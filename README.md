@@ -58,6 +58,10 @@ _Course Practicum: Archaeological Mapping, Wuhan, China_
 ---
 
 ## 💼 Work Experience
+**Xinyuan Game Company, bilibili**  
+_Intern of Key-animator and Modelling_
+2023.07 - 2023.09
+- Mainly used stable diffusion to generate the original scene artwork, modelled in 3dmax, built the scene in the unreal engine 5.
 
 **THUPDI**  
 _Intern of Urban Governance and Communication Center_  
@@ -65,7 +69,7 @@ _Intern of Urban Governance and Communication Center_
 - Collected GIS data, mapped urban renewal buildings in Taishan City, Shandong, and contributed to planning research.
 
 **Rabbitpre Intelligence AIGC Joint Laboratory, PKUSZ**  
-_Research Assistant (Part-time)_  
+_Research Assistant_  
 2023.08 - 2024.06  
 - Designed and developed web applications for AIGC diffusion models and large-scale image generation.
 
