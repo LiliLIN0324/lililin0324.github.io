@@ -34,28 +34,42 @@ _City and Regional Planning Major, City Energy Lab_
 
 ---
 
+## 📄 Academic Conference Presentations
+
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  The 39th AAAI Conference on Artificial Intelligence – Planning Workshop, Mar 2025  
+  Quan Jige, **Lili Lin**, Li Zhen
+
+- **Local Climate Zone and Urban Heat Resilience – An Empirical Study in New York**  
+  The 53rd International Conference on Urban Affairs, Apr 2025  
+  Steven Jige Quan, Parth Bansal, **Lili Lin**, Chaosu Li
+
+- **Assessing Urban Heat Resilience: Nonlinear Impacts of Urban Form Factors Across Scales Using Machine Learning**  
+  AI and Cities: International Forum for Innovation and Collaboration, May 2025  
+  Danbi Kim, **Lili Lin**, Steven Quan, Chaosu Li, Wei Wang
+
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  CUPUM 2025, Jun 2025  
+  Quan Jige, **Lili Lin**, Li Zhen
+
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  IACP Conference, Jul 2025  
+  Quan Jige, **Lili Lin**
+
 ## 🔬 Research & Projects
 
-**Team Member**  
-_Campus image perception, Tongji × DigitalFUTURES2023, Shanghai, China_  
-2023.06 - 2023.07  
-**Advisors:** Dr. Ying Long (Tsinghua University)  
-- Modeled public spaces and activities, tracked outdoor environments in real time, calculated vitality characterization indicators.
+- **Campus Image Perception**  
+  Team Member, Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
+  Modeled public spaces and activities; tracked outdoor environments; calculated vitality indicators.
 
-**Core Member**  
-_National-level Innovation Project: Determination of Heritage Value and Construction of a Digital Platform for the Hongqi Canal Irrigation Project, Wuhan, China_  
-2022.03 - 2023.03  
-**Advisors:** Dr. Tong Wang (HUST)  
-- Field research on the Hongqi Canal, weighted heritage values using AHP, built digital platform proposals and Arcgis datasets.
+- **Heritage Value Assessment & Digital Platform for Hongqi Canal**  
+  Core Member, National Innovation Project, Wuhan, China (Mar 2022–Mar 2023)  
+  Field research, value weighting (AHP), digital platform/ArcGIS dataset development.
 
-**Team Leader**  
-_Course Practicum: Archaeological Mapping, Wuhan, China_  
-2022.07 - 2022.10  
-**Advisors:** Dr. Qian Wan, Dr. Ken Lei (HUST)  
-- Coordinated a 12-member team for mapping Wudang Mountain architecture using point cloud data and ArchiCAD.
-- Produced an AR explosion diagram in Unity/UE4 for immersive experience.
+- **Archaeological Mapping: Wudang Mountain Architecture**  
+  Team Leader, Course Practicum, Wuhan, China (Jul–Oct 2022)  
+  Led 12-member team, point cloud mapping (ArchiCAD), produced AR diagrams (Unity/UE4).
 
----
 
 ## 💼 Work Experience
 **Xinyuan Game Company, bilibili**  
