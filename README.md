@@ -19,22 +19,9 @@ _City and Regional Planning Major, City Energy Lab_
 **Supervisor:** Steven Jige Quan  
 **Graduation GPA:** 3.9/4, 96/100
 
----
 
-## 🏆 Awards
-
-- Scholarship for Academic Excellence, Outstanding student leader (2020, 2021)
-- Merit Student (2022, 2023)
-- Scholarship for National Encouragement (2020-2023, 4 times)
-- 2022 Evolo Skyscraper Competition, Editors’ Choice
-- 8th China College “Internet+” Innovation and Entrepreneurship Provincial Competition, Provincial Third Price (2023)
-- Milan Design Week, Provincial First Price (2023)
-- 58th Central Glass International Architectural Design Competition, Merit Prizes (2023)
-- Graduate Scholarship For Excellent Foreign Students (GSFS) (2024)
-
----
 ## 📄 Research fields
-
+AI-driven urban planning and climate adaptation research, with a particular focus on urban thermal environments, cross-scale morphological analysis, and knowledge-graph-based approaches to support sustainable urban development.
 
 ## 📄 Academic Conference Presentations
 
@@ -98,6 +85,20 @@ _Research Assistant_
 
 ---
 
+---
+
+## 🏆 Awards
+
+- Scholarship for Academic Excellence, Outstanding student leader (2020, 2021)
+- Merit Student (2022, 2023)
+- Scholarship for National Encouragement (2020-2023, 4 times)
+- 2022 Evolo Skyscraper Competition, Editors’ Choice
+- 8th China College “Internet+” Innovation and Entrepreneurship Provincial Competition, Provincial Third Price (2023)
+- Milan Design Week, Provincial First Price (2023)
+- 58th Central Glass International Architectural Design Competition, Merit Prizes (2023)
+- Graduate Scholarship For Excellent Foreign Students (GSFS) (2024)
+
+---
 ## 📄 Publication
 
 _None at present._
