@@ -38,7 +38,7 @@ _City and Regional Planning Major, City Energy Lab_
 
 - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
   The 39th AAAI Conference on Artificial Intelligence – Planning Workshop, Mar 2025  
-  Quan Jige, **Lili Lin**, Li Zhen
+  Steven Jige Quan, **Lili Lin**, Zhen Li
 
 - **Local Climate Zone and Urban Heat Resilience – An Empirical Study in New York**  
   The 53rd International Conference on Urban Affairs, Apr 2025  
@@ -46,15 +46,15 @@ _City and Regional Planning Major, City Energy Lab_
 
 - **Assessing Urban Heat Resilience: Nonlinear Impacts of Urban Form Factors Across Scales Using Machine Learning**  
   AI and Cities: International Forum for Innovation and Collaboration, May 2025  
-  Danbi Kim, **Lili Lin**, Steven Quan, Chaosu Li, Wei Wang
+  Danbi Kim, **Lili Lin**, Steven Jige Quan, Chaosu Li, Wei Wang
 
 - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
   CUPUM 2025, Jun 2025  
-  Quan Jige, **Lili Lin**, Li Zhen
+  Steven Jige Quan, **Lili Lin**, Zhen Li
 
 - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
   IACP Conference, Jul 2025  
-  Quan Jige, **Lili Lin**
+  Steven Jige Quan, **Lili Lin**
 
 ## 🔬 Research & Projects
 
