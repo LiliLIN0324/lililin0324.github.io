@@ -20,7 +20,7 @@ _City and Regional Planning Major, City Energy Lab_
 **Graduation GPA:** 3.9/4, 96/100
 
 
-## 📄 Research fields
+## 👁 Research fields
 AI-driven urban planning and climate adaptation research, with a particular focus on urban thermal environments, cross-scale morphological analysis, and knowledge-graph-based approaches to support sustainable urban development.
 
 ## 📄 Academic Conference Presentations
