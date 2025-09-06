@@ -60,18 +60,17 @@ _City and Regional Planning Major, City Energy Lab_
 
 ## 🔬 Projects
 
-- **Campus Image Perception**  
-  Team Member, Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
-  Modeled public spaces and activities; tracked outdoor environments; calculated vitality indicators.
-
-- **Heritage Value Assessment & Digital Platform for Hongqi Canal**  
-  Core Member, National Innovation Project, Wuhan, China (Mar 2022–Mar 2023)  
-  Field research, value weighting (AHP), digital platform/ArcGIS dataset development.
-
 - **Archaeological Mapping: Wudang Mountain Architecture**  
-  Team Leader, Course Practicum, Wuhan, China (Jul–Oct 2022)  
+  Course Practicum, Wuhan, China (Jul–Oct 2022)  
   Led 12-member team, point cloud mapping (ArchiCAD), produced AR diagrams (Unity/UE4).
 
+- **Heritage Value Assessment & Digital Platform for Hongqi Canal**  
+  National Innovation Project, Wuhan, China (Mar 2022–Mar 2023)  
+  Field research, value weighting (AHP), digital platform/ArcGIS dataset development.
+
+- **Campus Image Perception**
+  Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
+  Modeled public spaces and activities; tracked outdoor environments; calculated vitality indicators.
 
 ## 💼 Work Experience
 **Xinyuan Game Company, bilibili**  
