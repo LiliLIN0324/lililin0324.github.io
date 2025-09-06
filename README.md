@@ -33,6 +33,8 @@ _City and Regional Planning Major, City Energy Lab_
 - Graduate Scholarship For Excellent Foreign Students (GSFS) (2024)
 
 ---
+## 📄 Research fields
+
 
 ## 📄 Academic Conference Presentations
 
@@ -56,7 +58,7 @@ _City and Regional Planning Major, City Energy Lab_
   IACP Conference, Jul 2025  
   Steven Jige Quan, **Lili Lin**
 
-## 🔬 Research & Projects
+## 🔬 Projects
 
 - **Campus Image Perception**  
   Team Member, Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
