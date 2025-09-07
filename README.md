@@ -64,15 +64,20 @@ _Intern of Key-animator and Modelling_
 2023.07 - 2023.09
 - Mainly used stable diffusion to generate the original scene artwork, modelled in 3dmax, built the scene in the unreal engine 5.
 
-**THUPDI**  
+**Tsinghua Tongheng Urban Planning & Design Institute (THUPDI)**  
 _Intern of Urban Governance and Communication Center_  
 2023.09 - 2023.11  
 - Collected GIS data, mapped urban renewal buildings in Taishan City, Shandong, and contributed to planning research.
 
 **Rabbitpre Intelligence AIGC Joint Laboratory, PKUSZ**  
 _Research Assistant_  
-2023.08 - 2024.06  
+2023.10 - 2024.08  
 - Designed and developed web applications for AIGC diffusion models and large-scale image generation.
+
+**Roche Limit Technology Co., Ltd.**  
+_UI & UX designer_  
+2024.9 - now  
+- Designed and optimized website and app interactions for Genshot.
 
 ---
 
