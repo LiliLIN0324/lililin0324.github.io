@@ -76,7 +76,7 @@ _Research Assistant_
 
 **Roche Limit Technology Co., Ltd.**  
 _UI & UX designer_  
-2024.9 - now  
+2024.9 - Present 
 - Designed and optimized website and app interactions for Genshot.
 
 ---
