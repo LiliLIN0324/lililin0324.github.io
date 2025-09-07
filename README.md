@@ -80,7 +80,7 @@ _Research Assistant_
 
 - **Programming & Parametric Design:** Python, ArcGIS, Grasshopper, Rhino, Unity, Unreal 5
 - **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID)
-- **Languages:** English (CET-6 617/IELTS-6.5), Mandarin (Native) 
+- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) 
 
 ---
 
