@@ -1,7 +1,7 @@
 # Hi, I'm Lili Lin 👋
 
-✉️ lily1326685527@gmail.com
-✉️ lili0324@snu.ac.kr
+- ✉️ lily1326685527@gmail.com
+- ✉️ lili0324@snu.ac.kr
 
 ---
 
@@ -17,8 +17,7 @@ _Bachelor Degree of Architecture_
 _City and Regional Planning Major, City Energy Lab_  
 2024.9 - Present  
 **Supervisor:** Steven Jige Quan  
-**Graduation GPA:** 3.9/4, 96/100
-
+**GPA:** 3.9/4, 96/100
 
 ## 👁 Research fields
 AI-driven urban planning and climate adaptation research, with a particular focus on urban thermal environments, cross-scale morphological analysis, and knowledge-graph-based approaches to support sustainable urban development.
