@@ -58,6 +58,11 @@ AI-driven urban planning and climate adaptation research, with a particular focu
   Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
   Modeled public spaces and activities; tracked outdoor environments; calculated vitality indicators.
 
+- **Participatory Urban Regeneration Empowered by Artificial Intelligence**
+  AI4CITY Workshop, Tongji Univ, Shanghai, China (July 2025)
+  Data group Leader, using diffusion model to generate the urban planning based on traffic, building, greenland, waterbodies.
+  https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm
+
 ## 💼 Work Experience
 **Xinyuan Game Company, bilibili**  
 _Intern of Key-animator and Modelling_
@@ -83,9 +88,9 @@ _UI & UX designer_
 
 ## 🛠 Skills
 
-- **Programming & Parametric Design:** Python, ArcGIS, Grasshopper, Rhino, Unity, Unreal 5
-- **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID)
-- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) 
+- **Programming & Parametric Design:** Python, ArcGIS, Machine learning, Grasshopper, Rhino, Unity, Unreal 5
+- **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID), Figma
+- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) , Korean (Basic)
 
 ---
 
