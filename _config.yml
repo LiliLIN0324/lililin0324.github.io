@@ -17,6 +17,7 @@ timezone: Asia/Seoul
 title: Lili Lin # the main title
 
 tagline: City and Urban planning # it will display as the subtitle
+tagline: Seoul National University # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
@@ -26,7 +27,7 @@ description: >- # used by seo meta and the atom feed
 url: ""
 
 github:
-  username: github_username # change to your GitHub username
+  username: lililin0324 # change to your GitHub username
 
 twitter:
   username: twitter_username # change to your Twitter username
