@@ -1,8 +1,9 @@
-# Hi, I'm Lili Lin 👋
-
-- ✉️ lily1326685527@gmail.com
-- ✉️ lili0324@snu.ac.kr
-
+---
+title: Lili Lin
+author: Lili
+date: 2025-10-11 06:34:00 +0900
+categories: [design]
+tags: [design]
 ---
 
 ## 🎓 Education

@@ -1,84 +1,112 @@
-<!-- markdownlint-disable-next-line -->
-<div align="center">
+# Hi, I'm Lili Lin 👋
 
-  <!-- markdownlint-disable-next-line -->
-  # Chirpy Jekyll Theme
+- ✉️ lily1326685527@gmail.com
+- ✉️ lili0324@snu.ac.kr
 
-  A minimal, responsive, and feature-rich Jekyll theme for technical writing.
+---
 
-  [![CI](https://img.shields.io/github/actions/workflow/status/cotes2020/jekyll-theme-chirpy/ci.yml?logo=github)][ci]&nbsp;
-  [![Codacy Badge](https://img.shields.io/codacy/grade/4e556876a3c54d5e8f2d2857c4f43894?logo=codacy)][codacy]&nbsp;
-  [![GitHub license](https://img.shields.io/github/license/cotes2020/jekyll-theme-chirpy?color=goldenrod)][license]&nbsp;
-  [![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy?&logo=RubyGems&logoColor=ghostwhite&label=gem&color=orange)][gem]&nbsp;
-  [![Open in Dev Containers](https://img.shields.io/badge/Dev_Containers-Open-deepskyblue?logo=linuxcontainers)][open-container]
+## 🎓 Education
 
-  [**Live Demo** →][demo]
+**Huazhong University of Science and Technology (985)**  
+_Bachelor Degree of Architecture_  
+2019.9 - 2024.6  
+**Graduation GPA:** 3.98/4, 90.8/100 (Top 5%)  
+**Majors:** Architectural Design, High-rise Architecture Design, Computer Graphics & Expression, Building Mechanics, Calculus, Fundamentals of Computer Programming (Python)
 
-  [![Devices Mockup](https://chirpy-img.netlify.app/commons/devices-mockup.png)][demo]
+**Seoul National University (qs50)**  
+_City and Regional Planning Major, City Energy Lab_  
+2024.9 - Present  
+**Supervisor:** Steven Jige Quan  
+**GPA:** 3.9/4, 96/100
 
-</div>
+## 👁 Research fields
+AI-driven urban planning and climate adaptation research, with a particular focus on urban thermal environments, cross-scale morphological analysis, and knowledge-graph-based approaches to support sustainable urban development.
 
-## Features
+## 📄 Academic Conference Presentations
 
-- Dark Theme
-- Localized UI language
-- Pinned Posts on Home Page
-- Hierarchical Categories
-- Trending Tags
-- Table of Contents
-- Last Modified Date
-- Syntax Highlighting
-- Mathematical Expressions
-- Mermaid Diagrams & Flowcharts
-- Dark Mode Images
-- Embed Media
-- Comment Systems
-- Built-in Search
-- Atom Feeds
-- PWA
-- Web Analytics
-- SEO & Performance Optimization
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  The 39th AAAI Conference on Artificial Intelligence – Planning Workshop, Mar 2025  
+  Steven Jige Quan, **Lili Lin**, Zhen Li
 
-## Documentation
+- **Local Climate Zone and Urban Heat Resilience – An Empirical Study in New York**  
+  The 53rd International Conference on Urban Affairs, Apr 2025  
+  Steven Jige Quan, Parth Bansal, **Lili Lin**, Chaosu Li
 
-To learn how to use, develop, and upgrade the project, please refer to the [Wiki][wiki].
+- **Assessing Urban Heat Resilience: Nonlinear Impacts of Urban Form Factors Across Scales Using Machine Learning**  
+  AI and Cities: International Forum for Innovation and Collaboration, May 2025  
+  Danbi Kim, **Lili Lin**, Steven Jige Quan, Chaosu Li, Wei Wang
 
-## Contributing
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  CUPUM 2025, Jun 2025  
+  Steven Jige Quan, **Lili Lin**, Zhen Li
 
-Contributions (_pull requests_, _issues_, and _discussions_) are what make the open-source community such an amazing place
-to learn, inspire, and create. Any contributions you make are greatly appreciated.
-For details, see the "[Contributing Guidelines][contribute-guide]".
+- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+  IACP Conference, Jul 2025  
+  Steven Jige Quan, **Lili Lin**
 
-## Credits
+## 🔬 Projects
 
-### Contributors
+- **Archaeological Mapping: Wudang Mountain Architecture**  
+  Course Practicum, Wuhan, China (Jul–Oct 2022)  
+  Led 12-member team, point cloud mapping (ArchiCAD), produced AR diagrams (Unity/UE4).
 
-Thanks to [all the contributors][contributors] involved in the development of the project!
+- **Heritage Value Assessment & Digital Platform for Hongqi Canal**  
+  National Innovation Project, Wuhan, China (Mar 2022–Mar 2023)  
+  Field research, value weighting (AHP), digital platform/ArcGIS dataset development.
 
-[![all-contributors](https://contrib.rocks/image?repo=cotes2020/jekyll-theme-chirpy&columns=16)][contributors]
-<sub> — Made with [contrib.rocks](https://contrib.rocks)</sub>
+- **Campus Image Perception**
+  Tongji × DigitalFUTURES2023, Shanghai, China (Jun–Jul 2023)  
+  Modeled public spaces and activities; tracked outdoor environments; calculated vitality indicators.
 
-### Third-Party Assets
+- **Participatory Urban Regeneration Empowered by Artificial Intelligence**
+  AI4CITY Workshop, Tongji Univ, Shanghai, China (July 2025)
+  Data group Leader, using diffusion model to generate the urban planning based on traffic, building, greenland, waterbodies.
+  https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm
 
-This project is built on the [Jekyll][jekyllrb] ecosystem and some [great libraries][lib], and is developed using [VS Code][vscode] as well as tools provided by [JetBrains][jetbrains] under a non-commercial open-source software license.
+## 💼 Work Experience
+**Xinyuan Game Company, bilibili**  
+_Intern of Key-animator and Modelling_
+2023.07 - 2023.09
+- Mainly used stable diffusion to generate the original scene artwork, modelled in 3dmax, built the scene in the unreal engine 5.
 
-The avatar and favicon for the project's website are from [ClipartMAX][clipartmax].
+**Tsinghua Tongheng Urban Planning & Design Institute (THUPDI)**  
+_Intern of Urban Governance and Communication Center_  
+2023.09 - 2023.11  
+- Collected GIS data, mapped urban renewal buildings in Taishan City, Shandong, and contributed to planning research.
 
-## License
+**Rabbitpre Intelligence AIGC Joint Laboratory, PKUSZ**  
+_Research Assistant_  
+2023.10 - 2024.08  
+- Designed and developed web applications for AIGC diffusion models and large-scale image generation.
 
-This project is published under [MIT License][license].
+**Roche Limit Technology Co., Ltd.**  
+_UI & UX designer_  
+2024.9 - Present 
+- Designed and optimized website and app interactions for Genshot.
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[ci]: https://github.com/cotes2020/jekyll-theme-chirpy/actions/workflows/ci.yml?query=event%3Apush+branch%3Amaster
-[codacy]: https://app.codacy.com/gh/cotes2020/jekyll-theme-chirpy/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
-[license]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE
-[open-container]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/cotes2020/jekyll-theme-chirpy
-[jekyllrb]: https://jekyllrb.com/
-[clipartmax]: https://www.clipartmax.com/middle/m2i8b1m2K9Z5m2K9_ant-clipart-childrens-ant-cute/
-[demo]: https://cotes2020.github.io/chirpy-demo/
-[wiki]: https://github.com/cotes2020/jekyll-theme-chirpy/wiki
-[contribute-guide]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CONTRIBUTING.md
-[contributors]: https://github.com/cotes2020/jekyll-theme-chirpy/graphs/contributors
-[lib]: https://github.com/cotes2020/chirpy-static-assets
-[vscode]: https://code.visualstudio.com/
-[jetbrains]: https://www.jetbrains.com/?from=jekyll-theme-chirpy
+---
+
+## 🛠 Skills
+
+- **Programming & Parametric Design:** Python, ArcGIS, Machine learning, Grasshopper, Rhino, Unity, Unreal 5
+- **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID), Figma
+- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) , Korean (Basic)
+
+---
+
+## 🏆 Awards
+
+- Scholarship for Academic Excellence, Outstanding student leader (2020, 2021)
+- Merit Student (2022, 2023)
+- Scholarship for National Encouragement (2020-2023, 4 times)
+- 2022 Evolo Skyscraper Competition, Editors’ Choice
+- 8th China College “Internet+” Innovation and Entrepreneurship Provincial Competition, Provincial Third Price (2023)
+- Milan Design Week, Provincial First Price (2023)
+- 58th Central Glass International Architectural Design Competition, Merit Prizes (2023)
+- Graduate Scholarship For Excellent Foreign Students (GSFS) (2024)
+
+---
+## 📄 Publication
+
+_None at present._
+
