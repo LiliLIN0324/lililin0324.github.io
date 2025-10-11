@@ -6,6 +6,14 @@ categories: [design,architecture,urban planning]
 tags: [design]
 ---
 
+<!-- ---
+title: Portfolio
+author: Lili
+date: 2025-10-11 06:50:00 +0900
+categories: [design,architecture,urban planning]
+tags: [design]
+---
+
 <div id="flipbook"></div>
 
 <script src="{{'/assets/js/data/jquery-3.7.1.min.js' | relative_url }}"></script>
@@ -70,4 +78,11 @@ $(document).ready(function() {
       display: 'double'
   });
 });
-</script>
+</script> -->
+
+
+<div id="flipbook"></div>
+
+<script src="{{ '/assets/js/data/jquery-3.7.1.min.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/data/turn.min.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/flipbook.js' | relative_url }}"></script>
