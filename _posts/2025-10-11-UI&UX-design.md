@@ -1,5 +1,5 @@
 ---
-title: 🟡 Design: UI & UX 
+title: 🟡 Design - UI & UX 
 author: Lili
 date: 2025-10-11 8:00:00 +0900
 categories: [ui]

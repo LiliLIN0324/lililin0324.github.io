@@ -62,34 +62,6 @@ AI-driven urban planning and climate adaptation research, with a particular focu
   </div>
 </div>
 
-<style>
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.card {
-  background: #fff;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  flex: 1 1 100%;
-}
-.card h3 {
-  margin-top: 0;
-}
-.card ul {
-  padding-left: 1.2em;
-}
-.card ul li a {
-  color: #0366d6;
-  text-decoration: none;
-}
-.card ul li a:hover {
-  text-decoration: underline;
-}
-</style>
-
 
 
 <!-- - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
@@ -156,16 +128,16 @@ _UI & UX designer_
 
 ## 🛠 Skills
 
-- **Programming & Parametric Design:** Python, ArcGIS, Machine learning, Grasshopper, Rhino, Unity, Unreal 5
-- **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID), Figma
-- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) , Korean (Basic)
+
 
 [![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/) [![Java](https://img.shields.io/badge/-Java-007396?logo=java&logoColor=white&style=for-the-badge)](https://www.oracle.com/java/) [![HTML](https://img.shields.io/badge/-HTML-E34F26?logo=html5&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/HTML)  
 [![QGIS](https://img.shields.io/badge/-QGIS-589632?logo=qgis&logoColor=white&style=for-the-badge)](https://www.qgis.org/) [![ArcGIS](https://img.shields.io/badge/-ArcGIS-0071C5?logo=arcgis&logoColor=white&style=for-the-badge)](https://www.esri.com/en-us/arcgis/products/arcgis-online/overview)  [![GeoPandas](https://img.shields.io/badge/-GeoPandas-2CA02C?logo=python&logoColor=white&style=for-the-badge)](https://geopandas.org/)  [![Shapely](https://img.shields.io/badge/-Shapely-1F77B4?logo=python&logoColor=white&style=for-the-badge)](https://shapely.readthedocs.io/)
 <br>[![Unreal Engine](https://img.shields.io/badge/-Unreal%20Engine-0E1128?logo=unreal-engine&logoColor=white&style=for-the-badge)](https://www.unrealengine.com/)  [![Blender](https://img.shields.io/badge/-Blender-F5792A?logo=blender&logoColor=white&style=for-the-badge)](https://www.blender.org/)  [![3ds Max](https://img.shields.io/badge/-3ds%20Max-00A3E0?logo=autodesk&logoColor=white&style=for-the-badge)](https://www.autodesk.com/products/3ds-max/)  [![Rhino](https://img.shields.io/badge/-Rhino-4D4D4D?logo=rhino&logoColor=white&style=for-the-badge)](https://www.rhino3d.com/)  [![SketchUp](https://img.shields.io/badge/-SketchUp-EB6E1F?logo=sketchup&logoColor=white&style=for-the-badge)](https://www.sketchup.com/)  [![AutoCAD](https://img.shields.io/badge/-AutoCAD-ED1C24?logo=autodesk&logoColor=white&style=for-the-badge)](https://www.autodesk.com/products/autocad/)
 [![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=figma&logoColor=white&style=for-the-badge)](https://www.figma.com/)  [![Photoshop](https://img.shields.io/badge/-Photoshop-31A8FF?logo=adobe-photoshop&logoColor=white&style=for-the-badge)](https://www.adobe.com/products/photoshop.html)  [![Illustrator](https://img.shields.io/badge/-Illustrator-FF9A00?logo=adobe-illustrator&logoColor=white&style=for-the-badge)](https://www.adobe.com/products/illustrator.html)  [![InDesign](https://img.shields.io/badge/-InDesign-FF3366?logo=adobe-indesign&logoColor=white&style=for-the-badge)](https://www.adobe.com/products/indesign.html)
 
-
+- **Programming & Parametric Design:** Python, ArcGIS, Machine learning, Grasshopper, Rhino, Unity, Unreal 5
+- **Office & Design:** MS-Office, Adobe Creative Suite (PS, AI, ID), Figma
+- **Languages:** English (CET-6 617 / IELTS-6.5), Mandarin (Native) , Korean (Basic)
 
 ---
 
@@ -185,3 +157,31 @@ _UI & UX designer_
 
 _None at present._
 
+
+<style>
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex: 1 1 100%;
+}
+.card h3 {
+  margin-top: 0;
+}
+.card ul {
+  padding-left: 1.2em;
+}
+.card ul li a {
+  color: #0366d6;
+  text-decoration: none;
+}
+.card ul li a:hover {
+  text-decoration: underline;
+}
+</style>
