@@ -25,8 +25,74 @@ _City and Regional Planning Major, City Energy Lab_
 AI-driven urban planning and climate adaptation research, with a particular focus on urban thermal environments, cross-scale morphological analysis, and knowledge-graph-based approaches to support sustainable urban development.
 
 ## 📄 Academic Conference Presentations
+<!-- ### Knowledge Graph for Urban Planning
+  AAAI Planning Workshop, Mar 2025
+  CUPUM Conference 2025, Jun 2025
+  IACP Conference, Jul 2025
+### Urban Heat Resilience in New York
+  ICUA 2025, Apr 2025
+### Urban Form & Machine Learning Analysis
+  AI and Cities Forum, May 2025
+  ACSP Conference, Oct 2025 -->
 
-- **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
+
+<div class="card-container">
+
+  <div class="card">
+    <h3> <a href="/posts/Project-2-KG/"> Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans </a> </h3>
+    <ul>
+      <li><a href="https://ai-for-urban-planning.github.io/AAAI25-workshop/#posters">(poster) AAAI Planning Workshop, Mar 2025 </a></li>
+      <li><a href="https://virtual.oxfordabstracts.com/event/73503/submission/414">(oral) CUPUM 2025, Jun 2025</a></li>
+      <li><a href="https://www.china-planning.org/alpha/2025-iacp-annual-conference-call-for-abstracts/">(oral) IACP Conference, Jul 2025</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3> <a href="/posts/Project-1-HR-LCZ/">  Local Climate Zone and Urban Heat Resilience – An Empirical Study in New York </a> </h3>
+    <ul>
+      <li><a href="https://urbanaffairsassociation.org/conference/past-conferences/">(oral) International Conference on Urban Affairs (ICUA) 2025, Apr 2025</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3> <a href="/posts/Project-3-ML-HR/"> Assessing Urban Heat Resilience: Nonlinear Impacts of Urban Form Factors Across Scales Using Machine Learning </a></h3>
+    <ul>
+      <li><a href="https://dcp.ufl.edu/urp/ai-and-cities/">(oral)AI and Cities Forum, May 2025</a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex: 1 1 100%;
+}
+.card h3 {
+  margin-top: 0;
+}
+.card ul {
+  padding-left: 1.2em;
+}
+.card ul li a {
+  color: #0366d6;
+  text-decoration: none;
+}
+.card ul li a:hover {
+  text-decoration: underline;
+}
+</style>
+
+
+
+<!-- - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
   The 39th AAAI Conference on Artificial Intelligence – Planning Workshop, Mar 2025  
   Steven Jige Quan, **Lili Lin**, Zhen Li
 
@@ -44,7 +110,7 @@ AI-driven urban planning and climate adaptation research, with a particular focu
 
 - **Knowledge Graph Generation from Urban Planning Texts: A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans**  
   IACP Conference, Jul 2025  
-  Steven Jige Quan, **Lili Lin**
+  Steven Jige Quan, **Lili Lin** -->
 
 ## 🔬 Projects
 

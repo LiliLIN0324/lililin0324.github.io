@@ -16,9 +16,8 @@ timezone: Asia/Seoul
 
 title: Lili Lin # the main title
 
-tagline: |
-  City and Urban Planning
-  Seoul National University
+tagline:
+  City and Regional Planning
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
@@ -30,8 +29,8 @@ url: ""
 github:
   username: lililin0324 # change to your GitHub username
 
-twitter:
-  username: twitter_username # change to your Twitter username
+Linkedin:
+  username: lililin0324 # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -40,7 +39,7 @@ social:
   email: lili0324@snu.ac.kr # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
+    - https://linkedin.com/in/lililin0324 # change to your Twitter homepage
     - https://lililin0324.github.io/ # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
@@ -153,6 +152,10 @@ paginate: 10
 
 # The base URL of your site
 baseurl: ""
+
+
+
+
 
 # ------------ The following options are not recommended to be modified ------------------
 
