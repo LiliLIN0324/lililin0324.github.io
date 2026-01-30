@@ -10,14 +10,19 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
+    "georaster": "^1.6.0",
+    "georaster-layer-for-leaflet": "^4.1.2",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.561.0",
     "plotly.js": "^3.3.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-plotly.js": "^2.6.0",
-    "react-router-dom": "^7.11.0"
+    "react-router-dom": "^7.11.0",
+    "shpjs": "^6.2.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.21",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.23",

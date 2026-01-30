@@ -3,10 +3,13 @@ import { HashRouter as Router, Routes, Route, Link, Outlet, useParams, useLocati
 import './src/index.css';
 // 1. 修改 import 方式
 import React, { useState, Suspense, lazy } from "react"; // 增加 Suspense 和 lazy
+import { on } from "events";
 
 // 使用 lazy 动态导入
 const ClusterVisualizer3D = lazy(() => import("./src/App.tsx"));
 const URplatform = lazy(() => import("./src/UR-platform.tsx"));
+const OpenStreetMap = lazy(() => import("./src/openstreetmap"));
+import openStreetMapSource from './src/openstreetmap?raw';
 
 // 数据部分保持不变
 const projects = [
@@ -197,12 +200,32 @@ const designProjects = [
       }
     }
 ];
-
+const tutorialProjects = [
+    {
+      id: "01",
+      slug: "how to add openstreet map in website",
+      title: "How to Add OpenStreetMap in Website",
+      category: "Tutorial",
+      year: "2026",
+      description: "A tutorial on integrating OpenStreetMap into a website.",
+      tech: ["python", "React", "TypeScript"],
+      hasDemo: true, 
+      component: <OpenStreetMap />,
+      details: {
+        description: "This tutorial explains how to integrate OpenStreetMap into a website using React and JavaScript.",
+        solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.",
+        challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners." ,
+        codeComponent: openStreetMapSource,
+        image: ["./data/fig/OpenStreetMap_tutorial.jpg"],
+        logo: "./data/fig/OpenStreetMap_tutorial_logo.jpg",
+      }
+    },
+];
 
 const ProjectListView = ({ data, type }: { data: any[], type: string }) => (
   <div className="p-6 md:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
     <div className="flex justify-between items-end border-b border-neutral-100 pb-4 mb-8">
-      <h2 className="text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Research' : 'Design'}</h2>
+      <h2 className="text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Research' : 'Design' }</h2>
       <span className="text-xs font-mono text-neutral-400">Idx: {data.length}</span>
     </div>
     <div className="grid gap-4">
@@ -270,21 +293,106 @@ const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
                 <h1 className="text-3xl font-light mb-6 text-neutral-900">{project.title}</h1>
                 <div className="bg-neutral-50 border-l-2 border-neutral-900 p-6 mb-8 font-serif italic text-neutral-700">"{project.description}"</div>
                 <div className="grid md:grid-cols-12 gap-8">
+                  {/* 这里是左侧的内容页 */}
                   <div className="md:col-span-8 space-y-8">
-                    {project.details.abstract && <section><h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">01 // Abstract</h3><p className="leading-relaxed text-neutral-800">{project.details.abstract}</p></section>}
-                    {project.details.solution && <section><h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">02 // Methodology</h3><p className="leading-relaxed text-neutral-800">{project.details.solution}</p></section>}
-                    <section className="space-y-8">
-                      {project.details.image.map((imgSrc: string, idx: number) => (
-                        <img key={idx} src={imgSrc} className="w-full border border-neutral-200" alt="Detail" />
-                      ))}
-                    </section>
+                    {project.details.abstract && (
+                      <section id="abstract">
+                        <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">
+                          Abstract
+                        </h3>
+                        <p className="leading-relaxed text-neutral-800">
+                          {project.details.abstract}
+                        </p>
+                      </section>
+                    )}
+
+                    {project.details.solution && (
+                      <section id="methodology">
+                        <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">
+                          Methodology
+                        </h3>
+                        <p className="leading-relaxed text-neutral-800">
+                          {project.details.solution}
+                        </p>
+                      </section>
+                    )}
+
+                    {project.details.challenge && (
+                      <section id="challenges">
+                        <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">
+                          Challenges
+                        </h3>
+                        <p className="text-xs leading-relaxed text-neutral-600">
+                          {project.details.challenge}
+                        </p>
+                      </section>
+                    )}
+                    {project.details.codeComponent && (
+                      <section id="code">
+                        <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">
+                          Code Example
+                        </h3>
+                        <pre className="bg-neutral-50 border border-neutral-100 p-4 overflow-x-auto text-xs">
+                          <code>{project.details.codeComponent}</code>
+                        </pre>
+                      </section>
+                    )}
                   </div>
-                  {project.details.challenge && (
-                    <div className="md:col-span-4 bg-neutral-50 p-4 border border-neutral-100 h-fit">
-                      <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">03 // Challenges</h3>
-                      <p className="text-xs leading-relaxed text-neutral-600">{project.details.challenge}</p>
-                    </div>
-                  )}
+
+                {/* 这里是右侧的目录栏 */}
+                <div className="md:col-span-4">
+                  <div className="sticky top-24 border border-neutral-100 p-4 bg-white">
+                    <h3 className="text-xs font-mono uppercase text-neutral-400 mb-4">
+                      Contents
+                    </h3>
+
+                    <ul className="space-y-2 text-sm">
+                      {project.details.abstract && (
+                        <li>
+                          <button
+                            onClick={() => scrollToSection("abstract")}
+                            className="text-neutral-700 hover:underline"
+                          >
+                            Abstract
+                          </button>
+                        </li>
+                      )}
+                      {project.details.solution && (
+                        <li>
+                          <button
+                            onClick={() => scrollToSection("methodology")}
+                            className="text-neutral-700 hover:underline"
+                          >
+                            Methodology
+                          </button>
+                        </li>
+                      )}
+                      {project.details.challenge && (
+                        <li>
+                          <button
+                            onClick={() => scrollToSection("challenges")}
+                            className="text-neutral-700 hover:underline"
+                          >
+                            Challenges
+                          </button>
+                        </li>
+                      )}
+                      {project.details.codeComponent && (
+                        <li>
+                          <button
+                            onClick={() => scrollToSection("code")}
+                            className="text-neutral-700 hover:underline"
+                          >
+                            Code Example
+                          </button>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+
+
+
                 </div>
              </div>
           </div>
@@ -292,13 +400,20 @@ const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
       <div className="w-full h-full bg-neutral-100 relative">
         {/* 使用 Suspense 包裹异步组件 */}
         <Suspense fallback={<div className="flex items-center justify-center h-full font-mono">LOADING_MODULE...</div>}>
-          {project.component || <div className="flex items-center justify-center h-full text-neutral-400 font-mono">NO_SIGNAL</div>}
+          {<div className="w-full h-full min-h-screen">  {project.component ? (<div className="w-full h-full">{project.component}</div>):(<div className="flex items-center justify-center h-full text-neutral-400 font-mono">NO_SIGNAL</div>)}</div>}
         </Suspense>
       </div>
       )}
       </div>
     </div>
   );
+};
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 };
 
 const App = () => {
@@ -324,7 +439,7 @@ const App = () => {
           <aside className={`border-r border-neutral-200 bg-neutral-50/50 flex flex-col transition-all duration-500 ease-in-out relative ${isSidebarOpen ? 'w-80 p-6' : 'w-12 py-6 items-center'}`}>
             <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="absolute top-1/2 -right-3 w-6 h-12 bg-white border border-neutral-200 shadow-sm flex items-center justify-center text-neutral-400 hover:text-neutral-900 z-20 rounded-r-md">{isSidebarOpen ? '‹' : '›'}</button>
             <nav className="flex flex-col gap-2 w-full">
-              {['research', 'design', 'about', 'contact'].map((tab) => (
+              {['research', 'design', 'tutorial', 'about', 'contact'].map((tab) => (
                 <Link
                   key={tab}
                   to={`/${tab}`}
@@ -343,6 +458,8 @@ const App = () => {
               <Route path="/research/:id" element={<ProjectDetailView data={projects} type="research" />} />
               <Route path="/design" element={<ProjectListView data={designProjects} type="design" />} />
               <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
+              <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
+              <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
               <Route path="/about" element={<AboutSection />} />
               <Route path="/contact" element={<ContactSection />} />
             </Routes>
@@ -352,7 +469,16 @@ const App = () => {
     </div>
   );
 };
-
+const TutorialSection = () => (
+  <div className="p-6 md:p-10 max-w-7xl animate-in fade-in slide-in-from-bottom-4">
+    <h2 className="text-xl font-medium text-neutral-900 border-b border-neutral-100 pb-4 mb-8">Tutorials</h2> 
+    <div className="prose prose-neutral prose-sm font-light text-lg text-neutral-800 leading-relaxed">
+      <p className="text-lg text-neutral-800 leading-relaxed mb-6 font-light">
+      Tutorials on various topics related to urban planning, AI, and web development. Each tutorial provides step-by-step guidance and practical examples to help you understand and implement the concepts effectively.
+      </p>
+    </div>
+  </div>
+);
 // 辅助组件
 const AboutSection = () => (
   <div className="p-6 md:p-10 max-w-7xl animate-in fade-in slide-in-from-bottom-4">

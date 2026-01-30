@@ -13,3 +13,4 @@ export const getClusterColor = (index: number): string => {
   return SOFT20_COLORS[index % SOFT20_COLORS.length];
 };
 export const AVAILABLE_KS = [5, 12, 20, 26];
+
