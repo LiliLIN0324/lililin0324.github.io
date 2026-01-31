@@ -167,6 +167,7 @@ const designProjects = [
       tech: ["Figma", "React", "TypeScript"],
       hasDemo: true,
       details: {
+        abstract: "This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korea users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner.",
         image: ["./data/fig/Bazi.jpg"],
         logo: "./data/fig/Bazi_logo.jpg",
       }
@@ -187,7 +188,7 @@ const designProjects = [
     },
     {
       id: "07",
-      slug:"",
+      slug:"riffle-ai-game-generation-tool",
       title: "Riffle - AI game Generation Tool",
       category: "UI&UX Design",
       year: "2026 - ongoing",
@@ -195,6 +196,7 @@ const designProjects = [
       tech: ["Figma", "React", "TypeScript"],
       hasDemo: true,
       details: {
+        abstract: "Riffle is an AI-powered game generation tool that leverages advanced artificial intelligence algorithms to create immersive and engaging gaming experiences. By just one word, users can generate unique game concepts, characters, and storylines tailored to their interests. The platform aims to democratize game development, allowing both aspiring and experienced developers to bring their creative visions to life with ease.",
         image: ["./data/fig/Riffle.jpg"],
         logo: "./data/fig/Riffle_logo.jpg",
       }
@@ -216,8 +218,9 @@ const tutorialProjects = [
         solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.",
         challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners." ,
         codeComponent: openStreetMapSource,
-        image: ["./data/fig/OpenStreetMap_tutorial.jpg"],
-        logo: "./data/fig/OpenStreetMap_tutorial_logo.jpg",
+        content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
+        image: ["./data/fig/OpenStreetMap.jpg"],
+        logo: "./data/fig/Openstreetmap_logo.jpg",
       }
     },
 ];
@@ -322,7 +325,7 @@ const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
                         <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">
                           Challenges
                         </h3>
-                        <p className="text-xs leading-relaxed text-neutral-600">
+                        <p className="leading-relaxed text-neutral-800">
                           {project.details.challenge}
                         </p>
                       </section>
@@ -337,7 +340,22 @@ const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
                         </pre>
                       </section>
                     )}
+                    {project.details.image && project.details.image.length > 0 && (
+                      <section id="images" className="space-y-6">
+                        <h3 className="text-xs font-mono uppercase text-neutral-400 mb-2">          
+                          Images
+                        </h3>
+                        <div className="grid gap-4">
+                          {project.details.image.map((imgSrc: string, index: number) => (
+                            <div key={index} className="border border-neutral-100 overflow-hidden bg-neutral-50">
+                              <img src={imgSrc} alt={`${project.title} - ${index + 1}`} className="w-full h-auto object-cover" />
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    )}
                   </div>
+                    
 
                 {/* 这里是右侧的目录栏 */}
                 <div className="md:col-span-4">
@@ -384,6 +402,16 @@ const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
                             className="text-neutral-700 hover:underline"
                           >
                             Code Example
+                          </button>
+                        </li>
+                      )}
+                      {project.details.image && project.details.image.length > 0 && (
+                        <li>
+                          <button
+                            onClick={() => scrollToSection("images")}
+                            className="text-neutral-700 hover:underline"
+                          >
+                            Images
                           </button>
                         </li>
                       )}
