@@ -9,7 +9,10 @@ import { on } from "events";
 const ClusterVisualizer3D = lazy(() => import("./src/App.tsx"));
 const URplatform = lazy(() => import("./src/UR-platform.tsx"));
 const OpenStreetMap = lazy(() => import("./src/openstreetmap"));
+const SequentialEvents = lazy(() => import("./src/photogeo"));
 import openStreetMapSource from './src/openstreetmap?raw';
+import SequentialEventsSource from './src/photogeo?raw';
+import { Component } from "lucide-react";
 
 // 数据部分保持不变
 const projects = [
@@ -205,7 +208,7 @@ const designProjects = [
 const tutorialProjects = [
     {
       id: "01",
-      slug: "how to add openstreet map in website",
+      slug: "how-to-add-openstreetmap-in-website",
       title: "How to Add OpenStreetMap in Website",
       category: "Tutorial",
       year: "2026",
@@ -221,14 +224,33 @@ const tutorialProjects = [
         content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
         image: ["./data/fig/OpenStreetMap.jpg"],
         logo: "./data/fig/Openstreetmap_logo.jpg",
-      }
+      },
+    },
+    {
+      id: "02",
+      slug: "how-to-get-sequential-events-from-photo-by-phone",
+      title: "How to get sequential events from photo by phone",
+      category: "Tutorial",
+      year: "2026",
+      description: "A tutorial on extracting sequential events from photos taken on a phone.",
+      tech: ["Computer Vision", "Image Processing"],
+      hasDemo: true,
+      component:<SequentialEvents />,
+      details: {
+        description: "This tutorial explains how to extract sequential events from photos taken on a phone using computer vision techniques.",
+        solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process.",
+        challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events.",
+        codeComponent: SequentialEventsSource,
+        image: ["./data/fig/Geophoto.jpg"],
+        logo: "./data/fig/Geophoto_logo.jpg",
+    }
     },
 ];
 
 const ProjectListView = ({ data, type }: { data: any[], type: string }) => (
   <div className="p-6 md:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
     <div className="flex justify-between items-end border-b border-neutral-100 pb-4 mb-8">
-      <h2 className="text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Research' : 'Design' }</h2>
+      <h2 className="text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Researches' : type === 'design' ? 'Designs' : 'Tutorials' }</h2>
       <span className="text-xs font-mono text-neutral-400">Idx: {data.length}</span>
     </div>
     <div className="grid gap-4">
