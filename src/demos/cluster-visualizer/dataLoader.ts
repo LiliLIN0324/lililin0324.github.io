@@ -1,11 +1,9 @@
-import { Cluster, DataPoint } from '../types';
-import { getClusterColor } from '../constants';
+import { Cluster, DataPoint } from './types';
+import { getClusterColor } from './constants';
 
 export const parseCSVFiles = async (files: File[]): Promise<Cluster[]> => {
   const clusters: Cluster[] = [];
 
-  // Sort files by name to ensure Cluster 0 gets the first color, etc.
-  // Assumes filenames like "...Cluster0...", "...Cluster1..."
   const sortedFiles = files.sort((a, b) => {
     const numA = extractClusterNumber(a.name);
     const numB = extractClusterNumber(b.name);
@@ -17,14 +15,13 @@ export const parseCSVFiles = async (files: File[]): Promise<Cluster[]> => {
     const text = await file.text();
     const data = parseCSVContent(text);
 
-    // Try to determine cluster ID from filename, otherwise use index
     const clusterId = extractClusterNumber(file.name) ?? i;
     
     clusters.push({
       id: clusterId,
       name: file.name.replace('.csv', ''),
       data: data,
-      color: getClusterColor(i), // Assign color based on sorted order
+      color: getClusterColor(i),
     });
   }
 
@@ -32,7 +29,6 @@ export const parseCSVFiles = async (files: File[]): Promise<Cluster[]> => {
 };
 
 const extractClusterNumber = (filename: string): number => {
-  // Matches "Cluster1", "Cluster 1", etc.
   const match = filename.match(/Cluster\s*(\d+)/i);
   return match ? parseInt(match[1], 10) : 999;
 };
@@ -67,7 +63,6 @@ export const parseCSVContent = (content: string, includeExtra = false): DataPoin
         meanNight: Number(row[meanNightIdx]),
          };
 
-      // 根据 includeExtra 决定是否添加额外字段
       if (includeExtra) {
         if (P10DayIdx !== -1) point.P10Day = Number(row[P10DayIdx]);
         if (P25DayIdx !== -1) point.P25Day = Number(row[P25DayIdx]);
@@ -83,4 +78,46 @@ export const parseCSVContent = (content: string, includeExtra = false): DataPoin
     }
 
   return data;
+};
+
+export const fetchLocalClusterData = async (k: number, includeExtra = false): 
+  Promise<Cluster[]> => {
+  const clusters: Cluster[] = [];
+  const promises: Promise<void>[] = [];
+
+  for (let i = 0; i < k; i++) {
+    const filename = `K_${k}_Cluster${i}_3D_Data.csv`;
+    const url = `/data/K_${k}/${filename}`;
+
+    const p = fetch(url)
+      .then(res => {
+        if (!res.ok) {
+          console.warn(`File not found or unreachable: ${url}`);
+          return null;
+        }
+        return res.text();
+      })
+      .then(text => {
+        if (!text) return;
+        
+        const data = parseCSVContent(text, includeExtra);
+        if (data.length > 0) {
+          clusters.push({
+            id: i,
+            name: filename.replace('.csv', ''),
+            data,
+            color: getClusterColor(i)
+          });
+        }
+      })
+      .catch(err => {
+        console.warn(`Error loading cluster ${i}:`, err);
+      });
+
+    promises.push(p);
+  }
+
+  await Promise.all(promises);
+
+  return clusters.sort((a, b) => a.id - b.id);
 };

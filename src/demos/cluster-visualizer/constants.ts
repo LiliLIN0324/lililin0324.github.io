@@ -8,9 +8,8 @@ export const SOFT20_COLORS = [
   'rgba(214, 39, 40, 1)', 'rgba(255, 152, 150, 1)'
 ];
 
-
 export const getClusterColor = (index: number): string => {
   return SOFT20_COLORS[index % SOFT20_COLORS.length];
 };
-export const AVAILABLE_KS = [5, 12, 20, 26];
 
+export const AVAILABLE_KS = [5, 12, 20, 26];

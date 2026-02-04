@@ -3,7 +3,6 @@ export interface DataPoint {
   meanDay: number;
   meanNight: number;
   
-  // 可选字段
   P10Day?: number;
   P25Day?: number;
   P75Day?: number;
