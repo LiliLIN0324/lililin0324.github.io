@@ -132,5 +132,71 @@ audio.play();
 
 // 6. 数据存储
 wx.setStorageSync('highScore', score);
-const highScore = wx.getStorageSync('highScore');`
+const highScore = wx.getStorageSync('highScore');`,
+  'how-to-conduct-time-geo-sequential-clustering-from-album': `// 时间地理序列聚类算法
+
+// 1. 提取照片的时间戳和位置信息
+interface Photo {
+  id: string;
+  timestamp: number;
+  location?: { lat: number; lng: number };
+  ip?: string;
+}
+
+// 2. 计算两点之间的距离（km）
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; // 地球半径
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+// 3. 聚类参数
+const MICRO_TIME_THRESHOLD = 1.5 * 60 * 60 * 1000; // 1.5小时
+const MICRO_DISTANCE_THRESHOLD = 0.5; // 500米
+const MACRO_TIME_THRESHOLD = 12 * 60 * 60 * 1000; // 12小时
+const MACRO_DISTANCE_THRESHOLD = 50; // 50公里
+
+// 4. 主聚类算法
+function clusterPhotosIntoEvents(photos: Photo[]): SmartEvent[] {
+  const sortedPhotos = [...photos].sort((a, b) => a.timestamp - b.timestamp);
+  const microEvents: SmartEvent[] = [];
+  
+  let currentMicro: SmartEvent = {
+    id: generateId(),
+    photos: [sortedPhotos[0]],
+    startTime: sortedPhotos[0].timestamp,
+    endTime: sortedPhotos[0].timestamp,
+    // ...其他属性
+  };
+
+  // 生成微事件
+  for (let i = 1; i < sortedPhotos.length; i++) {
+    const timeDiff = sortedPhotos[i].timestamp - currentMicro.endTime;
+    const distDiff = sortedPhotos[i].location && currentMicro.centerLocation
+      ? getDistance(
+          sortedPhotos[i].location.lat, sortedPhotos[i].location.lng,
+          currentMicro.centerLocation.lat, currentMicro.centerLocation.lng
+        )
+      : 0;
+
+    if (timeDiff < MICRO_TIME_THRESHOLD && 
+        distDiff < MICRO_DISTANCE_THRESHOLD &&
+        sortedPhotos[i].ip === currentMicro.clusterIp) {
+      currentMicro.photos.push(sortedPhotos[i]);
+      currentMicro.endTime = sortedPhotos[i].timestamp;
+    } else {
+      microEvents.push(currentMicro);
+      currentMicro = { ...currentMicro, id: generateId(), photos: [sortedPhotos[i]] };
+    }
+  }
+  microEvents.push(currentMicro);
+
+  // 合并为宏事件
+  return mergeMicroToMacroEvents(microEvents);
+}`
 };

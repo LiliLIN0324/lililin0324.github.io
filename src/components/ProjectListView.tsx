@@ -41,7 +41,7 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
                   className="flex-grow min-w-0 w-full flex flex-row gap-4 md:gap-6 items-center"
                 >
                   <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-neutral-100 overflow-hidden bg-neutral-50">
-                    <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
+                    <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-grow min-w-0">
                     <div className="flex justify-between items-start mb-2">
@@ -78,7 +78,7 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
                 className="flex flex-col h-full"
               >
                 <div className="flex-shrink-0 w-full aspect-square border border-neutral-100 overflow-hidden bg-neutral-50 mb-4">
-                  <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
+                  <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-grow min-w-0">
                   <div className="flex justify-between items-start mb-2">

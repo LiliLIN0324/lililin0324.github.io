@@ -304,7 +304,7 @@ export const tutorialProjects = [
       challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data.",
       image: ["/data/fig/photocluster-1.jpg", "/data/fig/photocluster-2.jpg"],
       logo: "/data/fig/Clusteringevents_logo.jpg",
-      code: "photocluster.tsx"
+      code: "clusteringevents.tsx"
     },  
   },
 ];
