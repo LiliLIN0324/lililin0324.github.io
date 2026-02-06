@@ -70,172 +70,266 @@ const URplatform: React.FC = () => {
         version: 8,
         sources: {},
         layers: [
-          { id: 'background', type: 'background', paint: { 'background-color': '#ffffffff' } }
+          { id: 'background', type: 'background', paint: { 'background-color': '#e5e7eb' } }
         ]
       },
       center: SHANGHAI_CENTER,
-      zoom: 15,
-      pitch: 45,
-      bearing: -10,
+      zoom: 12,
       preserveDrawingBuffer: true // ⭐ 必须加
     });
 
     map.on('load', () => {
       mapRef.current = map;
+      console.log('Map loaded successfully');
       
       // 按照堆叠顺序添加：Landuse -> Water -> Street -> Building
       
       // 1. Landuse (Bottom)
-      map.addSource('landuse', { type: 'geojson', data: './data/landuse.geojson' });
-      map.addLayer({
-        id: 'landuse',
-        type: 'fill',
-        source: 'landuse',
-        layout: { visibility: activeLayers.includes('landuse') ? 'visible' : 'none' },
-        paint: {
-          'fill-color': [
-            'match', ['get', 'type'],
-            '居住用地', '#fdae61',
-            '工业用地', '#d7191c',
-            '公园与绿地用地', '#1a9641',
-            '商务办公用地', '#2b83ba',
-            '教育科研用地', '#abdda4',
-            '商业服务用地', '#f46d43',
-            '行政办公用地', '#8073ac',
-            '体育与文化用地', '#ffff99',
-            '医疗卫生用地', '#d9ef8b',
-            '机场设施用地', '#bdbdbd',
-            '交通场站用地', '#636363',
-            '#e5e7eb'
-          ],
-          'fill-opacity': 0.2
-        }
-      });
+      try {
+        console.log('Loading landuse.geojson...');
+        fetch('https://pub-e0170f3fece2419a85fa1ce02c1f1a28.r2.dev/landuse.geojson')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log('landuse.geojson fetched successfully, features count:', data.features.length);
+            map.addSource('landuse', { type: 'geojson', data });
+            map.addLayer({
+              id: 'landuse',
+              type: 'fill',
+              source: 'landuse',
+              layout: { visibility: activeLayers.includes('landuse') ? 'visible' : 'none' },
+              paint: {
+                'fill-color': [
+                  'match', ['get', 'type'],
+                  '居住用地', '#fdae61',
+                  '工业用地', '#d7191c',
+                  '公园与绿地用地', '#1a9641',
+                  '商务办公用地', '#2b83ba',
+                  '教育科研用地', '#abdda4',
+                  '商业服务用地', '#f46d43',
+                  '行政办公用地', '#8073ac',
+                  '体育与文化用地', '#ffff99',
+                  '医疗卫生用地', '#d9ef8b',
+                  '机场设施用地', '#bdbdbd',
+                  '交通场站用地', '#636363',
+                  '#e5e7eb'
+                ],
+                'fill-opacity': 0.2
+              }
+            });
+            console.log('landuse.geojson loaded successfully');
+          })
+          .catch((error) => {
+            console.error('Error loading landuse layer:', error);
+          });
+      } catch (error) {
+        console.error('Error loading landuse layer:', error);
+      }
 
       // 2. Waterbodies
-      map.addSource('waterbodies', { type: 'geojson', data: './data/waterbodies.geojson' });
-      map.addLayer({
-        id: 'waterbodies',
-        type: 'fill',
-        source: 'waterbodies',
-        layout: { visibility: activeLayers.includes('waterbodies') ? 'visible' : 'none' },
-        paint: {
-          'fill-color': '#59bdffff',
-          'fill-opacity': 0.6
-        }
-      });
+      try {
+        console.log('Loading waterbodies.geojson...');
+        fetch('https://pub-e0170f3fece2419a85fa1ce02c1f1a28.r2.dev/waterbodies.geojson')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log('waterbodies.geojson fetched successfully, features count:', data.features.length);
+            map.addSource('waterbodies', { type: 'geojson', data });
+            map.addLayer({
+              id: 'waterbodies',
+              type: 'fill',
+              source: 'waterbodies',
+              layout: { visibility: activeLayers.includes('waterbodies') ? 'visible' : 'none' },
+              paint: {
+                'fill-color': '#59bdffff',
+                'fill-opacity': 0.6
+              }
+            });
+            console.log('waterbodies.geojson loaded successfully');
+          })
+          .catch((error) => {
+            console.error('Error loading waterbodies layer:', error);
+          });
+      } catch (error) {
+        console.error('Error loading waterbodies layer:', error);
+      }
 
       // 3. Street
-      map.addSource('street', { type: 'geojson', data: './data/street.geojson' });
-      map.addLayer({
-        id: 'street',
-        type: 'fill',
-        source: 'street',
-        layout: { visibility: activeLayers.includes('street') ? 'visible' : 'none' },
-        paint: {
-          'fill-color': [
-            'match', ['get', 'Type'],
-            '支路', '#f3f4f6',
-            '中心城区道路', '#e5e7eb',
-            '主干道路', '#d1d5db',
-            '中心城区主要道路', '#d1d5db',
-            '郊县中心城区主干道路', '#d1d5db',
-            '快速路', '#9ca3af',
-            '快速路匝道', '#9ca3af',
-            '高速', '#6b7280',
-            '高速公路匝道', '#6b7280',
-            '公路', '#4b5563',
-            '#e5e7eb'
-          ],
-          'fill-opacity': 0.8
-        }
-      });
+      try {
+        console.log('Loading street.geojson...');
+        fetch('https://pub-e0170f3fece2419a85fa1ce02c1f1a28.r2.dev/street.geojson')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log('street.geojson fetched successfully, features count:', data.features.length);
+            map.addSource('street', { type: 'geojson', data });
+            map.addLayer({
+              id: 'street',
+              type: 'fill',
+              source: 'street',
+              layout: { visibility: activeLayers.includes('street') ? 'visible' : 'none' },
+              paint: {
+                'fill-color': [
+                  'match', ['get', 'Type'],
+                  '支路', '#f3f4f6',
+                  '中心城区道路', '#e5e7eb',
+                  '主干道路', '#d1d5db',
+                  '中心城区主要道路', '#d1d5db',
+                  '郊县中心城区主干道路', '#d1d5db',
+                  '快速路', '#9ca3af',
+                  '快速路匝道', '#9ca3af',
+                  '高速', '#6b7280',
+                  '高速公路匝道', '#6b7280',
+                  '公路', '#4b5563',
+                  '#e5e7eb'
+                ],
+                'fill-opacity': 0.8
+              }
+            });
+            console.log('street.geojson loaded successfully');
+          })
+          .catch((error) => {
+            console.error('Error loading street layer:', error);
+          });
+      } catch (error) {
+        console.error('Error loading street layer:', error);
+      }
 
       // 4. Building (Top)
 
-      fetch('./data/building.geojson')
-        .then(res => res.json())
-        .then((data) => {
-          data.features.forEach((f: any, i: number) => {
-            f.id = i; // 👈 必须：给 feature 一个唯一 id
-          });
-
-          map.addSource('building', {
-            type: 'geojson',
-            data
-          });
-
-          map.addLayer({
-            id: 'building-3d',
-            type: 'fill-extrusion',
-            source: 'building',
-            layout: {
-              visibility: activeLayers.includes('building') ? 'visible' : 'none'
-            },
-            paint: {
-              'fill-extrusion-color': [
-                'match', ['get', 'Function'],
-                'Residence', '#fdc086',
-                'Office', '#8da0cb',
-                'Business', '#fc8d62',
-                'Industry', '#e78ac3',
-                'Public service', '#a6d854',
-                'Other', '#bdbdbd',
-                '#cccccc'
-              ],
-              'fill-extrusion-height': [
-                'coalesce',
-                ['get', 'Height'],
-                10
-              ],
-              'fill-extrusion-base': 0,
-              'fill-extrusion-opacity': 0.9
+      try {
+        console.log('Loading building.geojson...');
+        fetch('https://pub-e0170f3fece2419a85fa1ce02c1f1a28.r2.dev/building.geojson')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
             }
-          });
-        });
-      // 5. LST 热力图
-      map.addSource('lst-heatmap', {
-        type: 'image',
-        url: './data/LST_heatmap.png',
-        coordinates: [
-          [120.81495609, 31.89777115],
-          [122.26879924, 31.89777115],
-          [122.26879924, 30.65364428],
-          [120.81495609, 30.65364428]]
-      });
-      map.addLayer({
-        id: 'lst-heatmap',
-        type: 'raster',
-        source: 'lst-heatmap',
-        layout: {
-        visibility: activeLayers.includes('lst-heatmap') ? 'visible' : 'none'
-        },
-        paint: {
-          'raster-opacity': 0.3
-        }
-      });
-      
-      // - grid（最底层虚线轮廓）
-      map.addSource('grid', {
-        type: 'geojson',
-        data: './data/grid.geojson'
-      });
+            return res.json();
+          })
+          .then((data) => {
+            console.log('building.geojson fetched successfully, features count:', data.features.length);
+            data.features.forEach((f: any, i: number) => {
+              f.id = i; // 👈 必须：给 feature 一个唯一 id
+            });
 
-      map.addLayer(
-        {
-          id: 'grid-outline',
-          type: 'line',
-          source: 'grid',
+            map.addSource('building', {
+              type: 'geojson',
+              data
+            });
+
+            map.addLayer({
+              id: 'building-3d',
+              type: 'fill-extrusion',
+              source: 'building',
+              layout: {
+                visibility: activeLayers.includes('building') ? 'visible' : 'none'
+              },
+              paint: {
+                'fill-extrusion-color': [
+                  'match', ['get', 'Function'],
+                  'Residence', '#fdc086',
+                  'Office', '#8da0cb',
+                  'Business', '#fc8d62',
+                  'Industry', '#e78ac3',
+                  'Public service', '#a6d854',
+                  'Other', '#bdbdbd',
+                  '#cccccc'
+                ],
+                'fill-extrusion-height': [
+                  'coalesce',
+                  ['get', 'Height'],
+                  10
+                ],
+                'fill-extrusion-base': 0,
+                'fill-extrusion-opacity': 0.9
+              }
+            });
+            console.log('building-3d layer added successfully');
+          })
+          .catch((error) => {
+            console.error('Error loading building layer:', error);
+          });
+      } catch (error) {
+        console.error('Error loading building layer:', error);
+      }
+      // 5. LST 热力图
+      try {
+        console.log('Loading LST_heatmap.png...');
+        map.addSource('lst-heatmap', {
+          type: 'image',
+          url: '/data/fig/LST_heatmap.png',
+          coordinates: [
+            [120.81495609, 31.89777115],
+            [122.26879924, 31.89777115],
+            [122.26879924, 30.65364428],
+            [120.81495609, 30.65364428]
+          ]
+        });
+        map.addLayer({
+          id: 'lst-heatmap',
+          type: 'raster',
+          source: 'lst-heatmap',
           layout: {
-            visibility: 'visible'
+          visibility: activeLayers.includes('lst-heatmap') ? 'visible' : 'none'
           },
           paint: {
-            'line-color': '#9ca3af',
-            'line-width': 2,
-            'line-dasharray': [2, 10]
+            'raster-opacity': 0.3
           }
-        }
-      );
+        });
+        console.log('LST_heatmap.png loaded successfully');
+      } catch (error) {
+        console.error('Error loading lst-heatmap layer:', error);
+      }
+      
+      // - grid（最底层虚线轮廓）
+      try {
+        console.log('Loading grid.geojson...');
+        fetch('https://pub-e0170f3fece2419a85fa1ce02c1f1a28.r2.dev/grid.geojson')
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log('grid.geojson fetched successfully, features count:', data.features.length);
+            map.addSource('grid', { type: 'geojson', data });
+
+            map.addLayer(
+              {
+                id: 'grid-outline',
+                type: 'line',
+                source: 'grid',
+                layout: {
+                  visibility: 'visible'
+                },
+                paint: {
+                  'line-color': '#9ca3af',
+                  'line-width': 2,
+                  'line-dasharray': [2, 10]
+                }
+              }
+            );
+            console.log('grid.geojson loaded successfully');
+          })
+          .catch((error) => {
+            console.error('Error loading grid layer:', error);
+          });
+      } catch (error) {
+        console.error('Error loading grid layer:', error);
+      }
 
       // —— click building
       map.on('click', 'building-3d', (e) => {
@@ -301,20 +395,29 @@ const URplatform: React.FC = () => {
       });
     });
 
+    map.on('error', (e) => {
+      console.error('Map error:', e.error);
+      if (e.error && e.error.message) {
+        console.error('Error message:', e.error.message);
+      }
+      if (e.error && e.error.stack) {
+        console.error('Error stack:', e.error.stack);
+      }
+    });
 
     return () => map.remove();
   }, []);
 
   useEffect(() => {
-  if (!mapRef.current) return;
-  
-  // 强制地图在挂载后重新计算容器大小
-  const timer = setTimeout(() => {
-    mapRef.current?.resize();
-  }, 500);
+    if (!mapRef.current) return;
+    
+    // 强制地图在挂载后重新计算容器大小
+    const timer = setTimeout(() => {
+      mapRef.current?.resize();
+    }, 500);
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   // 监听图层切换叠加逻辑
   useEffect(() => {
@@ -418,7 +521,7 @@ const URplatform: React.FC = () => {
 
         {/* Map Container */}
         <div className="flex-1 relative">
-          <div ref={mapContainer} className="absolute inset-0 z-0 bg-[#e5e7eb]" />
+          <div ref={mapContainer} className="absolute inset-0 z-0 bg-[#e5e7eb] min-h-[600px]" />
 
           {/* Building Details Card - 动态跟随建筑 */}
           <div 

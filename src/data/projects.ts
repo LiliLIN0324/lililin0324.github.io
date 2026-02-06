@@ -12,8 +12,8 @@ export const projects = [
       abstract: "An interactive 3D visualization tool that enables users to explore clustered high-dimensional datasets. By applying PCA for dimensionality reduction and K-Means for clustering, project visualizes complex data patterns in an intuitive manner.",
       challenge: "compressed 223 cities in global data and revelas pattern from window period of time-series data from 2017 to 2019 with both day and night time data",
       solution: "Implemented PCA to reduce dimensions while preserving variance, and K-Means to identify clusters. Leveraged Three.js for rendering and React for UI management, ensuring smooth interactivity and performance.",
-      logo: "./data/fig/global_logo.jpg",
-      image: ["./data/fig/global-5.jpg", "./data/fig/global-12.jpg", "./data/fig/global-20.jpg", "./data/fig/global-26.jpg"],
+      logo: "/data/fig/global_logo.jpg",
+      image: ["/data/fig/global-5.jpg", "/data/fig/global-12.jpg", "/data/fig/global-20.jpg", "/data/fig/global-26.jpg"],
     },
   },
   {
@@ -25,11 +25,11 @@ export const projects = [
     description: "A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans",
     tech: ["Knowledge Graph", "NLP"],
     details: {
-      abstract: "Urban planners often struggle to learn from other cities' master plans, especially when these documents are lengthy, context-specific, and written in different languages. These challenges are further compounded by diverse social, economic, and cultural contexts. This study addresses these issues by creating expertise-informed knowledge graphs (KGs) from master plans of New York City and Shanghai—two cities with distinct linguistic, cultural, and governance contexts. We define ten core concepts—five related to climate change adaptation and five to urban planning—based on expert knowledge, and apply both traditional natural language processing (NLP) methods and emerging large language models (LLMs) to estimate node weights and relational edges. The traditional methods include simple word frequency, TF-IDF, and conventional topic modeling, while the LLM-based method leverages the power of generative LLMs such as ChatGPT for semantic relationship extraction. Expert validation shows that while LLM-based methods capture nuanced relationships more effectively, their 【black box】 nature limits interpretability. To address this, we propose a hybrid LLM approach that integrates explainable NLP techniques (such as coexistence frequency and semantic similarity) and LLM-based topic modeling. The resulting KGs reveal the difference between the two master plans: New York prioritizes resilience and equity, while Shanghai emphasizes sustainable development and balanced urbanization. By comparing these KGs, we demonstrate the potential of the hybrid approach in facilitating knowledge sharing and policy adaptation across diverse urban contexts. This scalable framework can be applied globally to analyze urban planning documents, providing more context-sensitive adaptation strategies. Furthermore, it offers a foundation for future research to extend this methodology to additional cities or incorporate temporal changes, deepening insights into urban adaptation planning and improving climate change strategies.",
+      abstract: "Urban planners often struggle to learn from other cities' master plans, especially when these documents are lengthy, context-specific, and written in different languages. These challenges are further compounded by diverse social, economic, and cultural contexts. This study addresses these issues by creating expertise-informed knowledge graphs (KGs) from master plans of New York City and Shanghai—two cities with distinct linguistic, cultural, and governance contexts. We define ten core concepts—five related to climate change adaptation and five to urban planning—based on expert knowledge, and apply both traditional natural language processing (NLP) methods and emerging large language models (LLMs) to estimate node weights and relational edges. The traditional methods include simple word frequency, TF-IDF, and conventional topic modeling, while the LLM-based method leverages the power of generative LLMs such as ChatGPT for semantic relationship extraction. Expert validation shows that while LLM-based methods capture nuanced relationships more effectively, their 【black box】 nature limits interpretability. To address this, we propose a hybrid LLM approach that integrates explainable NLP techniques (such as coexistence frequency and semantic similarity) and LLM-based topic modeling. The resulting KGs reveal the difference between the two master plans: New York prioritizes resilience and equity, while Shanghai emphasizes sustainable development and balanced urbanization. By comparing these KGs, we demonstrate the potential of the hybrid approach in facilitating knowledge sharing and policy adaptation across diverse urban contexts. This scalable framework can be applied globally to analyze urban planning documents, providing more context-sensitive adaptation strategies. Furthermore, it offers a foundation for future research to extend this methodology to additional cities or incorporate temporal changes, deepening insights into urban adaptation planning and fostering more resilient cities worldwide.",
       solution: "Traditional natural language processing (NLP) techniques and generative large language models (LLMs) are then applied to generate and compare the edges connecting these nodes.",
       challenge: "Expert validation reveals that while LLM-based methods capture semantic nuances more effectively, they often lack the interpretability crucial for practical implementation.",
-      logo: "./data/fig/kg_logo.jpg",
-      image: ["./data/fig/kg_figure.jpg"],
+      logo: "/data/fig/kg_logo.jpg",
+      image: ["/data/fig/kg_figure.jpg"],
     },
   },
   {
@@ -44,8 +44,8 @@ export const projects = [
       abstract: "As climate change intensifies, understanding heat resilience (HR) in urban environments is crucial for developing climate-resilient cities. While numerous studies have examined the relationship between urban form and urban heat islands (UHI), few have focused on HR, often limiting their analysis to single extreme heat events. Additionally, translating complex urban form findings into practical urban planning policies remains challenging. The concept of local climate zones (LCZ) offers a thermally-based classification of urban forms, which is more accessible for policymakers. However, most LCZ studies focus on UHI, with little attention to HR. This study addresses this gap by analyzing the relationship between LCZs and HR in New York City. HR is defined as the difference in land surface temperature (LST) between extreme heat and normal heat days. Using Landsat 8 imagery from 2010 to 2019 and selecting days with minimal cloud cover, the study identifies three pairs of heat events based on air temperature percentiles. LCZ map and GIS data, combined with census tract information, are analyzed using a spatial panel model to assess the influence of different LCZs and large-scale landscapes on HR. The results reveal that LCZ 1 (Compact high-rise) and LCZ 4 (Open high-rise) significantly increase HR compared to LCZ 2 (Compact mid-rise), while LCZ 3 (Compact low-rise) reduces HR. Additionally, HR is significantly elevated during extreme events with higher temperatures in normal heat days and greater temperature increases between normal and extreme heat days. These insights offer valuable guidance for urban planners and policymakers in designing heat-resilient cities by incorporating the LCZ framework into climate adaptation strategies and urban governance.",
       solution: "Using Landsat 8 imagery from 2010 to 2019 and selecting days with minimal cloud cover, the study identifies three pairs of heat events based on air temperature percentiles.",
       challenge: "Translating complex urban form findings into practical urban planning policies remains challenging.",
-      logo: "./data/fig/lcz_logo.jpg",
-      image: ["./data/fig/lcz_figure.jpg"],
+      logo: "/data/fig/lcz_logo.jpg",
+      image: ["/data/fig/lcz_figure.jpg"],
     },
   },
   {
@@ -60,8 +60,8 @@ export const projects = [
       abstract: "Climate change has been a pressing global issue in recent decades as it increasingly influences human life through extreme weather, ecosystem collapse, and food crises. Extreme heat is particularly exacerbated by the urban heat island (UHI) effect in cities. Numerous studies have empirically investigated the link between urban form factors and surface Urban Heat Islands (UHI), but few have studied how UHI changes in response to an extreme heat event, conceptualized as heat resilience in recent studies. Additionally, the majority of existing studies have relied on traditional regression models that assume linear relationships. To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods. The GBDT models demonstrated superior predictive accuracy, as evidenced by the lowest mean squared error (MSE). In addition, the results indicate that urban form factors have nonlinear relationships with urban land surface extreme heat and associated heat resilience. These findings have valuable implications for urban planning practice aimed at developing heat-resilient cities.",
       solution: "To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods.",
       challenge: "The majority of existing studies have relied on traditional regression models that assume linear relationships.",
-      logo: "./data/fig/ml_logo.jpg",
-      image: ["./data/fig/AAAI2026.jpg"],
+      logo: "/data/fig/ml_logo.jpg",
+      image: ["/data/fig/AAAI2026.jpg"],
     },
   },
   {
@@ -77,10 +77,27 @@ export const projects = [
       abstract: "This project integrates generative artificial intelligence techniques, including diffusion models, with large language model-based multi-agent mechanisms to develop a participatory urban regeneration framework that facilitates public interaction and multi-stakeholder engagement. Taking the area surrounding the initial development zone of Shanghai Wusong Innovation City as a case study, the framework incorporates urban spatial morphology, behavioral activity patterns, and urban heat island indicators into the early formulation of urban design guidelines, with the aim of achieving a participatory, efficient, and responsive pathway to urban regeneration.",
       solution: "https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm",
       challenge: "",
-      logo: "./data/fig/PU_logo.jpg",
-      image: ["./data/fig/PU-1.jpg", "./data/fig/PU-2.jpg"],
+      logo: "/data/fig/PU_logo.jpg",
+      image: ["/data/fig/PU-1.jpg", "/data/fig/PU-2.jpg"],
     },
   },
+  {
+    id: "06",
+    slug: "heatmapper",
+    title: "HeatMapper - Global Heat Monitoring",
+    category: "urban heat island, extreme heat, participation",
+    year: "2025-present",
+    description: "A web-based platform for global heat monitoring and visualization",
+    tech: ["React", "Three.js", "D3.js", "Node.js"],
+    hasDemo: true,
+    details: {
+      abstract: "HeatMapper is a comprehensive web platform designed to monitor and visualize global heat patterns. It provides real-time data on urban heat islands, extreme heat events, and temperature trends across different regions. The platform aims to raise awareness about heat-related issues and support informed decision-making for urban planning and climate adaptation.",
+      challenge: "Integrating real-time temperature data from multiple sources and presenting it in an intuitive, interactive visualization that allows users to explore heat patterns at different scales.",
+      solution: "Developed a responsive web application using React for the frontend, Three.js for 3D visualizations, D3.js for data visualizations, and Node.js for the backend. Implemented data integration pipelines to aggregate temperature data from various sources and created interactive maps and charts for user exploration.",
+      logo: "/data/fig/HeatMapper_logo.jpg",
+      image: ["/data/fig/heatmapper-1.png", "/data/fig/heatmapper-2.png"],
+    },
+  }
 ];
 
 export const designProjects = [
@@ -93,8 +110,8 @@ export const designProjects = [
     description: "A campus-based item exchange platform facilitating sustainable sharing among students.",
     tech: ["Figma", "React", "TypeScript"],
     details: {
-      image: ["./data/fig/1037pinpin.jpg"],
-      logo: "./data/fig/1037pinpin_logo.jpg",
+      image: ["/data/fig/1037pinpin.jpg"],
+      logo: "/data/fig/1037pinpin_logo.jpg",
     },
   },
   {
@@ -106,8 +123,8 @@ export const designProjects = [
     description: "An educational platform aimed at helping students develop scientific thinking through interactive modules.",
     tech: ["Figma", "React", "TypeScript"],
     details: {
-      image: ["./data/fig/persLEARN.jpg"],
-      logo: "./data/fig/persLEARN_logo.jpg",
+      image: ["/data/fig/persLEARN.jpg"],
+      logo: "/data/fig/persLEARN_logo.jpg",
     },
   },
   {
@@ -119,8 +136,8 @@ export const designProjects = [
     description: "An AI-powered image generation tool that transforms text prompts into high-quality visuals platform.",
     tech: ["Figma", "React", "TypeScript"],
     details: {
-      image: ["./data/fig/DragonDiffusion.jpg"],
-      logo: "./data/fig/DragonDiffusion_logo.jpg",
+      image: ["/data/fig/DragonDiffusion.jpg"],
+      logo: "/data/fig/DragonDiffusion_logo.jpg",
     },
   },
   {
@@ -132,8 +149,8 @@ export const designProjects = [
     description: "An AI-powered fashion app that curates daily outfit inspirations based on user preferences and trends.",
     tech: ["Figma", "React", "TypeScript"],
     details: {
-      image: ["./data/fig/Genstyle.jpg"],
-      logo: "./data/fig/Genstyle_logo.jpg",
+      image: ["/data/fig/Genstyle.jpg"],
+      logo: "/data/fig/Genstyle_logo.jpg",
     },
   },
   {
@@ -146,8 +163,8 @@ export const designProjects = [
     tech: ["Figma", "React", "TypeScript"],
     details: {
       abstract: "This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korean users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner.",
-      image: ["./data/fig/Bazi.jpg"],
-      logo: "./data/fig/Bazi_logo.jpg",
+      image: ["/data/fig/Bazi.jpg"],
+      logo: "/data/fig/Bazi_logo.jpg",
     },
   },
   {
@@ -159,8 +176,8 @@ export const designProjects = [
     description: "An AI-powered image generation tool that transforms text prompts into high-quality visuals platform.",
     tech: ["Figma", "React", "TypeScript"],
     details: {
-      image: ["./data/fig/Genshot.jpg"],
-      logo: "./data/fig/Genshot_logo.jpg",
+      image: ["/data/fig/Genshot.jpg"],
+      logo: "/data/fig/Genshot_logo.jpg",
     },
   },
   {
@@ -173,8 +190,45 @@ export const designProjects = [
     tech: ["Figma", "React", "TypeScript"],
     details: {
       abstract: "Riffle is an AI-powered game generation tool that leverages advanced artificial intelligence algorithms to create immersive and engaging gaming experiences. By just one word, users can generate unique game concepts, characters, and storylines tailored to their interests. The platform aims to democratize game development, allowing both aspiring and experienced developers to bring their creative visions to life with ease.",
-      image: ["./data/fig/Riffle.jpg"],
-      logo: "./data/fig/Riffle_logo.jpg",
+      image: ["/data/fig/Riffle.jpg"],
+      logo: "/data/fig/Riffle_logo.jpg",
+    },
+  },
+];
+
+export const gameProjects = [
+  {
+    id: "01",
+    slug: "kittylovecarrots",
+    title: "kittylovecarrots - found out carrots with drum rhythm",
+    category: "Game",
+    year: "2026-2 - on going",
+    description: "minigame in wechat.",
+    tech: ["WeChat Mini Program"],
+    details: {
+      abstract:" " ,
+      challenge: "Designing a game that is both fun and educational for children while also considering the challenges of game development.",
+      solution: "We developed a minigame called 'kittylovecarrots' that uses a drum rhythm to help children learn about carrots. The game features a simple yet engaging gameplay that allows children to explore the world of carrots in a fun and interactive way.",  
+      image: ["/data/fig/kittylovecarrots-1.png","/data/fig/kittylovecarrots-2.png"],
+      logo: "/data/fig/Kittylovecarrots_logo.jpg",
+    },
+  },
+  {
+    id: "02",
+    slug: "how-to-build-game-in-wechat-mini-program",
+    title: "How to build game in wechat mini program",
+    category: "Game",
+    year: "2026",
+    description: "A tutorial on building games in WeChat Mini Programs.",
+    tech: ["WeChat Mini Program", "Game Development"],
+    hasDemo: true,
+    details: {
+      description: "This tutorial explains how to build games in WeChat Mini Programs using the WeChat development framework and game development techniques.",
+      solution: "By following the WeChat Mini Program development guidelines and utilizing game development libraries, you can create engaging games for the WeChat platform. This tutorial provides step-by-step instructions and code examples to help you get started.",
+      challenge: "Developing games for WeChat Mini Programs requires understanding both the platform-specific APIs and general game development principles.",
+      image: ["/data/fig/wechatgame.png"],
+      logo: "/data/fig/wechatgame_logo.jpg",
+      code: "wechatgame.tsx"
     },
   },
 ];
@@ -194,8 +248,8 @@ export const tutorialProjects = [
       solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.",
       challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners.",
       content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
-      image: ["./data/fig/openstreetmap.png"],
-      logo: "./data/fig/Openstreetmap_logo.jpg",
+      image: ["/data/fig/openstreetmap.png"],
+      logo: "/data/fig/openstreetmap_logo.jpg",
       code: "openstreetmap.tsx"
     },
   },
@@ -212,8 +266,8 @@ export const tutorialProjects = [
       description: "This tutorial explains how to extract sequential events from photos taken on a phone using computer vision techniques.",
       solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process.",
       challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events.",
-      image: ["./data/fig/photogeo.png"],
-      logo: "./data/fig/Geophoto_logo.jpg",
+      image: ["/data/fig/photogeo.png"],
+      logo: "/data/fig/Geophoto_logo.jpg",
       code: "photogeo.tsx"
     },
   },
@@ -230,27 +284,27 @@ export const tutorialProjects = [
       description: "This tutorial explains how to visualize photo geolocation data on a map using mapping libraries and geospatial data processing techniques.",
       solution: "By utilizing mapping libraries such as Leaflet or Mapbox, you can plot geolocation data extracted from photos onto interactive maps. This tutorial provides detailed instructions and code examples to help you create compelling visualizations.",
       challenge: "Handling large datasets and ensuring accurate geospatial representation can be challenging when visualizing photo geolocation data.",
-      image: ["./data/fig/photogeomap.png"],
-      logo: "./data/fig/GeophotoMap_logo.jpg",
+      image: ["/data/fig/photogeomap.png"],
+      logo: "/data/fig/GeophotoMap_logo.jpg",
       code: "photogeomap.tsx"
     },
   },
   {
-    id: "04",
-    slug: "how-to-build-game-in-wechat-mini-program",
-    title: "How to build game in wechat mini program",
-    category: "Tutorial",
-    year: "2026",
-    description: "A tutorial on building games in WeChat Mini Programs.",
-    tech: ["WeChat Mini Program", "Game Development"],
-    hasDemo: true,
+    id:"04",
+    slug:"how-to-conduct-time-geo-sequential-clustering-from-album",
+    title:"How to conduct time-geo-sequential clustering from album",
+    category:"Tutorial",
+    year: "2026-2-6",
+    description:"A tutorial on conducting time-geo-sequential clustering from a photo album.",
+    tech: ["python", "Clustering", "Geospatial Data Processing"],
+    hasDemo:true,
     details: {
-      description: "This tutorial explains how to build games in WeChat Mini Programs using the WeChat development framework and game development techniques.",
-      solution: "By following the WeChat Mini Program development guidelines and utilizing game development libraries, you can create engaging games for the WeChat platform. This tutorial provides step-by-step instructions and code examples to help you get started.",
-      challenge: "Developing games for WeChat Mini Programs requires understanding both the platform-specific APIs and general game development principles.",
-      image: ["./data/fig/wechatgame.png"],
-      logo: "./data/fig/wechatgame_logo.jpg",
-      code: "wechatgame.tsx"
-    },
+      abstract: "This tutorial explains how to conduct time-geo-sequential clustering from a photo album using clustering algorithms and geospatial data processing techniques.",
+      solution: "By leveraging clustering algorithms such as K-means or DBSCAN, you can group photos based on their temporal and spatial characteristics. This tutorial provides practical examples and code snippets to guide you through the process.",
+      challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data.",
+      image: ["/data/fig/photogeomap.png"],
+      logo: "/data/fig/Clusteringevents_logo.jpg",
+      code: "photocluster.tsx"
+    },  
   },
 ];

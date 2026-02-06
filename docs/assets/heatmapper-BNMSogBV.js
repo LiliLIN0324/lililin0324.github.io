@@ -1,0 +1,1 @@
+import{j as e}from"./vendor-BNXyaaYz.js";import"./maplibre-DKOg2DWH.js";const r=()=>e.jsx("div",{className:"heatmapper-container",style:{width:"100%",height:"100vh"},children:e.jsx("iframe",{src:"https://geomapper-pi.vercel.app/",title:"HeatMapper - Global Heat Monitoring",style:{width:"100%",height:"100%",border:"none"},loading:"lazy"})});export{r as default};

@@ -11,7 +11,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
 
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash.includes('#demo')) {
+      if (window.location.hash.includes('demo')) {
         setViewMode('demo');
       } else {
         setViewMode('details');

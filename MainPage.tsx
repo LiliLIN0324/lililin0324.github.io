@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import './src/index.css';
 
-import { projects, designProjects, tutorialProjects } from './src/data/projects';
+import { projects, designProjects, tutorialProjects, gameProjects } from './src/data/projects';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
 import { TutorialSection } from './src/components/TutorialSection';
@@ -10,11 +10,12 @@ import { AboutSection } from './src/components/AboutSection';
 import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
 
+
 const MainPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const activeTab = location.pathname.split('/')[1] || 'research';
+  const activeTab = location.pathname.split('/')[1] || 'gis-urban-planning';
 
   return (
     <div className="min-h-screen p-0 bg-neutral-100 flex flex-col">
@@ -34,14 +35,20 @@ const MainPage = () => {
           <div className="flex items-center gap-4">
 
             <nav>
-                {['research', 'design', 'tutorial', 'about'].map((tab) => (
+                {[
+                  { key: 'gis-urban-planning', label: 'Geo & Planning' },
+                  { key: 'design', label: 'Design' },
+                  { key: 'game', label: 'Game' },
+                  { key: 'tutorial', label: 'Tutorial' },
+                  { key: 'about', label: 'About' }
+                ].map((tab) => (
                   <Link
-                    key={tab}
-                    to={`/${tab}`}
+                    key={tab.key}
+                    to={`/${tab.key}`}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab ? 'border-neutral-900 text-neutral-900 bg-white': 'border-transparent text-neutral-500 hover:bg-neutral-200'}`}
+                    className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 text-neutral-900 bg-white': 'border-transparent text-neutral-500 hover:bg-neutral-200'}`}
                   >
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    {tab.label}
                   </Link>
                 ))}
               </nav>
@@ -98,11 +105,13 @@ const MainPage = () => {
 
           <section className="flex-1 bg-white relative w-full h-full">
             <Routes>
-              <Route path="/" element={<Navigate to="/research" replace />} />
-              <Route path="/research" element={<ProjectListView data={projects} type="research" />} />
-              <Route path="/research/:id" element={<ProjectDetailView data={projects} type="research" />} />
+              <Route path="/" element={<Navigate to="/gis-urban-planning" replace />} />
+              <Route path="/gis-urban-planning" element={<ProjectListView data={projects} type="gis-urban-planning" />} />
+              <Route path="/gis-urban-planning/:id" element={<ProjectDetailView data={projects} type="gis-urban-planning" />} />
               <Route path="/design" element={<ProjectListView data={designProjects} type="design" />} />
               <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
+              <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
+              <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
               <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
               <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
               <Route path="/about" element={<AboutSection />} />
