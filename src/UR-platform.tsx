@@ -604,7 +604,7 @@ const URplatform: React.FC = () => {
 
         {/* Map Container */}
         <div className="flex-1 relative">
-          <div ref={mapContainer} className="absolute inset-0 z-0 bg-[#e5e7eb]" />
+          <div ref={mapContainer} className="!absolute inset-0 z-0 bg-[#e5e7eb] maplibregl-map" />
 
           {/* Building Details Card - 动态跟随建筑 */}
           <div 
