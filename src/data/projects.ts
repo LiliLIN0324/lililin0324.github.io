@@ -302,7 +302,7 @@ export const tutorialProjects = [
       abstract: "This tutorial explains how to conduct time-geo-sequential clustering from a photo album using clustering algorithms and geospatial data processing techniques.",
       solution: "By leveraging clustering algorithms such as K-means or DBSCAN, you can group photos based on their temporal and spatial characteristics. This tutorial provides practical examples and code snippets to guide you through the process.",
       challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data.",
-      image: ["/data/fig/photogeomap.png"],
+      image: ["/data/fig/photocluster-1.jpg", "/data/fig/photocluster-2.jpg"],
       logo: "/data/fig/Clusteringevents_logo.jpg",
       code: "photocluster.tsx"
     },  
