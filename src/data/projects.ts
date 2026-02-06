@@ -246,7 +246,7 @@ export const tutorialProjects = [
     details: {
       description: "This tutorial explains how to integrate OpenStreetMap into a website using React and JavaScript.",
       solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.",
-      challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners.",
+      challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners. There had some limitations on the free version of OpenStreetMap, especially if your website is complicated. You need to apply for an API key from Maptiler. link: https://api.maptiler.com/maps/basic/style.json?key=you_API_key.",
       content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
       image: ["/data/fig/openstreetmap.png"],
       logo: "/data/fig/openstreetmap_logo.jpg",

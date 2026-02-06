@@ -26,7 +26,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
   if (!project) return <div className="p-4 md:p-10 font-mono">PROJECT_NOT_FOUND</div>;
 
   return (
-    <div className="flex flex-col animate-in slide-in-from-right-4 duration-500 min-h-screen">
+    <div className="flex flex-col animate-in slide-in-from-right-4 duration-500 h-screen">
       <div className="sticky top-0 z-5 bg-white/80 backdrop-blur-md border-b border-neutral-200 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center shrink-0">
         <div className="flex items-center gap-4 md:gap-6">
           <Link to={`/${type}`} className="flex items-center gap-2 text-xs font-mono text-neutral-500 hover:text-neutral-900 transition-colors uppercase tracking-wider">← Index</Link>
@@ -214,7 +214,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
              </div>
           </div>
         ) : (
-          <div className="w-full h-[80vh] bg-neutral-100 relative">
+          <div className="w-full h-full bg-neutral-100 relative">
             <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-neutral-400 font-mono">Loading demo...</div>}>
               {(() => {
                 const DemoComponent = getDemoComponent(project.slug);

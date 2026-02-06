@@ -36,14 +36,15 @@ const URplatform: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const anchorRef = useRef<maplibregl.LngLat | null>(null); // 用于记录选中的地理位置
-  const [activeLayers, setActiveLayers] = useState<string[]>(['building', 'street', 'landuse', 'waterbodies','lst-heatmap']);
+  const [activeLayers, setActiveLayers] = useState<string[]>(['building', 'street', 'landuse', 'waterbodies','lst-heatmap', 'grid']);
+  const [showBasemap, setShowBasemap] = useState<boolean>(true);
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(true);
   const [comments, setComments] = useState(INITIAL_COMMENTS);
   const [historyItems, setHistoryItems] = useState(INITIAL_HISTORY);
   const [userInput, setUserInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [popupPos, setPopupPos] = useState<{ x: number, y: number } | null>(null); // 弹窗屏幕位置
-  const [isCommentOpen, setIsCommentOpen] = useState(true);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState<any>({
     name: 'BUILDING 1',
     type: 'Select a building on map',
@@ -52,6 +53,9 @@ const URplatform: React.FC = () => {
     structure: '-',
     style: '-'
   });
+  
+  const [viewMode, setViewMode] = useState<'2d' | '3d'>('3d');
+  const [zoomLevel, setZoomLevel] = useState<number>(12);
 
   const toggleLayer = (layerId: string) => {
     setActiveLayers(prev => 
@@ -61,22 +65,85 @@ const URplatform: React.FC = () => {
     );
   };
 
+  const toggleBasemap = () => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    setShowBasemap(prev => !prev);
+    
+    const newState = !showBasemap;
+    
+    if (map.getStyle()) {
+      const style = map.getStyle();
+      if (style && style.layers) {
+        style.layers.forEach(layer => {
+          try {
+            map.setLayoutProperty(layer.id, 'visibility', newState ? 'visible' : 'none');
+          } catch (e) {
+            console.log('Error setting layer visibility:', layer.id, e);
+          }
+        });
+      }
+      
+      // 设置背景颜色
+      if (!newState) {
+        map.addLayer({
+          id: 'white-background',
+          type: 'background',
+          paint: { 'background-color': '#ffffff' }
+        }, 'background');
+      } else {
+        try {
+          map.removeLayer('white-background');
+        } catch (e) {
+          console.log('Error removing white background:', e);
+        }
+      }
+    }
+  };
+
+  const toggleViewMode = () => {
+    const newMode = viewMode === '3d' ? '2d' : '3d';
+    setViewMode(newMode);
+    
+    const map = mapRef.current;
+    if (!map) return;
+    
+    if (newMode === '2d') {
+      // Switch to 2D view
+      map.setPitch(0);
+      map.setBearing(0);
+      if (map.getLayer('building-3d')) {
+        map.setLayoutProperty('building-3d', 'visibility', 'none');
+      }
+    } else {
+      // Switch to 3D view
+      map.setPitch(60);
+      map.setBearing(45);
+      if (map.getLayer('building-3d')) {
+        map.setLayoutProperty('building-3d', 'visibility', activeLayers.includes('building') ? 'visible' : 'none');
+      }
+    }
+  };
+
+  const handleZoomChange = (zoom: number) => {
+    setZoomLevel(zoom);
+    const map = mapRef.current;
+    if (!map) return;
+    
+    map.setZoom(zoom);
+  };
+
   useEffect(() => {
     if (!mapContainer.current) return;
 
     const map = new maplibregl.Map({
-      container: mapContainer.current,
-      style: {
-        version: 8,
-        sources: {},
-        layers: [
-          { id: 'background', type: 'background', paint: { 'background-color': '#e5e7eb' } }
-        ]
-      },
-      center: SHANGHAI_CENTER,
-      zoom: 12,
-      preserveDrawingBuffer: true // ⭐ 必须加
-    });
+          container: mapContainer.current,
+          style: 'https://api.maptiler.com/maps/toner/style.json?key=JmIyKqynNt3GiLy1siqz',
+          center: SHANGHAI_CENTER,
+          zoom: 12,
+          preserveDrawingBuffer: true // ⭐ 必须加
+        });
 
     map.on('load', () => {
       mapRef.current = map;
@@ -313,12 +380,12 @@ const URplatform: React.FC = () => {
                 type: 'line',
                 source: 'grid',
                 layout: {
-                  visibility: 'visible'
+                  visibility: activeLayers.includes('grid') ? 'visible' : 'none'
                 },
                 paint: {
                   'line-color': '#9ca3af',
-                  'line-width': 2,
-                  'line-dasharray': [2, 10]
+                  'line-width': 1,
+                  'line-dasharray': [1, 3]
                 }
               }
             );
@@ -396,16 +463,21 @@ const URplatform: React.FC = () => {
     });
 
     map.on('error', (e) => {
-      console.error('Map error:', e.error);
-      if (e.error && e.error.message) {
-        console.error('Error message:', e.error.message);
-      }
-      if (e.error && e.error.stack) {
-        console.error('Error stack:', e.error.stack);
-      }
-    });
+        console.error('Map error:', e.error);
+        if (e.error && e.error.message) {
+          console.error('Error message:', e.error.message);
+        }
+        if (e.error && e.error.stack) {
+          console.error('Error stack:', e.error.stack);
+        }
+      });
 
-    return () => map.remove();
+      // 监听地图缩放事件，更新 zoomLevel 状态
+      map.on('zoom', () => {
+        setZoomLevel(map.getZoom());
+      });
+
+      return () => map.remove();
   }, []);
 
   useEffect(() => {
@@ -424,10 +496,10 @@ const URplatform: React.FC = () => {
     const map = mapRef.current;
     if (!map || !map.isStyleLoaded()) return;
 
-    const layers = ['building-3d', 'landuse', 'street', 'waterbodies','lst-heatmap'];
+    const layers = ['building-3d', 'landuse', 'street', 'waterbodies','lst-heatmap', 'grid-outline'];
     layers.forEach(layerId => {
       if (map.getLayer(layerId)) {
-        const key = layerId === 'building-3d' ? 'building' : layerId;
+        const key = layerId === 'building-3d' ? 'building' : layerId === 'grid-outline' ? 'grid' : layerId;
         const isVisible = activeLayers.includes(key);
         map.setLayoutProperty(layerId, 'visibility', isVisible ? 'visible' : 'none');
       }
@@ -462,48 +534,59 @@ const URplatform: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-white overflow-hidden font-sans select-none">
+    <div className="flex h-full w-full bg-white overflow-hidden font-sans select-none">
 
 
       
       {/* 1. Left Sidebar */}
-      <div className="w-[100px] bg-[#8247e5] flex flex-col items-center py-6 z-50 shadow-2xl shrink-0">
+      <div className="w-[100px] bg-[#8247e5] flex flex-col items-center py-6 z-50 shadow-2xl shrink-0 h-full">
         <div className="w-12 h-12 rounded-full border-[3px] border-white/40 flex items-center justify-center mb-10">
           <div className="w-6 h-6 rounded-full bg-white shadow-inner"></div>
         </div>
         
-        <div className="flex-1 flex flex-col gap-10 items-center text-white/70">
-          <SidebarItem 
-            icon={<Building2 size={26} />} 
-            label="建筑" 
-            active={activeLayers.includes('building')} 
-            onClick={() => toggleLayer('building')}
-          />
-          <SidebarItem 
-            icon={<Navigation size={26} className="rotate-45" />} 
-            label="道路" 
-            active={activeLayers.includes('street')} 
-            onClick={() => toggleLayer('street')}
-          />
-          <SidebarItem 
-            icon={<TreePine size={26} />} 
-            label="土地" 
-            active={activeLayers.includes('landuse')} 
-            onClick={() => toggleLayer('landuse')}
-          />
-          <SidebarItem 
-            icon={<Waves size={26} />} 
-            label="水体" 
-            active={activeLayers.includes('waterbodies')} 
-            onClick={() => toggleLayer('waterbodies')}
-          />
-          <SidebarItem 
+        <div className="flex-1 flex flex-col gap-5 items-center text-white/70 overflow-y-auto">
+        <SidebarItem 
+          icon={<Building2 size={26} />} 
+          active={activeLayers.includes('building')} 
+          onClick={() => toggleLayer('building')}
+        />
+        <SidebarItem 
+          icon={<Navigation size={26} className="rotate-45" />} 
+          active={activeLayers.includes('street')} 
+          onClick={() => toggleLayer('street')}
+        />
+        <SidebarItem 
+          icon={<TreePine size={26} />} 
+          active={activeLayers.includes('landuse')} 
+          onClick={() => toggleLayer('landuse')}
+        />
+        <SidebarItem 
+          icon={<Waves size={26} />} 
+          active={activeLayers.includes('waterbodies')} 
+          onClick={() => toggleLayer('waterbodies')}
+        />
+        <SidebarItem 
           icon={<ThermometerSun size={26} />} 
-          label="地表温度" 
           active={activeLayers.includes('lst-heatmap')} 
           onClick={() => toggleLayer('lst-heatmap')}
-          />
-        </div>
+        />
+        <SidebarItem 
+          icon={<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 3v18"/></svg>} 
+          active={activeLayers.includes('grid')} 
+          onClick={() => toggleLayer('grid')}
+        />
+        <SidebarItem 
+          icon={<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>} 
+          active={showBasemap} 
+          onClick={() => {
+            setShowBasemap(!showBasemap);
+            const map = mapRef.current;
+            if (map) {
+              map.setLayoutProperty('osm', 'visibility', !showBasemap ? 'visible' : 'none');
+            }
+          }}
+        />
+      </div>
       </div>
 
       {/* 2. Main Viewport */}
@@ -521,7 +604,7 @@ const URplatform: React.FC = () => {
 
         {/* Map Container */}
         <div className="flex-1 relative">
-          <div ref={mapContainer} className="absolute inset-0 z-0 bg-[#e5e7eb] min-h-[600px]" />
+          <div ref={mapContainer} className="absolute inset-0 z-0 bg-[#e5e7eb]" />
 
           {/* Building Details Card - 动态跟随建筑 */}
           <div 
@@ -592,7 +675,7 @@ const URplatform: React.FC = () => {
           </div>)}
 
           {/* Bottom Input Bar */}
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-[720px] z-40">
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-2/3 z-40">
             <div className="bg-purple-100/90 backdrop-blur-xl rounded-full p-2.5 flex items-center gap-4 shadow-2xl border-2 border-white/50">
               <input 
                 type="text" 
@@ -615,15 +698,56 @@ const URplatform: React.FC = () => {
 
           {/* Map Controls */}
           <div className="absolute bottom-12 right-12 z-40 flex flex-col items-center gap-6">
-             <div className="bg-white/80 backdrop-blur rounded-full w-2 h-48 relative shadow-inner border border-gray-100 flex items-center justify-center">
+             {/* Basemap Toggle */}
+             <button 
+               onClick={toggleBasemap}
+               className={`w-20 h-12 rounded-xl shadow-lg border-2 border-white flex items-center justify-center transition-all ${showBasemap ? 'bg-[#8247e5] text-white' : 'bg-white text-gray-400 hover:text-[#8247e5]'}`}
+             >
+               {showBasemap ? 'MAP' : 'OFF'}
+             </button>
+             
+             {/* View Mode Toggle */}
+             <button 
+               onClick={toggleViewMode}
+               className={`w-20 h-12 rounded-xl shadow-lg border-2 border-white flex items-center justify-center transition-all ${viewMode === '3d' ? 'bg-[#8247e5] text-white' : 'bg-white text-gray-400 hover:text-[#8247e5]'}`}
+             >
+               {viewMode === '3d' ? '3D' : '2D'}
+             </button>
+             
+             {/* Zoom Level Slider */}
+             <div className="bg-white/80 backdrop-blur rounded-full w-2 h-24 relative shadow-inner border border-gray-100 flex items-center">
                 <div className="absolute top-0 w-3 h-[1px] bg-gray-300"></div>
                 <div className="absolute bottom-0 w-3 h-[1px] bg-gray-300"></div>
-                <div className="w-8 h-8 bg-[#8247e5] rounded-xl shadow-lg border-2 border-white cursor-pointer absolute" style={{ bottom: '20%' }}></div>
+                <input
+                  type="range"
+                  min="8"
+                  max="18"
+                  step="0.5"
+                  value={zoomLevel}
+                  onChange={(e) => handleZoomChange(parseFloat(e.target.value))}
+                  className="absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer"
+                  style={{
+                    writingMode: 'bt-lr',
+                    direction: 'rtl',
+                    WebkitAppearance: 'slider-vertical',
+                    MozAppearance: 'slider-vertical',
+                    appearance: 'slider-vertical'
+                  }}
+                />
              </div>
-             
+              
+             {/* Zoom Controls */}
              <div className="flex flex-col gap-3">
-               <button onClick={() => mapRef.current?.zoomIn()} className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-gray-400 hover:text-[#8247e5] transition-all"><Plus size={24}/></button>
-               <button onClick={() => mapRef.current?.zoomOut()} className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-gray-400 hover:text-[#8247e5] transition-all"><Minus size={24}/></button>
+               <button onClick={() => {
+                 const newZoom = zoomLevel + 1;
+                 setZoomLevel(newZoom);
+                 mapRef.current?.setZoom(newZoom);
+               }} className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-gray-400 hover:text-[#8247e5] transition-all"><Plus size={24}/></button>
+               <button onClick={() => {
+                 const newZoom = zoomLevel - 1;
+                 setZoomLevel(newZoom);
+                 mapRef.current?.setZoom(newZoom);
+               }} className="w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center text-gray-400 hover:text-[#8247e5] transition-all"><Minus size={24}/></button>
              </div>
           </div>
         </div>
@@ -687,6 +811,21 @@ const URplatform: React.FC = () => {
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .maplibregl-canvas { outline: none !important; }
+        
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 4px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 2px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 2px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
       `}</style>
     </div>
   );
