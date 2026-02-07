@@ -4,7 +4,7 @@ import { AVAILABLE_KS } from './constants';
 import { fetchLocalClusterData } from './dataLoader';
 import { Cluster } from './types';
 import { Maximize2, Pause, Play, Layers, MousePointer2, Loader2, AlertCircle } from 'lucide-react';
-import '../../index.css';
+
 
 export type AppProps = {
   initialK?: number;

@@ -8,12 +8,12 @@ export default function Index() {
 
   return (
     <>
-      {/* 主系统永远存在，提前加载 */}
+      {/* 主系统 */}
       <Router>
         <MainPage />
       </Router>
 
-      {/* Intro 只是遮罩层 */}
+      {/* Intro 遮罩层，后渲染以确保在顶部 */}
       {!entered && (
         <IntroScreen onFinish={() => setEntered(true)} />
       )}

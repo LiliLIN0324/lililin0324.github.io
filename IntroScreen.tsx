@@ -144,7 +144,7 @@ export default function IntroScreen({ onFinish }: Props) {
             filter: "blur(30px)",
             transition: { duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] } 
           }}
-          className="fixed inset-0 z-[9999] bg-black cursor-pointer overflow-hidden flex flex-col items-center justify-center"
+          className="fixed inset-0 z-50 bg-black cursor-pointer overflow-hidden flex flex-col items-center justify-center"
         >
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full " />
           <div className="relative z-20 text-center  select-none">
