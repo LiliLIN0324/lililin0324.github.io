@@ -43,7 +43,8 @@ export const HomePage = () => {
       </div>
 
       {/* 卡牌舞台 */}
-      <div className="relative w-full h-[400px] flex items-center justify-center overflow-hidden">
+      <div className="relative w-full h-[400px] flex items-center justify-center overflow-hidden z-10">
+
         {allProjects.map((project, index) => {
           const offset = index - currentIndex
 
@@ -59,7 +60,7 @@ export const HomePage = () => {
           return (
             <div
               key={`${project.type}-${project.slug}`}
-              className="absolute w-full max-w-3xl transition-all duration-500 ease-out"
+              className="absolute w-full max-w-7xl transition-all duration-500 ease-out"
               style={{
                 transform: `
                   translateY(${translateY + 20}px)
