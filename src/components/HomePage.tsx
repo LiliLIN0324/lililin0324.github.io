@@ -3,6 +3,7 @@ import {
   projects,
   designProjects,
   gameProjects,
+  platformProjects,
   tutorialProjects,
 } from '../data/projects'
 
@@ -11,6 +12,7 @@ export const HomePage = () => {
     ...projects.map(p => ({ ...p, type: 'planning' })),
     ...designProjects.map(p => ({ ...p, type: 'design' })),
     ...gameProjects.map(p => ({ ...p, type: 'game' })),
+    ...platformProjects.map(p => ({ ...p, type: 'platform' })),
     ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
   ]
 

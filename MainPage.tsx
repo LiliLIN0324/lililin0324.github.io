@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import '/index.css';
 
-import { projects, designProjects, tutorialProjects, gameProjects } from './src/data/projects';
+import { projects, designProjects, tutorialProjects, platformProjects, gameProjects } from './src/data/projects';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
-import { TutorialSection } from './src/components/TutorialSection';
 import { AboutSection } from './src/components/AboutSection';
 import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
@@ -24,6 +23,7 @@ const MainPage = () => {
   const imageMap = {
     'design': '/data/fig/lili/lili_05.png',
     'game': '/data/fig/lili/lili_03.png',
+    'platform': '/data/fig/lili/lili_11.png',
     'tutorial': '/data/fig/lili/lili_04.png',
     'about': '/data/fig/lili/lili_02.png',
     'planning': '/data/fig/lili/lili_06.png'
@@ -32,9 +32,11 @@ const MainPage = () => {
   // 随机图片列表
   const randomImages = [
     '/data/fig/lili/lili_01.png',
+    '/data/fig/lili/lili_07.png',
     '/data/fig/lili/lili_08.png',
     '/data/fig/lili/lili_09.png',
-    '/data/fig/lili/lili_10.png'
+    '/data/fig/lili/lili_10.png',
+    '/data/fig/lili/lili_12.png',
   ];
 
   // 随机句子列表
@@ -124,6 +126,7 @@ const MainPage = () => {
                   { key: 'planning', label: 'Planning', short: 'Planning' },
                   { key: 'design', label: 'Design', short: 'Design' },
                   { key: 'game', label: 'Game', short: 'G' },
+                  { key: 'platform', label: 'Platform', short: 'P' },
                   { key: 'tutorial', label: 'Tutorial', short: 'T' },
                   { key: 'about', label: 'About', short: 'A' }
                 ].map((tab) => (
@@ -258,6 +261,8 @@ const MainPage = () => {
               <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
               <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
               <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
+              <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
+              <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
               <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
               <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
               <Route path="/about" element={<AboutSection />} />

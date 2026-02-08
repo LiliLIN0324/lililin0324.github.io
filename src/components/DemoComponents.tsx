@@ -7,4 +7,5 @@ export const OpenStreetMap = lazy(() => import("../openstreetmap.tsx"));
 export const SequentialEvents = lazy(() => import("../photogeo.tsx"));
 export const PhotoGeolocationMap = lazy(() => import("../photogeomap.tsx"));
 export const ClusteringEvents = lazy(() => import("../clusteringevents.tsx"));
+export const LitFlowDemo = lazy(() => import("../litflow.tsx"));
 export const WeChatGameDemo = lazy(() => import("../wechatgame.tsx"));

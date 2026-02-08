@@ -7,7 +7,7 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
   return (
     <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-end border-b border-neutral-100 pb-4 mb-6 md:mb-8">
-        <h2 className="text-lg md:text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Researches' : type === 'design' ? 'Designs' : type === 'game' ? 'Games' : type === 'planning' ? 'Planning' : 'Tutorials' }</h2>
+        <h2 className="text-lg md:text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Researches' : type === 'design' ? 'Designs' : type === 'game' ? 'Games' : type === 'planning' ? 'Planning' :  type === 'tutorials'?'Tutorials':'Platform'}</h2>
         <div className="flex items-center gap-4">
           <div className="flex bg-neutral-100 p-1 rounded-sm border border-neutral-200">
             <button 
