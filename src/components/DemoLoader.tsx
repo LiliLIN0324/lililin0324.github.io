@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo,ClusteringEvents } from './DemoComponents';
+import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo,ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive } from './DemoComponents';
 
 // 根据slug获取对应的demo组件
 export const getDemoComponent = (slug: string) => {
@@ -14,6 +14,8 @@ export const getDemoComponent = (slug: string) => {
     'how-to-visualize-photo-geolocation-data-on-map': PhotoGeolocationMap,
     'how-to-build-game-in-wechat-mini-program': WeChatGameDemo,
     'how-to-conduct-time-geo-sequential-clustering-from-album': ClusteringEvents,
+    'box-up-my-stuff-in-cyberspace': BoxUpMyStuffInCyberspace,
+    'epstein-mystery-archive': EpsteinScretArchive,
   };
 
   return demoComponents[slug];

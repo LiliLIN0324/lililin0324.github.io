@@ -234,12 +234,12 @@ export const gameProjects = [
 ];
 
 export const platformProjects =[
-{
+  {
   id:"01",
   slug:"litflow",
   title:"LitFlow - Research Hub",
   category: "Platform",
-  year: "2026",
+  year: "2026-1-13 ongoing",
   description: "A platform for researchers to visualize their papers with summaries and keywords bubbles.",
   tech: ["python", "React", "TypeScript"],
   hasDemo: true,
@@ -250,8 +250,44 @@ export const platformProjects =[
     image: ["/data/fig/litflow (1).png", "/data/fig/litflow (2).png", "/data/fig/litflow (3).png", "/data/fig/litflow (4).png","/data/fig/litflow (5).png","/data/fig/litflow (6).png"],
     logo: "/data/fig/LitFlow_logo.jpg",
     code: "litflow.tsx"
-  },
-}
+  }},
+  {
+    id: "02",
+    slug: "box-up-my-stuff-in-cyberspace",
+    title: "Box up my stuff in cyberspace",
+    category: "Platform",
+    year: "2026-2-8",
+    description: "an App that people could box up their belongings in cyberspace" ,
+    tech: ["python", "React", "TypeScript"],
+    hasDemo: true,
+    details: {
+      abstract: "Box up my stuff in cyberspace is an App that people could box up their belongings in cyberspace. It provides a platform for users to upload their belongings, and for other users to find and download them.",
+      challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users.",
+      solution: "We developed Box up my stuff in cyberspace using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process.",
+      image: ["/data/fig/boxupcyberspace-1.png", "/data/fig/boxupcyberspace-2.png"],
+      logo: "/data/fig/Boxupcyberspace_logo.jpg",
+      code: "boxupcyberspace.tsx"
+  }},
+    {
+      id: "03",
+      slug: "epstein-mystery-archive",
+      title: "Epstein Mystery Archive",
+      category: "Platform",
+      year: "2026-2-11 on going",
+      description: "An archive of the Epstein Mystery, a case of sexual assault perpetrated by a man in 1983.",
+      tech: ["python", "React", "TypeScript"],
+      hasDemo: true,
+      details: {
+        abstract: "The Epstein Mystery Archive is an online platform that provides a detailed account of the case of sexual assault perpetrated by a man in 1983. It features a chronological timeline, interviews with suspects and authorities, and a collection of photographs to support the case.",
+        challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users.",
+        solution: "We developed the Epstein Mystery Archive using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process.",
+        image: ["/data/fig/epsteinscret-1.png", "/data/fig/epsteinscret-2.png"],
+        logo: "/data/fig/EpsteinScret_logo.jpg",
+        code: "epsteinscret.tsx"
+    }
+    
+},
+
 
 ];
 
