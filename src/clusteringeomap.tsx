@@ -887,7 +887,7 @@ const ClusteringGeoMap: React.FC = () => {
             <div className="flex gap-2 mt-4 justify-center">
               <a
                 href={CLUSTER_URL}
-                download="223_cities_cluster_with_index_geojson.zip"
+                download="223_cities_cluster_with_index.zip"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg text-sm transition-colors"
               >
                 <Download size={14} />
@@ -896,13 +896,13 @@ const ClusteringGeoMap: React.FC = () => {
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 hover:bg-purple-200 text-purple-600 rounded-lg text-sm transition-colors"
-                title="支持 .shp, .zip (Shapefile)"
+                title="支持 .zip (Shapefile)"
               >
                 <Upload size={14} />
                 加载 Shapefile
               </button>
             </div>
-            <p className="text-xs text-gray-400 mt-2">支持 .shp, .zip (Shapefile)</p>
+            <p className="text-xs text-gray-400 mt-2">支持 .zip (Shapefile)</p>
             <input
               ref={fileInputRef}
               type="file"
