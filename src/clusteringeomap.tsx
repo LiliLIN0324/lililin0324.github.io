@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import JSZip from 'jszip';
+
 import shp from 'shpjs';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -46,136 +46,13 @@ export const ATTRIBUTES = [
   { key: 'City Name', label: 'City Name', category: 'meta', type: 'string' }
 ];
 
-/**
- * 健壮的流式 GeoJSON 解析器
- * 能够处理大型标准 GeoJSON 和 GeoJSONL
- */
-async function parseLargeGeoJSON(uint8array: Uint8Array, onProgress: (percent: number) => void): Promise<any[]> {
-  const features: any[] = [];
-  const decoder = new TextDecoder();
-  let i = 0;
-  let braceDepth = 0;
-  let inString = false;
-  let escapeNext = false;
-  let startIdx = -1;
-  const len = uint8array.length;
-  
-  // 优化 1: 增加进度更新间隔，每 5MB 或 2% 更新一次，减少回调开销
-  const progressStep = Math.max(5 * 1024 * 1024, Math.floor(len / 50));
-  let nextProgressIdx = progressStep;
-  let lastYieldTime = Date.now();
-
-  // 优化 2: 预先缓存常用字符代码，减少属性访问
-  const BYTE_BACKSLASH = 92;
-  const BYTE_QUOTE = 34;
-  const BYTE_LBRACE = 123;
-  const BYTE_RBRACE = 125;
-  const BYTE_LBRACKET = 91; // [
-  const BYTE_RBRACKET = 93; // ]
-
-  // 状态机变量
-  let bracketDepth = 0; // [] 深度
-  
-  while (i < len) {
-    const byte = uint8array[i];
-    
-    if (escapeNext) {
-      escapeNext = false;
-    } else if (byte === BYTE_BACKSLASH) {
-      escapeNext = true;
-    } else if (byte === BYTE_QUOTE) {
-      inString = !inString;
-    } else if (!inString) {
-      if (byte === BYTE_LBRACE) { // {
-        if (startIdx === -1 && braceDepth === 0 && bracketDepth <= 1) {
-          // 只有在顶级或者 features 数组内开始记录
-          startIdx = i;
-        }
-        braceDepth++;
-      } else if (byte === BYTE_RBRACE) { // }
-        braceDepth--;
-        // 优化 3: 只有当可能是完整对象结束时才尝试解析
-        if (startIdx !== -1 && braceDepth === 0) {
-          // 优化 4: 简单的启发式检查，避免无效的 slice 和 decode
-          if (i - startIdx > 10) { // 放宽长度限制
-             try {
-               const chunk = uint8array.subarray(startIdx, i + 1);
-               const text = decoder.decode(chunk);
-               
-               // 优化 5: 尝试解析
-               // 只有当看起来包含 type 属性时才解析，提高命中率
-               if (text.includes('"type"')) {
-                 const obj = JSON.parse(text);
-                 if (obj.type === 'Feature') {
-                   features.push(obj);
-                   // 成功解析后重置，避免重复解析外层对象
-                   startIdx = -1;
-                 } else if (obj.features && Array.isArray(obj.features)) {
-                   // 如果解析到了 FeatureCollection，提取其 features
-                   features.push(...obj.features);
-                   startIdx = -1;
-                 }
-               }
-            } catch (e) {
-              // 忽略解析错误（可能是中间状态）
-            }
-          }
-          startIdx = -1; // 无论成功失败，当前对象结束，重置
-        }
-      } else if (byte === BYTE_LBRACKET) {
-        bracketDepth++;
-      } else if (byte === BYTE_RBRACKET) {
-        bracketDepth--;
-      }
-    }
-    
-    i++;
-    
-    if (i >= nextProgressIdx) {
-      onProgress(i / len);
-      nextProgressIdx += progressStep;
-      
-      const now = Date.now();
-      if (now - lastYieldTime > 50) {
-        await new Promise(resolve => setTimeout(resolve, 0));
-        lastYieldTime = Date.now();
-      }
-    }
-  }
-  
-  // 兜底逻辑：对于超大文件，尝试不同的解析策略
-  if (features.length === 0 && len > 0) {
-    console.log('流式解析未发现特征，尝试整体解析...');
-    console.log('文件大小:', len, 'bytes');
-    
-    try {
-      const fullText = decoder.decode(uint8array);
-      console.log('文件前 1000 字符:', fullText.substring(0, 1000));
-      console.log('文件末尾 500 字符:', fullText.substring(fullText.length - 500));
-      
-      const fullObj = JSON.parse(fullText);
-      console.log('JSON 解析后的类型:', fullObj.type);
-      console.log('JSON 是否有 features:', !!fullObj.features);
-      console.log('JSON features 数量:', fullObj.features?.length);
-      
-      if (fullObj.features) return fullObj.features;
-      if (Array.isArray(fullObj)) return fullObj;
-      if (fullObj.type === 'Feature') return [fullObj];
-    } catch (e) {
-      console.error('整体解析失败了:', e);
-    }
-  }
-  
-  return features;
-}
-
 const ClusteringGeoMap: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [geojsonData, setGeojsonData] = useState<any>(null);
+  const [mapData, setMapData] = useState<any>(null);
   const [places, setPlaces] = useState<PlaceInfo[]>([]);
   const [selectedPlace, setSelectedPlace] = useState<number | null>(null);
   const [activeAttribute, setActiveAttribute] = useState('K_12');
@@ -267,8 +144,8 @@ const ClusteringGeoMap: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // 只有在没有加载本地数据且没有已有 geojsonData 时才尝试云加载
-    if (localDataLoaded || geojsonData) return;
+    // 只有在没有加载本地数据且没有已有 mapData 时才尝试云加载
+    if (localDataLoaded || mapData) return;
 
     const loadData = async () => {
       setIsLoading(true);
@@ -331,62 +208,35 @@ const ClusteringGeoMap: React.FC = () => {
           return;
         }
         
-        // 优化 1: 如果是 ZIP，解压。如果是 GeoJSON/L，直接解析
-        // 检查文件头或 content-type
-        const isZip = allChunks[0] === 0x50 && allChunks[1] === 0x4B;
+        setLoadProgress(90);
+        
+        console.log('开始解析 Shapefile...');
+        const shpData = await shp(allChunks);
+        console.log('Shapefile 解析完成:', shpData);
         
         let features: any[] = [];
-        
-        if (isZip) {
-          console.log('开始解析 ZIP...');
-          const zip = await JSZip.loadAsync(allChunks);
-          console.log('ZIP 文件列表:', Object.keys(zip.files));
-          
-          const geojsonFile = Object.values(zip.files).find((file: any) => 
-            file.name.endsWith('.geojson') || file.name.endsWith('.geojsonl')
-          );
-          if (!geojsonFile) throw new Error(`ZIP 中未找到 .geojson 或 .geojsonl 文件。包含: ${Object.keys(zip.files).join(', ')}`);
-          
-          console.log('找到文件:', geojsonFile.name);
-          const uint8array = await geojsonFile.async('uint8array');
-          
-          if (uint8array.length < 50 * 1024 * 1024) {
-             const text = new TextDecoder().decode(uint8array);
-             const json = JSON.parse(text);
-             features = json.features || (Array.isArray(json) ? json : []);
-          } else {
-             features = await parseLargeGeoJSON(uint8array, (p) => setLoadProgress(90 + Math.round(p * 0.1)));
-          }
-        } else {
-          // 假设是 GeoJSON/L
-          if (allChunks.length < 50 * 1024 * 1024) {
-             const text = new TextDecoder().decode(allChunks);
-             try {
-               const json = JSON.parse(text);
-               features = json.features || (Array.isArray(json) ? json : []);
-             } catch(e) {
-               // 可能是 GeoJSONL，尝试 parseLargeGeoJSON
-               features = await parseLargeGeoJSON(allChunks, (p) => setLoadProgress(90 + Math.round(p * 0.1)));
-             }
-          } else {
-             features = await parseLargeGeoJSON(allChunks, (p) => setLoadProgress(90 + Math.round(p * 0.1)));
-          }
+        if (shpData.type === 'FeatureCollection') {
+          features = shpData.features;
+        } else if (Array.isArray(shpData)) {
+          features = shpData;
+        } else if (shpData.type === 'Feature') {
+          features = [shpData];
         }
-
+        
         console.log('解析完成，特征数量:', features?.length);
 
         if (localDataLoaded) return;
 
-        const geojson = {
+        const mapDataNew = {
           type: 'FeatureCollection' as const,
           features: features || []
         };
         
-        setGeojsonData(geojson);
+        setMapData(mapDataNew);
         setLoadProgress(100);
 
         const placeMap = new Map<number, PlaceInfo>();
-        geojson.features.forEach((feature: any) => {
+        mapDataNew.features.forEach((feature: any) => {
           const placeId = feature.properties?.Place ?? 0;
           if (!placeMap.has(placeId)) {
             placeMap.set(placeId, { id: placeId, name: `Place ${placeId}`, featureCount: 0 });
@@ -405,40 +255,40 @@ const ClusteringGeoMap: React.FC = () => {
         setIsLoading(false);
       }
     };
-    // 只有在没有加载本地数据且没有已有 geojsonData 时才尝试云加载
-    if (!localDataLoaded && !geojsonData) {
+    // 只有在没有加载本地数据且没有已有 mapData 时才尝试云加载
+    if (!localDataLoaded && !mapData) {
       loadData();
     }
   }, []); // 只在组件挂载时执行一次
 
   useEffect(() => {
-    if (!geojsonData) return;
-    setStats(calculateStats(geojsonData, activeAttribute));
-  }, [geojsonData, selectedPlace, activeAttribute]);
+    if (!mapData) return;
+    setStats(calculateStats(mapData, activeAttribute));
+  }, [mapData, selectedPlace, activeAttribute]);
 
   useEffect(() => {
-    if (!geojsonData) return;
+    if (!mapData) return;
     const map = mapRef.current;
     if (!map) return;
     
     console.log('开始添加图层...');
-    console.log('GeoJSON 特征数:', geojsonData.features.length);
-    if (geojsonData.features.length > 0) {
-      console.log('第一个特征示例:', JSON.stringify(geojsonData.features[0]).substring(0, 500));
+    console.log('特征数:', mapData.features.length);
+    if (mapData.features.length > 0) {
+      console.log('第一个特征示例:', JSON.stringify(mapData.features[0]).substring(0, 500));
     }
 
     const updateMapLayers = () => {
       console.log('updateMapLayers 被调用');
-      console.log('geojsonData:', geojsonData);
-      console.log('geojsonData.features 长度:', geojsonData?.features?.length);
+      console.log('mapData:', mapData);
+      console.log('mapData.features 长度:', mapData?.features?.length);
 
-      if (!geojsonData?.features || geojsonData.features.length === 0) {
-        console.warn('geojsonData 没有 features');
+      if (!mapData?.features || mapData.features.length === 0) {
+        console.warn('mapData 没有 features');
         return;
       }
 
-      console.log('第一个特征的属性:', geojsonData.features[0]?.properties);
-      console.log('第一个特征的 geometry:', geojsonData.features[0]?.geometry);
+      console.log('第一个特征的属性:', mapData.features[0]?.properties);
+      console.log('第一个特征的 geometry:', mapData.features[0]?.geometry);
 
       if (map.getSource('cluster')) {
         if (map.getLayer('cluster-fill')) map.removeLayer('cluster-fill');
@@ -447,7 +297,7 @@ const ClusteringGeoMap: React.FC = () => {
         map.removeSource('cluster');
       }
 
-      const allFeatures = geojsonData.features;
+      const allFeatures = mapData.features;
       console.log('selectedPlace:', selectedPlace);
       console.log('总特征数:', allFeatures.length);
 
@@ -456,10 +306,10 @@ const ClusteringGeoMap: React.FC = () => {
         return;
       }
 
-      const geojson = { type: 'FeatureCollection' as const, features: allFeatures };
+      const mapDataSource = { type: 'FeatureCollection' as const, features: allFeatures };
       
       try {
-        map.addSource('cluster', { type: 'geojson', data: geojson });
+        map.addSource('cluster', { type: 'geojson', data: mapDataSource });
       } catch (e) {
         console.error('添加 source 失败:', e);
         return;
@@ -617,7 +467,7 @@ const ClusteringGeoMap: React.FC = () => {
     };
 
     console.log('地图样式是否加载完成:', map.isStyleLoaded());
-    console.log('总 features:', geojsonData.features.length);
+    console.log('总 features:', mapData.features.length);
     console.log('当前 selectedPlace:', selectedPlace);
     
     if (!map.isStyleLoaded()) {
@@ -626,14 +476,13 @@ const ClusteringGeoMap: React.FC = () => {
     } else {
       updateMapLayers();
     }
-  }, [geojsonData, selectedPlace, activeAttribute]);
+  }, [mapData, selectedPlace, activeAttribute]);
 
   useEffect(() => {
-    if (!geojsonData || selectedPlace === null) return;
+    if (!mapData || selectedPlace === null) return;
     const map = mapRef.current;
     if (!map) return;
-    
-    const features = geojsonData.features.filter(
+    const features = mapData.features.filter(
       (f: any) => Number(f.properties?.Place) === Number(selectedPlace)
     );
     
@@ -782,22 +631,22 @@ const ClusteringGeoMap: React.FC = () => {
       setUploadProgress(30);
       
       setUploadStatus('正在解析 Shapefile...');
-      const geojson = await shp(arrayBuffer);
-      console.log('Shapefile 解析完成:', geojson);
+      const shpData = await shp(arrayBuffer);
+      console.log('Shapefile 解析完成:', shpData);
       
-      if (geojson.type === 'FeatureCollection') {
-        features = geojson.features;
-      } else if (Array.isArray(geojson)) {
-        features = geojson;
-      } else if (geojson.type === 'Feature') {
-        features = [geojson];
+      if (shpData.type === 'FeatureCollection') {
+        features = shpData.features;
+      } else if (Array.isArray(shpData)) {
+        features = shpData;
+      } else if (shpData.type === 'Feature') {
+        features = [shpData];
       }
       console.log('解析到的 features 数量:', features.length);
       
       setUploadProgress(95);
       setUploadStatus(`已解析 ${features.length} 个 Features...`);
       
-      const geojsonDataNew = {
+      const mapDataNew = {
         type: 'FeatureCollection' as const,
         features: features
       };
@@ -806,7 +655,7 @@ const ClusteringGeoMap: React.FC = () => {
       setUploadStatus('正在处理 Place 数据...');
 
       const placeMap = new Map<number, PlaceInfo>();
-      geojsonDataNew.features.forEach((feature: any) => {
+      mapDataNew.features.forEach((feature: any) => {
         const placeId = feature.properties?.Place ?? 0;
         if (!placeMap.has(placeId)) {
           placeMap.set(placeId, { id: placeId, name: `Place ${placeId}`, featureCount: 0 });
@@ -820,7 +669,7 @@ const ClusteringGeoMap: React.FC = () => {
       
       setTimeout(() => {
         setLocalDataLoaded(true);
-        setGeojsonData(geojsonDataNew);
+        setMapData(mapDataNew);
         setPlaces(Array.from(placeMap.values() as Iterable<PlaceInfo>).sort((a, b) => a.id - b.id));
         setIsUploading(false);
         setUploadMode(false);
@@ -838,7 +687,7 @@ const ClusteringGeoMap: React.FC = () => {
     setLocalFileUrl(null);
     setUploadMode(false);
     setError(null);
-    setGeojsonData(null);
+    setMapData(null);
     setPlaces([]);
     setSelectedPlace(null);
     setActiveAttribute('K_12');
@@ -966,7 +815,7 @@ const ClusteringGeoMap: React.FC = () => {
                 onChange={(e) => setSelectedPlace(e.target.value ? Number(e.target.value) : null)}
                 className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
               >
-                <option value="">All Places ({geojsonData?.features?.length ?? 0})</option>
+                <option value="">All Places ({mapData?.features?.length ?? 0})</option>
                 {places.map((p) => (
                   <option key={p.id} value={p.id}>{p.name} ({p.featureCount})</option>
                 ))}
@@ -1066,7 +915,7 @@ const ClusteringGeoMap: React.FC = () => {
 
       <div ref={mapContainer} className="w-full h-full" />
       
-      {showLegend && geojsonData && (
+      {showLegend && mapData && (
         <div className="absolute bottom-4 right-4 z-40 bg-white/95 backdrop-blur-md rounded-xl shadow-lg p-4 w-64">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-gray-800 flex items-center gap-2">
