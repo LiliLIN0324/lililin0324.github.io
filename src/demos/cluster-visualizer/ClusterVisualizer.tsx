@@ -4,6 +4,7 @@ import { AVAILABLE_KS } from './constants';
 import { fetchLocalClusterData } from './dataLoader';
 import { Cluster } from './types';
 import { Maximize2, Pause, Play, Layers, MousePointer2, Loader2, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 
 export type AppProps = {
@@ -380,6 +381,10 @@ const ClusterVisualizer3D: React.FC<AppProps> = ({ initialK = 5, providedCluster
         <button onClick={() => setIsAutoRotating(!isAutoRotating)} className="flex items-center justify-center gap-2 bg-white text-black px-4 py-2 rounded-lg text-sm">
           {isAutoRotating ? <>Stop <Pause size={16} /></> : <>Play <Play size={16} /></>}
         </button>
+        
+        <Link to="/clusteringeomap" className="flex items-center justify-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700 transition-colors">
+          Geo Map
+        </Link>
       </div>
 
       {/* 3D可视化组件 */}

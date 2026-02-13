@@ -9,6 +9,7 @@ import { AboutSection } from './src/components/AboutSection';
 import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
 import { HomePage } from './src/components/HomePage';
+import ClusteringGeoMap from './src/clusteringeomap';
 
 
 const MainPage = () => {
@@ -265,6 +266,7 @@ const MainPage = () => {
               <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
               <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
               <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
+              <Route path="/clusteringeomap" element={<ClusteringGeoMap />} />
               <Route path="/about" element={<AboutSection />} />
               <Route path="/contact" element={<ContactSection />} />
             </Routes>
