@@ -66,6 +66,20 @@ interface PlaceInfo {
   featureCount: number;    // 该 Place 包含的地理要素数量
 }
 
+const hexToRgb = (hex: string): [number, number, number] => {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return [r, g, b];
+};
+const lerpColor = (start: [number, number, number], end: [number, number, number], t: number): string => {
+  const r = Math.round(start[0] + (end[0] - start[0]) * t);
+  const g = Math.round(start[1] + (end[1] - start[1]) * t);
+  const b = Math.round(start[2] + (end[2] - start[2]) * t);
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
 /**
  * 属性配置数组
  * 定义了所有可用于可视化的属性
@@ -84,23 +98,32 @@ export const ATTRIBUTES = [
   { key: 'K_26', label: 'Cluster K=26', category: 'cluster', type: 'number' },
 
   // ===== Terrain: 地形属性 =====
-  { key: 'elev_mean', label: 'Elevation Mean', category: 'terrain', type: 'number' },
-  { key: 'elev_std', label: 'Elevation Std', category: 'terrain', type: 'number' },
-  { key: 'elev_range', label: 'Elevation Range', category: 'terrain', type: 'number' },
-  { key: 'slope_mean', label: 'Slope Mean', category: 'terrain', type: 'number' },
-  { key: 'slope_std', label: 'Slope Std', category: 'terrain', type: 'number' },
-  { key: 'slope_rang', label: 'Slope Range', category: 'terrain', type: 'number' },
+  { key: 'elev_mean', label: 'Elevation Mean(m)', category: 'terrain', type: 'number' },
+  { key: 'elev_std', label: 'Elevation Std(m)', category: 'terrain', type: 'number' },
+  { key: 'elev_range', label: 'Elevation Range(m)', category: 'terrain', type: 'number' },
+  { key: 'slope_mean', label: 'Slope Mean(°)', category: 'terrain', type: 'number' },
+  { key: 'slope_std', label: 'Slope Std(N/A)', category: 'terrain', type: 'number' },
+  { key: 'slope_rang', label: 'Slope Range(N/A)', category: 'terrain', type: 'number' },
 
   // ===== Urban: 城市属性 =====
-  { key: 'FAR', label: 'Floor Area Ratio', category: 'urban', type: 'number' },
+  { key: 'LandArea', label: 'Land Area', category: 'urban', type: 'number' },
+  { key: 'Buiheight', label: 'Building Height(m)', category: 'urban', type: 'number' },
+  { key: 'BldArea', label: 'Building Area(m²)', category: 'urban', type: 'number' },
   { key: 'CoverRatio', label: 'Building Coverage', category: 'urban', type: 'number' },
-  { key: 'GreenRatio', label: 'Green Ratio', category: 'urban', type: 'number' },
-  { key: 'GrVolRatio', label: 'Green Volume Ratio', category: 'urban', type: 'number' },
-  { key: 'ISF', label: 'Impervious Surface Fraction', category: 'urban', type: 'number' },
-
-  // ===== Meta: 元数据 =====
-  { key: 'Place', label: 'Place', category: 'meta', type: 'string' },
-  { key: 'City Name', label: 'City Name', category: 'meta', type: 'string' }
+  { key: 'FAR', label: 'Floor Area Ratio(N/A)', category: 'urban', type: 'number' },
+  { key: 'GreenArea', label: 'Green Area(m²)', category: 'urban', type: 'number' },
+  { key: 'GrHeight', label: 'Green Height(m)', category: 'urban', type: 'number' },
+  { key: 'GreenRatio', label: 'Green Ratio(N/A)', category: 'urban', type: 'number' },
+  { key: 'GrVolRatio', label: 'Green Volume Ratio(N/A)', category: 'urban', type: 'number' },
+  { key: 'ISF', label: 'Impervious Surface Fraction(N/A)', category: 'urban', type: 'number' },
+  { key: 'MIN_DistWB', label: 'Mini Distance to WaterBody(m)', category: 'urban', type: 'number' },
+  { key: 'MIN_DistGL', label: 'Mini Distance to GreenLand(m)', category: 'urban', type: 'number' },
+  { key: 'MIN_DistMT', label: 'Mini Distance to Mountain(m)', category: 'urban', type: 'number' },
+  
+  // // ===== Meta: 元数据 =====
+  // { key: 'Place', label: 'Place', category: 'meta', type: 'string' },
+  // { key: 'Place ID', label: 'Place ID', category: 'meta', type: 'string' },
+  // { key: 'City Name', label: 'City Name', category: 'meta', type: 'string' }
 ];
 
 /**
@@ -161,7 +184,7 @@ const ClusteringGeoMap: React.FC = () => {
   const [showPanel, setShowPanel] = useState(true);
   
   /** 当前属性的统计信息（最小值、最大值、平均值、总数） */
-  const [stats, setStats] = useState<{ min: number; max: number; mean: number; count: number } | null>(null);
+  const [stats, setStats] = useState<{ min: number; max: number; mean: number; count: number; nanCount: number } | null>(null);
   
   /** 本地文件的对象 URL（用于预览） */
   const [localFileUrl, setLocalFileUrl] = useState<string | null>(null);
@@ -198,6 +221,8 @@ const ClusteringGeoMap: React.FC = () => {
   
   /** 各属性的数值范围（从 CSV 分位数文件加载） */
   const [attributeRanges, setAttributeRanges] = useState<Record<string, AttributeRange>>({});
+  const [showGlobalRange, setShowGlobalRange] = useState(false);
+  const [colorScaleMode, setColorScaleMode] = useState<'global' | 'city'>('global');
   
   /** AbortController 引用，用于取消网络请求 */
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -207,6 +232,9 @@ const ClusteringGeoMap: React.FC = () => {
   
   /** 地图是否已初始化完成（用于控制自动定位） */
   const isMapInitialized = useRef(false);
+
+  /** 当前选中特征的 ID（用于跨渲染周期追踪高亮状态） */
+  const selectedFeatureIdRef = useRef<string | number | null>(null);
 
   /**
    * 计算指定属性的统计信息
@@ -219,29 +247,67 @@ const ClusteringGeoMap: React.FC = () => {
     // 获取所有要素（或按 selectedPlace 筛选）
     let features = data.features;
     if (selectedPlace !== null) {
-      features = features.filter((f: any) => Number(f.properties?.Place) === Number(selectedPlace));
+      features = features.filter((f: any) => {
+        const city = f.properties?.Place;
+        return city !== undefined && Number(city) === Number(selectedPlace);
+      });
     }
     
-    // 提取属性值并过滤无效值
-    const values = features.map((f: any) => f.properties?.[attr] ?? 0).filter((v: any) => !isNaN(v));
-    if (values.length === 0) return null;
+    // 提取属性值并过滤无效值（忽略 -9999）
+    const values = features
+      .map((f: any) => f.properties?.[attr])
+      .filter((v: any) => {
+        if (v === undefined || v === null) return false;
+        if (typeof v === 'string') {
+          const s = v.trim();
+          if (s === '' || /^(na|nan|null)$/i.test(s)) return false;
+        }
+        const n = Number(v);
+        return !(Number.isNaN(n) || n === -9999);
+      })
+      .map((v: any) => Number(v));
+    const nanCount = features.reduce((acc: number, f: any) => {
+      const raw = f.properties?.[attr];
+      let invalid = false;
+      if (raw === undefined || raw === null) {
+        invalid = true;
+      } else if (typeof raw === 'string') {
+        const s = raw.trim();
+        if (s === '' || /^(na|nan|null)$/i.test(s)) {
+          invalid = true;
+        } else {
+          const n = Number(raw);
+          if (Number.isNaN(n) || n === -9999) invalid = true;
+        }
+      } else {
+        const n = Number(raw);
+        if (Number.isNaN(n) || n === -9999) invalid = true;
+      }
+      return acc + (invalid ? 1 : 0);
+    }, 0);
     
     // 手动计算统计值（避免使用 reduce 可能带来的性能问题）
-    let min = values[0];
-    let max = values[0];
-    let sum = values[0];
-    for (let i = 1; i < values.length; i++) {
-      const v = values[i];
-      if (v < min) min = v;
-      if (v > max) max = v;
-      sum += v;
+    let min = NaN;
+    let max = NaN;
+    let sum = 0;
+    if (values.length > 0) {
+      min = values[0];
+      max = values[0];
+      sum = values[0];
+      for (let i = 1; i < values.length; i++) {
+        const v = values[i];
+        if (v < min) min = v;
+        if (v > max) max = v;
+        sum += v;
+      }
     }
     
     return {
       count: features.length,
       min,
       max,
-      mean: sum / values.length,
+      mean: values.length > 0 ? (sum / values.length) : NaN,
+      nanCount,
     };
   };
 
@@ -424,14 +490,14 @@ const ClusteringGeoMap: React.FC = () => {
         setMapData(mapDataNew);
         setLoadProgress(100);
 
-        // 提取 Place 信息用于下拉选择
+        // 提取 Place（城市ID）信息用于下拉选择
         const placeMap = new Map<number, PlaceInfo>();
         mapDataNew.features.forEach((feature: any) => {
-          const placeId = feature.properties?.Place ?? 0;
-          if (!placeMap.has(placeId)) {
-            placeMap.set(placeId, { id: placeId, name: `Place ${placeId}`, featureCount: 0 });
+          const cityId = Number(feature.properties?.Place ?? 0);
+          if (!placeMap.has(cityId)) {
+            placeMap.set(cityId, { id: cityId, name: `Place ${cityId}`, featureCount: 0 });
           }
-          const place = placeMap.get(placeId);
+          const place = placeMap.get(cityId);
           if (place) place.featureCount++;
         });
         setPlaces(Array.from(placeMap.values() as Iterable<PlaceInfo>).sort((a, b) => a.id - b.id));
@@ -460,7 +526,7 @@ const ClusteringGeoMap: React.FC = () => {
   useEffect(() => {
     if (!mapData) return;
     setStats(calculateStats(mapData, activeAttribute));
-  }, [mapData, selectedPlace, activeAttribute]);
+  }, [mapData, selectedPlace, activeAttribute, colorScaleMode, attributeRanges]);
 
   /**
    * Effect 4: 更新地图图层
@@ -481,253 +547,189 @@ const ClusteringGeoMap: React.FC = () => {
     const map = mapRef.current;
     if (!map) return;
     
-    console.log('开始添加图层...');
-    console.log('特征数:', mapData.features.length);
-    if (mapData.features.length > 0) {
-      console.log('第一个特征示例:', JSON.stringify(mapData.features[0]).substring(0, 500));
-    }
+    // 1. 初始化/更新数据源（仅当 mapData 变化时）
+    const updateSource = () => {
+      // 确保每个 feature 都有唯一的 id
+      mapData.features.forEach((f: any, index: number) => {
+        if (f.id === undefined) f.id = index;
+      });
 
-    /**
-     * 更新地图图层的核心函数
-     * 负责添加数据源和图层，设置样式
-     */
-    const updateMapLayers = () => {
-      console.log('updateMapLayers 被调用');
-      console.log('mapData:', mapData);
-      console.log('mapData.features 长度:', mapData?.features?.length);
+      if (!map.getSource('cluster')) {
+        console.log('初始化 cluster 数据源...');
+        map.addSource('cluster', { 
+          type: 'geojson', 
+          data: mapData,
+          generateId: true // 自动生成 feature id 备用
+        });
 
-      // 数据验证
-      if (!mapData?.features || mapData.features.length === 0) {
-        console.warn('mapData 没有 features');
-        return;
-      }
+        // 初始化静态图层结构
+        // 填充层
+        map.addLayer({
+          id: 'cluster-fill',
+          type: 'fill',
+          source: 'cluster',
+          layout: {},
+          paint: { 'fill-opacity': 0.7 },
+        });
 
-      console.log('第一个特征的属性:', mapData.features[0]?.properties);
-      console.log('第一个特征的 geometry:', mapData.features[0]?.geometry);
+        // 边框层
+        map.addLayer({
+          id: 'cluster-line',
+          type: 'line',
+          source: 'cluster',
+          layout: {},
+          paint: { 'line-color': '#7e7f80ff', 'line-width': 1 },
+        });
 
-      // 如果已有数据源，先清除旧的
-      if (map.getSource('cluster')) {
-        // 移除图层
-        if (map.getLayer('cluster-fill')) map.removeLayer('cluster-fill');
-        if (map.getLayer('cluster-line')) map.removeLayer('cluster-line');
-        if (map.getLayer('cluster-debug')) map.removeLayer('cluster-debug');
-        // 移除数据源
-        map.removeSource('cluster');
-      }
-
-      const allFeatures = mapData.features;
-      console.log('selectedPlace:', selectedPlace);
-      console.log('总特征数:', allFeatures.length);
-
-      if (allFeatures.length === 0) {
-        console.warn('没有特征可显示');
-        return;
-      }
-
-      // 创建 GeoJSON 数据源
-      const mapDataSource = { type: 'FeatureCollection' as const, features: allFeatures };
-      
-      try {
-        // 添加 GeoJSON 数据源
-        map.addSource('cluster', { type: 'geojson', data: mapDataSource });
-      } catch (e) {
-        console.error('添加 source 失败:', e);
-        return;
-      }
-
-      // 确定是否处于筛选模式
-      const isPlaceSelected = selectedPlace !== null;
-      const selectedPlaceNum = Number(selectedPlace);
-      const isHighlighted = highlightedPlace !== null;
-      const highlightedPlaceNum = Number(highlightedPlace);
-      
-      // 获取当前属性的数值范围
-      const range = attributeRanges[activeAttribute] || { min: 0, max: 1 };
-      const rangeMin = range?.min ?? 0;
-      const rangeMax = range?.max ?? 1;
-      
-      // 根据属性类型设置不同的颜色映射策略
-      let fillColor: any;
-      
-      // 聚类属性（K_5, K_12, K_20, K_26）：使用离散颜色
-      if (activeAttribute.includes('K_')) {
-        // 计算最大聚类数
-        const kMax = Math.round(rangeMax);
-        
-        // 生成 26 种离散颜色（彩虹色谱）
-        const allColors = Array.from({ length: 26 }, (_, i) => {
-          const t = i / 25;
-          let r: number, g: number, b: number;
-          // 6 段渐变色：蓝->青->绿->黄->橙->红
-          if (t < 0.167) {
-            const s = t / 0.167;
-            r = 0; g = 0; b = Math.round(139 + (255 - 139) * s);
-          } else if (t < 0.333) {
-            const s = (t - 0.167) / 0.167;
-            r = 0; g = Math.round(255 * s); b = 255;
-          } else if (t < 0.5) {
-            const s = (t - 0.333) / 0.167;
-            r = 0; g = Math.round(255 - 128 * s); b = Math.round(255 - 255 * s);
-          } else if (t < 0.667) {
-            const s = (t - 0.5) / 0.167;
-            r = Math.round(255 * s); g = 255; b = 0;
-          } else if (t < 0.833) {
-            const s = (t - 0.667) / 0.167;
-            r = 255; g = Math.round(255 - 128 * s); b = 0;
-          } else {
-            const s = (t - 0.833) / 0.167;
-            r = 255; g = Math.round(127 - 127 * s); b = 0;
+        // 高亮层
+        map.addLayer({
+          id: 'cluster-highlight',
+          type: 'line',
+          source: 'cluster',
+          layout: {},
+          paint: {
+            'line-color': '#632ffdff',
+            'line-width': 3,
+            'line-opacity': ['case', ['boolean', ['feature-state', 'selected'], false], 1, 0]
           }
-          return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        });
+
+        // 绑定交互事件
+        map.on('click', 'cluster-fill', (e) => {
+          if (e.features && e.features.length > 0) {
+            const feature = e.features[0];
+            const featureId = feature.id; 
+            
+            if (selectedFeatureIdRef.current !== null && selectedFeatureIdRef.current !== undefined) {
+              map.setFeatureState({ source: 'cluster', id: selectedFeatureIdRef.current }, { selected: false });
+            }
+
+            if (featureId !== undefined) {
+              map.setFeatureState({ source: 'cluster', id: featureId }, { selected: true });
+              selectedFeatureIdRef.current = featureId;
+            } else {
+              selectedFeatureIdRef.current = null;
+            }
+
+            setSelectedFeature(feature);
+            setShowFeaturePopup(true);
+
+            if (feature.properties?.Place !== undefined) {
+              setSelectedPlace(Number(feature.properties.Place));
+            }
+          }
         });
         
-        // 根据实际 K 值选择对应数量的颜色
-        const kColors = Array.from({ length: kMax + 1 }, (_, i) => allColors[Math.round(i * 25 / kMax)]);
-        const selectedColors = kColors.slice(0, kMax + 1);
-        
-        // 构建 MapLibre 的 interpolate 表达式进行离散着色
-        const colorSteps: any[] = ['interpolate', ['linear'], ['get', activeAttribute]];
-        for (let k = 0; k <= kMax; k++) {
-          colorSteps.push(k, selectedColors[k]);
-        }
-        fillColor = colorSteps;
-      } 
-      // 覆盖率/不透水面属性：蓝到橙渐变
-      else if (activeAttribute === 'CoverRatio' || activeAttribute === 'ISF' || activeAttribute === 'GreenRatio') {
-        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#3182bd', rangeMax, '#e6550d'];
-      } 
-      // 高程/坡度属性：绿到紫渐变
-      else if (activeAttribute.includes('elev') || activeAttribute.includes('slope')) {
-        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#31a354', rangeMax, '#756bb1'];
-      } 
-      // 其他属性：默认绿到紫渐变
-      else {
-        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#31a354', rangeMax, '#756bb1'];
-      }
+        map.on('mouseenter', 'cluster-fill', () => { map.getCanvas().style.cursor = 'pointer'; });
+        map.on('mouseleave', 'cluster-fill', () => { map.getCanvas().style.cursor = ''; });
 
-      // 设置填充透明度：选中 Place 高亮，其他淡化
-      const fillOpacity = isPlaceSelected 
-        ? ['case', ['==', ['to-number', ['get', 'Place']], selectedPlaceNum], 0.8, 0.15]
-        : 0.7;
-
-      // 添加填充图层
-      map.addLayer({
-        id: 'cluster-fill',
-        type: 'fill',
-        source: 'cluster',
-        layout: {},
-        paint: { 'fill-color': fillColor, 'fill-opacity': fillOpacity },
-      });
-
-      // 设置边框线样式
-      const lineOpacity = isPlaceSelected 
-        ? ['case', ['==', ['to-number', ['get', 'Place']], selectedPlaceNum], 1, 0.2]
-        : isHighlighted
-          ? ['case', ['==', ['to-number', ['get', 'Place']], highlightedPlaceNum], 1, 0.5]
-          : 1;
-
-      const lineColor = isPlaceSelected
-        ? ['case', ['==', ['to-number', ['get', 'Place']], selectedPlaceNum], '#a0a0a0ff', '#2d3436']
-        : isHighlighted
-          ? ['case', ['==', ['to-number', ['get', 'Place']], highlightedPlaceNum], '#ff0000', '#2d3436']
-          : '#2d3436';
-
-      // 添加边框线图层
-      map.addLayer({
-        id: 'cluster-line',
-        type: 'line',
-        source: 'cluster',
-        layout: {},
-        paint: { 'line-color': lineColor, 'line-width': 1, 'line-opacity': lineOpacity },
-      });
-      
-      // 设置点击事件：选中要素并显示详情
-      map.on('click', 'cluster-fill', (e) => {
-        if (e.features && e.features.length > 0) {
-          const feature = e.features[0];
-          setSelectedFeature(feature);
-          setShowFeaturePopup(true);
-
-          // 同时更新 Place 筛选
-          if (feature.properties?.Place) {
-            const placeNum = Number(feature.properties.Place);
-            setSelectedPlace(placeNum);
-            setHighlightedPlace(placeNum);
-          }
-        }
-      });
-      
-      // 鼠标悬停时改变光标
-      map.on('mouseenter', 'cluster-fill', () => {
-        map.getCanvas().style.cursor = 'pointer';
-      });
-
-      // 鼠标离开时恢复光标
-      map.on('mouseleave', 'cluster-fill', () => {
-        map.getCanvas().style.cursor = '';
-      });
-      
-      console.log('图层添加成功');
-
-      // 自动计算并调整地图视野以显示所有数据
-      if (allFeatures.length > 0) {
-        try {
-          const bounds = new maplibregl.LngLatBounds();
-          let validCoordsCount = 0;
-          
-          // 采样策略：数据量大时只计算部分点以提高性能
-          const sampleStep = Math.max(1, Math.floor(allFeatures.length / 2000));
-          
-          // 遍历所有几何类型，计算边界框
-          for (let i = 0; i < allFeatures.length; i += sampleStep) {
-            const feature = allFeatures[i];
-            if (!feature.geometry?.coordinates) continue;
-            
-            const type = feature.geometry.type;
-            const coords = feature.geometry.coordinates;
-            
-            if (type === 'Point') {
-              bounds.extend(coords as [number, number]);
-              validCoordsCount++;
-            } else if (type === 'LineString' || type === 'MultiPoint') {
-              (coords as any[]).forEach(c => bounds.extend(c));
-              validCoordsCount++;
-            } else if (type === 'Polygon' || type === 'MultiLineString') {
-              (coords as any[])[0]?.forEach((c: any) => bounds.extend(c));
-              validCoordsCount++;
-            } else if (type === 'MultiPolygon') {
-              (coords as any[])[0]?.[0]?.forEach((c: any) => bounds.extend(c));
-              validCoordsCount++;
+        // 自动缩放
+        const allFeatures = mapData.features;
+        if (allFeatures.length > 0) {
+          try {
+            const bounds = new maplibregl.LngLatBounds();
+            const sampleStep = Math.max(1, Math.floor(allFeatures.length / 2000));
+            for (let i = 0; i < allFeatures.length; i += sampleStep) {
+              const feature = allFeatures[i];
+              if (!feature.geometry?.coordinates) continue;
+              const type = feature.geometry.type;
+              const coords = feature.geometry.coordinates;
+              if (type === 'Point') bounds.extend(coords as [number, number]);
+              else if (type === 'LineString' || type === 'MultiPoint') (coords as any[]).forEach(c => bounds.extend(c));
+              else if (type === 'Polygon' || type === 'MultiLineString') (coords as any[])[0]?.forEach((c: any) => bounds.extend(c));
+              else if (type === 'MultiPolygon') (coords as any[])[0]?.[0]?.forEach((c: any) => bounds.extend(c));
             }
-          }
-          
-          // 只有有效坐标时才调整视野
-          if (!bounds.isEmpty() && validCoordsCount > 0) {
-            console.log('Fit bounds to:', bounds.toArray());
-            // 只在首次加载时自动定位
-            if (!isMapInitialized.current) {
+            if (!bounds.isEmpty()) {
               map.fitBounds(bounds, { padding: 50, duration: 1000 });
-              isMapInitialized.current = true;
             }
-          } else {
-            console.warn('无法计算有效的边界框');
-          }
-        } catch (e) {
-          console.error('Fit bounds error:', e);
+          } catch (e) { console.error('Fit bounds error:', e); }
         }
+
+      } else {
+        // 更新已有数据源
+        const source = map.getSource('cluster') as maplibregl.GeoJSONSource;
+        source.setData(mapData);
       }
     };
 
-    console.log('地图样式是否加载完成:', map.isStyleLoaded());
-    console.log('总 features:', mapData.features.length);
-    console.log('当前 selectedPlace:', selectedPlace);
-    
-    // 等待地图样式加载完成后再添加图层
-    if (!map.isStyleLoaded()) {
-      console.log('等待地图样式加载完成...');
-      map.once('style.load', updateMapLayers);
+    // 2. 更新样式（颜色、筛选）
+    const updateStyles = () => {
+      if (!map.getLayer('cluster-fill')) return;
+
+      // 更新筛选
+      const filter = null;
+      
+      map.setFilter('cluster-fill', filter);
+      map.setFilter('cluster-line', filter);
+      map.setFilter('cluster-highlight', filter);
+
+      // 更新颜色
+      const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+        let min = Infinity, max = -Infinity;
+        for (const f of mapData.features) {
+          const v = Number(f.properties?.[activeAttribute]);
+          if (Number.isNaN(v) || v === -9999) continue;
+          if (v < min) min = v;
+          if (v > max) max = v;
+        }
+        return { min: min === Infinity ? 0 : min, max: max === -Infinity ? 0 : max };
+      })();
+      const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
+      const rActive = colorScaleMode === 'city' ? rCity : rGlobal;
+      const rangeMin = rActive.min;
+      const rangeMax = rActive.max;
+      
+      let fillColor: any;
+      if (activeAttribute.includes('K_')) {
+        const kMax = Math.round((attributeRanges[activeAttribute]?.max ?? rangeMax));
+        const allColors = Array.from({ length: 26 }, (_, i) => {
+           const t = i / 25;
+           let r: number, g: number, b: number;
+           if (t < 0.167) { const s = t / 0.167; r = 0; g = 0; b = Math.round(139 + (255 - 139) * s); }
+           else if (t < 0.333) { const s = (t - 0.167) / 0.167; r = 0; g = Math.round(255 * s); b = 255; }
+           else if (t < 0.5) { const s = (t - 0.333) / 0.167; r = 0; g = Math.round(255 - 128 * s); b = Math.round(255 - 255 * s); }
+           else if (t < 0.667) { const s = (t - 0.5) / 0.167; r = Math.round(255 * s); g = 255; b = 0; }
+           else if (t < 0.833) { const s = (t - 0.667) / 0.167; r = 255; g = Math.round(255 - 128 * s); b = 0; }
+           else { const s = (t - 0.833) / 0.167; r = 255; g = Math.round(127 - 127 * s); b = 0; }
+           return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        });
+        const kColors = Array.from({ length: kMax + 1 }, (_, i) => allColors[Math.round(i * 25 / kMax)]);
+        const selectedColors = kColors.slice(0, kMax + 1);
+        const colorSteps: any[] = ['interpolate', ['linear'], ['get', activeAttribute]];
+        for (let k = 0; k <= kMax; k++) { colorSteps.push(k, selectedColors[k]); }
+        fillColor = colorSteps;
+      } else if (activeAttribute === 'CoverRatio' || activeAttribute === 'ISF' || activeAttribute === 'GreenRatio') {
+        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#3182bd', rangeMax, '#e6550d'];
+      } else if (activeAttribute.includes('elev') || activeAttribute.includes('slope')) {
+        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#31a354', rangeMax, '#756bb1'];
+      } else {
+        fillColor = ['interpolate', ['linear'], ['get', activeAttribute], rangeMin, '#31a354', rangeMax, '#756bb1'];
+      }
+      
+      map.setPaintProperty('cluster-fill', 'fill-color', fillColor);
+      
+      // 更新透明度
+      const isPlaceSelected = selectedPlace !== null;
+      const selectedPlaceNum = Number(selectedPlace);
+      const baseOpacity: any = isPlaceSelected 
+        ? ['case', ['==', ['to-number', ['get', 'Place']], selectedPlaceNum], 0.8, 0.15]
+        : 0.7;
+      const invalidValue: any = ['any',
+        ['==', ['get', activeAttribute], -9999],
+        ['==', ['get', activeAttribute], null]
+      ];
+      const finalOpacity: any = ['case', invalidValue, 0, baseOpacity];
+      map.setPaintProperty('cluster-fill', 'fill-opacity', finalOpacity);
+    };
+
+    if (map.isStyleLoaded()) {
+      updateSource();
+      updateStyles();
     } else {
-      updateMapLayers();
+      map.once('load', () => {
+        updateSource();
+        updateStyles();
+      });
     }
   }, [mapData, selectedPlace, activeAttribute]);
 
@@ -742,10 +744,10 @@ const ClusteringGeoMap: React.FC = () => {
     const map = mapRef.current;
     if (!map) return;
     
-    // 筛选出属于该 Place 的所有要素
-    const features = mapData.features.filter(
-      (f: any) => Number(f.properties?.Place) === Number(selectedPlace)
-    );
+    const features = mapData.features.filter((f: any) => {
+      const city = f.properties?.Place;
+      return city !== undefined && Number(city) === Number(selectedPlace);
+    });
     
     if (features.length === 0) return;
     
@@ -753,10 +755,8 @@ const ClusteringGeoMap: React.FC = () => {
       const bounds = new maplibregl.LngLatBounds();
       let validCoordsCount = 0;
       
-      // 采样策略
       const sampleStep = Math.max(1, Math.floor(features.length / 2000));
       
-      // 计算边界
       for (let i = 0; i < features.length; i += sampleStep) {
         const feature = features[i];
         if (!feature.geometry?.coordinates) continue;
@@ -779,9 +779,7 @@ const ClusteringGeoMap: React.FC = () => {
         }
       }
       
-      // 飞行到目标区域
       if (!bounds.isEmpty() && validCoordsCount > 0) {
-        console.log('Fly to place:', selectedPlace, bounds.toArray());
         map.fitBounds(bounds, { padding: 50, duration: 1000 });
       }
     } catch (e) {
@@ -800,7 +798,7 @@ const ClusteringGeoMap: React.FC = () => {
   useEffect(() => {
     const initMap = async () => {
       // 防止重复初始化
-      if (!mapContainer.current || mapRef.current) return;
+      if (!mapContainer.current || mapRef.current)
       console.log('开始初始化地图...');
       try {
         // 创建 MapLibre 地图实例
@@ -843,7 +841,14 @@ const ClusteringGeoMap: React.FC = () => {
         });
 
         // 地图错误处理
-        map.on('error', (e) => {
+        map.on('error', (e: any) => {
+          const msg = String(e?.error?.message || e?.message || '');
+          const aborted =
+            msg.includes('ERR_ABORTED') ||
+            msg.includes('AbortError') ||
+            msg.includes('Canceled') ||
+            msg.includes('cancelled');
+          if (aborted) return;
           console.error('地图错误:', e);
         });
 
@@ -938,7 +943,7 @@ const ClusteringGeoMap: React.FC = () => {
       
       // 不支持的格式
       if (!isZip && !isShp) {
-        setError('请上传 .shp 或 .zip 文件 (包含 Shapefile)');
+        setError('请上传 .zip 文件 (包含 Shapefile)');
         setIsUploading(false);
         return;
       }
@@ -979,11 +984,11 @@ const ClusteringGeoMap: React.FC = () => {
       // 统计每个 Place 包含的要素数量
       const placeMap = new Map<number, PlaceInfo>();
       mapDataNew.features.forEach((feature: any) => {
-        const placeId = feature.properties?.Place ?? 0;
-        if (!placeMap.has(placeId)) {
-          placeMap.set(placeId, { id: placeId, name: `Place ${placeId}`, featureCount: 0 });
+        const cityId = Number(feature.properties?.Place ?? 0);
+        if (!placeMap.has(cityId)) {
+          placeMap.set(cityId, { id: cityId, name: `Place ${cityId}`, featureCount: 0 });
         }
-        const place = placeMap.get(placeId);
+        const place = placeMap.get(cityId);
         if (place) place.featureCount++;
       });
       
@@ -1051,8 +1056,8 @@ const ClusteringGeoMap: React.FC = () => {
    * 6. 右侧图例（showLegend 时显示）
    */
   return (
-    // 主容器：占满全屏，灰色背景
-    <div className="relative w-full h-screen bg-gray-100">
+    // 主容器：占满父容器高度，灰色背景
+    <div className="relative w-full h-full bg-gray-100">
       {/* ===== 条件渲染 1: 文件上传进度弹窗 ===== */}
       {isUploading && (
         <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center">
@@ -1161,14 +1166,10 @@ const ClusteringGeoMap: React.FC = () => {
             <span className="text-sm text-gray-600">显示地图底图</span>
             <button
               onClick={() => setShowMap(!showMap)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                showMap ? 'bg-purple-600' : 'bg-gray-300'
-              }`}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showMap ? 'bg-purple-600' : 'bg-gray-300'}`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  showMap ? 'translate-x-6' : 'translate-x-1'
-                }`}
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showMap ? 'translate-x-6' : 'translate-x-1'}`}
               />
             </button>
           </div>
@@ -1177,7 +1178,7 @@ const ClusteringGeoMap: React.FC = () => {
           <div className="space-y-3">
             {/* Place 选择 */}
             <div>
-              <label className="text-xs font-medium text-gray-500 block mb-1">Place ID</label>
+              <label className="text-xs font-medium text-gray-500 block mb-1">Place (Count)</label>
               <select
                 value={selectedPlace ?? ''}
                 onChange={(e) => setSelectedPlace(e.target.value ? Number(e.target.value) : null)}
@@ -1220,6 +1221,7 @@ const ClusteringGeoMap: React.FC = () => {
                   <div><span className="text-gray-400">Min:</span> <span className="font-medium">{stats.min.toFixed(2)}</span></div>
                   <div><span className="text-gray-400">Max:</span> <span className="font-medium">{stats.max.toFixed(2)}</span></div>
                   <div><span className="text-gray-400">Mean:</span> <span className="font-medium">{stats.mean.toFixed(2)}</span></div>
+                  <div><span className="text-gray-400">NaN:</span> <span className="font-medium">{stats.nanCount}</span></div>
                 </div>
               </div>
             )}
@@ -1243,7 +1245,21 @@ const ClusteringGeoMap: React.FC = () => {
           <div className="flex justify-between items-start mb-4">
             <div>
               <div className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Feature Details</div>
-              <div className="text-lg font-semibold text-purple-600 mb-3">Place {selectedFeature.properties.Place}</div>
+              <div className="mb-3">
+                {selectedFeature.properties.Place && (
+                  <div className="text-lg font-semibold text-purple-600">
+                    Place: {selectedFeature.properties.Place}
+                  </div>
+                )}
+                {selectedFeature.properties['City Name'] && (
+                  <div className="text-sm font-medium text-gray-700">
+                    City: {selectedFeature.properties['City Name']}
+                  </div>
+                )}
+                <div className="text-sm font-medium text-gray-500">
+                   Place ID: {selectedFeature.properties['Place ID'] ?? 'N/A'}
+                </div>
+              </div>
             </div>
             <button 
               onClick={() => setShowFeaturePopup(false)}
@@ -1297,10 +1313,19 @@ const ClusteringGeoMap: React.FC = () => {
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-gray-800 flex items-center gap-2">
               <Layers size={16} />
-              图例
+              Legend
             </h3>
             <button onClick={() => setShowLegend(false)} className="text-gray-400 hover:text-gray-600">
               <X size={16} />
+            </button>
+          </div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs text-gray-500">颜色映射</span>
+            <button
+              onClick={() => setColorScaleMode(colorScaleMode === 'global' ? 'city' : 'global')}
+              className={`text-xs px-2 py-1 rounded ${colorScaleMode === 'global' ? 'bg-gray-200 text-gray-700' : 'bg-purple-100 text-purple-700'}`}
+            >
+              {colorScaleMode === 'global' ? '全局' : '城市'}
             </button>
           </div>
           
@@ -1355,15 +1380,53 @@ const ClusteringGeoMap: React.FC = () => {
             // 覆盖率属性：蓝到橙渐变
             : activeAttribute === 'CoverRatio' || activeAttribute === 'ISF' || activeAttribute === 'GreenRatio' ? (
               (() => {
-                const r = attributeRanges[activeAttribute] || { min: 0, max: 1 };
+                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                  let min = Infinity, max = -Infinity;
+                  for (const f of mapData.features) {
+                    const v = Number(f.properties?.[activeAttribute]);
+                    if (Number.isNaN(v) || v === -9999) continue;
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                  }
+                  return { min: min === Infinity ? 0 : min, max: max === -Infinity ? 0 : max };
+                })();
+                const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
+                const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
+                const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const baseStart = hexToRgb('#3182bd');
+                const baseEnd = hexToRgb('#e6550d');
+                const startColor = lerpColor(baseStart, baseEnd, startPct);
+                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
                 return (
                   <div>
-                    <div className="text-xs text-gray-500 mb-2">{ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute}</div>
-                    <div className="h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, #3182bd, #e6550d)' }}></div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>{r.min.toFixed(2)}</span>
-                      <span>{r.max.toFixed(2)}</span>
-                    </div>
+                    {colorScaleMode === 'city' && (
+                      <>
+                        <div className="text-xs text-gray-500 mb-2">{label}（城市区间）</div>
+                        <div className="relative h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, rgba(49,130,189,0.2), rgba(230,85,13,0.2))' }}>
+                          {selectedPlace !== null && (
+                            <div
+                              className="absolute top-0 h-3 rounded ring-1 ring-black/20"
+                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                            />
+                          )}
+                        </div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rCity.min.toFixed(2)}</span>
+                          <span>{rCity.max.toFixed(2)}</span>
+                        </div>
+                      </>
+                    )}
+                    {colorScaleMode === 'global' && (
+                      <div className="mt-2">
+                        <div className="text-xs text-gray-500 mb-1">{label}（全局）</div>
+                        <div className="h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, #3182bd, #e6550d)' }}></div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rGlobal.min.toFixed(2)}</span>
+                          <span>{rGlobal.max.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })()
@@ -1371,37 +1434,113 @@ const ClusteringGeoMap: React.FC = () => {
             // 高程/坡度属性：绿到紫渐变
             : activeAttribute.includes('elev') || activeAttribute.includes('slope') ? (
               (() => {
-                const r = attributeRanges[activeAttribute] || { min: 0, max: 500 };
+                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                  let min = Infinity, max = -Infinity;
+                  for (const f of mapData.features) {
+                    const v = Number(f.properties?.[activeAttribute]);
+                    if (Number.isNaN(v) || v === -9999) continue;
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                  }
+                  return { min: min === Infinity ? 0 : min, max: max === -Infinity ? 0 : max };
+                })();
+                const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
+                const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
+                const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const baseStart = hexToRgb('#31a354');
+                const baseEnd = hexToRgb('#756bb1');
+                const startColor = lerpColor(baseStart, baseEnd, startPct);
+                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
                 return (
                   <div>
-                    <div className="text-xs text-gray-500 mb-2">{ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute}</div>
-                    <div className="h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, #31a354, #756bb1)' }}></div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>{r.min.toFixed(1)}</span>
-                      <span>{r.max.toFixed(0)}+</span>
-                    </div>
+                    {colorScaleMode === 'city' && (
+                      <>
+                        <div className="text-xs text-gray-500 mb-2">{label}（城市区间，映射到全局色带）</div>
+                        <div className="relative h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, rgba(49,163,84,0.2), rgba(117,107,177,0.2))' }}>
+                          {selectedPlace !== null && (
+                            <div
+                              className="absolute top-0 h-3 rounded ring-1 ring-black/20"
+                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                            />
+                          )}
+                        </div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rCity.min.toFixed(1)}</span>
+                          <span>{rCity.max.toFixed(0)}+</span>
+                        </div>
+                      </>
+                    )}
+                    {colorScaleMode === 'global' && (
+                      <div className="mt-2">
+                        <div className="text-xs text-gray-500 mb-1">{label}（全局）</div>
+                        <div className="h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, #31a354, #756bb1)' }}></div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rGlobal.min.toFixed(1)}</span>
+                          <span>{rGlobal.max.toFixed(0)}+</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })()
             ) 
-            // 默认：显示属性名
+            // 默认：灰度渐变
             : (
-              <div className="text-xs text-gray-500">
-                {ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute}
-              </div>
+              (() => {
+                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                  let min = Infinity, max = -Infinity;
+                  for (const f of mapData.features) {
+                    const v = Number(f.properties?.[activeAttribute]);
+                    if (Number.isNaN(v) || v === -9999) continue;
+                    if (v < min) min = v;
+                    if (v > max) max = v;
+                  }
+                  return { min: min === Infinity ? 0 : min, max: max === -Infinity ? 0 : max };
+                })();
+                const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
+                const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
+                const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const baseStart = hexToRgb('#31a354');
+                const baseEnd = hexToRgb('#756bb1');
+                const startColor = lerpColor(baseStart, baseEnd, startPct);
+                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
+                return (
+                  <div>
+                    {colorScaleMode === 'city' && (
+                      <>
+                        <div className="text-xs text-gray-500 mb-2">{label}（城市区间，映射到全局色带）</div>
+                        <div className="relative h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, rgba(49,163,84,0.2), rgba(117,107,177,0.2))' }}>
+                          {selectedPlace !== null && (
+                            <div
+                              className="absolute top-0 h-3 rounded ring-1 ring-black/20"
+                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                            />
+                          )}
+                        </div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rCity.min.toFixed(2)}</span>
+                          <span>{rCity.max.toFixed(2)}</span>
+                        </div>
+                      </>
+                    )}
+                    {colorScaleMode === 'global' && (
+                      <div className="mt-2">
+                        <div className="text-xs text-gray-500 mb-1">{label}（全局）</div>
+                        <div className="h-3 rounded overflow-hidden" style={{ background: 'linear-gradient(to right, #31a354, #756bb1)' }}></div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{rGlobal.min.toFixed(2)}</span>
+                          <span>{rGlobal.max.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()
             )}
-            
-            {/* 统计信息 */}
-            {stats && (
-              <div className="pt-2 border-t border-gray-200">
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div><span className="text-gray-400">Count:</span> <span className="font-medium">{stats.count}</span></div>
-                  <div><span className="text-gray-400">Min:</span> <span className="font-medium">{stats.min.toFixed(2)}</span></div>
-                  <div><span className="text-gray-400">Max:</span> <span className="font-medium">{stats.max.toFixed(2)}</span></div>
-                  <div><span className="text-gray-400">Mean:</span> <span className="font-medium">{stats.mean.toFixed(2)}</span></div>
-                </div>
-              </div>
-            )}
+
+
           </div>
         </div>
       )}
