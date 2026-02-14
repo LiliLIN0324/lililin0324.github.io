@@ -1,368 +1,196 @@
-export const projects = [
-  {
-    id: "01",
-    slug: "cluster-visualizer-3d",
-    title: "Cluster Visualizer 3D",
-    category: "Global heat mapping",
-    year: "2024-present",
-    description: "A 3D exploration of high-dimensional data clusters using PCA and K-Means.",
-    tech: ["Python", "Three.js", "React"],
-    hasDemo: true,
-    details: {
-      abstract: "An interactive 3D visualization tool that enables users to explore clustered high-dimensional datasets. By applying PCA for dimensionality reduction and K-Means for clustering, project visualizes complex data patterns in an intuitive manner.",
-      challenge: "compressed 223 cities in global data and revelas pattern from window period of time-series data from 2017 to 2019 with both day and night time data",
-      solution: "Implemented PCA to reduce dimensions while preserving variance, and K-Means to identify clusters. Leveraged Three.js for rendering and React for UI management, ensuring smooth interactivity and performance.",
-      logo: "/data/fig/global_logo.jpg",
-      image: ["/data/fig/global-5.jpg", "/data/fig/global-12.jpg", "/data/fig/global-20.jpg", "/data/fig/global-26.jpg"],
-    },
-  },
-  {
-    id: "02",
-    slug: "knowledge-graph-urban-planning",
-    title: "Knowledge Graph Generation from Urban Planning Texts",
-    category: "Knowledge Graph",
-    year: "2025-present",
-    description: "A Comparative Analysis for Climate Change Adaptation in New York and Shanghai Master Plans",
-    tech: ["Knowledge Graph", "NLP"],
-    details: {
-      abstract: "Urban planners often struggle to learn from other cities' master plans, especially when these documents are lengthy, context-specific, and written in different languages. These challenges are further compounded by diverse social, economic, and cultural contexts. This study addresses these issues by creating expertise-informed knowledge graphs (KGs) from master plans of New York City and Shanghai—two cities with distinct linguistic, cultural, and governance contexts. We define ten core concepts—five related to climate change adaptation and five to urban planning—based on expert knowledge, and apply both traditional natural language processing (NLP) methods and emerging large language models (LLMs) to estimate node weights and relational edges. The traditional methods include simple word frequency, TF-IDF, and conventional topic modeling, while the LLM-based method leverages the power of generative LLMs such as ChatGPT for semantic relationship extraction. Expert validation shows that while LLM-based methods capture nuanced relationships more effectively, their 【black box】 nature limits interpretability. To address this, we propose a hybrid LLM approach that integrates explainable NLP techniques (such as coexistence frequency and semantic similarity) and LLM-based topic modeling. The resulting KGs reveal the difference between the two master plans: New York prioritizes resilience and equity, while Shanghai emphasizes sustainable development and balanced urbanization. By comparing these KGs, we demonstrate the potential of the hybrid approach in facilitating knowledge sharing and policy adaptation across diverse urban contexts. This scalable framework can be applied globally to analyze urban planning documents, providing more context-sensitive adaptation strategies. Furthermore, it offers a foundation for future research to extend this methodology to additional cities or incorporate temporal changes, deepening insights into urban adaptation planning and fostering more resilient cities worldwide.",
-      solution: "Traditional natural language processing (NLP) techniques and generative large language models (LLMs) are then applied to generate and compare the edges connecting these nodes.",
-      challenge: "Expert validation reveals that while LLM-based methods capture semantic nuances more effectively, they often lack the interpretability crucial for practical implementation.",
-      logo: "/data/fig/kg_logo.jpg",
-      image: ["/data/fig/kg_figure.jpg"],
-    },
-  },
-  {
-    id: "03",
-    slug: "local-climate-zones-urban-heat-resilience",
-    title: "Local Climate Zones and Urban Heat Resilience",
-    category: "GIS & Spatial Analysis",
-    year: "2025-present",
-    description: "An empirical study in different climate zones in United States",
-    tech: ["GIS", "Spatial Analysis"],
-    details: {
-      abstract: "As climate change intensifies, understanding heat resilience (HR) in urban environments is crucial for developing climate-resilient cities. While numerous studies have examined the relationship between urban form and urban heat islands (UHI), few have focused on HR, often limiting their analysis to single extreme heat events. Additionally, translating complex urban form findings into practical urban planning policies remains challenging. The concept of local climate zones (LCZ) offers a thermally-based classification of urban forms, which is more accessible for policymakers. However, most LCZ studies focus on UHI, with little attention to HR. This study addresses this gap by analyzing the relationship between LCZs and HR in New York City. HR is defined as the difference in land surface temperature (LST) between extreme heat and normal heat days. Using Landsat 8 imagery from 2010 to 2019 and selecting days with minimal cloud cover, the study identifies three pairs of heat events based on air temperature percentiles. LCZ map and GIS data, combined with census tract information, are analyzed using a spatial panel model to assess the influence of different LCZs and large-scale landscapes on HR. The results reveal that LCZ 1 (Compact high-rise) and LCZ 4 (Open high-rise) significantly increase HR compared to LCZ 2 (Compact mid-rise), while LCZ 3 (Compact low-rise) reduces HR. Additionally, HR is significantly elevated during extreme events with higher temperatures in normal heat days and greater temperature increases between normal and extreme heat days. These insights offer valuable guidance for urban planners and policymakers in designing heat-resilient cities by incorporating the LCZ framework into climate adaptation strategies and urban governance.",
-      solution: "Using Landsat 8 imagery from 2010 to 2019 and selecting days with minimal cloud cover, the study identifies three pairs of heat events based on air temperature percentiles.",
-      challenge: "Translating complex urban form findings into practical urban planning policies remains challenging.",
-      logo: "/data/fig/lcz_logo.jpg",
-      image: ["/data/fig/lcz_figure.jpg"],
-    },
-  },
-  {
-    id: "04",
-    slug: "urban-heat-resilience-machine-learning",
-    title: "Assessing Urban Heat Resilience",
-    category: "Machine Learning",
-    year: "2025-present",
-    description: "Revealing nonlinear relationships between urban form factors and extreme heat with an explainable machine learning approach",
-    tech: ["GIS", "Machine Learning"],
-    details: {
-      abstract: "Climate change has been a pressing global issue in recent decades as it increasingly influences human life through extreme weather, ecosystem collapse, and food crises. Extreme heat is particularly exacerbated by the urban heat island (UHI) effect in cities. Numerous studies have empirically investigated the link between urban form factors and surface Urban Heat Islands (UHI), but few have studied how UHI changes in response to an extreme heat event, conceptualized as heat resilience in recent studies. Additionally, the majority of existing studies have relied on traditional regression models that assume linear relationships. To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods. The GBDT models demonstrated superior predictive accuracy, as evidenced by the lowest mean squared error (MSE). In addition, the results indicate that urban form factors have nonlinear relationships with urban land surface extreme heat and associated heat resilience. These findings have valuable implications for urban planning practice aimed at developing heat-resilient cities.",
-      solution: "To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods.",
-      challenge: "The majority of existing studies have relied on traditional regression models that assume linear relationships.",
-      logo: "/data/fig/ml_logo.jpg",
-      image: ["/data/fig/AAAI2026.jpg"],
-    },
-  },
-  {
-    id: "05",
-    slug: "participatory-urban-regeneration-empowered-by-artificial-intelligence",
-    title: "Participatory Urban Regeneration Empowered by Artificial Intelligence",
-    category: "Urban regeneration, participatory urban planning",
-    year: "2025-present",
-    description: "Using AI techniques to build a platform to encourage stakeholders joining in urban regeneration",
-    tech: ["diffusion models"],
-    hasDemo: true,
-    details: {
-      abstract: "This project integrates generative artificial intelligence techniques, including diffusion models, with large language model-based multi-agent mechanisms to develop a participatory urban regeneration framework that facilitates public interaction and multi-stakeholder engagement. Taking the area surrounding the initial development zone of Shanghai Wusong Innovation City as a case study, the framework incorporates urban spatial morphology, behavioral activity patterns, and urban heat island indicators into the early formulation of urban design guidelines, with the aim of achieving a participatory, efficient, and responsive pathway to urban regeneration.",
-      solution: "https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm",
-      challenge: "",
-      logo: "/data/fig/PU_logo.jpg",
-      image: ["/data/fig/PU-1.jpg", "/data/fig/PU-2.jpg"],
-    },
-  },
-  {
-    id: "06",
-    slug: "heatmapper",
-    title: "HeatMapper - Global Heat Monitoring",
-    category: "urban heat island, extreme heat, participation",
-    year: "2025-present",
-    description: "A web-based platform for global heat monitoring and visualization",
-    tech: ["React", "Three.js", "D3.js", "Node.js"],
-    hasDemo: true,
-    details: {
-      abstract: "HeatMapper is a comprehensive web platform designed to monitor and visualize global heat patterns. It provides real-time data on urban heat islands, extreme heat events, and temperature trends across different regions. The platform aims to raise awareness about heat-related issues and support informed decision-making for urban planning and climate adaptation.",
-      challenge: "Integrating real-time temperature data from multiple sources and presenting it in an intuitive, interactive visualization that allows users to explore heat patterns at different scales.",
-      solution: "Developed a responsive web application using React for the frontend, Three.js for 3D visualizations, D3.js for data visualizations, and Node.js for the backend. Implemented data integration pipelines to aggregate temperature data from various sources and created interactive maps and charts for user exploration.",
-      logo: "/data/fig/HeatMapper_logo.jpg",
-      image: ["/data/fig/heatmapper-1.png", "/data/fig/heatmapper-2.png"],
-    },
+import clusterVisualizer3dMd from './projects/planning/01_cluster-visualizer-3d.md?raw';
+import knowledgeGraphUrbanPlanningMd from './projects/planning/02_knowledge-graph-urban-planning.md?raw';
+import localClimateZonesUrbanHeatResilienceMd from './projects/planning/03_local-climate-zones-urban-heat-resilience.md?raw';
+import urbanHeatResilienceMachineLearningMd from './projects/planning/04_urban-heat-resilience-machine-learning.md?raw';
+import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/05_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
+import heatmapperMd from './projects/planning/06_heatmapper.md?raw';
+
+import pinpin1037Md from './projects/design/01_1037pinpin.md?raw';
+import perslearnMd from './projects/design/02_perslearn.md?raw';
+import dragonDiffussionMd from './projects/design/03_dragon-diffussion.md?raw';
+import genstyleMd from './projects/design/04_genstyle.md?raw';
+import baziFengshuiAnalysisMd from './projects/design/05_bazi-fengshui-analysis.md?raw';
+import genshotAIVideoGenerationToolMd from './projects/design/06_genshot-AI-video-generation-tool.md?raw';
+import riffleAiGameGenerationToolMd from './projects/design/07_riffle-ai-game-generation-tool.md?raw';
+
+import kittylovecarrotsMd from './projects/games/01_kittylovecarrots.md?raw';
+import howToBuildGameInWechatMiniProgramMd from './projects/games/02_how-to-build-game-in-wechat-mini-program.md?raw';
+
+import litflowMd from './projects/platform/01_litflow.md?raw';
+import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
+import epsteinMysteryArchiveMd from './projects/platform/03_epstein-mystery-archive.md?raw';
+
+import howToAddOpenstreetmapInWebsiteMd from './projects/tutorials/01_how-to-add-openstreetmap-in-website.md?raw';
+import howToGetSequentialEventsFromPhotoByPhoneMd from './projects/tutorials/02_how-to-get-sequential-events-from-photo-by-phone.md?raw';
+import howToVisualizePhotoGeolocationDataOnMapMd from './projects/tutorials/03_how-to-visualize-photo-geolocation-data-on-map.md?raw';
+import howToConductTimeGeoSequentialClusteringFromAlbumMd from './projects/tutorials/04_how-to-conduct-time-geo-sequential-clustering-from-album.md?raw';
+import howToConstructDockerMd from './projects/tutorials/05_how-to-construct-docker.md?raw';
+import howToConstructWorkflowInDifyMd from './projects/tutorials/06_how-to-construct-workflow-in-dify.md?raw';
+
+
+
+function parseMarkdown(markdownContent: string) {
+  const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+  const match = markdownContent.match(frontmatterRegex);
+  
+  let data: Record<string, any> = {};
+  let content = markdownContent;
+  
+  if (match) {
+    const frontmatterStr = match[1];
+    content = markdownContent.slice(match[0].length).trim();
+    
+    const lines = frontmatterStr.split('\n');
+    let currentKey: string | null = null;
+    let currentValue: string[] = [];
+    
+    lines.forEach(line => {
+      const trimmedLine = line.trim();
+      
+      if (trimmedLine === '') {
+        if (currentKey && currentValue.length > 0) {
+          data[currentKey] = currentValue.join('\n');
+          currentKey = null;
+          currentValue = [];
+        }
+        return;
+      }
+      
+      const colonIndex = line.indexOf(':');
+      
+      if (colonIndex !== -1 && !line.startsWith(' ')) {
+        if (currentKey) {
+          data[currentKey] = currentValue.join('\n');
+        }
+        
+        currentKey = line.slice(0, colonIndex).trim();
+        let value = line.slice(colonIndex + 1).trim();
+        
+        if (value === '|') {
+          currentValue = [];
+        } else {
+          data[currentKey] = value;
+          currentKey = null;
+          currentValue = [];
+        }
+      } else if (currentKey && line.startsWith('  ')) {
+        currentValue.push(line.slice(2));
+      }
+    });
+    
+    if (currentKey) {
+      data[currentKey] = currentValue.join('\n');
+    }
+    
+    Object.keys(data).forEach(key => {
+      let value: any = data[key];
+      
+      if (typeof value === 'string') {
+        value = value.trim();
+        
+        if (value.startsWith('"') && value.endsWith('"')) {
+          value = value.slice(1, -1);
+        }
+        
+        if (value.startsWith('[') && value.endsWith(']')) {
+          try {
+            data[key] = JSON.parse(value);
+          } catch {
+            data[key] = [value.slice(1, -1).trim()];
+          }
+        } else if (value === 'true') {
+          data[key] = true;
+        } else if (value === 'false') {
+          data[key] = false;
+        } else if (!isNaN(Number(value)) && value.trim() !== '') {
+          data[key] = Number(value);
+        } else {
+          data[key] = value;
+        }
+      }
+    });
   }
+  
+  return {
+    id: data.id || '',
+    slug: data.slug || '',
+    title: data.title || '',
+    category: data.category || '',
+    year: data.year || '',
+    description: data.description || '',
+    tech: data.tech || [],
+    abstract: data.abstract || '',
+    challenge: data.challenge || '',
+    solution: data.solution || '',
+    hasDemo: data.hasDemo || false,
+    icon: data.icon || '',
+    code: data.code || '',
+    logo: data.icon || '',
+    image: data.image || [],
+    content: content
+  };
+}
+
+function createProject(mdContent: string) {
+  const parsed = parseMarkdown(mdContent);
+  return {
+    id: parsed.id,
+    slug: parsed.slug,
+    title: parsed.title,
+    category: parsed.category,
+    year: parsed.year,
+    description: parsed.description,
+    tech: parsed.tech,
+    hasDemo: parsed.hasDemo,
+    details: {
+      abstract: parsed.abstract,
+      description: parsed.description,
+      challenge: parsed.challenge,
+      solution: parsed.solution,
+      logo: parsed.logo,
+      icon: parsed.icon,
+      code: parsed.code,
+      image: parsed.image,
+      content: parsed.content
+    }
+  };
+}
+
+export const projects = [
+  createProject(clusterVisualizer3dMd),
+  createProject(knowledgeGraphUrbanPlanningMd),
+  createProject(localClimateZonesUrbanHeatResilienceMd),
+  createProject(urbanHeatResilienceMachineLearningMd),
+  createProject(participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd),
+  createProject(heatmapperMd)
 ];
 
 export const designProjects = [
-  {
-    id: "01",
-    slug: "1037pinpin",
-    title: "1037pinpin - Campus Item Exchange Platform",
-    category: "UI&UX Design",
-    year: "2023",
-    description: "A campus-based item exchange platform facilitating sustainable sharing among students.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      image: ["/data/fig/1037pinpin.jpg"],
-      logo: "/data/fig/1037pinpin_logo.jpg",
-    },
-  },
-  {
-    id: "02",
-    slug: "perslearn",
-    title: "persLEARN - Educational Platform for Scientific Thinking",
-    category: "UI&UX Design",
-    year: "2023",
-    description: "An educational platform aimed at helping students develop scientific thinking through interactive modules.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      image: ["/data/fig/persLEARN.jpg"],
-      logo: "/data/fig/persLEARN_logo.jpg",
-    },
-  },
-  {
-    id: "03",
-    slug: "dragon-diffussion",
-    title: "Dragon Diffussion - AI Image Generation Tool",
-    category: "UI&UX Design",
-    year: "2024",
-    description: "An AI-powered image generation tool that transforms text prompts into high-quality visuals platform.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      image: ["/data/fig/DragonDiffusion.jpg"],
-      logo: "/data/fig/DragonDiffusion_logo.jpg",
-    },
-  },
-  {
-    id: "04",
-    slug: "genstyle",
-    title: "Genstyle - Daily Outfit Inspiration Delivered",
-    category: "UI&UX Design",
-    year: "2025",
-    description: "An AI-powered fashion app that curates daily outfit inspirations based on user preferences and trends.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      image: ["/data/fig/Genstyle.jpg"],
-      logo: "/data/fig/Genstyle_logo.jpg",
-    },
-  },
-  {
-    id: "05",
-    slug: "bazi-fengshui-analysis",
-    title: "Bazi - Fengshui Analysis Application",
-    category: "UI&UX Design",
-    year: "2025",
-    description: "An app that provides personalized AI Fengshui insights based on users' birth data and environmental factors.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      abstract: "This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korean users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner.",
-      image: ["/data/fig/Bazi.jpg"],
-      logo: "/data/fig/Bazi_logo.jpg",
-    },
-  },
-  {
-    id: "06",
-    slug: "genshot-AI-video-generation-tool",
-    title: "Genshot - AI videos Generation Tool",
-    category: "UI&UX Design",
-    year: "2025",
-    description: "An AI-powered image generation tool that transforms text prompts into high-quality visuals platform.",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      image: ["/data/fig/Genshot.jpg"],
-      logo: "/data/fig/Genshot_logo.jpg",
-    },
-  },
-  {
-    id: "07",
-    slug: "riffle-ai-game-generation-tool",
-    title: "Riffle - AI game Generation Tool",
-    category: "UI&UX Design",
-    year: "2026 - ongoing",
-    description: "An AI-powered game generation tool",
-    tech: ["Figma", "React", "TypeScript"],
-    details: {
-      abstract: "Riffle is an AI-powered game generation tool that leverages advanced artificial intelligence algorithms to create immersive and engaging gaming experiences. By just one word, users can generate unique game concepts, characters, and storylines tailored to their interests. The platform aims to democratize game development, allowing both aspiring and experienced developers to bring their creative visions to life with ease.",
-      image: ["/data/fig/Riffle.jpg"],
-      logo: "/data/fig/Riffle_logo.jpg",
-    },
-  },
+  createProject(pinpin1037Md),
+  createProject(perslearnMd),
+  createProject(dragonDiffussionMd),
+  createProject(genstyleMd),
+  createProject(baziFengshuiAnalysisMd),
+  createProject(genshotAIVideoGenerationToolMd),
+  createProject(riffleAiGameGenerationToolMd)
 ];
 
 export const gameProjects = [
-  {
-    id: "01",
-    slug: "kittylovecarrots",
-    title: "kittylovecarrots - found out carrots with drum rhythm",
-    category: "Game",
-    year: "2026-2 - on going",
-    description: "minigame in wechat.",
-    tech: ["WeChat Mini Program"],
-    details: {
-      abstract:" " ,
-      challenge: "Designing a game that is both fun and educational for children while also considering the challenges of game development.",
-      solution: "We developed a minigame called 'kittylovecarrots' that uses a drum rhythm to help children learn about carrots. The game features a simple yet engaging gameplay that allows children to explore the world of carrots in a fun and interactive way.",  
-      image: ["/data/fig/kittylovecarrots-1.png","/data/fig/kittylovecarrots-2.png"],
-      logo: "/data/fig/Kittylovecarrots_logo.jpg",
-    },
-  },
-  {
-    id: "02",
-    slug: "how-to-build-game-in-wechat-mini-program",
-    title: "How to build game in wechat mini program",
-    category: "Game",
-    year: "2026",
-    description: "A tutorial on building games in WeChat Mini Programs.",
-    tech: ["WeChat Mini Program", "Game Development"],
-    hasDemo: true,
-    details: {
-      description: "This tutorial explains how to build games in WeChat Mini Programs using the WeChat development framework and game development techniques.",
-      solution: "By following the WeChat Mini Program development guidelines and utilizing game development libraries, you can create engaging games for the WeChat platform. This tutorial provides step-by-step instructions and code examples to help you get started.",
-      challenge: "Developing games for WeChat Mini Programs requires understanding both the platform-specific APIs and general game development principles.",
-      image: ["/data/fig/wechatgame.png"],
-      logo: "/data/fig/wechatgame_logo.jpg",
-      code: "wechatgame.tsx"
-    },
-  },
+  createProject(kittylovecarrotsMd),
+  createProject(howToBuildGameInWechatMiniProgramMd)
 ];
 
-export const platformProjects =[
-  {
-  id:"01",
-  slug:"litflow",
-  title:"LitFlow - Research Hub",
-  category: "Platform",
-  year: "2026-1-13 ongoing",
-  description: "A platform for researchers to visualize their papers with summaries and keywords bubbles.",
-  tech: ["python", "React", "TypeScript"],
-  hasDemo: true,
-  details: {
-    abstract: "LitFlow is a platform designed to facilitate the sharing and discovery of research papers. It provides a platform for researchers to copy the links of papers, and for users to search and filter papers based on various criteria.",
-    challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of researchers and users.",
-    solution: "We developed LitFlow using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process.",
-    image: ["/data/fig/litflow (1).png", "/data/fig/litflow (2).png", "/data/fig/litflow (3).png", "/data/fig/litflow (4).png","/data/fig/litflow (5).png","/data/fig/litflow (6).png"],
-    logo: "/data/fig/LitFlow_logo.jpg",
-    code: "litflow.tsx"
-  }},
-  {
-    id: "02",
-    slug: "box-up-my-stuff-in-cyberspace",
-    title: "Box up my stuff in cyberspace",
-    category: "Platform",
-    year: "2026-2-8",
-    description: "an App that people could box up their belongings in cyberspace" ,
-    tech: ["python", "React", "TypeScript"],
-    hasDemo: true,
-    details: {
-      abstract: "Box up my stuff in cyberspace is an App that people could box up their belongings in cyberspace. It provides a platform for users to upload their belongings, and for other users to find and download them.",
-      challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users.",
-      solution: "We developed Box up my stuff in cyberspace using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process.",
-      image: ["/data/fig/boxupcyberspace-1.png", "/data/fig/boxupcyberspace-2.png"],
-      logo: "/data/fig/Boxupcyberspace_logo.jpg",
-      code: "boxupcyberspace.tsx"
-  }},
-    {
-      id: "03",
-      slug: "epstein-mystery-archive",
-      title: "Epstein Mystery Archive",
-      category: "Platform",
-      year: "2026-2-11 on going",
-      description: "An archive of the Epstein Mystery, a case of sexual assault perpetrated by a man in 1983.",
-      tech: ["python", "React", "TypeScript"],
-      hasDemo: true,
-      details: {
-        abstract: "The Epstein Mystery Archive is an online platform that provides a detailed account of the case of sexual assault perpetrated by a man in 1983. It features a chronological timeline, interviews with suspects and authorities, and a collection of photographs to support the case.",
-        challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users.",
-        solution: "We developed the Epstein Mystery Archive using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process.",
-        image: ["/data/fig/epsteinscret-1.png", "/data/fig/epsteinscret-2.png"],
-        logo: "/data/fig/EpsteinScret_logo.jpg",
-        code: "epsteinscret.tsx"
-    }
-    
-},
-
-
+export const platformProjects = [
+  createProject(litflowMd),
+  createProject(boxUpMyStuffInCyberspaceMd),
+  createProject(epsteinMysteryArchiveMd)
 ];
 
 export const tutorialProjects = [
-  {
-    id: "01",
-    slug: "how-to-add-openstreetmap-in-website",
-    title: "How to Add OpenStreetMap in Website",
-    category: "Tutorial",
-    year: "2026",
-    description: "A tutorial on integrating OpenStreetMap into a website.",
-    tech: ["python", "React", "TypeScript"],
-    hasDemo: true,
-    details: {
-      description: "This tutorial explains how to integrate OpenStreetMap into a website using React and JavaScript.",
-      solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.",
-      challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners. There had some limitations on the free version of OpenStreetMap, especially if your website is complicated. You need to apply for an API key from Maptiler. link: https://api.maptiler.com/maps/basic/style.json?key=you_API_key.",
-      content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
-      image: ["/data/fig/openstreetmap.png"],
-      logo: "/data/fig/useOpenstreetMap_logo.jpg",
-      code: "openstreetmap.tsx"
-    },
-  },
-  {
-    id: "02",
-    slug: "how-to-get-sequential-events-from-photo-by-phone",
-    title: "How to get sequential events from photo by phone",
-    category: "Tutorial",
-    year: "2026",
-    description: "A tutorial on extracting sequential events from photos taken on a phone.",
-    tech: ["Computer Vision", "Image Processing"],
-    hasDemo: true,
-    details: {
-      description: "This tutorial explains how to extract sequential events from photos taken on a phone using computer vision techniques.",
-      solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process.",
-      challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events.",
-      image: ["/data/fig/photogeo.png"],
-      logo: "/data/fig/Geophoto_logo.jpg",
-      code: "photogeo.tsx"
-    },
-  },
-  {
-    id: "03",
-    slug: "how-to-visualize-photo-geolocation-data-on-map",
-    title: "How to visualize photo geolocation data on map",
-    category: "Tutorial",
-    year: "2026",
-    description: "A tutorial on visualizing photo geolocation data on a map.",
-    tech: ["Mapping", "Image Processing"],
-    hasDemo: true,
-    details: {
-      description: "This tutorial explains how to visualize photo geolocation data on a map using mapping libraries and geospatial data processing techniques.",
-      solution: "By utilizing mapping libraries such as Leaflet or Mapbox, you can plot geolocation data extracted from photos onto interactive maps. This tutorial provides detailed instructions and code examples to help you create compelling visualizations.",
-      challenge: "Handling large datasets and ensuring accurate geospatial representation can be challenging when visualizing photo geolocation data.",
-      image: ["/data/fig/photogeomap.png"],
-      logo: "/data/fig/GeophotoMap_logo.jpg",
-      code: "photogeomap.tsx"
-    },
-  },
-  {
-    id:"04",
-    slug:"how-to-conduct-time-geo-sequential-clustering-from-album",
-    title:"How to conduct time-geo-sequential clustering from album",
-    category:"Tutorial",
-    year: "2026-2-6",
-    description:"A tutorial on conducting time-geo-sequential clustering from a photo album.",
-    tech: ["python", "Clustering", "Geospatial Data Processing"],
-    hasDemo:true,
-    details: {
-      abstract: "This tutorial explains how to conduct time-geo-sequential clustering from a photo album using clustering algorithms and geospatial data processing techniques.",
-      solution: "By leveraging clustering algorithms such as K-means or DBSCAN, you can group photos based on their temporal and spatial characteristics. This tutorial provides practical examples and code snippets to guide you through the process.",
-      challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data.",
-      image: ["/data/fig/photocluster-1.jpg", "/data/fig/photocluster-2.jpg"],
-      logo: "/data/fig/Clusteringevents_logo.jpg",
-      code: "clusteringevents.tsx"
-    },  
-  },
+  createProject(howToAddOpenstreetmapInWebsiteMd),
+  createProject(howToGetSequentialEventsFromPhotoByPhoneMd),
+  createProject(howToVisualizePhotoGeolocationDataOnMapMd),
+  createProject(howToConductTimeGeoSequentialClusteringFromAlbumMd),
+  createProject(howToConstructDockerMd),
+  createProject(howToConstructWorkflowInDifyMd),
 ];

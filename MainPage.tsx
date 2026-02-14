@@ -10,6 +10,7 @@ import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
 import { HomePage } from './src/components/HomePage';
 import ClusteringGeoMap from './src/clusteringeomap';
+import { GoogleTranslate } from './src/components/GoogleTranslate';
 
 
 const MainPage = () => {
@@ -110,7 +111,8 @@ const MainPage = () => {
               Lili Lin <span className="text-neutral-300 font-light mx-2">/</span> <span className="text-sm font-mono font-normal text-neutral-500">PORTFOLIO</span>
             </h1>
           </div>
-          <div className="flex items-center gap-0">
+          <div className="flex items-center gap-4">
+            <GoogleTranslate />
             <nav className="flex md:flex gap-0">
                 <Link
                   to="/"

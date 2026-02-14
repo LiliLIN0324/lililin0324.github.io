@@ -131,11 +131,14 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                           Images
                         </h3>
                         <div className="space-y-6">
-                          {project.details.image.map((imgSrc: string, index: number) => (
-                            <div key={index} className="border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                              <img src={imgSrc} alt={`${project.title} - ${index + 1}`} className="w-full h-auto object-cover" />
-                            </div>
-                          ))}
+                          {project.details.image.map((imgSrc: string, index: number) => {
+                            if (!imgSrc) return null;
+                            return (
+                              <div key={index} className="border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <img src={imgSrc} alt={`${project.title} - ${index + 1}`} className="w-full h-auto object-cover" />
+                              </div>
+                            );
+                          })}
                         </div>
                       </section>
                     )}

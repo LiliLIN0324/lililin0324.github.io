@@ -1,0 +1,10 @@
+[33m403f661[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fix: 修复城市范围色带宽度和颜色计算错误
+[33mdf64e62[m docs: 更新文档资源与构建产物
+[33m4b813b8[m chore: 更新构建产物并修正项目数据中的logo文件名
+[33ma8afc3d[m refactor(clusteringeomap): 移除JSZip依赖并简化数据解析逻辑
+[33m36add5d[m fix: 修正下载文件名并更新支持文件格式说明
+[33m6648d38[m feat: 添加地理聚类地图功能并优化UI组件
+[33ma73e433[m docs: 添加文档图片资源并更新index.html引用
+[33ma4f7eb4[m feat(平台): 添加BoxUpMyStuffInCyberspace和EpsteinScretArchive组件
+[33m7619667[m feat(平台): 添加LitFlow研究平台功能
+[33mf1d6c2e[m chore: 更新多个品牌logo图片文件
