@@ -307,7 +307,7 @@ export const tutorialProjects = [
       challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners. There had some limitations on the free version of OpenStreetMap, especially if your website is complicated. You need to apply for an API key from Maptiler. link: https://api.maptiler.com/maps/basic/style.json?key=you_API_key.",
       content: "This tutorial covers the basics of adding OpenStreetMap to your website, including setting up the map container, initializing the map, adding tile layers, and incorporating markers and GeoJSON data for enhanced interactivity.",
       image: ["/data/fig/openstreetmap.png"],
-      logo: "/data/fig/OpenstreetMap_logo.jpg",
+      logo: "/data/fig/useOpenstreetMap_logo.jpg",
       code: "openstreetmap.tsx"
     },
   },

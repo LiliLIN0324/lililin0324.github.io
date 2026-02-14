@@ -1,1 +1,0 @@
-import{j as e}from"./vendor-DZAo0AJL.js";import"./maplibre-BkiGPtbL.js";const i=()=>e.jsx("div",{className:"litflow-container",style:{width:"100%",height:"100vh"},children:e.jsx("iframe",{src:"box-up-stuff-in-cyberspace.vercel.app",title:"LitFlow - Research Hub",style:{width:"100%",height:"100%",border:"none"},loading:"lazy"})});export{i as default};
