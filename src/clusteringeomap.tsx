@@ -664,7 +664,7 @@ const ClusteringGeoMap: React.FC = () => {
       map.setFilter('cluster-highlight', filter);
 
       // 更新颜色
-      const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+      const rGlobal = (() => {
         let min = Infinity, max = -Infinity;
         for (const f of mapData.features) {
           const v = Number(f.properties?.[activeAttribute]);
@@ -1380,7 +1380,7 @@ const ClusteringGeoMap: React.FC = () => {
             // 覆盖率属性：蓝到橙渐变
             : activeAttribute === 'CoverRatio' || activeAttribute === 'ISF' || activeAttribute === 'GreenRatio' ? (
               (() => {
-                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                const rGlobal = (() => {
                   let min = Infinity, max = -Infinity;
                   for (const f of mapData.features) {
                     const v = Number(f.properties?.[activeAttribute]);
@@ -1393,11 +1393,12 @@ const ClusteringGeoMap: React.FC = () => {
                 const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
                 const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
                 const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
-                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const endPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = Math.max(0, endPct - startPct);
                 const baseStart = hexToRgb('#3182bd');
                 const baseEnd = hexToRgb('#e6550d');
                 const startColor = lerpColor(baseStart, baseEnd, startPct);
-                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
+                const endColor = lerpColor(baseStart, baseEnd, endPct);
                 return (
                   <div>
                     {colorScaleMode === 'city' && (
@@ -1407,7 +1408,7 @@ const ClusteringGeoMap: React.FC = () => {
                           {selectedPlace !== null && (
                             <div
                               className="absolute top-0 h-3 rounded ring-1 ring-black/20"
-                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                          style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
                             />
                           )}
                         </div>
@@ -1434,7 +1435,7 @@ const ClusteringGeoMap: React.FC = () => {
             // 高程/坡度属性：绿到紫渐变
             : activeAttribute.includes('elev') || activeAttribute.includes('slope') ? (
               (() => {
-                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                const rGlobal = (() => {
                   let min = Infinity, max = -Infinity;
                   for (const f of mapData.features) {
                     const v = Number(f.properties?.[activeAttribute]);
@@ -1447,11 +1448,12 @@ const ClusteringGeoMap: React.FC = () => {
                 const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
                 const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
                 const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
-                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const endPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = Math.max(0, endPct - startPct);
                 const baseStart = hexToRgb('#31a354');
                 const baseEnd = hexToRgb('#756bb1');
                 const startColor = lerpColor(baseStart, baseEnd, startPct);
-                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
+                const endColor = lerpColor(baseStart, baseEnd, endPct);
                 return (
                   <div>
                     {colorScaleMode === 'city' && (
@@ -1461,7 +1463,7 @@ const ClusteringGeoMap: React.FC = () => {
                           {selectedPlace !== null && (
                             <div
                               className="absolute top-0 h-3 rounded ring-1 ring-black/20"
-                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                          style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
                             />
                           )}
                         </div>
@@ -1488,7 +1490,7 @@ const ClusteringGeoMap: React.FC = () => {
             // 默认：灰度渐变
             : (
               (() => {
-                const rGlobal = attributeRanges[activeAttribute] ?? (() => {
+                const rGlobal = (() => {
                   let min = Infinity, max = -Infinity;
                   for (const f of mapData.features) {
                     const v = Number(f.properties?.[activeAttribute]);
@@ -1501,11 +1503,12 @@ const ClusteringGeoMap: React.FC = () => {
                 const rCity = selectedPlace !== null && stats ? { min: stats.min, max: stats.max } : rGlobal;
                 const label = ATTRIBUTES.find(a => a.key === activeAttribute)?.label || activeAttribute;
                 const startPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.min - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
-                const widthPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rCity.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const endPct = rGlobal.max > rGlobal.min ? Math.max(0, Math.min(1, (rCity.max - rGlobal.min) / (rGlobal.max - rGlobal.min))) : 0;
+                const widthPct = Math.max(0, endPct - startPct);
                 const baseStart = hexToRgb('#31a354');
                 const baseEnd = hexToRgb('#756bb1');
                 const startColor = lerpColor(baseStart, baseEnd, startPct);
-                const endColor = lerpColor(baseStart, baseEnd, Math.min(1, startPct + widthPct));
+                const endColor = lerpColor(baseStart, baseEnd, endPct);
                 return (
                   <div>
                     {colorScaleMode === 'city' && (
@@ -1515,7 +1518,7 @@ const ClusteringGeoMap: React.FC = () => {
                           {selectedPlace !== null && (
                             <div
                               className="absolute top-0 h-3 rounded ring-1 ring-black/20"
-                              style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
+                          style={{ left: `${startPct * 100}%`, width: `${widthPct * 100}%`, background: `linear-gradient(to right, ${startColor}, ${endColor})` }}
                             />
                           )}
                         </div>
