@@ -20,3 +20,9 @@ https://www.docker.com/
 <code>
 wsl --update
 </code>
+
+## 03 打开设置，把文件的默认存储换到e盘
+Settings> Resources > Advanced 
+Disk image location -> 修改到需要的盘。
+
+## 04 日常使用。

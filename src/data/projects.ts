@@ -26,6 +26,7 @@ import howToVisualizePhotoGeolocationDataOnMapMd from './projects/tutorials/03_h
 import howToConductTimeGeoSequentialClusteringFromAlbumMd from './projects/tutorials/04_how-to-conduct-time-geo-sequential-clustering-from-album.md?raw';
 import howToConstructDockerMd from './projects/tutorials/05_how-to-construct-docker.md?raw';
 import howToConstructWorkflowInDifyMd from './projects/tutorials/06_how-to-construct-workflow-in-dify.md?raw';
+import howToConstructLightBackendWorkflowMd from './projects/tutorials/07_how-to-construct-light-backend-workflow.md?raw';
 
 
 
@@ -193,4 +194,5 @@ export const tutorialProjects = [
   createProject(howToConductTimeGeoSequentialClusteringFromAlbumMd),
   createProject(howToConstructDockerMd),
   createProject(howToConstructWorkflowInDifyMd),
+  createProject(howToConstructLightBackendWorkflowMd)
 ];

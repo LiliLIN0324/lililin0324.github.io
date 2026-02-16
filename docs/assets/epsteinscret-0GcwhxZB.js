@@ -1,1 +1,0 @@
-import{j as e}from"./vendor-DurXHiR-.js";import"./maplibre-BkiGPtbL.js";const i=()=>e.jsx("div",{className:"heatmapper-container",style:{width:"100%",height:"100vh"},children:e.jsx("iframe",{src:"https://epstein-mystery-archive.vercel.app/",title:"HeatMapper - Global Heat Monitoring",style:{width:"100%",height:"100%",border:"none"},loading:"lazy"})});export{i as default};
