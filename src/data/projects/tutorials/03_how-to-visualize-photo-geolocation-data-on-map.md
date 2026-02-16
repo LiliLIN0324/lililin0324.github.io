@@ -3,7 +3,7 @@ id: "03"
 slug: "how-to-visualize-photo-geolocation-data-on-map"
 title: "How to visualize photo geolocation data on map"
 category: "Tutorial"
-year: "2026"
+year: "2026-2-3"
 description: "A tutorial on visualizing photo geolocation data on a map."
 tech: ["Mapping","Image Processing"]
 challenge: "Handling large datasets and ensuring accurate geospatial representation can be challenging when visualizing photo geolocation data."

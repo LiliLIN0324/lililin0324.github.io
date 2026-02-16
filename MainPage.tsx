@@ -10,7 +10,6 @@ import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
 import { HomePage } from './src/components/HomePage';
 import ClusteringGeoMap from './src/clusteringeomap';
-import { GoogleTranslate } from './src/components/GoogleTranslate';
 
 
 const MainPage = () => {
@@ -112,7 +111,6 @@ const MainPage = () => {
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <GoogleTranslate />
             <nav className="flex md:flex gap-0">
                 <Link
                   to="/"
