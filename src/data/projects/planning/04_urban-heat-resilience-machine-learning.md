@@ -149,3 +149,11 @@ ST = (DN * 0.00341802) + 149.0
 | 03 | Dist_M | km | Euclidean_Distance(Centroid, Nearest Mountain) | 국가정보포털 (NSDI) |
 | 03 | Dist_W  |km  |Euclidean_Distance(*Centroid*, Nearest Waterbody)        |국가정보포털 (NSDI)  |
 
+---
+
+## 4 - Research Results and Visualization
+
+![Research Results](/data/fig/AAAI2026.jpg)
+
+This poster summarizes the key findings of our study on urban heat resilience using machine learning approaches. The visualization demonstrates the nonlinear relationships between urban form factors and extreme heat events.
+

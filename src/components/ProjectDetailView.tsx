@@ -109,6 +109,28 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                       </section>
                     )}
 
+                    {project.details.challenge && (
+                      <section id="challenges">
+                        <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
+                          Challenges
+                        </h3>
+                        <p className="text-base md:text-lg leading-relaxed text-neutral-800 whitespace-normal">
+                          {project.details.challenge}
+                        </p>
+                      </section>
+                    )}
+
+                    {project.details.solution && (
+                      <section id="methodology">
+                        <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
+                          Methodology
+                        </h3>
+                        <p className="text-base md:text-lg leading-relaxed text-neutral-800 whitespace-normal">
+                          {project.details.solution}
+                        </p>
+                      </section>
+                    )}
+
                     {project.details.content && (
                       <section id="content">
                         <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
@@ -222,28 +244,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                         </div>
                       </section>
                     )}
-
-                    {project.details.solution && (
-                      <section id="methodology">
-                        <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
-                          Methodology
-                        </h3>
-                        <p className="text-base md:text-lg leading-relaxed text-neutral-800 whitespace-normal">
-                          {project.details.solution}
-                        </p>
-                      </section>
-                    )}
-
-                    {project.details.challenge && (
-                      <section id="challenges">
-                        <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
-                          Challenges
-                        </h3>
-                        <p className="text-base md:text-lg leading-relaxed text-neutral-800 whitespace-normal">
-                          {project.details.challenge}
-                        </p>
-                      </section>
-                    )}
                     {(project.details.code || project.details.codeComponent || tutorialCodeContent[project.slug]) && (
                       <section id="code">
                         <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">
@@ -253,23 +253,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                           <pre className="text-sm font-mono leading-relaxed">
                             <code>{tutorialCodeContent[project.slug] || project.details.codeComponent || `// Code file: ${project.details.code}`}</code>
                           </pre>
-                        </div>
-                      </section>
-                    )}
-                    {project.details.image && project.details.image.length > 0 && (
-                      <section id="images" className="space-y-6">
-                        <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 mb-4 pb-2 border-b border-neutral-100">          
-                          Images
-                        </h3>
-                        <div className="space-y-6">
-                          {project.details.image.map((imgSrc: string, index: number) => {
-                            if (!imgSrc) return null;
-                            return (
-                              <div key={index} className="border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                                <img src={imgSrc} alt={`${project.title} - ${index + 1}`} className="w-full h-auto object-cover" />
-                              </div>
-                            );
-                          })}
                         </div>
                       </section>
                     )}
@@ -364,14 +347,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                               className="text-sm text-neutral-600 hover:text-neutral-900 hover:bg-white px-2 py-1 rounded transition-all w-full text-left"
                             >
                               Code Example
-                            </button>
-                          )}
-                          {project.details.image && project.details.image.length > 0 && (
-                            <button
-                              onClick={() => scrollToSection("images")}
-                              className="text-sm text-neutral-600 hover:text-neutral-900 hover:bg-white px-2 py-1 rounded transition-all w-full text-left"
-                            >
-                              Images
                             </button>
                           )}
                         </div>

@@ -31,7 +31,7 @@ import howToConstructLightBackendWorkflowMd from './projects/tutorials/07_how-to
 
 
 function parseMarkdown(markdownContent: string) {
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+  const frontmatterRegex = /^---\r?\n([\s\S]*?)\r?\n---/;
   const match = markdownContent.match(frontmatterRegex);
   
   let data: Record<string, any> = {};
@@ -41,7 +41,7 @@ function parseMarkdown(markdownContent: string) {
     const frontmatterStr = match[1];
     content = markdownContent.slice(match[0].length).trim();
     
-    const lines = frontmatterStr.split('\n');
+    const lines = frontmatterStr.split(/\r?\n/);
     let currentKey: string | null = null;
     let currentValue: string[] = [];
     
@@ -49,11 +49,6 @@ function parseMarkdown(markdownContent: string) {
       const trimmedLine = line.trim();
       
       if (trimmedLine === '') {
-        if (currentKey && currentValue.length > 0) {
-          data[currentKey] = currentValue.join('\n');
-          currentKey = null;
-          currentValue = [];
-        }
         return;
       }
       
@@ -79,7 +74,7 @@ function parseMarkdown(markdownContent: string) {
       }
     });
     
-    if (currentKey) {
+    if (currentKey && currentValue.length > 0) {
       data[currentKey] = currentValue.join('\n');
     }
     

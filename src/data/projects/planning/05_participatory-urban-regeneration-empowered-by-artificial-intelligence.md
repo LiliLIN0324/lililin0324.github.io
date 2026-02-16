@@ -13,15 +13,6 @@ icon: "/data/fig/PU_logo.jpg"
 image: ["/data/fig/PU-1.jpg","/data/fig/PU-2.jpg"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
-# 效果展示
 
 ![效果展示](/data/fig/PU-1.jpg)
 
