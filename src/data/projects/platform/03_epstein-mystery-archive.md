@@ -27,7 +27,51 @@ Original datasat released by US government. -> google drive
 <iframe src="https://drive.google.com/embeddedfolderview?id=15T3gys6zGFDE-Fth6S6H4CFCOtfMXebq#grid" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 for example, the file "12l_mgFf2lW-gvfE1kfiu7GTBpLxtls5q" is the record of Mr. Epstein's sexual assault case.
-<iframe src="https://drive.google.com/file/d/12l_mgFf2lW-gvfE1kfiu7GTBpLxtls5q/preview" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/12l_mgFf2lW-gvfE1kfiu7GTBpLxtls5q/preview" width="100%" height="600" frameborder="0" allowfullscreen"></iframe>
+
+## Google OAuth
+https://console.cloud.google.com/
+
+**Why we need Google OAuth:**
+1. **Secure Authentication**: Provides a secure and trusted authentication mechanism for users
+2. **No Password Management**: Users don't need to create or remember another password
+3. **Account Verification**: Ensures users have a valid Google account before accessing sensitive documents
+4. **Access Control**: Helps manage who can view and interact with the archive materials
+5. **Audit Trail**: Tracks user activity and access patterns for security purposes
+
+**Setup Steps:**
+1. Go to Google Cloud Console
+2. Create a new project
+3. Enable Google OAuth API
+4. Configure OAuth consent screen
+5. Create OAuth 2.0 Client ID
+6. Add authorized redirect URIs
+7. Implement OAuth flow in your application
+
+## IMAGES/IMAGES001
+https://drive.google.com/drive/folders/1hbt7DnoeoWY5AFqNIMxQ6JfUrIwuFbVw
+## IMAGES/IMAGES002
+https://drive.google.com/drive/folders/1YtByjZ7msxaTUsMWV5pFzDVfZMUMVDRb
+## IMAGES/IMAGES003
+https://drive.google.com/drive/folders/169W0-Sgw4ZN61eSq-mO6mE7i4F2tbiCM
+## IMAGES/IMAGES004
+https://drive.google.com/drive/folders/1c3n-TjtumvyfDkrzH1vs1-oHMVc3tyci
+## IMAGES/IMAGES005
+https://drive.google.com/drive/folders/1FGWhpp1Yxm-RT8G3Ie-v7Ftd-zFha0qz
+## IMAGES/IMAGES006
+https://drive.google.com/drive/folders/1dxC6GaePcwvy953fXwKznKVwL3u4l4es
+## IMAGES/IMAGES007
+https://drive.google.com/drive/folders/1axUXaIs4XT3IQkNMRpHpDX_sg4znEgC8
+## IMAGES/IMAGES008
+https://drive.google.com/drive/folders/1hno5jSW--phzhefZuzmKlgxrSFdmgYMn
+## IMAGES/IMAGES009
+https://drive.google.com/drive/folders/11K6xnVKr2xGcd9Cgww1OMmgfwsvvwXht
+## IMAGES/IMAGES010
+https://drive.google.com/drive/folders/15g91IdhyX4uocwGj5N_W_A9g0EAOjkk3
+## IMAGES/IMAGES011
+https://drive.google.com/drive/folders/13ZyhRCXC_cL1eX34GV9benUj_RD--PZM
+## IMAGES/IMAGES012
+https://drive.google.com/drive/folders/1__354BbVLSciR40xa8B0wgBhyLL1Scp3
 
 ![效果展示](/data/fig/epsteinscret-1.png)
 ![效果展示](/data/fig/epsteinscret-2.png)

@@ -37,9 +37,9 @@ export const HomePage = () => {
   return (
     <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Header */}
-      <div className="flex justify-between items-end border-b border-neutral-100 pb-4 mb-6 md:mb-8">
-        <h2 className="text-lg md:text-xl font-medium text-neutral-900">All Projects</h2>
-        <span className="text-xs font-mono text-neutral-400">
+      <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8">
+        <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">All Projects</h2>
+        <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
           {currentIndex + 1} / {allProjects.length}
         </span>
       </div>
@@ -74,9 +74,9 @@ export const HomePage = () => {
                 zIndex: 100 - Math.abs(offset),
               }}
             >
-              <div className="bg-white border border-neutral-200 rounded-xl p-6 shadow-lg">
+              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl p-6 shadow-lg">
                 <div className="flex gap-6">
-                  <div className="w-36 h-36 bg-neutral-100 overflow-hidden rounded-md flex-shrink-0">
+                  <div className="w-36 h-36 bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md flex-shrink-0">
                     <img
                       src={project.details.logo}
                       alt={project.title}

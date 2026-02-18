@@ -6,25 +6,25 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
 
   return (
     <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex justify-between items-end border-b border-neutral-100 pb-4 mb-6 md:mb-8">
-        <h2 className="text-lg md:text-xl font-medium text-neutral-900">Selected {type === 'research' ? 'Researches' : type === 'design' ? 'Designs' : type === 'game' ? 'Games' : type === 'planning' ? 'Planning' :  type === 'tutorials'?'Tutorials':'Platform'}</h2>
+      <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8">
+        <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Selected {type === 'research' ? 'Researches' : type === 'design' ? 'Designs' : type === 'game' ? 'Games' : type === 'planning' ? 'Planning' :  type === 'tutorials'?'Tutorials':'Platform'}</h2>
         <div className="flex items-center gap-4">
-          <div className="flex bg-neutral-100 p-1 rounded-sm border border-neutral-200">
+          <div className="flex bg-neutral-100 dark:bg-neutral-800 p-1 rounded-sm border border-neutral-200 dark:border-neutral-700">
             <button 
               onClick={() => setViewMode('grid')}
-              className={`px-3 py-1 text-xs font-mono ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-neutral-500'}`}
+              className={`px-3 py-1 text-xs font-mono ${viewMode === 'grid' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
             >
               GRID
             </button>
             <button 
               onClick={() => setViewMode('list')}
-              className={`px-3 py-1 text-xs font-mono ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-neutral-500'}`}
+              className={`px-3 py-1 text-xs font-mono ${viewMode === 'list' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
             >
               LIST
             </button>
 
           </div>
-          <span className="text-xs font-mono text-neutral-400">Idx: {data.length}</span>
+          <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">Idx: {data.length}</span>
         </div>
       </div>
       
@@ -33,18 +33,18 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
           {data.map((project) => (
             <div 
               key={project.slug} 
-              className="group relative border border-neutral-200 p-4 md:p-6 hover:border-neutral-900 transition-all duration-300 bg-white hover:bg-neutral-50 hover:shadow-sm"
+              className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm"
             >
               <div className="flex flex-row gap-4 md:gap-6 items-center flex-1">
                 <Link 
                   to={`/${type}/${project.slug}`}
                   className="flex-grow min-w-0 w-full flex flex-row gap-4 md:gap-6 items-center"
                 >
-                  <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-neutral-100 overflow-hidden bg-neutral-50">
+                  <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800">
                     {project.details.logo ? (
                       <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                      <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -53,11 +53,11 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
                   </div>
                   <div className="flex-grow min-w-0">
                     <div className="flex justify-between items-start mb-2">
-                      <span className="text-[10px] font-mono text-neutral-400">NO. {project.id}</span>
-                      <span className="text-[10px] font-mono text-neutral-500">{project.year}</span>
+                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
+                      <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
                     </div>
-                    <h3 className="text-base md:text-lg lg:text-xl font-bold text-neutral-900 mb-1 group-hover:text-blue-600 truncate">{project.title}</h3>
-                    <p className="text-neutral-500 text-sm line-clamp-1">{project.description}</p>
+                    <h3 className="text-base md:text-lg lg:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 truncate">{project.title}</h3>
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-1">{project.description}</p>
                   </div>
                 </Link>
                 {project.hasDemo && (
@@ -79,17 +79,17 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
           {data.map((project) => (
             <div 
               key={project.slug} 
-              className="group relative border border-neutral-200 p-4 md:p-6 hover:border-neutral-900 transition-all duration-300 bg-white hover:bg-neutral-50 hover:shadow-sm flex flex-col"
+              className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm flex flex-col"
             >
               <Link 
                 to={`/${type}/${project.slug}`}
                 className="flex flex-col h-full"
               >
-                <div className="flex-shrink-0 w-full aspect-square border border-neutral-100 overflow-hidden bg-neutral-50 mb-4">
+                <div className="flex-shrink-0 w-full aspect-square border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800 mb-4">
                   {project.details.logo ? (
                     <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                    <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
                       <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
@@ -98,11 +98,11 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
                 </div>
                 <div className="flex-grow min-w-0">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="text-[10px] font-mono text-neutral-400">NO. {project.id}</span>
-                    <span className="text-[10px] font-mono text-neutral-500">{project.year}</span>
+                    <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
+                    <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
                   </div>
-                  <h3 className="text-base md:text-lg font-bold text-neutral-900 mb-1 group-hover:text-blue-600 line-clamp-2">{project.title}</h3>
-                  <p className="text-neutral-500 text-sm line-clamp-2">{project.description}</p>
+                  <h3 className="text-base md:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 line-clamp-2">{project.title}</h3>
+                  <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-2">{project.description}</p>
                 </div>
               </Link>
               {project.hasDemo && (
