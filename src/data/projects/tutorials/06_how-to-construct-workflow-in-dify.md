@@ -23,7 +23,12 @@ Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 
 ## 01 本地部署 Dify
 **链接**: https://dify.ai/
+
+<iframe src="https://dify.ai/" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+
 **GitHub**: https://github.com/langgenius/dify
+
+<iframe src="https://github.com/langgenius/dify" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 ### a. Dify 介绍
 Dify 是一个开源的 LLM 应用开发平台，提供可视化工作流构建、知识库管理、模型集成等功能。云版本提供 200 额度试用，建议先体验再自部署。
@@ -56,7 +61,12 @@ docker compose up -d
 
 ## 02 配置 Ollama 本地模型
 **链接**: https://ollama.com/
+
+<iframe src="https://ollama.com/" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+
 **插件**: https://marketplace.dify.ai/plugin/langgenius/ollama
+
+<iframe src="https://marketplace.dify.ai/plugin/langgenius/ollama" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 ### a. Ollama 介绍
 Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 Llama、Mistral、Qwen 等模型。特点：
@@ -67,6 +77,8 @@ Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 
 ### b. 安装配置步骤
 
 1. **下载安装**：访问 https://ollama.com/download 下载对应系统版本
+
+<iframe src="https://ollama.com/download" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 2. **设置模型存储路径**（重要）：
    ```powershell
    # 设置环境变量，将模型存储到 E 盘
@@ -162,7 +174,12 @@ ollama list
    - 选择 `Complex PDF with Images & Tables` 启用 MinerU 解析
    - MinerU：开源 PDF 解析工具，擅长处理图片、表格等复杂内容
    - GitHub: https://github.com/opendatalab/MinerU
-   - Docker 部署https://opendatalab.github.io/MinerU/zh/quick_start/docker_deployment/#docker-compose
+
+<iframe src="https://github.com/opendatalab/MinerU" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+
+   - Docker 部署: https://opendatalab.github.io/MinerU/zh/quick_start/docker_deployment/#docker-compose
+
+<iframe src="https://opendatalab.github.io/MinerU/zh/quick_start/docker_deployment/#docker-compose" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 
 
@@ -184,6 +201,8 @@ ollama list
 ### g. 部署独立 MinerU 服务
 
 **参考教程**：https://zhuanlan.zhihu.com/p/1905282812648613610
+
+<iframe src="https://zhuanlan.zhihu.com/p/1905282812648613610" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 **部署步骤**：
 03 使用 Dify 中 MinerU 插件的常见问题

@@ -15,14 +15,6 @@ code: "clusteringevents.tsx"
 image: ["/data/fig/photocluster-1.jpg","/data/fig/photocluster-2.jpg"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
 # 效果展示
 
 ![效果展示](/data/fig/photocluster-1.jpg)

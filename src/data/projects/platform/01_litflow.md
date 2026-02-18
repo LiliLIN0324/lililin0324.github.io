@@ -15,14 +15,6 @@ code: "litflow.tsx"
 image: ["/data/fig/litflow (1).png","/data/fig/litflow (2).png","/data/fig/litflow (3).png","/data/fig/litflow (4).png","/data/fig/litflow (5).png","/data/fig/litflow (6).png"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
 # 效果展示
 
 ![效果展示](/data/fig/litflow (1).png)

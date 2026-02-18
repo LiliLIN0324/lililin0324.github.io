@@ -14,14 +14,6 @@ icon: "/data/fig/global_logo.jpg"
 image: ["/data/fig/global-5.jpg","/data/fig/global-12.jpg","/data/fig/global-20.jpg","/data/fig/global-26.jpg"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
 # 效果展示
 
 ![效果展示](/data/fig/global-5.jpg)

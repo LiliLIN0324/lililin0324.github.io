@@ -5,7 +5,7 @@ import React from 'react';
 
 const WeChatGameDemo: React.FC = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 overflow-y-auto p-8">
       <div className="max-w-3xl w-full bg-white rounded-lg shadow-md p-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">微信小游戏开发教程</h1>
         

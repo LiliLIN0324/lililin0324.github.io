@@ -15,14 +15,6 @@ code: "boxupcyberspace.tsx"
 image: ["/data/fig/boxupcyberspace-1.png","/data/fig/boxupcyberspace-2.png"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
 # 效果展示
 
 ![效果展示](/data/fig/boxupcyberspace-1.png)

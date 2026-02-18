@@ -15,16 +15,19 @@ code: "epsteinscret.tsx"
 image: ["/data/fig/epsteinscret-1.png","/data/fig/epsteinscret-2.png"]
 ---
 
-# 项目背景
+# Background
+## Overview
+**Oversight Committee Releases Epstein Records Provided by the Department of Justice** 
+https://oversight.house.gov/release/oversight-committee-releases-epstein-records-provided-by-the-department-of-justice/
 
-这里是项目的详细介绍...
+WASHINGTON — Sep 2, 2025, the House Committee on Oversight and Government Reform released **33,295** pages of Epstein-related records that were provided by the U.S. Department of Justice. On August 5, Chairman Comer issued a subpoena for records related to Mr. Jeffrey Epstein, and the Department of Justice has indicated it will continue producing those records while ensuring the redaction of **victim identities and any child sexual abuse material**.
+## Details
+Original datasat released by US government. -> google drive
 
-# 技术实现
+<iframe src="https://drive.google.com/embeddedfolderview?id=15T3gys6zGFDE-Fth6S6H4CFCOtfMXebq#grid" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
-## 技术栈
-
-# 效果展示
+for example, the file "12l_mgFf2lW-gvfE1kfiu7GTBpLxtls5q" is the record of Mr. Epstein's sexual assault case.
+<iframe src="https://drive.google.com/file/d/12l_mgFf2lW-gvfE1kfiu7GTBpLxtls5q/preview" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 ![效果展示](/data/fig/epsteinscret-1.png)
-
 ![效果展示](/data/fig/epsteinscret-2.png)

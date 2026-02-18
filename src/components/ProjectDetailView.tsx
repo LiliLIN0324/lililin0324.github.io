@@ -5,6 +5,88 @@ import { getDemoComponent } from './DemoLoader';
 import { tutorialCodeContent } from './tutorialCodeContent';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+
+const SmartIframe = ({ src, ...props }) => {
+  const [canEmbed, setCanEmbed] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  const handleLoad = () => {
+    setCanEmbed(true);
+    setChecked(true);
+  };
+
+  const handleError = () => {
+    setCanEmbed(false);
+    setChecked(true);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!checked) {
+        setCanEmbed(false);
+        setChecked(true);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [checked]);
+
+  return (
+    <>
+      <iframe
+        src={src}
+        onLoad={handleLoad}
+        onError={handleError}
+        style={{ display: 'none' }}
+        title="detector"
+      />
+
+      {!checked && (
+        <div className="w-full my-4">
+          <a 
+            href={src} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-600 hover:bg-neutral-100 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            访问链接
+          </a>
+        </div>
+      )}
+
+      {checked && canEmbed && (
+        <div className="w-full my-6">
+          <iframe 
+            src={src}
+            className="w-full h-96 rounded-lg shadow-md border border-neutral-200"
+            allowFullScreen
+            {...props}
+          />
+        </div>
+      )}
+
+      {checked && !canEmbed && (
+        <div className="w-full my-4">
+          <a 
+            href={src} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-600 hover:bg-neutral-100 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            访问链接
+          </a>
+        </div>
+      )}
+    </>
+  );
+};
 
 export const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
   const { id } = useParams();
@@ -71,7 +153,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
           )}
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto">
+      <div className={`flex-1 ${viewMode === 'details' ? 'overflow-y-auto' : 'overflow-hidden'}`}>
         {viewMode === 'details' ? (
           <div className="flex flex-col p-4 md:p-6 lg:p-10 w-full h-full max-w-7xl mx-auto">
              <div className="mb-8 md:mb-10">
@@ -139,6 +221,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                         <div className="text-base md:text-lg leading-relaxed text-neutral-800 prose prose-neutral max-w-none">
                           <ReactMarkdown 
                             remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeRaw]}
                             components={{
                               table: ({children}) => (
                                 <table className="min-w-full border-collapse border border-neutral-300">
@@ -236,6 +319,9 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                                     />
                                   );
                                 }
+                              },
+                              iframe: ({src, title, ...props}) => {
+                                return <SmartIframe src={src} title={title || "Embedded content"} {...props} />;
                               },
                             }}
                           >

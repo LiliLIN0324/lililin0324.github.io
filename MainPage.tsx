@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import '/index.css';
 
 import { projects, designProjects, tutorialProjects, platformProjects, gameProjects } from './src/data/projects';
@@ -13,10 +13,14 @@ import ClusteringGeoMap from './src/clusteringeomap';
 
 
 const MainPage = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isDiceSpinning, setIsDiceSpinning] = useState(false);
+  const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 });
   const [currentImage, setCurrentImage] = useState('/data/fig/lili/lili_01.png');
   const [randomQuote, setRandomQuote] = useState('Exploring the intersection of technology and creativity.');
   const location = useLocation();
+  const navigate = useNavigate();
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const activeTab = pathSegments[0] || '';
 
@@ -75,30 +79,12 @@ const MainPage = () => {
     setRandomQuote(getRandomQuote());
   }, [activeTab]);
 
-  // 确保移动端默认打开，桌面端不受影响
-  useEffect(() => {
-    // 检查屏幕宽度，如果是移动端则默认打开
-    const handleResize = () => {
-       if (window.innerWidth < 300) {
-           // Mobile defaults to open as per request
-           setIsMobileMenuOpen(true);
-       } else {
-           // Desktop also needs it open but hidden via CSS
-           setIsMobileMenuOpen(true);
-       }
-    };
-    
-    // Initial check
-    handleResize();
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+
 
   return (
     <div className="h-screen p-0 bg-neutral-100 flex flex-col ">
       <div className="w-full bg-white border border-neutral-10 flex flex-col relative h-full">
-        <header className="border-b p-4 flex justify-between items-center bg-white z-30 shrink-0">
+        <header className="border-b p-4 flex justify-between items-center bg-white z-30 shrink-0 relative">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -111,7 +97,109 @@ const MainPage = () => {
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <nav className="flex md:flex gap-0">
+            <button
+              onClick={() => {
+                setIsDiceSpinning(true);
+                const newX = diceRotation.x + 360 * 2 + Math.random() * 360;
+                const newY = diceRotation.y + 360 * 2 + Math.random() * 360;
+                setDiceRotation({ x: newX, y: newY });
+                
+                setTimeout(() => {
+                  const pages = ['planning', 'design', 'game', 'platform', 'tutorial', 'about'];
+                  const randomPage = pages[Math.floor(Math.random() * pages.length)];
+                  navigate(`/${randomPage}`);
+                  setIsDiceSpinning(false);
+                }, 1000);
+              }}
+              className="flex items-center gap-2 px-3 py-2 border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50 transition-all"
+              title="🎲 Explore a random project"
+            >
+              <div className="w-5 h-5" style={{ perspective: '100px' }}>
+                <div 
+                  className="w-full h-full relative transition-transform duration-1000 ease-out"
+                  style={{ 
+                    transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`,
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  {/* Front - 1 */}
+                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'translateZ(10px)' }}>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div></div>
+                      <div></div><div className="rounded-full justify-center" style={{ width: '5px', height: '5px', backgroundColor: '#dc2626' }}></div><div></div>
+                      <div></div><div></div><div></div>
+                    </div>
+                  </div>
+                  {/* Back - 6 */}
+                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(180deg) translateZ(10px)' }}>
+                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
+
+                  </div>
+                  {/* Left - 3 */}
+                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(-90deg) translateZ(10px)' }}>
+                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
+                    <div className="grid grid-cols-5 marg w-full h-full justify-center">
+                      <div></div>
+                      <div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-5  w-full h-full justify-center">
+                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-5  w-full h-full justify-center">
+                      <div></div><div></div><div></div><div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
+                  </div>
+                  {/* Right - 4 */}
+                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(90deg) translateZ(10px)' }}>
+                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px', backgroundColor: '#dc2626' }}></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px', backgroundColor: '#dc2626' }}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px' , backgroundColor: '#dc2626'}}></div><div></div><div className=" rounded-full justify-center" style={{ width: '4px', height: '4px' , backgroundColor: '#dc2626'}}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
+                  </div>
+                  {/* Top - 2 */}
+                  <div className="absolute w-full h-full bg-white border-gray-400  justify-center rounded flex  p-0.5" style={{ transform: 'rotateX(90deg) translateZ(10px)' }}>
+                    <div className="grid grid-cols-3 border w-full h-full justify-center">
+                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
+                    </div>
+                  </div>
+                  
+                   {/* Bottom - 5 */}
+                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateX(-90deg) translateZ(10px)' }}>
+                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
+
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div><div></div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-3  w-full h-full justify-center">
+                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div><div></div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
+                    </div>
+                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
+
+                  </div>
+ 
+
+                </div>
+              </div>
+              <span className="text-sm font-medium">Jump</span>
+            </button>
+            <nav className="hidden sm:flex gap-0">
                 <Link
                   to="/"
                   onClick={() => {
@@ -139,7 +227,6 @@ const MainPage = () => {
                         setIsMobileMenuOpen(true)
                       }
                     }}
-
                     className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 text-neutral-900 bg-white': 'border-transparent text-neutral-500 hover:bg-neutral-200'}`}
                   >
                   <span>{tab.label}</span>
@@ -147,7 +234,55 @@ const MainPage = () => {
                 ))}
             </nav>
 
+            <div className="sm:hidden relative">
+              <button
+                onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                className="flex items-center gap-2 px-3 py-2 border border-neutral-200 text-neutral-900 hover:text-neutral-900 hover:bg-neutral-50"
+              >
+                <span className="text-sm font-medium">
+                  {activeTab === '' ? 'Home' : 
+                   activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                </span>
+                {isMobileNavOpen ? '✕' : '▼'}
+              </button>
+              
+              {isMobileNavOpen && (
+                <div className="absolute right-0 top-10 bg-white border border-neutral-200 rounded-lg shadow-lg z-50 min-w-[160px]">
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      setIsMobileNavOpen(false);
+                      setIsMobileMenuOpen(true);
+                    }}
+                    className={`block px-4 py-3 text-sm font-medium transition-all ${activeTab === '' ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:bg-neutral-50'}`}
+                  >
+                    Home
+                  </Link>
+                  {[
+                    { key: 'planning', label: 'Planning' },
+                    { key: 'design', label: 'Design' },
+                    { key: 'game', label: 'Game' },
+                    { key: 'platform', label: 'Platform' },
+                    { key: 'tutorial', label: 'Tutorial' },
+                    { key: 'about', label: 'About' }
+                  ].map((tab) => (
+                    <Link
+                      key={tab.key}
+                      to={`/${tab.key}`}
+                      onClick={() => {
+                        setIsMobileNavOpen(false);
+                        setIsMobileMenuOpen(true);
+                      }}
+                      className={`block px-4 py-3 text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:bg-neutral-50'}`}
+                    >
+                      {tab.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
+
+          </div>
 
         </header>
 

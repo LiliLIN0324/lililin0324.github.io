@@ -14,14 +14,6 @@ code: "wechatgame.tsx"
 image: ["/data/fig/wechatgame.png"]
 ---
 
-# 项目背景
-
-这里是项目的详细介绍...
-
-# 技术实现
-
-## 技术栈
-
 # 效果展示
 
 ![效果展示](/data/fig/wechatgame.png)
