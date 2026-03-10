@@ -15,13 +15,17 @@ abstract: |
 Docker +  Dify  + Ollama + 知识库 + 工作流
 实现本地 AI 工作流的完整搭建：环境部署、模型配置、知识管理、流程自动化
 
-## 01 Docker 打开
+---
+
+## 第一次使用 Dify（完整安装配置）
+
+### 1. 打开 Docker
 ```powershell
 # 打开 Docker Desktop
 Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 ```
 
-## 01 本地部署 Dify
+### 2. 本地部署 Dify
 **链接**: https://dify.ai/
 
 <iframe src="https://dify.ai/" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
@@ -30,10 +34,10 @@ Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 
 <iframe src="https://github.com/langgenius/dify" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
-### a. Dify 介绍
+#### a. Dify 介绍
 Dify 是一个开源的 LLM 应用开发平台，提供可视化工作流构建、知识库管理、模型集成等功能。云版本提供 200 额度试用，建议先体验再自部署。
 
-### b. 本地部署步骤
+#### b. 本地部署步骤
 1. **环境准备**：确保已安装 Docker 和 Docker Compose
 2. **克隆项目**：
    ```bash
@@ -51,15 +55,14 @@ Dify 是一个开源的 LLM 应用开发平台，提供可视化工作流构建�
    ```
 5. **访问应用**：打开浏览器访问 `http://localhost/install`
 
-> **注意**：每次使用前需要运行
+### 3. 配置 Ollama 本地模型
 
-```powershell
-docker compose down
-docker compose up -d
-```
+#### a. Ollama 介绍
+Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 Llama、Mistral、Qwen 等模型。特点：
+- 完全本地运行，无需联网
+- 无需 API Key，数据隐私安全
+- 支持多种开源模型
 
-
-## 02 配置 Ollama 本地模型
 **链接**: https://ollama.com/
 
 <iframe src="https://ollama.com/" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
@@ -68,17 +71,12 @@ docker compose up -d
 
 <iframe src="https://marketplace.dify.ai/plugin/langgenius/ollama" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
-### a. Ollama 介绍
-Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 Llama、Mistral、Qwen 等模型。特点：
-- 完全本地运行，无需联网
-- 无需 API Key，数据隐私安全
-- 支持多种开源模型
-
-### b. 安装配置步骤
+#### b. 安装配置步骤
 
 1. **下载安装**：访问 https://ollama.com/download 下载对应系统版本
 
 <iframe src="https://ollama.com/download" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+
 2. **设置模型存储路径**（重要）：
    ```powershell
    # 设置环境变量，将模型存储到 E 盘
@@ -95,16 +93,16 @@ Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 
    服务地址：`http://127.0.0.1:11434`
 5. **下载模型**：
    ```bash
-   # 下载对话模型
+   # 下载LLM model
    ollama pull llama3.2
    
-   # 下载嵌入模型（用于知识库向量化）
+   # 下载Embedded model（用于知识库向量化）
    ollama pull mxbai-embed-large
    ollama pull nomic-embed-text
    ```
    > **注意**：目前 Ollama 官方库中暂无专门的 Rerank 模型。可以使用嵌入模型的相似度排序作为替代方案。（推荐使用）
 
-### c. 在 Dify 中配置 Ollama
+#### c. 在 Dify 中配置 Ollama
 
 1. **进入模型提供商配置**：
    - 登录 Dify 后，点击右上角 `设置` → `模型提供商`
@@ -122,32 +120,11 @@ Ollama 是一个跨平台的大型语言模型推理框架，支持本地运行 
 
 4. **保存配置**：点击 `保存` 完成配置
 
-### d. 关于 Rerank 模型
+#### d. 关于 Rerank 模型
 
 **当前状态**：目前 Ollama 官方库中暂无专门的 Rerank 模型可用。
 
-
-4. **部署和测试**：
-   ```bash
-   # 启动本地 Rerank 服务
-   python rerank_service.py
-   
-   # 测试服务
-   curl -X POST http://localhost:5002/rerank \
-     -H "Content-Type: application/json" \
-     -d '{
-       "query": "What is machine learning?",
-       "documents": [
-         "Machine learning is a subset of artificial intelligence.",
-         "Deep learning uses neural networks with multiple layers.",
-         "Python is a popular programming language for data science."
-       ]
-     }'
-   ```
-
-
-
-### f. Python 集成（可选）
+#### e. Python 集成（可选）
 ```bash
 # 创建专用环境
 conda create -n ollama python=3.9 -y
@@ -158,9 +135,9 @@ pip install ollama
 ollama list
 ```
 
-## 03 创建知识库和工作流
+### 4. 创建知识库和工作流
 
-### a. 创建知识库
+#### a. 创建知识库
 
 1. **登录 Dify**：访问 `http://localhost` 并完成初始设置
 
@@ -181,8 +158,6 @@ ollama list
 
 <iframe src="https://opendatalab.github.io/MinerU/zh/quick_start/docker_deployment/#docker-compose" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
-
-
 4. **配置索引设置**：
    - **向量化模型**：`nomic-embed-text`（你当前使用的）
    - **分块设置**：800 字符，重叠 80 字符（复杂文档建议）
@@ -198,11 +173,11 @@ ollama list
    - **根本原因**：MinerU 服务未正确启动或配置缺失
    - **解决方案**：配置独立 MinerU 服务
 
-### g. 部署独立 MinerU 服务
+#### b. 部署独立 MinerU 服务
 
-**参考教程**：https://zhuanlan.zhihu.com/p/1905282812648613610
+**参考教程**：https://zhuanlan.zhihu.com/p/19052812648613610
 
-<iframe src="https://zhuanlan.zhihu.com/p/1905282812648613610" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<iframe src="https://zhuanlan.zhihu.com/p/19052812648613610" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
 **部署步骤**：
 03 使用 Dify 中 MinerU 插件的常见问题
@@ -219,7 +194,7 @@ ollama list
 
 ● 其他部署方式：FILES_URL 设置为 'http://Dify宿主机IP:5001'
 
-（如 http://192.168.1.100:5001，这里的 IP 通常是运行 Dify 的机器的 IP，即前文提到的“本地IP”端口。5001 是 Dify API 服务的默认端口）。
+（如 http://192.168.1.100:5001，这里的 IP 通常是运行 Dify 的机器的 IP，即前文提到的"本地IP"端口。5001 是 Dify API 服务的默认端口）。
 
 2. 确认 Dify API 服务的 5001 端口已对外暴露（可检查 docker-compose.yaml 文件的端口映射）。
 
@@ -227,7 +202,7 @@ ollama list
 
 4. 重启 Dify 服务以使配置生效。
 
-### b. 构建工作流
+#### c. 构建工作流
 
 1. **创建工作流**：
    - 点击左侧菜单"工作室"
@@ -271,7 +246,7 @@ ollama list
    - 选择发布方式：Web 应用、API
    - 配置访问权限和域名
 
-### c. 实战示例：文档问答助手
+#### d. 实战示例：文档问答助手
 
 **目标**：创建一个基于上传文档的智能问答系统
 
@@ -298,9 +273,41 @@ ollama list
    - 温度：0.1（保证回答稳定性）
    - 最大长度：1000
 
-### e. 故障排除
+---
 
-**常见问题及解决方案**：
+## 以后每次打开 Dify（日常使用）
+
+### 1. 打开 Docker Desktop
+```powershell
+# 打开 Docker Desktop
+Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+```
+//这一步其实可有可无，因为可以设置docker开机自启。
+
+### 2. 启动 Dify 服务
+```bash
+# 进入 Dify docker 目录
+cd E:/dify-project/dify-new/docker
+
+# 重启服务
+docker compose down
+docker compose up -d
+```
+
+### 3. 启动 Ollama 服务（如果需要使用本地模型）
+```bash
+ollama serve
+```
+服务地址：`http://127.0.0.1:11434`
+
+### 4. 访问 Dify
+打开浏览器访问：`http://localhost`
+
+---
+
+## 故障排除
+
+### 常见问题及解决方案：
 
 1. **Ollama 连接失败**：
    - 检查 Ollama 服务：`ollama list`
@@ -357,37 +364,39 @@ ollama list
      - 检查 Docker 容器资源使用情况
      - 必要时增加容器内存限制
 
-### f. 最佳实践
+---
 
-**模型选择策略**：
+## 最佳实践
+
+### 模型选择策略：
 - **对话任务**：使用 `llama3.2` 系列，平衡性能和资源消耗
 - **嵌入任务**：`mxbai-embed-large` 适合中文，`nomic-embed-text` 适合英文
 - **重排序任务**：目前使用嵌入模型的相似度排序，调整检索参数优化效果
 - **语音任务**：本地 Whisper（隐私）vs 云端 API（便捷）
 
-**知识库优化**：
+### 知识库优化：
 - 定期更新文档内容，保持信息时效性
 - 合理设置分块大小，避免信息丢失或上下文过长
 - 使用清晰的文档结构和标题，提高检索准确性
 
-**工作流设计原则**：
+### 工作流设计原则：
 - 保持流程简洁，避免不必要的复杂节点
 - 合理使用变量和条件分支，提高复用性
 - 添加错误处理机制，提升系统稳定性
 
-**语音功能优化**：
+### 语音功能优化：
 - 选择合适的 Whisper 模型大小（tiny/base/small/medium/large）
 - 优化音频输入质量，减少背景噪音
 - 合理设置音频格式和采样率
 - 考虑音频缓存和预加载策略
 
-**性能优化建议**：
+### 性能优化建议：
 - 监控 API 调用次数和响应时间
 - 合理设置缓存策略，减少重复计算
 - 定期清理无用数据和应用
 - 语音处理考虑异步化，避免阻塞主流程
 
-**安全考虑**：
+### 安全考虑：
 - 定期备份重要的知识库和工作流配置
 - 设置适当的访问权限和API密钥管理
 - 避免在提示词中包含敏感信息
@@ -407,4 +416,3 @@ ollama list
 6. **故障排除**：常见问题的诊断和解决方案
 
 通过这套方案，你可以构建完全本地化的 AI 应用，确保数据隐私和定制化需求，同时支持文本和语音多模态交互。
-
