@@ -1,0 +1,1 @@
+import{j as e}from"./react-vendor-6zld6QO8.js";import"./geo-Z02C8O4I.js";import"./vendor-C2tZ253J.js";const s=()=>e.jsx("div",{className:"litflow-container",style:{width:"100%",height:"100vh"},children:e.jsx("iframe",{src:"box-up-stuff-in-cyberspace.vercel.app",title:"LitFlow - Research Hub",style:{width:"100%",height:"100%",border:"none"},loading:"lazy"})});export{s as default};

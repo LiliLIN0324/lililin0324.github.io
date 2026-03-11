@@ -358,19 +358,19 @@ export const HomePage = () => {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[10px] font-mono px-2 py-1 bg-neutral-100 rounded">
+                      <span className="text-[10px] font-mono px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded">
                         {project.type.toUpperCase()}
                       </span>
-                      <span className="text-[10px] font-mono text-neutral-400">
+                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
                         {project.year}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold mb-2">
+                    <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
                       {project.title}
                     </h3>
 
-                    <p className="text-sm text-neutral-600 mb-4 line-clamp-3">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
                       {project.description}
                     </p>
 
@@ -378,7 +378,7 @@ export const HomePage = () => {
                       {project.tech?.slice(0, 3).map((t, i) => (
                         <span
                           key={i}
-                          className="text-[10px] font-mono px-2 py-1 bg-blue-50 text-blue-700 rounded"
+                          className="text-[10px] font-mono px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded"
                         >
                           {t}
                         </span>
@@ -388,7 +388,7 @@ export const HomePage = () => {
                     <div className="flex gap-3">
                       <a
                         href={`#/${project.type}/${project.slug}`}
-                        className="px-4 py-2 text-xs font-mono bg-neutral-200 hover:bg-neutral-300 rounded"
+                        className="px-4 py-2 text-xs font-mono bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-700 dark:text-neutral-200 rounded"
                       >
                         VIEW
                       </a>
