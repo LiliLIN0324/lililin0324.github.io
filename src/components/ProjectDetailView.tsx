@@ -6,6 +6,7 @@ import { tutorialCodeContent } from './tutorialCodeContent';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import ImageCarousel from './ImageCarousel'; // 导入 ImageCarousel 组件
 
 const SmartIframe = ({ src, ...props }) => {
   const [canEmbed, setCanEmbed] = useState(false);
@@ -223,6 +224,19 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeRaw]}
                             components={{
+                              iframe: ({src, title, ...props}) => {
+                                return <SmartIframe src={src} title={title || "Embedded content"} {...props} />;
+                              },
+                              imagecarousel: ({ images, captions }: { images?: string; captions?: string }) => {
+                                const urls = (images || '').split(',').map(s => s.trim()).filter(Boolean);
+                                const captionList = captions ? captions.split('|').map(s => s.trim()) : undefined;
+                                return <ImageCarousel images={urls} captions={captionList} />;
+                              },
+                              imageCarousel: ({ images, captions }: { images?: string; captions?: string }) => {
+                                const urls = (images || '').split(',').map(s => s.trim()).filter(Boolean);
+                                const captionList = captions ? captions.split('|').map(s => s.trim()) : undefined;
+                                return <ImageCarousel images={urls} captions={captionList} />;
+                              },
                               table: ({children}) => (
                                 <table className="min-w-full border-collapse border border-neutral-300 dark:border-neutral-600">
                                   {children}
@@ -288,18 +302,15 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                                 </a>
                               ),
                               img: ({src, alt, ...props}) => {
-                                // Check if the image is in a table by looking at the parent context
                                 const isInTable = props.className?.includes('h-32') || 
-                                                alt?.includes('BCR') || 
-                                                alt?.includes('BHV') || 
-                                                alt?.includes('SVF') ||
-                                                alt?.includes('NDVI') ||
-                                                alt?.includes('EV') ||
-                                                alt?.includes('WR') ||
-                                                alt?.includes('Dist_');
-                                
+                                                  alt?.includes('BCR') || 
+                                                  alt?.includes('BHV') || 
+                                                  alt?.includes('SVF') ||
+                                                  alt?.includes('NDVI') ||
+                                                  alt?.includes('EV') ||
+                                                  alt?.includes('WR') ||
+                                                  alt?.includes('Dist_');
                                 if (isInTable) {
-                                  // Small images in tables
                                   return (
                                     <img 
                                       src={src} 
@@ -309,7 +320,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                                     />
                                   );
                                 } else {
-                                  // Full-width standalone images
                                   return (
                                     <img 
                                       src={src} 
@@ -319,9 +329,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                                     />
                                   );
                                 }
-                              },
-                              iframe: ({src, title, ...props}) => {
-                                return <SmartIframe src={src} title={title || "Embedded content"} {...props} />;
                               },
                             }}
                           >

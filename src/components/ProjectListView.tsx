@@ -52,22 +52,16 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
                 <iframe
                   key={pdfPage}
                   src={`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_ui_portfolio.pdf#page=${pdfPage}&view=Fit&scrollbar=0&toolbar=0&navpanes=0`}
-                  className="w-full h-full"
+                  className="absolute inset-0 w-[110%] h-[110%] pointer-events-none" // 增加宽高以挤出滚动条
                   title="Portfolio PDF"
                   style={{ 
                     border: 'none',
-                    overflow: 'hidden',
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none'
+                    transform: 'translate(-2.5%, -5%)' // 平移以隐藏滚动条和边缘
                   }}
                 />
                 {/* 遮罩层隐藏滚动条 */}
                 <div 
-                  className="absolute right-0 top-0 bottom-0 w-4 bg-neutral-100 dark:bg-neutral-800 z-10"
-                  style={{ pointerEvents: 'none' }}
-                />
-                <div 
-                  className="absolute left-0 right-0 bottom-0 h-4 bg-neutral-100 dark:bg-neutral-800 z-10"
+                  className="absolute inset-0 bg-transparent z-10"
                   style={{ pointerEvents: 'none' }}
                 />
               </div>
