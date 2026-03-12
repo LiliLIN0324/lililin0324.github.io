@@ -25,19 +25,12 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, captions }) => {
 
   return (
     <div className="w-full">
-      <div className="relative overflow-hidden rounded-lg shadow-lg aspect-video">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={currentIndex}
-            src={images[currentIndex]}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 w-full h-full object-contain bg-neutral-100 dark:bg-neutral-800"
-            alt={currentCaption || `Carousel Image ${currentIndex + 1}`}
-          />
-        </AnimatePresence>
+      <div className="relative overflow-hidden rounded-lg shadow-lg bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center max-h-[350px]">
+        <img
+          src={images[currentIndex]}
+          className="max-w-full max-h-[350px] w-auto h-auto object-contain"
+          alt={currentCaption || `Carousel Image ${currentIndex + 1}`}
+        />
 
         <button
           onClick={goToPrevious}
