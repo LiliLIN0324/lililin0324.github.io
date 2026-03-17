@@ -14,7 +14,8 @@ import genshotAIVideoGenerationToolMd from './projects/design/06_genshot-AI-vide
 import riffleAiGameGenerationToolMd from './projects/design/07_riffle-ai-game-generation-tool.md?raw';
 
 import kittylovecarrotsMd from './projects/games/01_kittylovecarrots.md?raw';
-import howToBuildGameInWechatMiniProgramMd from './projects/games/02_how-to-build-game-in-wechat-mini-program.md?raw';
+import howToBuildGameInWechatMiniProgramMd from './projects/games/02_wechat-mini-game-development.md?raw';
+import howToUseUnityMakingWechatMinigamesMd from './projects/games/03_how-to-use-unity-making-wechat-minigames.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
 import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
@@ -27,6 +28,8 @@ import howToConductTimeGeoSequentialClusteringFromAlbumMd from './projects/tutor
 import howToConstructDockerMd from './projects/tutorials/05_how-to-construct-docker.md?raw';
 import howToConstructWorkflowInDifyMd from './projects/tutorials/06_how-to-construct-workflow-in-dify.md?raw';
 import howToConstructLightBackendWorkflowMd from './projects/tutorials/07_how-to-construct-light-backend-workflow.md?raw';
+import whatsMcpMd from './projects/tutorials/08_whats-mcp.md?raw';
+import howToChooseSuitableDatabaseMd from './projects/tutorials/09_how-to-choose-suitable-database.md?raw';
 
 
 
@@ -173,7 +176,8 @@ export const designProjects = [
 
 export const gameProjects = [
   createProject(kittylovecarrotsMd),
-  createProject(howToBuildGameInWechatMiniProgramMd)
+  createProject(howToBuildGameInWechatMiniProgramMd),
+  createProject(howToUseUnityMakingWechatMinigamesMd)
 ];
 
 export const platformProjects = [
@@ -189,5 +193,7 @@ export const tutorialProjects = [
   createProject(howToConductTimeGeoSequentialClusteringFromAlbumMd),
   createProject(howToConstructDockerMd),
   createProject(howToConstructWorkflowInDifyMd),
-  createProject(howToConstructLightBackendWorkflowMd)
+  createProject(howToConstructLightBackendWorkflowMd),
+  createProject(whatsMcpMd),
+  createProject(howToChooseSuitableDatabaseMd)
 ];

@@ -6,7 +6,7 @@ category: "Tutorial"
 year: "2026-2-25"
 description: "面向非计算机背景学生的 MCP 入门教程，用通俗的语言解释 Model Context Protocol 是什么、为什么需要它、以及如何使用它。"
 tech: ["MCP", "AI", "Claude", "LLM"]
-icon: "/data/fig/What's_MCP.jpg"
+icon: "/data/fig/mcp_logo.jpg"
 abstract: |
   MCP（Model Context Protocol）是一种让 AI 助手与外部工具和数据源连接的标准协议。本教程用通俗的语言，帮助没有计算机背景的学生理解 MCP 的概念、工作原理和实际应用。
 ---

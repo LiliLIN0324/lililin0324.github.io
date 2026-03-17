@@ -93,7 +93,7 @@ https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
 
 ![微信开发者工具项目结构](/data/fig/games/wechat-mini-game-devtools-02.png)
 
-### 使用vibe三方平台打开微信小程序编译代码
+### 01 使用vibe三方平台打开微信小程序编译代码
 
 这里我一般用的是trae CN, trae 也可以，但是我个人比较喜欢trae CN, 因为trae CN 目前的免费模型比较好。可以考虑使用windsurf代替。
 
@@ -111,30 +111,10 @@ https://www.trae.cn/
 ├── audio/                           音频资源
 │   ├── background.mp3
 │   ├── carrot.mp3
-│   ├── excellent.mp3
-│   ├── meow.mp3
-│   ├── rhythm.mp3
-│   └── tissue.mp3
+│   ├── ...
 ├── images/                          图片资源
 │   ├── card.png                     卡片背景
-│   ├── carrot.png                   萝卜
-│   ├── cat.png                      猫默认形象
-│   ├── cat_wink.png                 猫眨眼
-│   ├── cat-2.png, cat-3.png ...     猫朝向图
-│   ├── cat-down-left.png ...        猫下落状态图
-│   ├── coin.png                     顶部货币图标（鱼=coin）
-│   ├── energy.png                   顶部能量图标
-│   ├── game.png                     主页"游戏"按钮图
-│   ├── dress.png                    主页"换装"按钮图
-│   ├── sound_on.png / sound_off.png 声音开关图标
-│   ├── wardrobe.png                 换装页衣柜背景
-│   ├── hat_chrismas.png ...         帽子资源
-│   ├── cloth_burger.png ...         衣服资源
-│   ├── earing_1.png ...             配饰资源
-│   ├── side_card.png                右侧面板背景图
-│   ├── loading.png                  加载页背景图
-│   ├── btn1.png ... btn4.png        关卡按钮图
-│   └── btmain.png                   标题页"开始"按钮图
+│   ├── ...(后续将图片素材完全迁移，通过CDN访问)
 ├── js/
 │   ├── base/                        基础能力
 │   │   ├── animation.js             帧动画
@@ -170,10 +150,24 @@ https://www.trae.cn/
 ```
 
 具体的功能有空补上。那么就可以开始做一些小游戏了！
+注意：资产文件的限制比较多，一开始不要设计太大的图片。demo做完了之后，可以参考02 CDN资产配置，将素材上传到Cloudflare R2库中。
 
-注意：资产文件的限制比较多，一开始不要设计太大的图片。
+### 02 CDN资产配置 (免费图床)
+CDN（内容分发网络）资产是指分布在不同地理位置的服务器节点及其缓存的内容，旨在将HTML、图像、视频等静态/动态数据缓存到靠近用户的边缘节点，从而实现加速访问、降低源站带宽压力、提高可靠性并防御DDoS攻击。其核心价值在于提升用户体验。
+由于微信小程序的界面对代码的大小有一定的限制，所以我们不能把所有的图片素材都内置，我是直接把素材放在了Cloudflare上访问。Cloudflare R2 免费有每月10G 存储，100 万次A 类操作，1000 万次B 类操作，对于个人用户来说完全足够了。
+在cloudflare中的R2库里面添加一个文件夹，把所有的图片素材上传到那里，然后在game.json中配置对应的路径。
+![CDN资产](/data/fig/games/wechat-mini-game-cdn.png)
 
 ## 03 发布与审核
+
+### 测试版、开发版、正式版
+在微信开发者工具中，我们可以发布不同的版本：
+
+- **测试版** - 用于内部测试，不面向公众
+- **开发版** - 面向公众测试，可邀请好友测试
+- **正式版** - 正式发布，面向所有用户
+
+个人开发者只能有15个测试用户。发布到正式版的审核很严格，需要完成
 
 ### 审核流程与时间
 
@@ -183,8 +177,97 @@ https://www.trae.cn/
 2. **小游戏资质审核** - 游戏类目需要额外的资质
 3. **代码发布审核** - 每次代码更新都需要审核
 4. **适龄审核** - 游戏内容分级审核
-5. **备案审核** - 根据政策要求进行备案
-
+5. **ICP备案审核** - 根据政策要求进行ICP备案
+![alt text](/data/fig/games/wechat-mini-game-verification.png)
 ![审核通知时间线](/data/fig/games/wechat-mini-game-review-timeline.png)
 
 > ⚠️ 建议提前规划好发布时间，预留充足的审核周期。
+
+发布到正式版之后，就可以开始看游戏的用户流量情况了。
+![alt text](/data/fig/games/wechat-mini-game-data-visual.png)
+
+
+## 04微信小游戏软著
+> 📌 **参考阅读**  
+> [CSDN：小游戏软著申请全流程](https://blog.csdn.net/oSuiFeng788/article/details/143061373?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-4-143061373-blog-100574718.235^v43^pc_blog_bottom_relevance_base6&spm=1001.2101.3001.4242.3&utm_relevant_index=6)
+> [软著知乎经验分享帖] https://zhuanlan.zhihu.com/p/681006624
+
+---
+
+### 🎮 为什么一定要申请软著？
+| 平台 | 上线前是否必须软著 |
+|------|--------------------|
+| 微信小程序 | ❌ 可后补 |
+| 抖音小游戏 | ✅ 强制提交 |
+| OPPO、vivo、小米等 | ✅ 强制提交 |
+
+> ⚠️ 依据《计算机软件著作权登记办法》第 20 条，**受理后 60 日内**完成审查，**请至少提前 2 个月准备**。
+
+---
+
+### 🚀 全流程线上 · 0 跑腿
+1. 注册 + 实名认证（1–3 个工作日）  
+![alt text](/data/fig/games/object-storage.png)
+![alt text](/data/fig/games/copyright-protection-center.png)
+
+2. 在线填报 + 电子签章  
+3. 审查通过后**直接下载电子证书**  
+   → 无需邮寄纸质材料，**全程免费**。
+
+---
+
+### 🧩 材料一览（可点击展开）
+<details>
+<summary>1️⃣ 程序鉴别资料（源码）</summary>
+
+- **连续前 30 页 + 后 30 页**（每页 ≥ 50 行）  
+- 若总代码 ≤ 60 页，**全部提交**  
+- 页眉：软件名称 + 版本号（与申请表一致）  
+- 页脚：居中页码（1–60）
+
+> 工具推荐：  
+> `cloc` / `git log --stat` 快速统计行数 → 导出 PDF
+</details>
+
+<details>
+<summary>2️⃣ 文档鉴别资料（说明书 / 流程图 / 用户手册 三选一）</summary>
+
+- **连续前 30 页 + 后 30 页**（每页 ≥ 30 行）  
+- 建议直接导出**Figma 交互原型 + 文字说明** → PDF  
+- 页码规则同上
+</details>
+
+<details>
+<summary>3️⃣ 其余常规资料</summary>
+
+- 申请表（系统自动生成）  
+- 身份证正反面 + 手持照（实名认证）  
+- 软件名称、版本号、开发完成日期、权利范围等
+</details>
+
+---
+
+### 📝 六步极速填报
+1. 选择办理身份（个人 / 企业）  
+2. 填写软件基本信息  
+3. 填写开发信息（团队、时间、软硬件环境）  
+4. **软件功能与特点**（⚠️ 最多字数，建议提前写好）  
+5. 确认信息 → 生成**签章页**  
+6. 打印 → 手写签名 → 扫描上传 → **提交**
+
+---
+
+### ⏱️ 关键时间节点
+| 阶段 | 时长 | 备注 |
+|------|------|------|
+| 实名认证 | 1–3 工作日 | 一次性通过 |
+| 材料准备 | 1–3 天 | 用脚本导出 PDF 最快 |
+| 审查周期 | **60 日内** | 无补正情况下 |
+| 补正材料 | +30 日 | 收到通知后需重新提交 |
+
+---
+
+### 🎉 审查通过
+- 短信 + 邮件提醒  
+- 登录后台即可**下载电子证书**（带官方水印）  
+- 后续平台上线时**直接上传 PDF** 即可。
