@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { scrollToSection } from './utils';
 import { getDemoComponent } from './DemoLoader';
 import { tutorialCodeContent } from './tutorialCodeContent';
 import ReactMarkdown from 'react-markdown';
@@ -92,33 +91,7 @@ const SmartIframe = ({ src, ...props }) => {
 export const ProjectDetailView = ({ data, type }: { data: any[], type: string }) => {
   const { id } = useParams();
   const [viewMode, setViewMode] = useState<'details' | 'demo'>('details');
-  const [isTocCollapsed, setIsTocCollapsed] = useState(false);
   const project = data.find(p => p.slug === id);
-
-  // Extract headings from markdown content
-  const extractHeadings = (content: string) => {
-    const headingRegex = /^(#{1,6})\s+(.+)$/gm;
-    const headings: { level: number; text: string; id: string }[] = [];
-    let match;
-    
-    while ((match = headingRegex.exec(content)) !== null) {
-      const level = match[1].length;
-      const text = match[2].trim();
-      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-      headings.push({ level, text, id });
-    }
-    
-    return headings;
-  };
-
-  const headings = project?.details?.content ? extractHeadings(project.details.content) : [];
-
-  const scrollToHeading = (headingId: string) => {
-    const element = document.getElementById(headingId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -179,8 +152,8 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                   </p>
                 </div>
              </div>
-                <div className="grid md:grid-cols-12 gap-6 md:gap-8 w-full flex-grow">
-                  <div className="md:col-span-12 lg:col-span-8 space-y-8 md:space-y-10">
+                <div className="w-full flex-grow">
+                  <div className="space-y-8 md:space-y-10 max-w-4xl mx-auto">
                     {project.details.abstract && (
                       <section id="abstract">
                         <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-4 pb-2 border-b border-neutral-100 dark:border-neutral-800">
@@ -350,104 +323,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[], type: string })
                       </section>
                     )}
                   </div>
-
-                <div className="md:col-span-12 lg:col-span-4 hidden lg:block">
-                  <div className="sticky top-24 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden">
-                    <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
-                      <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                        Contents
-                      </h3>
-                      <button
-                        onClick={() => setIsTocCollapsed(!isTocCollapsed)}
-                        className="text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
-                      >
-                        <svg 
-                          className={`w-4 h-4 transform transition-transform ${isTocCollapsed ? 'rotate-90' : ''}`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    </div>
-
-                    <div className={`${isTocCollapsed ? 'max-h-0' : 'max-h-96'} overflow-hidden transition-all duration-300`}>
-                      <div className="p-4 space-y-2 overflow-y-auto max-h-80">
-                        {/* Overview Section */}
-                        <div className="space-y-1">
-                          <h4 className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">Overview</h4>
-                          {project.details.abstract && (
-                            <button
-                              onClick={() => scrollToSection("abstract")}
-                              className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-white dark:hover:bg-neutral-700 px-2 py-1 rounded transition-all w-full text-left text-left"
-                            >
-                              Abstract
-                            </button>
-                          )}
-                        </div>
-
-                        {/* Content Section */}
-                        {headings.length > 0 && (
-                          <div className="space-y-1 mt-4">
-                            <h4 className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">Content Sections</h4>
-                            {headings.map((heading, index) => (
-                              <button
-                                key={index}
-                                onClick={() => scrollToHeading(heading.id)}
-                                className={`text-sm hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-white dark:hover:bg-neutral-700 px-2 py-1 rounded transition-all w-full text-left block ${
-                                  heading.level === 1 ? 'font-semibold text-neutral-800 dark:text-neutral-200' :
-                                  heading.level === 2 ? 'font-medium text-neutral-700 dark:text-neutral-300 ml-2' :
-                                  heading.level === 3 ? 'text-neutral-600 dark:text-neutral-400 ml-4' :
-                                  heading.level === 4 ? 'text-neutral-600 dark:text-neutral-400 ml-6' :
-                                  heading.level === 5 ? 'text-neutral-500 dark:text-neutral-500 ml-8' :
-                                  'text-neutral-500 dark:text-neutral-500 ml-10'
-                                }`}
-                              >
-                                {heading.text}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Methodology Section */}
-                        <div className="space-y-1 mt-4">
-                          <h4 className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">Methodology</h4>
-                          {project.details.solution && (
-                            <button
-                              onClick={() => scrollToSection("methodology")}
-                              className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-white dark:hover:bg-neutral-700 px-2 py-1 rounded transition-all w-full text-left"
-                            >
-                              Approach
-                            </button>
-                          )}
-                          {project.details.challenge && (
-                            <button
-                              onClick={() => scrollToSection("challenges")}
-                              className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-white dark:hover:bg-neutral-700 px-2 py-1 rounded transition-all w-full text-left"
-                            >
-                              Challenges
-                            </button>
-                          )}
-                        </div>
-
-                        {/* Resources Section */}
-                        <div className="space-y-1 mt-4">
-                          <h4 className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2">Resources</h4>
-                          {(project.details.code || project.details.codeComponent || tutorialCodeContent[project.slug]) && (
-                            <button
-                              onClick={() => scrollToSection("code")}
-                              className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-white dark:hover:bg-neutral-700 px-2 py-1 rounded transition-all w-full text-left"
-                            >
-                              Code Example
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-             </div>
           </div>
         ) : (
           <div className="w-full h-full bg-neutral-100 dark:bg-neutral-900 relative">

@@ -15,7 +15,6 @@ import ClusteringGeoMap from './src/clusteringeomap';
 
 const MainPage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isDiceSpinning, setIsDiceSpinning] = useState(false);
   const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 });
   const [currentImage, setCurrentImage] = useState('/data/fig/lili/lili_01.png');
@@ -89,8 +88,15 @@ const MainPage = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+              className="relative w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-[0px] text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+              aria-label={isMobileMenuOpen ? 'Hide profile panel' : 'Show profile panel'}
+              title={isMobileMenuOpen ? 'Hide profile panel' : 'Show profile panel'}
             >
+              <span className="absolute inset-0 flex flex-col items-center justify-center gap-1">
+                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
+                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
+                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
+              </span>
               ☰
             </button>
             <h1 className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
@@ -98,6 +104,75 @@ const MainPage = () => {
             </h1>
           </div>
           <div className="flex items-center gap-4">
+            <nav className="hidden sm:flex gap-0">
+                <Link
+                  to="/"
+                  onClick={() => {
+                    if (window.innerWidth < 768) {
+                      setIsMobileMenuOpen(false)
+                    }
+                  }}
+                  className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === '' ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
+                >
+                <span>Home</span>
+                </Link>
+                {[
+                  { key: 'design', label: 'Design', short: 'Design' },
+                  { key: 'planning', label: 'Planning', short: 'Planning' },
+                  { key: 'game', label: 'Game', short: 'G' },
+                  { key: 'platform', label: 'Platform', short: 'P' },
+                  { key: 'tutorial', label: 'Tutorial', short: 'T' },
+                  { key: 'about', label: 'About', short: 'A' }
+                ].map((tab) => (
+                  <Link
+                    key={tab.key}
+                    to={`/${tab.key}`}
+                    onClick={() => {
+                      if (window.innerWidth < 768) {
+                        setIsMobileMenuOpen(false)
+                      }
+                    }}
+                    className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
+                  >
+                  <span>{tab.label}</span>
+                  </Link>
+                ))}
+            </nav>
+
+            <nav className="sm:hidden flex gap-0">
+                <Link
+                  to="/"
+                  onClick={() => {
+                    if (window.innerWidth < 768) {
+                      setIsMobileMenuOpen(false)
+                    }
+                  }}
+                  className={`px-3 py-2 text-sm font-medium border-b-4 transition-all ${activeTab === '' ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
+                >
+                <span>Home</span>
+                </Link>
+                {[
+                  { key: 'design', label: 'Design' },
+                  { key: 'planning', label: 'Planning' },
+                  { key: 'game', label: 'Game' },
+                  { key: 'platform', label: 'Platform' },
+                  { key: 'tutorial', label: 'Tutorial' },
+                  { key: 'about', label: 'About' }
+                ].map((tab) => (
+                  <Link
+                    key={tab.key}
+                    to={`/${tab.key}`}
+                    onClick={() => {
+                      if (window.innerWidth < 768) {
+                        setIsMobileMenuOpen(false)
+                      }
+                    }}
+                    className={`px-3 py-2 text-sm font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
+                  >
+                  <span>{tab.label}</span>
+                  </Link>
+                ))}
+            </nav>
             <ThemeToggle />
             <button
               onClick={() => {
@@ -201,89 +276,6 @@ const MainPage = () => {
               </div>
               <span className="text-sm font-medium">Jump</span>
             </button>
-            <nav className="hidden sm:flex gap-0">
-                <Link
-                  to="/"
-                  onClick={() => {
-                    if (window.innerWidth < 768) {
-                      setIsMobileMenuOpen(true)
-                    }
-                  }}
-                  className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === '' ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                >
-                <span>Home</span>
-                </Link>
-                {[
-                  { key: 'planning', label: 'Planning', short: 'Planning' },
-                  { key: 'design', label: 'Design', short: 'Design' },
-                  { key: 'game', label: 'Game', short: 'G' },
-                  { key: 'platform', label: 'Platform', short: 'P' },
-                  { key: 'tutorial', label: 'Tutorial', short: 'T' },
-                  { key: 'about', label: 'About', short: 'A' }
-                ].map((tab) => (
-                  <Link
-                    key={tab.key}
-                    to={`/${tab.key}`}
-                    onClick={() => {
-                      if (window.innerWidth < 768) {
-                        setIsMobileMenuOpen(true)
-                      }
-                    }}
-                    className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                  >
-                  <span>{tab.label}</span>
-                  </Link>
-                ))}
-            </nav>
-
-            <div className="sm:hidden relative">
-              <button
-                onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                className="flex items-center gap-2 px-3 py-2 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800"
-              >
-                <span className="text-sm font-medium">
-                  {activeTab === '' ? 'Home' : 
-                   activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
-                </span>
-                {isMobileNavOpen ? '✕' : '▼'}
-              </button>
-              
-              {isMobileNavOpen && (
-                <div className="absolute right-0 top-10 bg-neutral-900 dark:bg-neutral-800 border border-neutral-700 dark:border-neutral-600 rounded-lg shadow-lg z-50 min-w-[160px]">
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      setIsMobileNavOpen(false);
-                      setIsMobileMenuOpen(true);
-                    }}
-                    className={`block px-4 py-3 text-sm font-medium transition-all ${activeTab === '' ? 'bg-neutral-700 dark:bg-neutral-700 text-white' : 'text-neutral-300 dark:text-neutral-200 hover:bg-neutral-800 dark:hover:bg-neutral-700'}`}
-                  >
-                    Home
-                  </Link>
-                  {[
-                    { key: 'planning', label: 'Planning' },
-                    { key: 'design', label: 'Design' },
-                    { key: 'game', label: 'Game' },
-                    { key: 'platform', label: 'Platform' },
-                    { key: 'tutorial', label: 'Tutorial' },
-                    { key: 'about', label: 'About' }
-                  ].map((tab) => (
-                    <Link
-                      key={tab.key}
-                      to={`/${tab.key}`}
-                      onClick={() => {
-                        setIsMobileNavOpen(false);
-                        setIsMobileMenuOpen(true);
-                      }}
-                      className={`block px-4 py-3 text-sm font-medium transition-all ${activeTab === tab.key ? 'bg-neutral-700 dark:bg-neutral-700 text-white' : 'text-neutral-300 dark:text-neutral-200 hover:bg-neutral-800 dark:hover:bg-neutral-700'}`}
-                    >
-                      {tab.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
           </div>
 
         </header>
@@ -350,6 +342,7 @@ const MainPage = () => {
           )}
           
           {/* 桌面端侧边栏 */}
+          {isMobileMenuOpen && (
           <aside className="hidden md:flex border-r border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex-col w-64 p-4 overflow-y-auto h-full z-10 shrink-0">
             <div className="flex flex-col gap-6 w-full mt-4 black">
                 {/* 图片显示 */}
@@ -387,6 +380,7 @@ const MainPage = () => {
                 </div>
               </div>
             </aside>
+          )}
             
             <section
               className="flex-1 relative w-full h-[calc(100vh-4rem)] overflow-y-auto"

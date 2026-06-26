@@ -4,7 +4,7 @@ import IntroScreen from './IntroScreen';
 import MainPage from './MainPage';
 
 export default function Index() {
-  const [entered, setEntered] = useState(false);
+  const [entered, setEntered] = useState(true); // 默认为 true，跳过星空屏保
 
   return (
     <>

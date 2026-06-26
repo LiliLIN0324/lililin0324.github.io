@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   projects,
   designProjects,
@@ -9,13 +10,40 @@ import {
 } from '../data/projects'
 
 export const HomePage = () => {
-  const allProjects = [
-    ...projects.map(p => ({ ...p, type: 'planning' })),
-    ...designProjects.map(p => ({ ...p, type: 'design' })),
-    ...gameProjects.map(p => ({ ...p, type: 'game' })),
-    ...platformProjects.map(p => ({ ...p, type: 'platform' })),
-    ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
-  ]
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [currentLiliImage, setCurrentLiliImage] = useState('/data/fig/lili/lili_01.png')
+
+  // 分类到图片的映射
+  const categoryImageMap = {
+    'all': '/data/fig/lili/lili_01.png',
+    'design': '/data/fig/lili/lili_05.png',
+    'planning': '/data/fig/lili/lili_06.png',
+    'game': '/data/fig/lili/lili_03.png',
+    'platform': '/data/fig/lili/lili_11.png',
+    'tutorial': '/data/fig/lili/lili_04.png',
+  }
+
+  useEffect(() => {
+    setCurrentLiliImage(categoryImageMap[selectedCategory as keyof typeof categoryImageMap] || categoryImageMap.all)
+  }, [selectedCategory])
+
+  const allProjects = (() => {
+    const projectsByType = {
+      all: [
+        ...designProjects.map(p => ({ ...p, type: 'design' })),
+        ...projects.map(p => ({ ...p, type: 'planning' })),
+        ...gameProjects.map(p => ({ ...p, type: 'game' })),
+        ...platformProjects.map(p => ({ ...p, type: 'platform' })),
+        ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
+      ],
+      design: designProjects.map(p => ({ ...p, type: 'design' })),
+      planning: projects.map(p => ({ ...p, type: 'planning' })),
+      game: gameProjects.map(p => ({ ...p, type: 'game' })),
+      platform: platformProjects.map(p => ({ ...p, type: 'platform' })),
+      tutorial: tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
+    }
+    return projectsByType[selectedCategory as keyof typeof projectsByType] || projectsByType.all
+  })()
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const maxIndex = allProjects.length - 1
@@ -144,6 +172,156 @@ export const HomePage = () => {
 
   return (
     <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Header */}
+      <div className="flex flex-col items-center border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8 gap-4">
+        <div className="text-center">
+          {/* Lili Avatar */}
+          <div className="flex justify-center mb-4">
+            <img 
+              src={currentLiliImage} 
+              alt="Lili Avatar" 
+              className="w-24 h-24 md:w-32 md:h-32 object-contain"
+            />
+          </div>
+          
+          <div className="flex flex-wrap gap-4 justify-center mb-3">
+            <button
+              onClick={() => { setSelectedCategory('all'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'all' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              All ({designProjects.length + projects.length + gameProjects.length + platformProjects.length + tutorialProjects.length})
+            </button>
+            <button
+              onClick={() => { setSelectedCategory('design'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'design' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              Design ({designProjects.length})
+            </button>
+            <button
+              onClick={() => { setSelectedCategory('planning'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'planning' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              Planning ({projects.length})
+            </button>
+            <button
+              onClick={() => { setSelectedCategory('game'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'game' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              Game ({gameProjects.length})
+            </button>
+            <button
+              onClick={() => { setSelectedCategory('platform'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'platform' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              Platform ({platformProjects.length})
+            </button>
+            <button
+              onClick={() => { setSelectedCategory('tutorial'); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'tutorial' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+            >
+              Tutorial ({tutorialProjects.length})
+            </button>
+          </div>
+          <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
+            {currentIndex + 1} / {allProjects.length}
+          </span>
+        </div>
+      </div>
+
+      {/* 卡牌舞台 */}
+      <div ref={cardStageRef} className="relative w-full h-[400px] flex items-center justify-center overflow-hidden z-10 mb-10 md:mb-12">
+
+        {allProjects.map((project, index) => {
+          const offset = index - currentIndex
+
+          // 超出可见范围直接不渲染
+          if (offset < -2 || offset > 3) return null
+
+          const scale = 1 - Math.abs(offset) * 0.08
+          const translateY = offset * 60
+          const translateZ = -Math.abs(offset) * 120
+          const rotateX = offset * -6
+          const opacity = offset === 0 ? 1 : 0.5
+
+          return (
+            <div
+              key={`${project.type}-${project.slug}`}
+              className="absolute w-full max-w-7xl transition-all duration-500 ease-out"
+              style={{
+                transform: `
+                  translateY(${translateY + 20}px)
+                  translateZ(${translateZ}px)
+                  rotateX(${rotateX}deg)
+                  scale(${scale})
+                `,
+                opacity,
+                zIndex: 100 - Math.abs(offset),
+              }}
+            >
+              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl p-6 shadow-lg">
+                <div className="flex gap-6">
+                  <div className="w-36 h-36 bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md flex-shrink-0">
+                    <img
+                      src={project.details.logo}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-[10px] font-mono px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded">
+                        {project.type.toUpperCase()}
+                      </span>
+                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
+                        {project.year}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech?.slice(0, 3).map((t, i) => (
+                        <span
+                          key={i}
+                          className="text-[10px] font-mono px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <a
+                        href={`#/${project.type}/${project.slug}`}
+                        className="px-4 py-2 text-xs font-mono bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-700 dark:text-neutral-200 rounded"
+                      >
+                        VIEW
+                      </a>
+
+                      {(project as any).hasDemo && (
+                        <a
+                          href={`#/${project.type}/${project.slug}#demo`}
+                          className="px-4 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 rounded"
+                        >
+                          DEMO
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
       {/* Video Banner - 轮播 */}
       <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden mb-8 md:mb-10 shadow-2xl">
         {/* 视频列表 */}
@@ -451,108 +629,6 @@ export const HomePage = () => {
             )
           })}
         </div>
-      </div>
-
-      {/* Header */}
-      <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8">
-        <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">All Projects</h2>
-        <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-          {currentIndex + 1} / {allProjects.length}
-        </span>
-      </div>
-
-      {/* 卡牌舞台 */}
-      <div ref={cardStageRef} className="relative w-full h-[400px] flex items-center justify-center overflow-hidden z-10">
-
-        {allProjects.map((project, index) => {
-          const offset = index - currentIndex
-
-          // 超出可见范围直接不渲染
-          if (offset < -2 || offset > 3) return null
-
-          const scale = 1 - Math.abs(offset) * 0.08
-          const translateY = offset * 60
-          const translateZ = -Math.abs(offset) * 120
-          const rotateX = offset * -6
-          const opacity = offset === 0 ? 1 : 0.5
-
-          return (
-            <div
-              key={`${project.type}-${project.slug}`}
-              className="absolute w-full max-w-7xl transition-all duration-500 ease-out"
-              style={{
-                transform: `
-                  translateY(${translateY + 20}px)
-                  translateZ(${translateZ}px)
-                  rotateX(${rotateX}deg)
-                  scale(${scale})
-                `,
-                opacity,
-                zIndex: 100 - Math.abs(offset),
-              }}
-            >
-              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl p-6 shadow-lg">
-                <div className="flex gap-6">
-                  <div className="w-36 h-36 bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md flex-shrink-0">
-                    <img
-                      src={project.details.logo}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[10px] font-mono px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded">
-                        {project.type.toUpperCase()}
-                      </span>
-                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
-                        {project.year}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tech?.slice(0, 3).map((t, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] font-mono px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-3">
-                      <a
-                        href={`#/${project.type}/${project.slug}`}
-                        className="px-4 py-2 text-xs font-mono bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-700 dark:text-neutral-200 rounded"
-                      >
-                        VIEW
-                      </a>
-
-                      {(project as any).hasDemo && (
-                        <a
-                          href={`#/${project.type}/${project.slug}#demo`}
-                          className="px-4 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 rounded"
-                        >
-                          DEMO
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        })}
       </div>
 
     </div>
