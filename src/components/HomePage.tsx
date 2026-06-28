@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+﻿import React, { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
@@ -21,6 +21,16 @@ export const HomePage = () => {
     'game': '/data/fig/lili/lili_03.png',
     'platform': '/data/fig/lili/lili_11.png',
     'tutorial': '/data/fig/lili/lili_04.png',
+  }
+
+  // 分类到介绍文字的映射
+  const categoryTextMap: Record<string, React.ReactNode> = {
+    'all': <>这是我在<strong>设计、开发、游戏和城市规划</strong>领域的项目。</>,
+    'design': <>这是我在<strong>设计</strong>领域的项目。</>,
+    'planning': <>这是我在<strong>城市规划</strong>领域的项目。</>,
+    'game': <>这是我在<strong>游戏</strong>领域的项目。</>,
+    'platform': <>这是我在<strong>平台开发</strong>领域的项目。</>,
+    'tutorial': <>这是我在<strong>教程</strong>领域的项目。</>,
   }
 
   useEffect(() => {
@@ -175,19 +185,22 @@ export const HomePage = () => {
       {/* Header */}
       <div className="flex flex-col items-center border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8 gap-4">
         <div className="text-center">
-          {/* Lili Avatar */}
-          <div className="flex justify-center mb-4">
-            <img 
-              src={currentLiliImage} 
-              alt="Lili Avatar" 
-              className="w-24 h-24 md:w-32 md:h-32 object-contain"
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img
+              src={currentLiliImage}
+              alt="Lili Avatar"
+              className="w-32 h-32 md:w-48 md:h-48 object-contain"
             />
+            <div className="relative bg-white dark:bg-neutral-800 rounded-2xl px-6 py-4 shadow-lg max-w-xs md:max-w-md">
+              <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-r-8 border-r-white dark:border-r-neutral-800 border-b-8 border-b-transparent"></div>
+              <p className="text-sm md:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                你好！我是林丽丽，欢迎来到我的作品集。{categoryTextMap[selectedCategory as keyof typeof categoryTextMap] || categoryTextMap.all}              </p>
+            </div>
           </div>
-          
           <div className="flex flex-wrap gap-4 justify-center mb-3">
             <button
-              onClick={() => { setSelectedCategory('all'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'all' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+              onClick={() => { setSelectedCategory("all"); setCurrentIndex(0); }}
+              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === "all" ? "text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100" : "text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"}`}
             >
               All ({designProjects.length + projects.length + gameProjects.length + platformProjects.length + tutorialProjects.length})
             </button>
@@ -634,3 +647,4 @@ export const HomePage = () => {
     </div>
   )
 }
+
