@@ -133,6 +133,45 @@ audio.play();
 // 6. 数据存储
 wx.setStorageSync('highScore', score);
 const highScore = wx.getStorageSync('highScore');`,
+  'kittylovecarrots': `// 微信小程序游戏开发基本步骤
+
+// 1. 初始化游戏画布
+const canvas = wx.createCanvas();
+const ctx = canvas.getContext('2d');
+
+// 2. 游戏主循环
+function gameLoop() {
+  update(); // 更新游戏状态
+  render(); // 渲染游戏画面
+  requestAnimationFrame(gameLoop);
+}
+
+// 3. 碰撞检测
+function checkCollision(obj1, obj2) {
+  return (
+    obj1.x < obj2.x + obj2.width &&
+    obj1.x + obj1.width > obj2.x &&
+    obj1.y < obj2.y + obj2.height &&
+    obj1.y + obj1.height > obj2.y
+  );
+}
+
+// 4. 触摸事件处理
+wx.onTouchStart(function(res) {
+  const touch = res.touches[0];
+  const x = touch.clientX;
+  const y = touch.clientY;
+  // 处理触摸事件
+});
+
+// 5. 音频播放
+const audio = wx.createInnerAudioContext();
+audio.src = 'path/to/audio.mp3';
+audio.play();
+
+// 6. 数据存储
+wx.setStorageSync('highScore', score);
+const highScore = wx.getStorageSync('highScore');`,
   'how-to-conduct-time-geo-sequential-clustering-from-album': `// 时间地理序列聚类算法
 
 // 1. 提取照片的时间戳和位置信息

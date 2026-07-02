@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo,ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo } from './DemoComponents';
+import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo, GameJam72HourDemo, PeaceEliteHustCampusDemo, BMWMetaIslandDemo, ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo } from './DemoComponents';
 
 // 根据slug获取对应的demo组件
 export const getDemoComponent = (slug: string) => {
@@ -12,7 +12,11 @@ export const getDemoComponent = (slug: string) => {
     'how-to-add-openstreetmap-in-website': OpenStreetMap,
     'how-to-get-sequential-events-from-photo-by-phone': SequentialEvents,
     'how-to-visualize-photo-geolocation-data-on-map': PhotoGeolocationMap,
+    'kittylovecarrots': WeChatGameDemo,
     'how-to-build-game-in-wechat-mini-program': WeChatGameDemo,
+    '72-hour-game-jam': GameJam72HourDemo,
+    'peace-elite-hust-campus': PeaceEliteHustCampusDemo,
+    'bmw-meta-island': BMWMetaIslandDemo,
     'how-to-conduct-time-geo-sequential-clustering-from-album': ClusteringEvents,
     'box-up-my-stuff-in-cyberspace': BoxUpMyStuffInCyberspace,
     'epstein-mystery-archive': EpsteinScretArchive,

@@ -13,9 +13,11 @@ import baziFengshuiAnalysisMd from './projects/design/05_bazi-fengshui-analysis.
 import genshotAIVideoGenerationToolMd from './projects/design/06_genshot-AI-video-generation-tool.md?raw';
 import riffleAiGameGenerationToolMd from './projects/design/07_riffle-ai-game-generation-tool.md?raw';
 
-import kittylovecarrotsMd from './projects/games/01_kittylovecarrots.md?raw';
-import howToBuildGameInWechatMiniProgramMd from './projects/games/02_wechat-mini-game-development.md?raw';
-import howToUseUnityMakingWechatMinigamesMd from './projects/games/03_how-to-use-unity-making-wechat-minigames.md?raw';
+import gameJam72HourMd from './projects/games/01_72-hour-game-jam.md?raw';
+import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.md?raw';
+import bmwMetaIslandMd from './projects/games/03_bmw-meta-island.md?raw';
+import kittylovecarrotsMd from './projects/games/04_kittylovecarrots.md?raw';
+import howToUseUnityMakingWechatMinigamesMd from './projects/games/06_how-to-use-unity-making-wechat-minigames.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
 import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
@@ -175,8 +177,10 @@ export const designProjects = [
 ];
 
 export const gameProjects = [
+  createProject(gameJam72HourMd),
+  createProject(peaceEliteHustCampusMd),
+  createProject(bmwMetaIslandMd),
   createProject(kittylovecarrotsMd),
-  createProject(howToBuildGameInWechatMiniProgramMd),
   createProject(howToUseUnityMakingWechatMinigamesMd)
 ];
 

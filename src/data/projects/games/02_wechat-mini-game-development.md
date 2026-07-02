@@ -1,5 +1,5 @@
 ---
-id: "02"
+id: "03"
 slug: "how-to-build-game-in-wechat-mini-program"
 title: "How to build game in wechat mini program"
 category: "Game"

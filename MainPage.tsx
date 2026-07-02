@@ -25,7 +25,7 @@ const MainPage = () => {
   const activeTab = pathSegments[0] || '';
 
   // 图片映射
-  const imageMap = {
+  const imageMap: Record<string, string> = {
     'design': '/data/fig/lili/lili_05.png',
     'game': '/data/fig/lili/lili_03.png',
     'platform': '/data/fig/lili/lili_11.png',
@@ -68,7 +68,6 @@ const MainPage = () => {
 
   // 初始化时设置随机图片和句子
   useEffect(() => {
-    // 根路径时使用随机图片
     if (activeTab === '') {
       setCurrentImage(getRandomImage());
     } else if (imageMap[activeTab]) {
@@ -118,8 +117,8 @@ const MainPage = () => {
                 </Link>
                 {[
                   { key: 'design', label: 'Design', short: 'Design' },
-                  { key: 'planning', label: 'Planning', short: 'Planning' },
                   { key: 'game', label: 'Game', short: 'G' },
+                  { key: 'planning', label: 'Planning', short: 'Planning' },
                   { key: 'platform', label: 'Platform', short: 'P' },
                   { key: 'tutorial', label: 'Tutorial', short: 'T' },
                   { key: 'about', label: 'About', short: 'A' }
@@ -153,8 +152,8 @@ const MainPage = () => {
                 </Link>
                 {[
                   { key: 'design', label: 'Design' },
-                  { key: 'planning', label: 'Planning' },
                   { key: 'game', label: 'Game' },
+                  { key: 'planning', label: 'Planning' },
                   { key: 'platform', label: 'Platform' },
                   { key: 'tutorial', label: 'Tutorial' },
                   { key: 'about', label: 'About' }
