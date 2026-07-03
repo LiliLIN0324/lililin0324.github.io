@@ -6,12 +6,27 @@ category: "Machine Learning"
 year: "2025-present"
 description: "Revealing nonlinear relationships between urban form factors and extreme heat with an explainable machine learning approach"
 tech: ["GIS","Machine Learning"]
-abstract: "Climate change has been a pressing global issue in recent decades as it increasingly influences human life through extreme weather, ecosystem collapse, and food crises. Extreme heat is particularly exacerbated by the urban heat island (UHI) effect in cities. Numerous studies have empirically investigated the link between urban form factors and surface Urban Heat Islands (UHI), but few have studied how UHI changes in response to an extreme heat event, conceptualized as heat resilience in recent studies. Additionally, the majority of existing studies have relied on traditional regression models that assume linear relationships. To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods. The GBDT models demonstrated superior predictive accuracy, as evidenced by the lowest mean squared error (MSE). In addition, the results indicate that urban form factors have nonlinear relationships with urban land surface extreme heat and associated heat resilience. These findings have valuable implications for urban planning practice aimed at developing heat-resilient cities."
-challenge: "The majority of existing studies have relied on traditional regression models that assume linear relationships."
-solution: "To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods."
 icon: "/data/fig/ml_logo.jpg"
 image: ["/data/fig/AAAI2026.jpg"]
 ---
+
+“利用机器学习评估城市形态对不同尺度下热韧性的非线性影响”
+> 2025.10，在美国明尼阿波利斯举行的第65届美国大学规划学院协会（ACSP）会议上作口头报告
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/01.png)<br>
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/02.png)<br>
+> 2026.2，在新加坡举行的第40届AAAI城市规划人工智能研讨会上作海报展示
+![alt text](/data/fig/AAAI2026.jpg)<br>
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/03.png)<br>
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/04.png)<br>
+> 2025.5.10 在线上参加佛罗里达大学组织的AI和城市工作坊
+> 2025.8.7 在英国剑桥大学进行工作坊交流
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/05.png)
+![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/06.png)
+
+## abstract: 
+"Climate change has been a pressing global issue in recent decades as it increasingly influences human life through extreme weather, ecosystem collapse, and food crises. Extreme heat is particularly exacerbated by the urban heat island (UHI) effect in cities. Numerous studies have empirically investigated the link between urban form factors and surface Urban Heat Islands (UHI), but few have studied how UHI changes in response to an extreme heat event, conceptualized as heat resilience in recent studies. Additionally, the majority of existing studies have relied on traditional regression models that assume linear relationships. To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods. The GBDT models demonstrated superior predictive accuracy, as evidenced by the lowest mean squared error (MSE). In addition, the results indicate that urban form factors have nonlinear relationships with urban land surface extreme heat and associated heat resilience. These findings have valuable implications for urban planning practice aimed at developing heat-resilient cities."
+challenge: "The majority of existing studies have relied on traditional regression models that assume linear relationships."
+solution: "To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods."
 
 ## 1 - Extreme Heat Days and Normal Heat Days Identification
 

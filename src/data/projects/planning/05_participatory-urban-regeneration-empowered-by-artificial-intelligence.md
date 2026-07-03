@@ -1,7 +1,7 @@
 ---
 id: "05"
 slug: "participatory-urban-regeneration-empowered-by-artificial-intelligence"
-title: "Participatory Urban Regeneration Empowered by Artificial Intelligence"
+title: "人工智能赋能下的参与式城市更新 Participatory Urban Regeneration Empowered by Artificial Intelligence"
 category: "Urban regeneration, participatory urban planning"
 year: "2025-present"
 description: "Using AI techniques to build a platform to encourage stakeholders joining in urban regeneration"
@@ -13,6 +13,8 @@ icon: "/data/fig/PU_logo.jpg"
 image: ["/data/fig/PU-1.jpg","/data/fig/PU-2.jpg"]
 ---
 
+![alt text](/data/fig/planning/05-participatory-urban-regeneration-empowered-by-artificial-intelligence/01.png)
+![alt text](/data/fig/planning/05-participatory-urban-regeneration-empowered-by-artificial-intelligence/02.png)
 https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm
 
 <iframe src="https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm" width="100%" height="600" frameborder="0" allowfullscreen></iframe>

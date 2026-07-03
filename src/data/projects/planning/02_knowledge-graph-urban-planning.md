@@ -10,9 +10,22 @@ abstract: "Urban planners often struggle to learn from other cities' master plan
 challenge: "Expert validation reveals that while LLM-based methods capture semantic nuances more effectively, they often lack the interpretability crucial for practical implementation."
 solution: "Traditional natural language processing (NLP) techniques and generative large language models (LLMs) are then applied to generate and compare the edges connecting these nodes."
 icon: "/data/fig/kg_logo.jpg"
-image: ["/data/fig/kg_figure.jpg"]
+image: ["/data/fig/AAAI2025.jpg"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/kg_figure.jpg)
+“基于城市规划文本的知识图谱生成：纽约和上海总体规划中气候变化适应的比较分析” 
+> 2025.2，在美国费城举行的第39届AAAI城市规划人工智能研讨会上作海报展示<br>
+[《AAAI paper Abstract》](/data/pdf/2025AAAIpaper.pdf)<br>
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/01.png)
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/02.png)
+
+> 2025.6，在英国伦敦举行的计算城市规划与城市管理会议(CUPUM)上作口头报告![alt text]
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/03.png)
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/05.png)
+
+> 2025.7，在中国厦门举行的第 19届国际中国规划协会（IACP）会议上作口头报告
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/04.png)
+
+![alt text](/data/fig/AAAI2025.jpg)
