@@ -16,7 +16,8 @@ import riffleAiGameGenerationToolMd from './projects/design/07_riffle-ai-game-ge
 import gameJam72HourMd from './projects/games/01_72-hour-game-jam.md?raw';
 import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.md?raw';
 import bmwMetaIslandMd from './projects/games/03_bmw-meta-island.md?raw';
-import kittylovecarrotsMd from './projects/games/04_kittylovecarrots.md?raw';
+import guangzhouXinyuanTechMd from './projects/games/04_guangzhou-xinyuan-tech.md?raw';
+import kittylovecarrotsMd from './projects/games/05_kittylovecarrots.md?raw';
 import howToUseUnityMakingWechatMinigamesMd from './projects/games/06_how-to-use-unity-making-wechat-minigames.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
@@ -180,6 +181,7 @@ export const gameProjects = [
   createProject(gameJam72HourMd),
   createProject(peaceEliteHustCampusMd),
   createProject(bmwMetaIslandMd),
+  createProject(guangzhouXinyuanTechMd),
   createProject(kittylovecarrotsMd),
   createProject(howToUseUnityMakingWechatMinigamesMd)
 ];
