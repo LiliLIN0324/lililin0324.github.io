@@ -7,8 +7,8 @@ year: "2026-2 - on going"
 description: "指萝卜小游戏与微信小游戏完整开发流程合并展示。"
 tech: ["WeChat Mini Program", "游戏开发", "Figma", "AI生图"]
 abstract: " "
-challenge: "Designing a game that is both fun and educational for children while also considering the challenges of game development."
-solution: "We developed a minigame called 'kittylovecarrots' that uses a drum rhythm to help children learn about carrots. The game features a simple yet engaging gameplay that allows children to explore the world of carrots in a fun and interactive way."
+challenge: "设计一款既有趣又具有教育意义的儿童游戏，同时兼顾游戏开发过程中的技术实现与设计难点。"
+solution: "我们开发了一款名为 Kitty Love Carrots 的节奏小游戏，通过鼓点节奏（drum rhythm）的互动玩法，引导儿童认识胡萝卜相关知识。游戏采用简单易上手且富有趣味性的机制，让孩子们能够在轻松愉快的游戏体验中，以互动探索的方式学习和了解胡萝卜。"
 hasDemo: true
 icon: "/data/fig/Kittylovecarrots_logo.jpg"
 image: ["/data/fig/kittylovecarrots-1.png","/data/fig/kittylovecarrots-2.png"]
@@ -169,6 +169,35 @@ CDN（内容分发网络）资产是指分布在不同地理位置的服务器�
 
 发布到正式版之后，就可以开始看游戏的用户流量情况了。
 ![alt text](/data/fig/games/wechat-mini-game-data-visual.png)
+
+
+## godot引擎，辅助游戏。
+我意识到我可能需要更复杂的
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+## 源码目录介绍
+```
+----godot-loader.js              //引擎加载器
++---engine
+|       demo-pck.bin             //Demo场景资源包, .bin就是.pck文件, 把你自己的资源文件打包成.pck文件更改后缀名为.bin, 然后放到这里就可以了, 要改名字则修改game.js中的资源路径
+|       game.js                  //godot 引擎主程序
+|       godot-sdk.js             //godot适配微信sdk
+|       godot.js                 //godot 引擎主程序
+|       godot.wasm.br            //wasm文件
+|
++---images
+        background.jpg           //游戏背景图片
+        logo.png                 //游戏logo图片
+
+```
+
+## 其它说明
+ios运行请在小游戏后台开通高性能+模式, 操作方法: 功能->游戏能力地图->研发能力->生成提效包->高性能模式
+
+
+
 
 ## 04微信小游戏软著
 

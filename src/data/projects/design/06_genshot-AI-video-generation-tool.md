@@ -8,9 +8,9 @@ description: "An AI-powered image generation tool that transforms text prompts i
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "/data/fig/Genshot_logo.jpg"
-image: ["/data/fig/Genshot.jpg"]
+image: ["/data/fig/Genshot-v2.jpg"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/Genshot.jpg)
+![效果展示](/data/fig/Genshot-v2.jpg)
