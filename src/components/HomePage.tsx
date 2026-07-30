@@ -360,14 +360,7 @@ export const HomePage = () => {
             </button>
           </div>
 
-          {/* Dot indicators */}
-          {stageMediaItems.length > 1 && (
-            <div className="flex justify-center gap-2 pb-6 pt-2">
-              {stageMediaItems.map((_, i) => (
-                <button key={i} onClick={() => setStageImageIndex(i)} aria-label={`Media ${i + 1}`} className={`h-1.5 rounded-full transition-all duration-300 ${i === stageImageIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/25 hover:bg-white/50'}`} />
-              ))}
-            </div>
-          )}
+
         </section>
       )}
 
@@ -375,35 +368,35 @@ export const HomePage = () => {
       <section className="shell pt-10 md:pt-0">
 
         {/* Section title */}
-        <div className="flex items-end justify-between gap-4 mb-2 py-2 md:mb-4">
-          <div>
-            {/* Info strip */}
-            <div className="mx-auto mt-2 flex max-w-5xl items-center justify-between ">
-              <div className="flex items-baseline gap-3">
-                <p className="text-sm font-bold text-white/75 truncate">{currentProject?.title}</p>
-                <p className="eyebrow text-white/35 shrink-0">{currentProject?.type} · {currentProject?.year}</p>
-              </div>
-            </div>
+        <div className="flex items-center justify-between gap-2 mb-2 py-2 md:mb-4">
+          <div className="flex items-baseline gap-3 min-w-0">
+            <p className="text-sm font-bold text-ink truncate">{currentProject?.title}</p>
+            <p className="eyebrow shrink-0">{currentProject?.type} · {currentProject?.year}</p>
           </div>
-          <button
-            onClick={rollDice}
-            className="btn-ghost shrink-0 !px-2"
-            title="Roll a random project"
-          >
-            <span className="h-5 w-5" style={{ perspective: '120px' }}>
-              <span
-                className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
-                style={{ transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`, transformStyle: 'preserve-3d' }}
-              >
-                <DiceFace value={1} transform="translateZ(10px)" />
-                <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
-                <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
-                <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
-                <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
-                <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
+          <div className="flex items-center gap-3 shrink-0">
+            {stageMediaItems.length > 1 && stageMediaItems.map((_, i) => (
+              <button key={i} onClick={() => setStageImageIndex(i)} aria-label={`Media ${i + 1}`} className={`h-1.5 rounded-full transition-all duration-300 ${i === stageImageIndex ? 'w-6 bg-accent' : 'w-1.5 bg-rule hover:bg-ink-3'}`} />
+            ))}
+            <button
+              onClick={rollDice}
+              className="btn-ghost shrink-0 !px-2"
+              title="Roll a random project"
+            >
+              <span className="h-5 w-5" style={{ perspective: '120px' }}>
+                <span
+                  className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
+                  style={{ transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`, transformStyle: 'preserve-3d' }}
+                >
+                  <DiceFace value={1} transform="translateZ(10px)" />
+                  <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
+                  <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
+                  <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
+                  <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
+                  <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
+                </span>
               </span>
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
 
         {/* Filter rail */}
