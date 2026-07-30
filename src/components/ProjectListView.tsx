@@ -1,361 +1,240 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const ProjectListView = ({ data, type }: { data: any[], type: string }) => {
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+// Route params are singular ('tutorial'), which the previous mapping missed —
+// the Tutorial index rendered as "Selected Platform".
+const TYPE_LABEL: Record<string, string> = {
+  design: 'Products',
+  game: 'Games',
+  planning: 'Planning',
+  platform: 'Platform',
+  tutorial: 'Tutorials',
+  research: 'Research',
+};
+
+const PlaceholderThumb = ({ className }: { className?: string }) => (
+  <div className="flex h-full w-full items-center justify-center text-ink-3/50">
+    <svg className={className} fill="none" stroke="currentColor" strokeWidth={1.4} viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  </div>
+);
+
+const DemoLink = ({ to, className = '' }: { to: string; className?: string }) => (
+  <Link to={to} className={`btn-accent ${className}`}>
+    Demo
+  </Link>
+);
+
+/* ---------------------------------------------------------------------------
+   Portfolio PDF flip-through. Currently disabled via SHOW_PORTFOLIO_PDF but
+   kept intact so it can be switched back on.
+   --------------------------------------------------------------------------- */
+const SHOW_PORTFOLIO_PDF = false;
+const TOTAL_PDF_PAGES = 55;
+
+const PDF_PAGE_HINTS: Record<number, { text: string; link: string }> = {
+  2: { text: 'Self-introduction', link: '/about' },
+  5: { text: 'View 1037pinpin Project', link: '/design/1037pinpin' },
+  11: { text: 'View Perslearn Project', link: '/design/perslearn' },
+  21: { text: 'View Dragon Diffusion Project', link: '/design/dragon-diffussion' },
+  27: { text: 'View Genstyle Project', link: '/design/genstyle' },
+  43: { text: 'View Luoshu Project', link: '/design/bazi-fengshui-analysis' },
+  48: { text: 'View Genshot Project', link: '/design/genshot' },
+};
+
+const PortfolioPdf = () => {
   const [pdfPage, setPdfPage] = useState(1);
-  const totalPdfPages = 55; // TODO: 请根据实际PDF页数修改
-  const showPortfolioPdf = false;
-  
-  // Page hint configuration: page number -> { hint text, link }
-  const pageHints: Record<number, { text: string; link: string }> = {
-    2: { text: "Self-introduction", link: "/about" },
-    5: { text: "View 1037pinpin Project", link: "/design/1037pinpin" },
-    11: { text: "View Perslearn Project", link: "/design/perslearn" },
-    21: { text: "View Dragon Diffusion Project", link: "/design/dragon-diffussion" },
-    27: { text: "View Genstyle Project", link: "/design/genstyle" },
-    43: { text: "View Luoshu Project", link: "/design/bazi-fengshui-analysis" },
-    48: { text: "View Genshot Project", link: "/design/genshot" },
-  }
+  const hint = PDF_PAGE_HINTS[pdfPage];
 
   return (
-    <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* PDF Viewer + Projects Side by Side - 只在 design 类型显示 */}
-      {type === 'design' ? (
-        <div className="flex flex-col gap-6 lg:gap-8">
-          {showPortfolioPdf && (
-            <div className="flex-1 lg:flex-shrink-0 lg:w-[55%]">
-              <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-4">
-                <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Portfolio PDF</h2>
-                <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-                  Page {pdfPage} / {totalPdfPages}
-                </span>
-              </div>
-              
-              {/* PDF 显示区域 */}
-              <div className="relative flex items-center justify-center gap-2">
-                {/* 左翻页按钮 */}
-                <button
-                  onClick={() => setPdfPage(prev => Math.max(1, prev - 1))}
-                  disabled={pdfPage <= 1}
-                  className="flex-shrink-0 w-10 h-10 rounded-full bg-white dark:bg-neutral-800 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-300 border border-neutral-200 dark:border-neutral-700"
-                >
-                  <svg className="w-5 h-5 text-neutral-700 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                
-                {/* PDF 显示区域 */}
-                <div 
-                  className="relative flex-1 bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-2xl border border-neutral-300 dark:border-neutral-600" 
-                  style={{ aspectRatio: '4/2.8' }}
-                >
-                  <iframe
-                    key={pdfPage}
-                    src={`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_ui_portfolio.pdf#page=${pdfPage}&view=Fit&scrollbar=0&toolbar=0&navpanes=0`}
-                    className="absolute inset-0 w-[110%] h-[110%] pointer-events-none" // 增加宽高以挤出滚动条
-                    title="Portfolio PDF"
-                    style={{ 
-                      border: 'none',
-                      transform: 'translate(-2.5%, -5%)' // 平移以隐藏滚动条和边缘
-                    }}
-                  />
-                  {/* 遮罩层隐藏滚动条 */}
-                  <div 
-                    className="absolute inset-0 bg-transparent z-10"
-                    style={{ pointerEvents: 'none' }}
-                  />
-                </div>
-                
-                {/* 右翻页按钮 */}
-                <button
-                  onClick={() => setPdfPage(prev => Math.min(totalPdfPages, prev + 1))}
-                  disabled={pdfPage >= totalPdfPages}
-                  className="flex-shrink-0 w-10 h-10 rounded-full bg-white dark:bg-neutral-800 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-300 border border-neutral-200 dark:border-neutral-700"
-                >
-                  <svg className="w-5 h-5 text-neutral-700 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-              
-              {/* 页码指示器 */}
-              <div className="flex justify-center gap-1 mt-4 flex-wrap">
-                {Array.from({ length: totalPdfPages }).map((_, index) => {
-                  const pageNum = index + 1
-                  const isActive = pdfPage === pageNum
-                  const hasHint = pageHints[pageNum]
-                  
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setPdfPage(pageNum)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        isActive
-                          ? 'bg-neutral-800 dark:bg-neutral-200 w-6'
-                          : hasHint
-                            ? 'bg-blue-500 w-1.5 hover:bg-blue-600'
-                            : 'bg-neutral-300 dark:bg-neutral-600 w-1.5 hover:bg-neutral-400'
-                      }`}
-                      title={hasHint ? pageHints[pageNum].text : `Page ${pageNum}`}
-                    />
-                  )
-                })}
-              </div>
-              
-              {/* 页面跳转提示 */}
-              {pageHints[pdfPage] && (
-                <div className="mt-3 flex justify-center">
-                  <Link
-                    to={pageHints[pdfPage].link}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-full transition-colors shadow-md hover:shadow-lg"
-                  >
-                    <span>{pageHints[pdfPage].text}</span>
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+    <div className="mb-12">
+      <div className="section-head">
+        <p className="eyebrow">Portfolio PDF</p>
+        <p className="eyebrow nums-tabular">
+          Page {pdfPage} <span className="mx-1 text-rule">/</span> {TOTAL_PDF_PAGES}
+        </p>
+      </div>
 
-          {/* 右侧：项目列表 */}
-          <div className="w-full">
-            <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-4">
-              <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Selected Designs</h2>
-              <div className="flex items-center gap-2">
-                <div className="flex bg-neutral-100 dark:bg-neutral-800 p-1 rounded-sm border border-neutral-200 dark:border-neutral-700">
-                  <button 
-                    onClick={() => setViewMode('grid')}
-                    className={`px-2 py-1 text-xs font-mono ${viewMode === 'grid' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
-                  >
-                    GRID
-                  </button>
-                  <button 
-                    onClick={() => setViewMode('list')}
-                    className={`px-2 py-1 text-xs font-mono ${viewMode === 'list' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
-                  >
-                    LIST
-                  </button>
-                </div>
-                <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">Idx: {data.length}</span>
-              </div>
-            </div>
-            
-            {/* 项目列表内容 - 与其他分类保持一致 */}
-            <div>
-              {viewMode === 'list' ? (
-                <div className="space-y-4">
-                  {data.map((project) => (
-                    <div 
-                      key={project.slug} 
-                      className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm"
-                    >
-                      <div className="flex flex-row gap-4 md:gap-6 items-center flex-1">
-                        <Link 
-                          to={`/${type}/${project.slug}`}
-                          className="flex-grow min-w-0 w-full flex flex-row gap-4 md:gap-6 items-center"
-                        >
-                          <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800">
-                            {project.details.logo ? (
-                              <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
-                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex-grow min-w-0">
-                            <div className="flex justify-between items-start mb-2">
-                              <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
-                              <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
-                            </div>
-                            <h3 className="text-base md:text-lg lg:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 truncate">{project.title}</h3>
-                            <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-1">{project.description}</p>
-                          </div>
-                        </Link>
-                        {project.hasDemo && (
-                          <button 
-                            onClick={() => {
-                              window.location.href = `#/${type}/${project.slug}#demo`;
-                            }}
-                            className="flex-shrink-0 px-3 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-sm"
-                          >
-                            DEMO
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                  {data.map((project) => (
-                    <div 
-                      key={project.slug} 
-                      className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm flex flex-col"
-                    >
-                      <Link 
-                        to={`/${type}/${project.slug}`}
-                        className="flex flex-col h-full"
-                      >
-                        <div className="flex-shrink-0 w-full aspect-square border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800 mb-4">
-                          {project.details.logo ? (
-                            <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
-                              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-grow min-w-0">
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
-                            <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
-                          </div>
-                          <h3 className="text-base md:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 line-clamp-2">{project.title}</h3>
-                          <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-2">{project.description}</p>
-                        </div>
-                      </Link>
-                      {project.hasDemo && (
-                        <button 
-                          onClick={() => {
-                            window.location.href = `#/${type}/${project.slug}#demo`;
-                          }}
-                          className="flex-shrink-0 w-full mt-4 px-3 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-sm"
-                        >
-                          DEMO
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+      <div className="mt-5 flex items-center gap-3">
+        <button
+          onClick={() => setPdfPage(p => Math.max(1, p - 1))}
+          disabled={pdfPage <= 1}
+          aria-label="Previous page"
+          className="icon-btn shrink-0 disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+
+        <div className="relative flex-1 overflow-hidden border border-rule bg-surface-2" style={{ aspectRatio: '4 / 2.8' }}>
+          <iframe
+            key={pdfPage}
+            src={`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_ui_portfolio.pdf#page=${pdfPage}&view=Fit&scrollbar=0&toolbar=0&navpanes=0`}
+            title="Portfolio PDF"
+            className="pointer-events-none absolute inset-0 h-[110%] w-[110%] border-0"
+            style={{ transform: 'translate(-2.5%, -5%)' }}
+          />
         </div>
-      ) : (
-        /* 非 design 类型的原有布局 */
-        <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8">
-          <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Selected {type === 'research' ? 'Researches' : type === 'game' ? 'Games' : type === 'planning' ? 'Planning' :  type === 'tutorials'?'Tutorials':'Platform'}</h2>
-          <div className="flex items-center gap-4">
-            <div className="flex bg-neutral-100 dark:bg-neutral-800 p-1 rounded-sm border border-neutral-200 dark:border-neutral-700">
-              <button 
-                onClick={() => setViewMode('grid')}
-                className={`px-3 py-1 text-xs font-mono ${viewMode === 'grid' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
-              >
-                GRID
-              </button>
-              <button 
-                onClick={() => setViewMode('list')}
-                className={`px-3 py-1 text-xs font-mono ${viewMode === 'list' ? 'bg-white dark:bg-neutral-700 shadow-sm' : 'text-neutral-500 dark:text-neutral-400'}`}
-              >
-                LIST
-              </button>
-            </div>
-            <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">Idx: {data.length}</span>
-          </div>
+
+        <button
+          onClick={() => setPdfPage(p => Math.min(TOTAL_PDF_PAGES, p + 1))}
+          disabled={pdfPage >= TOTAL_PDF_PAGES}
+          aria-label="Next page"
+          className="icon-btn shrink-0 disabled:cursor-not-allowed disabled:opacity-30"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+
+      <div className="mt-4 flex flex-wrap justify-center gap-1">
+        {Array.from({ length: TOTAL_PDF_PAGES }).map((_, index) => {
+          const pageNum = index + 1;
+          const isActive = pdfPage === pageNum;
+          const pageHint = PDF_PAGE_HINTS[pageNum];
+          return (
+            <button
+              key={pageNum}
+              onClick={() => setPdfPage(pageNum)}
+              title={pageHint ? pageHint.text : `Page ${pageNum}`}
+              aria-label={pageHint ? pageHint.text : `Page ${pageNum}`}
+              className={`h-1.5 transition-all duration-300 ${
+                isActive ? 'w-6 bg-ink' : pageHint ? 'w-1.5 bg-accent' : 'w-1.5 bg-rule hover:bg-ink-3'
+              }`}
+            />
+          );
+        })}
+      </div>
+
+      {hint && (
+        <div className="mt-4 flex justify-center">
+          <Link to={hint.link} className="btn-accent">
+            {hint.text}
+            <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </Link>
         </div>
       )}
-      
-      {/* 非 design 类型的项目列表 */}
-      {type !== 'design' && (
-        viewMode === 'list' ? (
-          <div className="space-y-4">
-            {data.map((project) => (
-              <div 
-                key={project.slug} 
-                className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm"
-              >
-                <div className="flex flex-row gap-4 md:gap-6 items-center flex-1">
-                  <Link 
-                    to={`/${type}/${project.slug}`}
-                    className="flex-grow min-w-0 w-full flex flex-row gap-4 md:gap-6 items-center"
-                  >
-                    <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800">
-                      {project.details.logo ? (
-                        <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
-                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-grow min-w-0">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
-                        <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
-                      </div>
-                      <h3 className="text-base md:text-lg lg:text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 truncate">{project.title}</h3>
-                      <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-1">{project.description}</p>
-                    </div>
-                  </Link>
-                  {project.hasDemo && (
-                    <button 
-                      onClick={() => {
-                        window.location.href = `#/${type}/${project.slug}#demo`;
-                      }}
-                      className="flex-shrink-0 px-3 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-sm"
-                    >
-                      DEMO
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
+    </div>
+  );
+};
+
+/* ---------------------------------------------------------------------------
+   Index rows / cards
+   --------------------------------------------------------------------------- */
+const ListRow = ({ project, type, index }: { project: any; type: string; index: number }) => (
+  <li className="group border-b border-rule transition-colors duration-300 hover:bg-surface">
+    <div className="flex items-center gap-4 py-4 md:gap-6 md:py-5">
+      <span className="nums-tabular hidden w-10 shrink-0 self-start pt-1 text-lg font-bold leading-none tracking-masthead text-ink-3/60 transition-colors group-hover:text-accent-text sm:block">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <Link to={`/${type}/${project.slug}`} className="flex min-w-0 flex-1 items-center gap-4 md:gap-6">
+        <div className="h-16 w-16 shrink-0 overflow-hidden border border-rule bg-surface-2 md:h-20 md:w-20">
+          {project.details.logo
+            ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-105" />
+            : <PlaceholderThumb className="h-7 w-7" />}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-base font-bold tracking-tight text-ink md:text-lg lg:text-xl">
+            <span className="wipe-underline">{project.title}</span>
+          </h3>
+          <p className="mt-1 truncate text-sm text-ink-2">{project.description}</p>
+        </div>
+
+        <div className="hidden shrink-0 flex-wrap justify-end gap-1.5 lg:flex lg:max-w-[16rem]">
+          {project.tech?.slice(0, 3).map((t: string) => <span key={t} className="chip">{t}</span>)}
+        </div>
+
+        <span className="eyebrow nums-tabular hidden w-12 shrink-0 text-right md:block">{project.year}</span>
+      </Link>
+
+      {project.hasDemo && <DemoLink to={`/${type}/${project.slug}#demo`} className="shrink-0" />}
+    </div>
+  </li>
+);
+
+const GridCard = ({ project, type, index }: { project: any; type: string; index: number }) => (
+  <article className="group flex flex-col border border-rule bg-surface transition-colors duration-300 hover:border-rule-strong">
+    <Link to={`/${type}/${project.slug}`} className="flex flex-1 flex-col">
+      <div className="aspect-square w-full overflow-hidden border-b border-rule bg-surface-2">
+        {project.details.logo
+          ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.05]" />
+          : <PlaceholderThumb className="h-10 w-10" />}
+      </div>
+
+      <div className="flex flex-1 flex-col p-4">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="nums-tabular text-sm font-bold tracking-masthead text-ink-3/70 transition-colors group-hover:text-accent-text">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="eyebrow nums-tabular">{project.year}</span>
+        </div>
+
+        <h3 className="mt-2.5 line-clamp-2 text-base font-bold leading-snug tracking-tight text-ink md:text-lg">
+          <span className="wipe-underline">{project.title}</span>
+        </h3>
+        <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-2">{project.description}</p>
+
+        {project.tech?.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {project.tech.slice(0, 2).map((t: string) => <span key={t} className="chip">{t}</span>)}
           </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {data.map((project) => (
-              <div 
-                key={project.slug} 
-                className="group relative border border-neutral-200 dark:border-neutral-700 p-4 md:p-6 hover:border-neutral-900 dark:hover:border-neutral-500 transition-all duration-300 bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:shadow-sm flex flex-col"
-              >
-                <Link 
-                  to={`/${type}/${project.slug}`}
-                  className="flex flex-col h-full"
-                >
-                  <div className="flex-shrink-0 w-full aspect-square border border-neutral-100 dark:border-neutral-700 overflow-hidden bg-neutral-50 dark:bg-neutral-800 mb-4">
-                    {project.details.logo ? (
-                      <img src={project.details.logo} alt={project.title} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-neutral-300 dark:text-neutral-600">
-                        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex-grow min-w-0">
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">NO. {project.id}</span>
-                      <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">{project.year}</span>
-                    </div>
-                    <h3 className="text-base md:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1 group-hover:text-blue-600 line-clamp-2">{project.title}</h3>
-                    <p className="text-neutral-500 dark:text-neutral-400 text-sm line-clamp-2">{project.description}</p>
-                  </div>
-                </Link>
-                {project.hasDemo && (
-                  <button 
-                    onClick={() => {
-                      window.location.href = `#/${type}/${project.slug}#demo`;
-                    }}
-                    className="flex-shrink-0 w-full mt-4 px-3 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-sm"
-                  >
-                    DEMO
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        )
+        )}
+      </div>
+    </Link>
+
+    {project.hasDemo && (
+      <div className="border-t border-rule p-3">
+        <DemoLink to={`/${type}/${project.slug}#demo`} className="w-full" />
+      </div>
+    )}
+  </article>
+);
+
+export const ProjectListView = ({ data, type }: { data: any[], type: string }) => {
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const label = TYPE_LABEL[type] ?? 'Works';
+
+  return (
+    <div className="shell animate-rise-in py-8 md:py-12">
+      {type === 'design' && SHOW_PORTFOLIO_PDF && <PortfolioPdf />}
+
+      <div className="section-head">
+        <p className="eyebrow">{type} / Index</p>
+        <p className="eyebrow nums-tabular">{String(data.length).padStart(2, '0')} Entries</p>
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-b border-rule pb-5">
+        <h1 className="text-display-sm">Selected {label}</h1>
+
+        <div className="flex shrink-0 border border-rule" role="group" aria-label="View mode">
+          {(['grid', 'list'] as const).map(mode => (
+            <button
+              key={mode}
+              onClick={() => setViewMode(mode)}
+              aria-pressed={viewMode === mode}
+              className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow transition-colors duration-200 ${
+                viewMode === mode ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'
+              }`}
+            >
+              {mode}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {viewMode === 'list' ? (
+        <ul className="mt-2 border-t border-rule">
+          {data.map((project, index) => (
+            <ListRow key={project.slug} project={project} type={type} index={index} />
+          ))}
+        </ul>
+      ) : (
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+          {data.map((project, index) => (
+            <GridCard key={project.slug} project={project} type={type} index={index} />
+          ))}
+        </div>
       )}
     </div>
   );

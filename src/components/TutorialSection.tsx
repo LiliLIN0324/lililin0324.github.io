@@ -1,15 +1,28 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const TutorialSection = () => {
   return (
-    <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4">
-      <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100 border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8">Tutorials</h2>
-      <div className="text-center py-16">
-        <div className="w-12 h-12 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center mx-auto mb-6">
-          📚
+    <div className="shell flex h-full flex-col items-center justify-center py-20 text-center">
+      <div className="animate-rise-in max-w-md space-y-8">
+        <div className="flex justify-center">
+          <span className="icon-btn h-14 w-14">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.4} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </span>
         </div>
-        <h3 className="text-xl font-medium text-neutral-900 dark:text-neutral-100 mb-2">Tutorials Section</h3>
-        <p className="text-neutral-500 dark:text-neutral-400">Coming soon with educational content</p>
+
+        <div className="space-y-3">
+          <p className="eyebrow">Tutorials</p>
+          <h2 className="text-display-sm">Coming soon</h2>
+          <p className="max-w-measure text-base leading-relaxed text-ink-2">
+            Educational content is in the works. In the meantime, check out the existing tutorials in the index.
+          </p>
+        </div>
+
+        <Link to="/tutorial" className="btn-ghost">
+          Browse tutorials →
+        </Link>
       </div>
     </div>
   );

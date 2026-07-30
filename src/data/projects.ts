@@ -1,9 +1,11 @@
-import clusterVisualizer3dMd from './projects/planning/01_cluster-visualizer-3d.md?raw';
-import knowledgeGraphUrbanPlanningMd from './projects/planning/02_knowledge-graph-urban-planning.md?raw';
-import localClimateZonesUrbanHeatResilienceMd from './projects/planning/03_local-climate-zones-urban-heat-resilience.md?raw';
-import urbanHeatResilienceMachineLearningMd from './projects/planning/04_urban-heat-resilience-machine-learning.md?raw';
-import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/05_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
-import heatmapperMd from './projects/planning/06_heatmapper.md?raw';
+import neurotopiaMd from './projects/planning/01_neurotopia.md?raw';
+import clusterVisualizer3dMd from './projects/planning/02_cluster-visualizer-3d.md?raw';
+import knowledgeGraphUrbanPlanningMd from './projects/planning/03_knowledge-graph-urban-planning.md?raw';
+import localClimateZonesUrbanHeatResilienceMd from './projects/planning/04_local-climate-zones-urban-heat-resilience.md?raw';
+import urbanHeatResilienceMachineLearningMd from './projects/planning/05_urban-heat-resilience-machine-learning.md?raw';
+import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/06_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
+import heatmapperMd from './projects/planning/07_heatmapper.md?raw';
+
 
 import pinpin1037Md from './projects/design/01_1037pinpin.md?raw';
 import perslearnMd from './projects/design/02_perslearn.md?raw';
@@ -159,6 +161,7 @@ function createProject(mdContent: string) {
 }
 
 export const projects = [
+  createProject(neurotopiaMd),
   createProject(clusterVisualizer3dMd),
   createProject(knowledgeGraphUrbanPlanningMd),
   createProject(localClimateZonesUrbanHeatResilienceMd),

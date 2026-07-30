@@ -1,5 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import {
   projects,
@@ -9,642 +8,616 @@ import {
   tutorialProjects,
 } from '../data/projects'
 
+const CATEGORIES = [
+  { key: 'all', label: 'All' },
+  { key: 'product', label: 'Product' },
+  { key: 'game', label: 'Game' },
+  { key: 'planning', label: 'Planning' },
+
+  { key: 'platform', label: 'Platform' },
+  { key: 'tutorial', label: 'Tutorial' },
+] as const
+
+const CATEGORY_IMAGE: Record<string, string> = {
+  all: '/data/fig/lili/lili_01.png',
+  product: '/data/fig/lili/lili_05.png',
+  planning: '/data/fig/lili/lili_06.png',
+  game: '/data/fig/lili/lili_03.png',
+  platform: '/data/fig/lili/lili_11.png',
+  tutorial: '/data/fig/lili/lili_04.png',
+}
+
+const CATEGORY_BLURB: Record<string, React.ReactNode> = {
+  all: <>这是我在<strong className="font-semibold text-ink">产品、开发、游戏和城市规划</strong>领域的项目。</>,
+  product: <>这是我在<strong className="font-semibold text-ink">产品</strong>领域的项目。</>,
+  planning: <>这是我在<strong className="font-semibold text-ink">城市规划</strong>领域的项目。</>,
+  game: <>这是我在<strong className="font-semibold text-ink">游戏</strong>领域的项目。</>,
+  platform: <>这是我在<strong className="font-semibold text-ink">平台开发</strong>领域的项目。</>,
+  tutorial: <>这是我在<strong className="font-semibold text-ink">教程</strong>领域的项目。</>,
+}
+
+const GALLERY_VIDEOS = [
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/kitty-0317.mp4', title: 'Kitty Video' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%912026-02-09_184301_354.mp4', title: 'Kitty Video 2' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/20260225-192100.mp4', title: 'Riffle Loading 1' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video3.mp4', title: 'Video Title 3' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video4.mp4', title: 'Video Title 4' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video5.mp4', title: 'Video Title 5' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video6.mp4', title: 'Video Title 6' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video7.mp4', title: 'Video Title 7' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video8.mp4', title: 'Video Title 8' },
+]
+
+const ChevronLeft = () => (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+  </svg>
+)
+const ChevronRight = () => (
+  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+  </svg>
+)
+
+const DICE_PIPS: Record<number, number[]> = {
+  1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8],
+}
+const DiceFace = ({ value, transform }: { value: number; transform: string }) => (
+  <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 border border-neutral-400 bg-white p-[2px]" style={{ transform, backfaceVisibility: 'hidden' }}>
+    {Array.from({ length: 9 }).map((_, i) => (
+      <span key={i} className="flex items-center justify-center">
+        {DICE_PIPS[value].includes(i) && (
+          <span className="block h-[2.5px] w-[2.5px] rounded-full" style={{ background: value === 1 || value === 4 ? '#cc2a18' : '#171717' }} />
+        )}
+      </span>
+    ))}
+  </div>
+)
+
 export const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [currentLiliImage, setCurrentLiliImage] = useState('/data/fig/lili/lili_01.png')
 
-  // 分类到图片的映射
-  const categoryImageMap = {
-    'all': '/data/fig/lili/lili_01.png',
-    'design': '/data/fig/lili/lili_05.png',
-    'planning': '/data/fig/lili/lili_06.png',
-    'game': '/data/fig/lili/lili_03.png',
-    'platform': '/data/fig/lili/lili_11.png',
-    'tutorial': '/data/fig/lili/lili_04.png',
+  const projectsByType = {
+    all: [
+      ...designProjects.map(p => ({ ...p, type: 'product' })),
+      ...projects.map(p => ({ ...p, type: 'planning' })),
+      ...gameProjects.map(p => ({ ...p, type: 'game' })),
+      ...platformProjects.map(p => ({ ...p, type: 'platform' })),
+      ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
+    ],
+    product: designProjects.map(p => ({ ...p, type: 'product' })),
+    planning: projects.map(p => ({ ...p, type: 'planning' })),
+    game: gameProjects.map(p => ({ ...p, type: 'game' })),
+    platform: platformProjects.map(p => ({ ...p, type: 'platform' })),
+    tutorial: tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
   }
 
-  // 分类到介绍文字的映射
-  const categoryTextMap: Record<string, React.ReactNode> = {
-    'all': <>这是我在<strong>设计、开发、游戏和城市规划</strong>领域的项目。</>,
-    'design': <>这是我在<strong>设计</strong>领域的项目。</>,
-    'planning': <>这是我在<strong>城市规划</strong>领域的项目。</>,
-    'game': <>这是我在<strong>游戏</strong>领域的项目。</>,
-    'platform': <>这是我在<strong>平台开发</strong>领域的项目。</>,
-    'tutorial': <>这是我在<strong>教程</strong>领域的项目。</>,
-  }
+  const countFor = (key: string) =>
+    projectsByType[key as keyof typeof projectsByType].length
 
-  useEffect(() => {
-    setCurrentLiliImage(categoryImageMap[selectedCategory as keyof typeof categoryImageMap] || categoryImageMap.all)
-  }, [selectedCategory])
-
-  const allProjects = (() => {
-    const projectsByType = {
-      all: [
-        ...designProjects.map(p => ({ ...p, type: 'design' })),
-        ...projects.map(p => ({ ...p, type: 'planning' })),
-        ...gameProjects.map(p => ({ ...p, type: 'game' })),
-        ...platformProjects.map(p => ({ ...p, type: 'platform' })),
-        ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
-      ],
-      design: designProjects.map(p => ({ ...p, type: 'design' })),
-      planning: projects.map(p => ({ ...p, type: 'planning' })),
-      game: gameProjects.map(p => ({ ...p, type: 'game' })),
-      platform: platformProjects.map(p => ({ ...p, type: 'platform' })),
-      tutorial: tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
-    }
-    return projectsByType[selectedCategory as keyof typeof projectsByType] || projectsByType.all
-  })()
+  const allProjects = projectsByType[selectedCategory as keyof typeof projectsByType] ?? projectsByType.all
+  const maxIndex = Math.max(0, allProjects.length - 1)
 
   const [currentIndex, setCurrentIndex] = useState(0)
-  const maxIndex = allProjects.length - 1
+  const currentLiliImage = CATEGORY_IMAGE[selectedCategory] ?? CATEGORY_IMAGE.all
 
-  // Banner 视频轮播状态
-  const [bannerIndex, setBannerIndex] = useState(0)
-  const bannerVideos = [
-    {
-      src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/20260305-222003.mp4",
-      title: "Welcome to My Portfolio",
-      subtitle: "Explore my projects in urban planning, design, game development, and AI tutorials."
-    },
-    {
-      src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/20260304_heatmap_2.mp4",
-      title: "Data Visualization",
-      subtitle: "Interactive heatmaps and spatial analysis for urban research."
-    }
-  ]
-
-  // Gallery 竖版视频轮播状态
-  const [galleryIndex, setGalleryIndex] = useState(0)
-  const [videoAudioInfo, setVideoAudioInfo] = useState<Record<number, boolean>>({})
-  const [pdfPage, setPdfPage] = useState(1)
-  const totalPdfPages = 20 // 假设大约20页，用户可根据实际调整
-  
-  const galleryVideos = [
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/kitty-0317.mp4", title: "Kitty Video" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%912026-02-09_184301_354.mp4", title: "Kitty Video 2" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/20260225-192100.mp4", title: "Riffle Loading 1" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video3.mp4", title: "Video Title 3" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video4.mp4", title: "Video Title 4" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video5.mp4", title: "Video Title 5" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video6.mp4", title: "Video Title 6" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video7.mp4", title: "Video Title 7" },
-    { src: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video8.mp4", title: "Video Title 8" },
-  ]
-
-  // 检测视频是否有音轨
-  const checkAudioTracks = (video: HTMLVideoElement, index: number) => {
-    const v = video as any
-    
-    console.log(`Checking audio for video ${index}:`, {
-      audioTracks: v.audioTracks?.length,
-      mozHasAudio: v.mozHasAudio,
-      webkitAudioDecodedByteCount: v.webkitAudioDecodedByteCount,
-      videoTracks: v.videoTracks?.length,
-      readyState: v.readyState
-    })
-    
-    // 方法1: 检测 audioTracks (现代浏览器，最准确)
-    if (v.audioTracks && v.audioTracks.length > 0) {
-      const hasAudio = Array.from(v.audioTracks).some((track: any) => track.enabled)
-      console.log(`Video ${index} has audioTracks:`, hasAudio)
-      setVideoAudioInfo(prev => ({ ...prev, [index]: hasAudio }))
-      return
-    }
-    
-    // 方法2: 检测 mozHasAudio (Firefox)
-    if ('mozHasAudio' in v) {
-      const hasAudio = v.mozHasAudio
-      console.log(`Video ${index} mozHasAudio:`, hasAudio)
-      setVideoAudioInfo(prev => ({ ...prev, [index]: hasAudio }))
-      return
-    }
-    
-    // 方法3: 检测 webkitAudioDecodedByteCount (Chrome/Safari)
-    // 注意：这个属性在视频开始播放前可能是0或undefined
-    const webkitAudioBytes = v.webkitAudioDecodedByteCount
-    if (typeof webkitAudioBytes === 'number' && webkitAudioBytes > 0) {
-      console.log(`Video ${index} webkitAudioDecodedByteCount:`, webkitAudioBytes)
-      setVideoAudioInfo(prev => ({ ...prev, [index]: true }))
-      return
-    }
-    
-    // 方法4: 通过视频时长和文件大小推断
-    // 如果视频加载完成但没有检测到音频，我们延迟再检查一次
-    if (v.readyState >= 3) {
-      // 延迟检查，给浏览器更多时间解码音频信息
-      setTimeout(() => {
-        const delayedWebkitAudio = v.webkitAudioDecodedByteCount
-        const delayedMozAudio = v.mozHasAudio
-        const hasAudio = delayedWebkitAudio > 0 || delayedMozAudio === true
-        console.log(`Video ${index} delayed check:`, { delayedWebkitAudio, delayedMozAudio, hasAudio })
-        setVideoAudioInfo(prev => ({ ...prev, [index]: hasAudio }))
-      }, 500)
-      return
-    }
-    
-    // 默认假设有音频（大多数竖版视频都有声音）
-    console.log(`Video ${index} default to has audio`)
-    setVideoAudioInfo(prev => ({ ...prev, [index]: true }))
+  const selectCategory = (key: string) => {
+    setSelectedCategory(key)
+    setCurrentIndex(0)
   }
 
-  // 自动切换 banner 视频
+  /* ---------------- Stage media helpers ---------------- */
+  // Extract <video> src URLs from markdown content.
+  const extractVideos = (content: string): string[] => {
+    if (!content) return []
+    const re = /<video[^>]+src="([^"]+)"/gi
+    return Array.from(content.matchAll(re), m => m[1])
+  }
+
+  const getHeroMedia = (project: any): { src: string; isVideo: boolean } | null => {
+    if (!project) return null
+    const videos = extractVideos(project.details?.content ?? '')
+    if (videos.length > 0) return { src: videos[0], isVideo: true }
+    const imgs = project.details?.image as string[] | undefined
+    if (imgs?.length) return { src: imgs[0], isVideo: false }
+    if (project.details?.logo) return { src: project.details.logo, isVideo: false }
+    return null
+  }
+
+  const getHeroImage = (project: any): string | null => {
+    if (!project) return null
+    const imgs = project.details?.image as string[] | undefined
+    if (imgs?.length) return imgs[0]
+    return project.details?.logo ?? null
+  }
+
+  const prevProject = allProjects[(currentIndex - 1 + allProjects.length) % allProjects.length]
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length]
+  const prevSideImg = getHeroImage(prevProject)
+  const nextSideImg = getHeroImage(nextProject)
+
+  const [stageImageIndex, setStageImageIndex] = useState(0)
+  const [stageMuted, setStageMuted] = useState(false)
+  const stageVideoRef = useRef<HTMLVideoElement>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const currentProject = allProjects[currentIndex]
+
+  // Green panels: other images from the SAME current project flanking the center.
+  const sameProjectImages: string[] = currentProject?.details?.image ?? []
+  const greenLeft = sameProjectImages.length >= 2
+    ? sameProjectImages[(stageImageIndex - 1 + sameProjectImages.length) % sameProjectImages.length]
+    : null
+  const greenRight = sameProjectImages.length >= 3
+    ? sameProjectImages[(stageImageIndex + 1) % sameProjectImages.length]
+    : (sameProjectImages.length === 2 ? sameProjectImages[(stageImageIndex + 1) % 2] : null)
+  useEffect(() => { setStageImageIndex(0); setStageMuted(false) }, [currentIndex, selectedCategory])
+
+  /* ---------------- Dice ---------------- */
+  const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 })
+  const rollDice = () => {
+    setDiceRotation(prev => ({
+      x: prev.x + 720 + Math.round(Math.random() * 360),
+      y: prev.y + 720 + Math.round(Math.random() * 360),
+    }))
+    setTimeout(() => selectProject(Math.floor(Math.random() * allProjects.length)), 900)
+  }
+
+  const projectVideos = extractVideos(currentProject?.details?.content ?? '')
+  const projectImages: string[] = currentProject?.details?.image ?? []
+  // Videos first, then images. Fall back to logo.
+  const stageMediaItems = [...projectVideos, ...projectImages]
+  const stageSrc = stageMediaItems.length > 0
+    ? stageMediaItems[stageImageIndex % stageMediaItems.length]
+    : currentProject?.details?.logo
+  const isStageVideo = projectVideos.length > 0 && stageImageIndex < projectVideos.length
+  // Always an image for the blurred trapezoid background.
+  const blurSrc = projectImages.length > 0 ? projectImages[0] : currentProject?.details?.logo
+
+  // Advance to next media — for images this is timer-driven, for videos it's
+  // triggered by onEnded on the <video> element.
+  const advanceStageMedia = () => {
+    setStageImageIndex(prev => (prev + 1) % (stageMediaItems.length || 1))
+  }
+
+  // Clear any running timer, then for images-only start a 5 s auto-advance.
   useEffect(() => {
-    const timer = setInterval(() => {
-      setBannerIndex(prev => (prev + 1) % bannerVideos.length)
-    }, 8000) // 8秒切换一次
-    return () => clearInterval(timer)
-  }, [bannerVideos.length])
-
-  // 鼠标滚轮 → 切牌（仅在卡牌区域）
-  const cardStageRef = useRef<HTMLDivElement>(null)
-  
-  useEffect(() => {
-    const cardStage = cardStageRef.current
-    if (!cardStage) return
-
-    const handleWheel = (e: WheelEvent) => {
-      // 检查滚轮事件是否发生在卡牌区域内
-      const target = e.target as HTMLElement
-      if (!cardStage.contains(target)) return
-
-      e.preventDefault()
-
-      setCurrentIndex(prev => {
-        if (e.deltaY > 0) return Math.min(prev + 1, maxIndex)
-        return Math.max(prev - 1, 0)
-      })
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
+    // Only auto-advance when the current item is NOT a video.
+    if (isStageVideo || stageMediaItems.length <= 1) return
+    timerRef.current = setInterval(advanceStageMedia, 5000)
+    return () => {
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
     }
+  }, [currentIndex, selectedCategory, isStageVideo, stageMediaItems.length])
 
-    // 在卡牌容器上监听滚轮事件，而不是全局 window
-    cardStage.addEventListener('wheel', handleWheel, { passive: false })
-    return () => cardStage.removeEventListener('wheel', handleWheel)
-  }, [maxIndex])
+  const toggleStageAudio = () => {
+    const video = stageVideoRef.current
+    if (!video) return
+    video.muted = !video.muted
+    setStageMuted(!video.muted)
+  }
+
+  /* ---------------- Filmstrip cards ---------------- */
+  const filmstripRef = useRef<HTMLDivElement>(null)
+
+  const selectProject = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  /* ---------------- Vertical video gallery ---------------- */
+  const galleryRef = useRef<HTMLDivElement>(null)
+  const galleryVideoRefs = useRef<(HTMLVideoElement | null)[]>([])
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0)
+  const [galleryIndex, setGalleryIndex] = useState(0)
+  const [galleryEdges, setGalleryEdges] = useState({ start: true, end: false })
+  const [videoHasAudio, setVideoHasAudio] = useState<Record<number, boolean>>({})
+
+  const advanceGallery = (index: number) => {
+    const next = index % GALLERY_VIDEOS.length
+    setActiveVideoIndex(next)
+    // Scroll horizontally only — never trigger vertical page jump.
+    const el = galleryRef.current
+    if (el) {
+      const card = el.children[next] as HTMLElement | null
+      if (card) el.scrollTo({ left: card.offsetLeft - el.offsetWidth / 2 + (card as HTMLElement).offsetWidth / 2, behavior: 'smooth' })
+    }
+  }
+
+  // Auto-play the active video whenever it changes.
+  useEffect(() => {
+    const video = galleryVideoRefs.current[activeVideoIndex]
+    if (!video) return
+    video.currentTime = 0
+    video.play().catch(() => {})
+  }, [activeVideoIndex])
+
+  // Native scroll-snap rather than a transform offset: the visible column count
+  // changes per breakpoint, and this can never overshoot past the last item.
+  const syncGallery = useCallback(() => {
+    const el = galleryRef.current
+    if (!el) return
+    const item = el.firstElementChild as HTMLElement | null
+    const itemWidth = item?.offsetWidth || 1
+    setGalleryIndex(Math.round(el.scrollLeft / itemWidth))
+    setGalleryEdges({
+      start: el.scrollLeft <= 1,
+      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1,
+    })
+  }, [])
+
+  useEffect(() => {
+    syncGallery()
+    window.addEventListener('resize', syncGallery)
+    return () => window.removeEventListener('resize', syncGallery)
+  }, [syncGallery])
+
+  const scrollGallery = (direction: -1 | 1) => {
+    const el = galleryRef.current
+    if (!el) return
+    const item = el.firstElementChild as HTMLElement | null
+    el.scrollBy({ left: direction * (item?.offsetWidth || el.clientWidth / 2), behavior: 'smooth' })
+  }
+
+  // Audio-track detection is inconsistent across engines, so try each vendor
+  // hook in turn and assume audio only as a last resort.
+  const checkAudioTracks = (video: HTMLVideoElement, index: number) => {
+    const v = video as any
+    const mark = (hasAudio: boolean) =>
+      setVideoHasAudio(prev => (prev[index] === hasAudio ? prev : { ...prev, [index]: hasAudio }))
+
+    if (v.audioTracks?.length) {
+      mark(Array.from(v.audioTracks).some((t: any) => t.enabled))
+      return
+    }
+    if ('mozHasAudio' in v) {
+      mark(Boolean(v.mozHasAudio))
+      return
+    }
+    if (typeof v.webkitAudioDecodedByteCount === 'number' && v.webkitAudioDecodedByteCount > 0) {
+      mark(true)
+      return
+    }
+    if (v.readyState >= 3) {
+      // Chromium reports decoded byte counts only after it starts decoding.
+      setTimeout(() => mark(v.webkitAudioDecodedByteCount > 0 || v.mozHasAudio === true), 500)
+      return
+    }
+    mark(true)
+  }
 
   return (
-    <div className="p-4 md:p-6 lg:p-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Header */}
-      <div className="flex flex-col items-center border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6 md:mb-8 gap-4">
-        <div className="text-center">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <img
-              src={currentLiliImage}
-              alt="Lili Avatar"
-              className="w-32 h-32 md:w-48 md:h-48 object-contain"
-            />
-            <div className="relative bg-white dark:bg-neutral-800 rounded-2xl px-6 py-4 shadow-lg max-w-xs md:max-w-md">
-              <div className="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-r-8 border-r-white dark:border-r-neutral-800 border-b-8 border-b-transparent"></div>
-              <p className="text-sm md:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                你好！我是林丽丽，欢迎来到我的作品集。{categoryTextMap[selectedCategory as keyof typeof categoryTextMap] || categoryTextMap.all}              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-4 justify-center mb-3">
+    <div className="animate-rise-in pb-16">
+      {/* ============================ STAGE ============================ */}
+      {stageSrc && (
+        <section className="relative w-full overflow-hidden border-b border-neutral-800" style={{ background: 'linear-gradient(to bottom, #3f3f3f 100%, #0a0a0a 100%)' }}>
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.07]" aria-hidden="true" />
+          <div className="absolute inset-0 z-20 pointer-events-none" style={{ boxShadow: 'inset 0 0 140px 50px rgba(0,0,0,0.75)' }} aria-hidden="true" />
+
+          {/* Framework: 3:4 · trapezoid · 4:3 · trapezoid · 3:4 */}
+          <div className="relative mx-auto flex w-full max-w-12xl items-stretch px-0 py-6 md:py-0">
+            {/* ▸ Left 3:4 — prev project */}
             <button
-              onClick={() => { setSelectedCategory("all"); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === "all" ? "text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100" : "text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"}`}
+              onClick={() => selectProject((currentIndex - 1 + allProjects.length) % allProjects.length)}
+              className="group relative z-10 hidden w-[11%] h-[80%] shrink-0 md:block"
+              title={prevProject?.title}
             >
-              All ({designProjects.length + projects.length + gameProjects.length + platformProjects.length + tutorialProjects.length})
-            </button>
-            <button
-              onClick={() => { setSelectedCategory('design'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'design' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
-            >
-              Design ({designProjects.length})
-            </button>
-            <button
-              onClick={() => { setSelectedCategory('planning'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'planning' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
-            >
-              Planning ({projects.length})
-            </button>
-            <button
-              onClick={() => { setSelectedCategory('game'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'game' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
-            >
-              Game ({gameProjects.length})
-            </button>
-            <button
-              onClick={() => { setSelectedCategory('platform'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'platform' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
-            >
-              Platform ({platformProjects.length})
-            </button>
-            <button
-              onClick={() => { setSelectedCategory('tutorial'); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded transition-all ${selectedCategory === 'tutorial' ? 'text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b-2 border-neutral-900 dark:border-neutral-100' : 'text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
-            >
-              Tutorial ({tutorialProjects.length})
-            </button>
-          </div>
-          <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-            {currentIndex + 1} / {allProjects.length}
-          </span>
-        </div>
-      </div>
-
-      {/* 卡牌舞台 */}
-      <div ref={cardStageRef} className="relative w-full h-[400px] flex items-center justify-center overflow-hidden z-10 mb-10 md:mb-12">
-
-        {allProjects.map((project, index) => {
-          const offset = index - currentIndex
-
-          // 超出可见范围直接不渲染
-          if (offset < -2 || offset > 3) return null
-
-          const scale = 1 - Math.abs(offset) * 0.08
-          const translateY = offset * 60
-          const translateZ = -Math.abs(offset) * 120
-          const rotateX = offset * -6
-          const opacity = offset === 0 ? 1 : 0.5
-
-          return (
-            <div
-              key={`${project.type}-${project.slug}`}
-              className="absolute w-full max-w-7xl transition-all duration-500 ease-out"
-              style={{
-                transform: `
-                  translateY(${translateY + 20}px)
-                  translateZ(${translateZ}px)
-                  rotateX(${rotateX}deg)
-                  scale(${scale})
-                `,
-                opacity,
-                zIndex: 100 - Math.abs(offset),
-              }}
-            >
-              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl p-6 shadow-lg">
-                <div className="flex gap-6">
-                  <div className="w-36 h-36 bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md flex-shrink-0">
-                    <img
-                      src={project.details.logo}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-[10px] font-mono px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded">
-                        {project.type.toUpperCase()}
-                      </span>
-                      <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500">
-                        {project.year}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tech?.slice(0, 3).map((t, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] font-mono px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-3">
-                      <a
-                        href={`#/${project.type}/${project.slug}`}
-                        className="px-4 py-2 text-xs font-mono bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-700 dark:text-neutral-200 rounded"
-                      >
-                        VIEW
-                      </a>
-
-                      {(project as any).hasDemo && (
-                        <a
-                          href={`#/${project.type}/${project.slug}#demo`}
-                          className="px-4 py-2 text-xs font-mono bg-blue-600 text-white hover:bg-blue-700 rounded"
-                        >
-                          DEMO
-                        </a>
-                      )}
-                    </div>
-                  </div>
+              <div className="aspect-[1/3] w-full overflow-hidden border border-white/[0.06] bg-white/[0.03]">
+                {prevSideImg && <img src={prevSideImg} alt="" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} className="absolute inset-0 h-full w-full object-cover opacity-40 transition-opacity group-hover:opacity-65" />}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                  <p className="truncate text-center font-mono text-[9px] uppercase tracking-eyebrow text-white/50">{prevProject?.title}</p>
                 </div>
               </div>
-            </div>
-          )
-        })}
-      </div>
+            </button>
 
-      {/* Video Banner - 轮播 */}
-      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden mb-8 md:mb-10 shadow-2xl">
-        {/* 视频列表 */}
-        {bannerVideos.map((video, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === bannerIndex ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              src={video.src}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          </div>
-        ))}
-        
-        {/* 视频遮罩层 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        
-        {/* Banner 文字内容 */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
-            {bannerVideos[bannerIndex].title}
-          </h1>
-          <p className="text-base md:text-lg text-white/80 max-w-2xl">
-            {bannerVideos[bannerIndex].subtitle}
-          </p>
-        </div>
-        
-        {/* 切换指示器 */}
-        <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 flex gap-2">
-          {bannerVideos.map((_, index) => (
+            {/* ▸ Left trapezoid — blurred center image, right-angle */}
+            <div className="relative z-10 hidden flex-1 overflow-hidden md:block" aria-hidden="true">
+              <div className="h-full w-full" style={{ clipPath: 'polygon(0 0%, 100% 0%, 100% 86%, 0 100%)' }}>
+                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" />
+              </div>
+            </div>
+
+            {/* ▸ Center 16:9 — current project */}
+            <div className="relative z-20 flex h-[98%] w-[50%] shrink-0 flex-col">
+              <div className="aspect-video max-h-[70vh] w-full overflow-hidden border border-white/[0.08]" style={{ boxShadow: '0 0 70px -10px rgba(0,0,0,0.5)' }}>
+                {isStageVideo ? (
+                  <video ref={el => { stageVideoRef.current = el }} key={stageSrc} src={stageSrc} autoPlay muted={stageMuted} playsInline onEnded={advanceStageMedia} className="absolute inset-0 h-full w-full object-cover animate-rise-in" />
+                ) : (
+                  <img key={stageSrc} src={stageSrc} alt={currentProject?.title ?? ''} className="absolute inset-0 h-full w-full object-cover animate-rise-in" />
+                )}
+                {isStageVideo && (
+                  <button onClick={toggleStageAudio} className="absolute bottom-2 right-2 z-30 flex h-8 w-8 items-center justify-center border border-white/30 bg-black/55 text-white/80 hover:border-white hover:text-white" title={stageMuted ? 'Unmute' : 'Mute'}>
+                    {stageMuted ? (
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
+                    ) : (
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                    )}
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* ▸ Right trapezoid — blurred center image, right-angle */}
+            <div className="relative z-10 hidden flex-1 overflow-hidden md:block" aria-hidden="true">
+              <div className="h-full w-full" style={{ clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 86%)' }}>
+                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" />
+              </div>
+            </div>
+
+            {/* ▸ Right 3:4 — next project */}
             <button
-              key={index}
-              onClick={() => setBannerIndex(index)}
-              className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                index === bannerIndex 
-                  ? 'bg-white w-6 md:w-8' 
-                  : 'bg-white/50 hover:bg-white/80'
-              }`}
-            />
-          ))}
-        </div>
-        
-        {/* 左右切换按钮 */}
-        <button
-          onClick={() => setBannerIndex(prev => (prev - 1 + bannerVideos.length) % bannerVideos.length)}
-          className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-all duration-300 opacity-0 hover:opacity-100 group-hover:opacity-100"
-          style={{ opacity: 0.7 }}
-        >
-          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          onClick={() => setBannerIndex(prev => (prev + 1) % bannerVideos.length)}
-          className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-all duration-300 opacity-0 hover:opacity-100 group-hover:opacity-100"
-          style={{ opacity: 0.7 }}
-        >
-          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Video Gallery - 竖排视频轮播 */}
-      <div className="mb-10 md:mb-12">
-        <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6">
-          <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Video Gallery</h2>
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-              {galleryIndex + 1} / {galleryVideos.length}
-            </span>
-            <div className="flex gap-1">
-              <button
-                onClick={() => setGalleryIndex(prev => (prev - 1 + galleryVideos.length) % galleryVideos.length)}
-                className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 flex items-center justify-center transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setGalleryIndex(prev => (prev + 1) % galleryVideos.length)}
-                className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 flex items-center justify-center transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* 竖排视频轮播区 - 一行显示4个 */}
-        <div className="relative overflow-hidden">
-          <div 
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${galleryIndex * (100 / 4)}%)` }}
-          >
-            {galleryVideos.map((video, index) => (
-              <div
-                key={index}
-                className="w-1/4 flex-shrink-0 px-2"
-              >
-                <div 
-                  className="relative aspect-[9/16] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-800 group cursor-pointer"
-                  onMouseEnter={(e) => {
-                    const video = e.currentTarget.querySelector('video');
-                    if (video) {
-                      video.play().catch(err => console.log('Video play failed:', err));
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    const video = e.currentTarget.querySelector('video');
-                    if (video) {
-                      video.pause();
-                    }
-                  }}
-                >
-                  <video
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    src={video.src}
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    onCanPlay={(e) => checkAudioTracks(e.currentTarget, index)}
-                  />
-                  {/* 音量图标 - 有声音时显示 */}
-                  {videoAudioInfo[index] && (
-                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/50 flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                      </svg>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white text-xs font-medium truncate">{video.title}</p>
-                  </div>
+              onClick={() => selectProject((currentIndex + 1) % allProjects.length)}
+              className="group relative z-10 hidden w-[11%]  h-[80%] shrink-0 md:block"
+              title={nextProject?.title}
+            >
+              <div className="aspect-[1/3] w-full overflow-hidden border border-white/[0.06] bg-white/[0.03]">
+                {nextSideImg && <img src={nextSideImg} alt="" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} className="absolute inset-0 h-full w-full object-cover opacity-40 transition-opacity group-hover:opacity-65" />}
+                <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                  <p className="truncate text-center font-mono text-[9px] uppercase tracking-eyebrow text-white/50">{nextProject?.title}</p>
                 </div>
               </div>
-            ))}
+            </button>
           </div>
-        </div>
-        
-        {/* 指示器 */}
-        <div className="flex justify-center gap-2 mt-4">
-          {Array.from({ length: Math.ceil(galleryVideos.length / 4) }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setGalleryIndex(index * 4)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                Math.floor(galleryIndex / 4) === index 
-                  ? 'bg-neutral-800 dark:bg-neutral-200 w-6' 
-                  : 'bg-neutral-300 dark:bg-neutral-600 w-2'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
 
-      {/* Portfolio PDF Section */}
-      <div className="mb-10 md:mb-12">
-        <div className="flex justify-between items-end border-b border-neutral-100 dark:border-neutral-800 pb-4 mb-6">
-          <h2 className="text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-100">Portfolio PDF</h2>
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500">
-              Pages {pdfPage}-{Math.min(pdfPage + 1, totalPdfPages)} / {totalPdfPages}
-            </span>
-            <div className="flex gap-1">
-              <button
-                onClick={() => setPdfPage(prev => Math.max(1, prev - 2))}
-                disabled={pdfPage <= 1}
-                className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 disabled:opacity-30 flex items-center justify-center transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setPdfPage(prev => Math.min(totalPdfPages, prev + 2))}
-                disabled={pdfPage >= totalPdfPages - 1}
-                className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 disabled:opacity-30 flex items-center justify-center transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+          {/* Dot indicators */}
+          {stageMediaItems.length > 1 && (
+            <div className="flex justify-center gap-2 pb-6 pt-2">
+              {stageMediaItems.map((_, i) => (
+                <button key={i} onClick={() => setStageImageIndex(i)} aria-label={`Media ${i + 1}`} className={`h-1.5 rounded-full transition-all duration-300 ${i === stageImageIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/25 hover:bg-white/50'}`} />
+              ))}
             </div>
-            <a 
-              href="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_planning_portfolio.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-2 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-              title="Open in new window"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        </div>
+          )}
+        </section>
+      )}
 
-        {/* 两页并排显示区域 - 使用 AnimatePresence 实现翻页效果 */}
-        <div className="max-w-5xl mx-auto relative group/pdf">
-          <div className="grid grid-cols-2 gap-0 relative overflow-hidden px-10">
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={`page-container-${pdfPage}`}
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -50, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="grid grid-cols-2 gap-0 col-span-2"
+      {/* ============================ WORKS INDEX ============================ */}
+      <section className="shell pt-10 md:pt-0">
+
+        {/* Section title */}
+        <div className="flex items-end justify-between gap-4 mb-2 py-2 md:mb-4">
+          <div>
+            {/* Info strip */}
+            <div className="mx-auto mt-2 flex max-w-5xl items-center justify-between ">
+              <div className="flex items-baseline gap-3">
+                <p className="text-sm font-bold text-white/75 truncate">{currentProject?.title}</p>
+                <p className="eyebrow text-white/35 shrink-0">{currentProject?.type} · {currentProject?.year}</p>
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={rollDice}
+            className="btn-ghost shrink-0 !px-2"
+            title="Roll a random project"
+          >
+            <span className="h-5 w-5" style={{ perspective: '120px' }}>
+              <span
+                className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
+                style={{ transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`, transformStyle: 'preserve-3d' }}
               >
-                {/* 左侧页 */}
-                <div className="relative aspect-[0.98/1.4] bg-neutral-100 dark:bg-neutral-800 rounded-l-lg overflow-hidden shadow-md border-y border-l border-neutral-200 dark:border-neutral-700">
-                  <iframe
-                    src={`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_planning_portfolio.pdf#page=${pdfPage}&view=Fit&scrollbar=0&toolbar=0&navpanes=0`}
-                    className="absolute w-[105%] h-[105%] pointer-events-none" // 稍微增加溢出量
-                    title={`Portfolio PDF Page ${pdfPage}`}
-                    style={{ 
-                      border: 'none', 
-                      maxWidth: 'none',
-                      left: '-1%', // 向左偏移 1% 裁剪掉自带黑边
-                      top: '-0.4%',  // 向上偏移 1% 裁剪掉自带黑边
-                      transform: 'none'
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-transparent z-10" />
-                </div>
-
-                {/* 右侧页 */}
-                <div className="relative aspect-[0.98/1.4] bg-neutral-100 dark:bg-neutral-800 rounded-r-lg overflow-hidden shadow-md border-y border-r border-neutral-200 dark:border-neutral-700">
-                  {pdfPage + 1 <= totalPdfPages ? (
-                    <>
-                      <iframe
-                        src={`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/lili_planning_portfolio.pdf#page=${pdfPage + 1}&view=Fit&scrollbar=0&toolbar=0&navpanes=0`}
-                        className="absolute w-[105%] h-[103%] pointer-events-none"
-                        title={`Portfolio PDF Page ${pdfPage + 1}`}
-                        style={{ 
-                          border: 'none', 
-                          maxWidth: 'none',
-                          left: '-1%', // 向左偏移 1% 裁剪掉自带黑边
-                          top: '-0.4%',
-                          transform: 'none'
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-transparent z-10" />
-                    </>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-neutral-400 font-mono text-sm">
-                      END
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* 左右翻页按钮 - 悬浮在两侧 */}
-            <button
-              onClick={() => setPdfPage(prev => Math.max(1, prev - 2))}
-              disabled={pdfPage <= 1}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-neutral-800/80 shadow-lg hover:bg-white dark:hover:bg-neutral-700 flex items-center justify-center transition-all z-20 disabled:opacity-0"
-            >
-              <svg className="w-5 h-5 text-neutral-700 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={() => setPdfPage(prev => Math.min(totalPdfPages, prev + 2))}
-              disabled={pdfPage >= totalPdfPages - 1}
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 dark:bg-neutral-800/80 shadow-lg hover:bg-white dark:hover:bg-neutral-700 flex items-center justify-center transition-all z-20 disabled:opacity-0"
-            >
-              <svg className="w-5 h-5 text-neutral-700 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+                <DiceFace value={1} transform="translateZ(10px)" />
+                <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
+                <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
+                <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
+                <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
+                <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
+              </span>
+            </span>
+          </button>
         </div>
-        
-        {/* 页码指示器 */}
-        <div className="flex justify-center gap-1 mt-6 flex-wrap">
-          {Array.from({ length: Math.ceil(totalPdfPages / 2) }).map((_, index) => {
-            const startPage = index * 2 + 1
-            const isActive = pdfPage === startPage || pdfPage === startPage - 1
+
+        {/* Filter rail */}
+        <div className="mt-4 -mx-1 flex overflow-x-auto hide-scrollbar border-b border-rule">
+          {CATEGORIES.map(cat => {
+            const isActive = selectedCategory === cat.key
             return (
               <button
-                key={index}
-                onClick={() => setPdfPage(startPage)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  isActive
-                    ? 'bg-neutral-800 dark:bg-neutral-200 w-6'
-                    : 'bg-neutral-300 dark:bg-neutral-600 w-2 hover:bg-neutral-400'
+                key={cat.key}
+                onClick={() => selectCategory(cat.key)}
+                aria-pressed={isActive}
+                className={`relative shrink-0 px-3.5 pb-3 pt-1 font-mono text-[11px] uppercase tracking-eyebrow transition-colors duration-200 ${
+                  isActive ? 'text-ink' : 'text-ink-3 hover:text-ink'
                 }`}
-                title={`Pages ${startPage}-${Math.min(startPage + 1, totalPdfPages)}`}
-              />
+              >
+                {cat.label}
+                <span className="ml-1.5 nums-tabular text-ink-3">{countFor(cat.key)}</span>
+                <span
+                  className={`absolute inset-x-2 bottom-0 h-[3px] origin-left bg-accent transition-transform duration-300 ease-editorial ${
+                    isActive ? 'scale-x-100' : 'scale-x-0'
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
             )
           })}
         </div>
-      </div>
 
+        {/* ---- Filmstrip cards ---- */}
+        <div className="mt-5 flex items-center gap-2">
+          <button
+            onClick={() => selectProject(Math.max(0, currentIndex - 1))}
+            disabled={currentIndex <= 0}
+            aria-label="Previous project"
+            className="icon-btn shrink-0 disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <ChevronLeft />
+          </button>
+
+          <div
+            ref={filmstripRef}
+            className="flex flex-1 gap-2 overflow-x-auto hide-scrollbar py-2"
+          >
+            {allProjects.map((project, index) => {
+              const isActive = index === currentIndex
+              return (
+                <button
+                  key={`${project.type}-${project.slug}`}
+                  onClick={() => selectProject(index)}
+                  className={`group flex shrink-0 items-center gap-3 border px-3 py-2.5 transition-all duration-200 ${
+                    isActive
+                      ? 'border-rule-strong bg-surface shadow-lift'
+                      : 'border-rule bg-surface-2 hover:border-rule-strong hover:bg-surface'
+                  }`}
+                  style={{ minWidth: '220px', maxWidth: '280px' }}
+                >
+                  <span className={`nums-tabular text-lg font-bold leading-none tracking-masthead transition-colors ${
+                    isActive ? 'text-accent-text' : 'text-ink-3/60 group-hover:text-ink-3'
+                  }`}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div className="h-10 w-10 shrink-0 overflow-hidden border border-rule bg-surface-2">
+                    <img
+                      src={project.details.logo}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 text-left">
+                    <p className="truncate text-sm font-bold tracking-tight text-ink">
+                      {project.title}
+                    </p>
+                    <p className="eyebrow">{project.type} · {project.year}</p>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          <button
+            onClick={() => selectProject(Math.min(maxIndex, currentIndex + 1))}
+            disabled={currentIndex >= maxIndex}
+            aria-label="Next project"
+            className="icon-btn shrink-0 disabled:cursor-not-allowed disabled:opacity-30"
+          >
+            <ChevronRight />
+          </button>
+        </div>
+
+        <div className="mt-2 flex items-center justify-between">
+          <p className="eyebrow nums-tabular">
+            {String(currentIndex + 1).padStart(2, '0')}
+            <span className="mx-1.5 text-rule">/</span>
+            {String(allProjects.length).padStart(2, '0')}
+          </p>
+          <Link
+            to={`/${currentProject?.type}/${currentProject?.slug}`}
+            className="font-mono text-[11px] uppercase tracking-eyebrow text-accent-text transition-colors hover:text-ink"
+          >
+            View details →
+          </Link>
+        </div>
+      </section>
+
+      {/* ============================ INTRO ============================ */}
+      <section className="shell border-t border-rule py-10 md:py-0">
+        <div className="max-w-12xl">
+            <p className="mt-4 max-w-3xl text-lg text-ink">
+              你好！我是林丽丽，欢迎来到我的作品集。
+            </p>
+            <p className="mt-4 max-w-measure text-base leading-relaxed text-ink-2">
+              {CATEGORY_BLURB[selectedCategory] ?? CATEGORY_BLURB.all}
+            </p>
+        </div>
+      </section>
+
+      {/* ============================ VIDEO GALLERY ============================ */}
+      <section className="shell pt-12 md:pt-16">
+        <div className="section-head">
+          <p className="eyebrow">Motion</p>
+          <p className="eyebrow nums-tabular">
+            {String(activeVideoIndex + 1).padStart(2, '0')}
+            <span className="mx-1.5 text-rule">/</span>
+            {String(GALLERY_VIDEOS.length).padStart(2, '0')}
+          </p>
+        </div>
+
+        <div className="mt-5 flex items-end justify-between gap-4">
+          <h2 className="text-display-sm">Video Gallery</h2>
+          <div className="flex shrink-0 gap-2">
+            <button
+              onClick={() => scrollGallery(-1)}
+              disabled={galleryEdges.start}
+              aria-label="Scroll gallery left"
+              className="icon-btn disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronLeft />
+            </button>
+            <button
+              onClick={() => scrollGallery(1)}
+              disabled={galleryEdges.end}
+              aria-label="Scroll gallery right"
+              className="icon-btn disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={galleryRef}
+          onScroll={syncGallery}
+          className="mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto hide-scrollbar scroll-smooth md:gap-4"
+        >
+          {GALLERY_VIDEOS.map((video, index) => {
+            const isActive = index === activeVideoIndex
+            return (
+              <figure
+                key={video.src}
+                className={`group relative w-[62%] shrink-0 snap-start sm:w-[40%] md:w-[30%] lg:w-[23%] ${
+                  isActive ? 'ring-1 ring-accent ring-offset-2 ring-offset-canvas' : ''
+                }`}
+                onMouseEnter={e => {
+                  const v = e.currentTarget.querySelector('video')
+                  if (v && !isActive) v.play().catch(() => {})
+                }}
+                onMouseLeave={e => {
+                  const v = e.currentTarget.querySelector('video')
+                  if (v && !isActive) v.pause()
+                }}
+              >
+                <div className="relative aspect-[9/16] overflow-hidden border border-rule bg-surface-2">
+                  <video
+                    ref={el => { galleryVideoRefs.current[index] = el }}
+                    className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-105"
+                    src={video.src}
+                    muted
+                    playsInline
+                    preload="metadata"
+                    onCanPlay={e => checkAudioTracks(e.currentTarget, index)}
+                    onEnded={() => { if (isActive) advanceGallery(index + 1) }}
+                  />
+
+                  {/* Active badge */}
+                  {isActive && (
+                    <span className="absolute left-2 top-2 flex items-center gap-1 border border-white/30 bg-black/60 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-eyebrow text-white">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                      Now
+                    </span>
+                  )}
+
+                  {videoHasAudio[index] && (
+                    <span
+                      className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center bg-black/55 text-white"
+                      title="Has audio"
+                    >
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                      </svg>
+                    </span>
+                  )}
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </div>
+
+                <figcaption className="mt-2.5 flex items-baseline gap-2">
+                  <span className="eyebrow nums-tabular shrink-0">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="truncate text-sm text-ink-2">{video.title}</span>
+                </figcaption>
+              </figure>
+            )
+          })}
+        </div>
+      </section>
     </div>
   )
 }
-

@@ -1,5 +1,5 @@
 ---
-id: "04"
+id: "05"
 slug: "urban-heat-resilience-machine-learning"
 title: "Assessing Urban Heat Resilience"
 category: "Machine Learning"
@@ -9,8 +9,9 @@ tech: ["GIS","Machine Learning"]
 icon: "/data/fig/ml_logo.jpg"
 image: ["/data/fig/AAAI2026.jpg"]
 ---
-
+# Research topic 1 
 “利用机器学习评估城市形态对不同尺度下热韧性的非线性影响”
+
 > 2025.10，在美国明尼阿波利斯举行的第65届美国大学规划学院协会（ACSP）会议上作口头报告
 ![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/01.png)<br>
 ![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/02.png)<br>
@@ -22,6 +23,7 @@ image: ["/data/fig/AAAI2026.jpg"]
 > 2025.8.7 在英国剑桥大学进行工作坊交流
 ![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/05.png)
 ![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/06.png)
+
 
 ## abstract: 
 "Climate change has been a pressing global issue in recent decades as it increasingly influences human life through extreme weather, ecosystem collapse, and food crises. Extreme heat is particularly exacerbated by the urban heat island (UHI) effect in cities. Numerous studies have empirically investigated the link between urban form factors and surface Urban Heat Islands (UHI), but few have studied how UHI changes in response to an extreme heat event, conceptualized as heat resilience in recent studies. Additionally, the majority of existing studies have relied on traditional regression models that assume linear relationships. To address this gap, this study aims to identify nonlinear relationships between urban form factors and land surface temperature (LST) and heat resilience, using machine learning methods. The GBDT models demonstrated superior predictive accuracy, as evidenced by the lowest mean squared error (MSE). In addition, the results indicate that urban form factors have nonlinear relationships with urban land surface extreme heat and associated heat resilience. These findings have valuable implications for urban planning practice aimed at developing heat-resilient cities."
@@ -174,3 +176,8 @@ ST = (DN * 0.00341802) + 149.0
 
 This poster summarizes the key findings of our study on urban heat resilience using machine learning approaches. The visualization demonstrates the nonlinear relationships between urban form factors and extreme heat events.
 
+# Research topic 2
+“利用机器学习评估城市形态对不同天气状况下热韧性的非线性影响”
+<div style="display:flex; flex-direction:column; gap:16px;">
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/GBDT2.mp4"></video>
+</div>

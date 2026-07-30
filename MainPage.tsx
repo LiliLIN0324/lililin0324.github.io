@@ -12,10 +12,48 @@ import { HomePage } from './src/components/HomePage';
 import { ThemeToggle } from './src/components/ThemeToggle';
 import ClusteringGeoMap from './src/clusteringeomap';
 
+const NAV_TABS = [
+  { key: '', label: 'Home' },
+  { key: 'product', label: 'Product' },
+  { key: 'game', label: 'Game' },
+  { key: 'planning', label: 'Planning' },
+  { key: 'platform', label: 'Platform' },
+  { key: 'tutorial', label: 'Tutorial' },
+  { key: 'about', label: 'About' },
+];
+
+/* Pip positions on a 3x3 grid, indexed 0-8 left-to-right, top-to-bottom. */
+const DICE_PIPS: Record<number, number[]> = {
+  1: [4],
+  2: [0, 8],
+  3: [0, 4, 8],
+  4: [0, 2, 6, 8],
+  5: [0, 2, 4, 6, 8],
+  6: [0, 2, 3, 5, 6, 8],
+};
+
+/* Faces 1 and 4 are red on a standard Chinese die. */
+const DiceFace = ({ value, transform }: { value: number; transform: string }) => (
+  <div
+    className="absolute inset-0 grid grid-cols-3 grid-rows-3 border border-neutral-400 bg-white p-[2px]"
+    style={{ transform, backfaceVisibility: 'hidden' }}
+  >
+    {Array.from({ length: 9 }).map((_, i) => (
+      <span key={i} className="flex items-center justify-center">
+        {DICE_PIPS[value].includes(i) && (
+          <span
+            className="block h-[2.5px] w-[2.5px] rounded-full"
+            style={{ background: value === 1 || value === 4 ? '#cc2a18' : '#171717' }}
+          />
+        )}
+      </span>
+    ))}
+  </div>
+);
 
 const MainPage = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDiceSpinning, setIsDiceSpinning] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [headerCollapsed, setHeaderCollapsed] = useState(false);
   const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 });
   const [currentImage, setCurrentImage] = useState('/data/fig/lili/lili_01.png');
   const [randomQuote, setRandomQuote] = useState('Exploring the intersection of technology and creativity.');
@@ -24,9 +62,8 @@ const MainPage = () => {
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const activeTab = pathSegments[0] || '';
 
-  // 图片映射
   const imageMap: Record<string, string> = {
-    'design': '/data/fig/lili/lili_05.png',
+    'product': '/data/fig/lili/lili_05.png',
     'game': '/data/fig/lili/lili_03.png',
     'platform': '/data/fig/lili/lili_11.png',
     'tutorial': '/data/fig/lili/lili_04.png',
@@ -34,7 +71,6 @@ const MainPage = () => {
     'planning': '/data/fig/lili/lili_06.png'
   };
 
-  // 随机图片列表
   const randomImages = [
     '/data/fig/lili/lili_01.png',
     '/data/fig/lili/lili_07.png',
@@ -44,365 +80,203 @@ const MainPage = () => {
     '/data/fig/lili/lili_12.png',
   ];
 
-  // 随机句子列表
   const quotes = [
     "Exploring the intersection of technology and creativity.",
     "Turning data into meaningful visual stories.",
     "Building digital experiences that inspire.",
-    "Bridging the gap between design and development.",
+    "Bridging the gap between product and development.",
     "Creating solutions that matter in the real world.",
     "Passionate about geospatial technology and urban planning."
   ];
 
-  // 随机选择图片
-  const getRandomImage = () => {
-    const randomIndex = Math.floor(Math.random() * randomImages.length);
-    return randomImages[randomIndex];
-  };
+  const pickRandom = <T,>(list: T[]) => list[Math.floor(Math.random() * list.length)];
 
-  // 随机选择句子
-  const getRandomQuote = () => {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    return quotes[randomIndex];
-  };
-
-  // 初始化时设置随机图片和句子
   useEffect(() => {
-    if (activeTab === '') {
-      setCurrentImage(getRandomImage());
-    } else if (imageMap[activeTab]) {
-      setCurrentImage(imageMap[activeTab]);
-    } else {
-      setCurrentImage(getRandomImage());
-    }
-    setRandomQuote(getRandomQuote());
+    setCurrentImage(imageMap[activeTab] ?? pickRandom(randomImages));
+    setRandomQuote(pickRandom(quotes));
   }, [activeTab]);
 
-
+  const rollDice = () => {
+    setDiceRotation(prev => ({
+      x: prev.x + 720 + Math.round(Math.random() * 360),
+      y: prev.y + 720 + Math.round(Math.random() * 360),
+    }));
+    const pages = ['product', 'game','planning',  'platform', 'tutorial', 'about'];
+    setTimeout(() => navigate(`/${pickRandom(pages)}`), 900);
+  };
 
   return (
-    <div className="h-screen p-0 bg-neutral-100 dark:bg-neutral-900 flex flex-col">
-      <div className="w-full flex flex-col relative h-full">
-        <header className="border-b border-neutral-200 dark:border-neutral-800 p-4 flex justify-between items-center bg-white dark:bg-neutral-900 z-30 shrink-0 relative">
-          <div className="flex items-center gap-4">
+    <div className="flex h-screen flex-col bg-canvas text-ink">
+      <header className={`relative z-30 shrink-0 border-b border-rule bg-surface/85 backdrop-blur transition-all duration-300 ease-editorial ${headerCollapsed ? 'h-0 border-b-0 overflow-hidden opacity-0' : ''}`}>
+        <div className="shell flex h-16 items-center justify-between gap-4">
+          {/* Wordmark */}
+          <div className="flex min-w-0 items-center gap-3">
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="relative w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-[0px] text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
-              aria-label={isMobileMenuOpen ? 'Hide profile panel' : 'Show profile panel'}
-              title={isMobileMenuOpen ? 'Hide profile panel' : 'Show profile panel'}
+              onClick={() => setIsPanelOpen(!isPanelOpen)}
+              className="icon-btn"
+              aria-expanded={isPanelOpen}
+              aria-label={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
+              title={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
             >
-              <span className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
-                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
-                <span className="block w-3.5 h-px bg-neutral-500 dark:bg-neutral-400" />
+              <span className="flex flex-col items-center justify-center gap-[3px]" aria-hidden="true">
+                <span className="block h-px w-4 bg-current transition-transform duration-300" />
+                <span className={`block h-px w-4 bg-current transition-opacity duration-300 ${isPanelOpen ? 'opacity-0' : 'opacity-100'}`} />
+                <span className="block h-px w-4 bg-current transition-transform duration-300" />
               </span>
-              ☰
             </button>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-              Lili Lin <span className="text-neutral-300 dark:text-neutral-600 font-light mx-2">/</span> <span className="text-sm font-mono font-normal text-neutral-500 dark:text-neutral-400">PORTFOLIO</span>
-            </h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <nav className="hidden sm:flex gap-0">
-                <Link
-                  to="/"
-                  onClick={() => {
-                    if (window.innerWidth < 768) {
-                      setIsMobileMenuOpen(false)
-                    }
-                  }}
-                  className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === '' ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                >
-                <span>Home</span>
-                </Link>
-                {[
-                  { key: 'design', label: 'Design', short: 'Design' },
-                  { key: 'game', label: 'Game', short: 'G' },
-                  { key: 'planning', label: 'Planning', short: 'Planning' },
-                  { key: 'platform', label: 'Platform', short: 'P' },
-                  { key: 'tutorial', label: 'Tutorial', short: 'T' },
-                  { key: 'about', label: 'About', short: 'A' }
-                ].map((tab) => (
-                  <Link
-                    key={tab.key}
-                    to={`/${tab.key}`}
-                    onClick={() => {
-                      if (window.innerWidth < 768) {
-                        setIsMobileMenuOpen(false)
-                      }
-                    }}
-                    className={`px-4 py-3 text font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                  >
-                  <span>{tab.label}</span>
-                  </Link>
-                ))}
-            </nav>
 
-            <nav className="sm:hidden flex gap-0">
-                <Link
-                  to="/"
-                  onClick={() => {
-                    if (window.innerWidth < 768) {
-                      setIsMobileMenuOpen(false)
-                    }
-                  }}
-                  className={`px-3 py-2 text-sm font-medium border-b-4 transition-all ${activeTab === '' ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                >
-                <span>Home</span>
-                </Link>
-                {[
-                  { key: 'design', label: 'Design' },
-                  { key: 'game', label: 'Game' },
-                  { key: 'planning', label: 'Planning' },
-                  { key: 'platform', label: 'Platform' },
-                  { key: 'tutorial', label: 'Tutorial' },
-                  { key: 'about', label: 'About' }
-                ].map((tab) => (
-                  <Link
-                    key={tab.key}
-                    to={`/${tab.key}`}
-                    onClick={() => {
-                      if (window.innerWidth < 768) {
-                        setIsMobileMenuOpen(false)
-                      }
-                    }}
-                    className={`px-3 py-2 text-sm font-medium border-b-4 transition-all ${activeTab === tab.key ? 'border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-950': 'border-transparent text-neutral-500 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}
-                  >
-                  <span>{tab.label}</span>
-                  </Link>
-                ))}
-            </nav>
+            <Link to="/" className="group flex min-w-0 items-baseline gap-2.5">
+              <span className="truncate text-lg font-bold tracking-masthead md:text-xl">
+                Lili&nbsp;Lin
+              </span>
+              <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
+              <span className="hidden font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors group-hover:text-accent-text sm:block">
+                Portfolio
+              </span>
+            </Link>
+          </div>
+
+          {/* Nav — one list, scrolls horizontally when it runs out of room */}
+          <nav className="-mx-1 flex min-w-0 flex-1 justify-end overflow-x-auto hide-scrollbar">
+            <ul className="flex shrink-0 items-stretch">
+              {NAV_TABS.map((tab) => {
+                const isActive = activeTab === tab.key;
+                return (
+                  <li key={tab.key || 'home'} className="flex">
+                    <Link
+                      to={`/${tab.key}`}
+                      onClick={() => { if (window.innerWidth < 768) setIsPanelOpen(false); }}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`relative flex items-center px-3 text-sm font-medium transition-colors duration-200 md:px-4 ${
+                        isActive ? 'text-ink' : 'text-ink-3 hover:text-ink'
+                      }`}
+                    >
+                      {tab.label}
+                      {/* Swiss active marker: accent rule on the top edge */}
+                      <span
+                        className={`absolute inset-x-2 top-0 h-[3px] origin-left bg-accent transition-transform duration-300 ease-editorial md:inset-x-3 ${
+                          isActive ? 'scale-x-100' : 'scale-x-0'
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className="flex shrink-0 items-center gap-2">
             <ThemeToggle />
             <button
-              onClick={() => {
-                setIsDiceSpinning(true);
-                const newX = diceRotation.x + 360 * 2 + Math.random() * 360;
-                const newY = diceRotation.y + 360 * 2 + Math.random() * 360;
-                setDiceRotation({ x: newX, y: newY });
-                
-                setTimeout(() => {
-                  const pages = ['planning', 'design', 'game', 'platform', 'tutorial', 'about'];
-                  const randomPage = pages[Math.floor(Math.random() * pages.length)];
-                  navigate(`/${randomPage}`);
-                  setIsDiceSpinning(false);
-                }, 1000);
-              }}
-              className="flex items-center gap-2 px-3 py-2 border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all"
-              title="🎲 Explore a random project"
+              onClick={rollDice}
+              className="btn-ghost hidden !px-3 sm:inline-flex"
+              title="Explore a random project"
             >
-              <div className="w-5 h-5" style={{ perspective: '100px' }}>
-                <div 
-                  className="w-full h-full relative transition-transform duration-1000 ease-out"
-                  style={{ 
+              <span className="h-5 w-5" style={{ perspective: '120px' }}>
+                <span
+                  className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
+                  style={{
                     transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`,
-                    transformStyle: 'preserve-3d'
+                    transformStyle: 'preserve-3d',
                   }}
                 >
-                  {/* Front - 1 */}
-                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'translateZ(10px)' }}>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div></div>
-                      <div></div><div className="rounded-full justify-center" style={{ width: '5px', height: '5px', backgroundColor: '#dc2626' }}></div><div></div>
-                      <div></div><div></div><div></div>
-                    </div>
-                  </div>
-                  {/* Back - 6 */}
-                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(180deg) translateZ(10px)' }}>
-                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center"></div>
-
-                  </div>
-                  {/* Left - 3 */}
-                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(-90deg) translateZ(10px)' }}>
-                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
-                    <div className="grid grid-cols-5 marg w-full h-full justify-center">
-                      <div></div>
-                      <div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-5  w-full h-full justify-center">
-                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-5  w-full h-full justify-center">
-                      <div></div><div></div><div></div><div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
-                  </div>
-                  {/* Right - 4 */}
-                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateY(90deg) translateZ(10px)' }}>
-                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px', backgroundColor: '#dc2626' }}></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px', backgroundColor: '#dc2626' }}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div className="rounded-full justify-center" style={{ width: '4px', height: '4px' , backgroundColor: '#dc2626'}}></div><div></div><div className=" rounded-full justify-center" style={{ width: '4px', height: '4px' , backgroundColor: '#dc2626'}}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-1  w-full h-full justify-center"></div>
-                  </div>
-                  {/* Top - 2 */}
-                  <div className="absolute w-full h-full bg-white border-gray-400  justify-center rounded flex  p-0.5" style={{ transform: 'rotateX(90deg) translateZ(10px)' }}>
-                    <div className="grid grid-cols-3 border w-full h-full justify-center">
-                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
-                    </div>
-                  </div>
-                  
-                   {/* Bottom - 5 */}
-                  <div className="absolute w-full h-full bg-white border border-gray-400 rounded flex items-center justify-center" style={{ transform: 'rotateX(-90deg) translateZ(10px)' }}>
-                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
-
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div><div></div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-3  w-full h-full justify-center">
-                      <div></div><div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div><div></div></div><div className="bg-gray-800 rounded-full justify-center" style={{ width: '4px', height: '4px' }}></div><div></div>
-                    </div>
-                    <div className="grid grid-cols-5  w-full h-full justify-center"></div>
-
-                  </div>
- 
-
-                </div>
-              </div>
-              <span className="text-sm font-medium">Jump</span>
+                  <DiceFace value={1} transform="translateZ(10px)" />
+                  <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
+                  <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
+                  <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
+                  <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
+                  <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
+                </span>
+              </span>
+              Jump
+            </button>
+            <button
+              onClick={() => setHeaderCollapsed(true)}
+              className="icon-btn hidden sm:inline-flex"
+              title="Collapse header"
+              aria-label="Collapse header"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>
             </button>
           </div>
+        </div>
+      </header>
 
-        </header>
+      {/* Expand trigger — only visible when header is collapsed */}
+      {headerCollapsed && (
+        <button
+          onClick={() => setHeaderCollapsed(false)}
+          className="group flex h-4 w-full items-center justify-center bg-surface/50 hover:bg-surface transition-colors duration-200"
+          title="Expand header"
+          aria-label="Expand header"
+        >
+          <svg className="h-3 w-3 text-ink-3 transition-colors group-hover:text-ink" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+      )}
 
-        <main className="flex flex-row flex-1 overflow-hidden relative">
-          {/* 移动端侧边栏 - 根据状态显示/隐藏，占用空间 */}
-          {isMobileMenuOpen && (
-            <aside className="md:hidden border-r border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 w-64 pt-2 px-4 pb-4 flex-shrink-0 overflow-y-auto h-full z-20">
-              {/* 移动端导航链接 - 移除了右上角的缩写导航 */}
-              
-              <div className="flex flex-col gap-6 w-full mt-4">
-                {/* 图片显示 */}
-                {currentImage && (
-                  <div className="w-full flex justify-center py-4">
-                    <img 
-                      src={currentImage} 
-                      alt="Lili's avatar" 
-                      className="w-40 h-auto object-contain rounded-lg border border-neutral-100 dark:border-neutral-800 shadow-sm"
-                      style={{ display: 'block', maxWidth: '100%' }}
-                    />
-                  </div>
-                )}
-                
-                {/* 自我介绍和社交链接 - 竖线分隔格式 */}
-                <div className="space-y-3">
-                  <div className="text-center">
-                    <h3 className="text-sm font-mono text-neutral-500 dark:text-neutral-400 mb-2">Lili Lin</h3>
-                    <h3 className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mb-2">林丽丽</h3>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                      Designer | Developer | Product Maker
-                    </p>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                      Passionate about creating meaningful digital experiences that bridge technology and creativity.
-                    </p>
-                  </div>
-                  <div className="pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center gap-4">
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 italic mb-3">
-                      "{randomQuote}"
-                    </p>
-                    {/* 社交媒体链接 - 竖线分隔，带图标 */}
-                    <div className="flex items-center justify-center gap-2 text-xs">
-                      <a href="https://github.com/lililin0324" className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors" title="GitHub">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                      </a>
-                      <span className="text-neutral-300 dark:text-neutral-600">|</span>
-                      <a href="mailto:lili0324@snu.ac.kr" className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors" title="Email">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                      </a>
-                      <span className="text-neutral-300 dark:text-neutral-600">|</span>
-                      <a href="https://www.linkedin.com/in/lililin0324" className="flex items-center gap-1 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors" title="LinkedIn">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
+      <main className="relative flex min-h-0 flex-1 flex-row overflow-hidden">
+        {/* Profile panel — one implementation for both breakpoints */}
+        {isPanelOpen && (
+          <aside className="z-20 h-full w-64 shrink-0 overflow-y-auto border-r border-rule bg-surface md:w-72">
+            <div className="flex flex-col gap-8 p-5">
+              {currentImage && (
+                <img
+                  src={currentImage}
+                  alt="Lili's avatar"
+                  className="w-full border border-rule bg-surface-2 object-contain"
+                />
+              )}
+
+              <div className="space-y-3">
+                <div>
+                  <p className="eyebrow">Profile</p>
+                  <h2 className="mt-2 text-xl font-bold tracking-masthead">Lili Lin</h2>
+                  <p className="text-sm text-ink-2">林丽丽</p>
                 </div>
+                <hr className="hairline" />
+                <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+                  Designer · Developer · Product Maker
+                </p>
+                <p className="text-sm leading-relaxed text-ink-2">
+                  Creating meaningful digital experiences that bridge technology and creativity.
+                </p>
               </div>
-            </aside>
-          )}
-          
-          {/* 桌面端侧边栏 */}
-          {isMobileMenuOpen && (
-          <aside className="hidden md:flex border-r border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex-col w-64 p-4 overflow-y-auto h-full z-10 shrink-0">
-            <div className="flex flex-col gap-6 w-full mt-4 black">
-                {/* 图片显示 */}
-                {currentImage && (
-                  <div className="w-full flex justify-center py-4">
-                    <img 
-                      src={currentImage} 
-                      alt="Lili's avatar" 
-                      className="w-40 h-auto object-contain rounded-lg border border-neutral-100 dark:border-neutral-800 shadow-sm"
-                      style={{ display: 'block', maxWidth: '100%' }}
-                    />
-                  </div>
-                )}
-                
-                {/* 社交媒体链接 */}
-                <div className="flex flex-col gap-2">
+
+              <div className="space-y-4">
+                <hr className="hairline" />
+                <p className="border-l-2 border-accent pl-3 text-sm italic leading-relaxed text-ink-2">
+                  {randomQuote}
+                </p>
+                <div className="flex gap-2">
                   <SocialLink href="https://github.com/lililin0324" label="GH" />
                   <SocialLink href="mailto:lili0324@snu.ac.kr" label="EM" />
                   <SocialLink href="https://www.linkedin.com/in/lililin0324" label="LK" />
                 </div>
-                
-                {/* 自我介绍和随机句子 */}
-                <div className="mt-4 space-y-3">
-                  <div className="text-center">
-                    <h3 className="text-sm font-mono text-neutral-500 dark:text-neutral-400 mb-2">ABOUT</h3>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                      I'm Lili, a designer and developer passionate about creating meaningful digital experiences that bridge technology and creativity.
-                    </p>
-                  </div>
-                  <div className="pt-3 border-t border-neutral-100 dark:border-neutral-800 text-center">
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 italic">
-                      "{randomQuote}"
-                    </p>
-                  </div>
-                </div>
               </div>
-            </aside>
-          )}
-            
-            <section
-              className="flex-1 relative w-full h-[calc(100vh-4rem)] overflow-y-auto"
-            >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/planning" element={<ProjectListView data={projects} type="planning" />} />
-              <Route path="/planning/:id" element={<ProjectDetailView data={projects} type="planning" />} />
-              <Route path="/design" element={<ProjectListView data={designProjects} type="design" />} />
-              <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
-              <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
-              <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
-              <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
-              <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
-              <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
-              <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
-              <Route path="/clusteringeomap" element={<ClusteringGeoMap />} />
-              <Route path="/about" element={<AboutSection />} />
-              <Route path="/contact" element={<ContactSection />} />
-            </Routes>
-          </section>
-        </main>
-      </div>
+            </div>
+          </aside>
+        )}
+
+        <section className="relative min-w-0 flex-1 overflow-y-auto">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/planning" element={<ProjectListView data={projects} type="planning" />} />
+            <Route path="/planning/:id" element={<ProjectDetailView data={projects} type="planning" />} />
+            <Route path="/product" element={<ProjectListView data={designProjects} type="product" />} />
+            <Route path="/product/:id" element={<ProjectDetailView data={designProjects} type="product" />} />
+            <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
+            <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
+            <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
+            <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
+            <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
+            <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
+            <Route path="/clusteringeomap" element={<ClusteringGeoMap />} />
+            <Route path="/about" element={<AboutSection />} />
+            <Route path="/contact" element={<ContactSection />} />
+          </Routes>
+        </section>
+      </main>
     </div>
   );
 };

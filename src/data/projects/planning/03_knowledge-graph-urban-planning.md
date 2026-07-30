@@ -1,5 +1,5 @@
 ---
-id: "02"
+id: "03"
 slug: "knowledge-graph-urban-planning"
 title: "Knowledge Graph Generation from Urban Planning Texts"
 category: "Knowledge Graph"
@@ -16,16 +16,23 @@ image: ["/data/fig/AAAI2025.jpg"]
 # 效果展示
 
 “基于城市规划文本的知识图谱生成：纽约和上海总体规划中气候变化适应的比较分析” 
+
+<div style="display:flex; flex-direction:column; gap:16px;">
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/KnowledgeGraph.mp4"></video>
+</div>
+
+![alt text](/data/fig/AAAI2025.jpg)
+
 > 2025.2，在美国费城举行的第39届AAAI城市规划人工智能研讨会上作海报展示<br>
 [《AAAI paper Abstract》](/data/pdf/2025AAAIpaper.pdf)<br>
+
 ![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/01.png)
 ![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/02.png)
 
-> 2025.6，在英国伦敦举行的计算城市规划与城市管理会议(CUPUM)上作口头报告![alt text]
+> 2025.6，在英国伦敦举行的计算城市规划与城市管理会议(CUPUM)上作口头报告!
 ![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/03.png)
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/04.png)
 ![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/05.png)
 
 > 2025.7，在中国厦门举行的第 19届国际中国规划协会（IACP）会议上作口头报告
-![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/04.png)
-
-![alt text](/data/fig/AAAI2025.jpg)
+![alt text](/data/fig/planning/02-knowledge-graph-urban-planning/06.png)
