@@ -1,5 +1,5 @@
 ---
-id: "05"
+id: "02"
 slug: "genshot-AI-video-generation-tool"
 title: "Genshot - AI videos Generation Tool"
 category: "UI&UX Design"

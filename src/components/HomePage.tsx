@@ -318,7 +318,7 @@ export const HomePage = () => {
             </div>
 
             {/* ▸ Center 16:9 — current project */}
-            <div className="relative z-20 flex h-[98%] w-[50%] shrink-0 flex-col">
+            <div className="relative z-20 flex h-auto w-full shrink-0 flex-col md:h-[98%] md:w-[50%]">
               <div className="aspect-video max-h-[70vh] w-full overflow-hidden border border-white/[0.08]" style={{ boxShadow: '0 0 70px -10px rgba(0,0,0,0.5)' }}>
                 {isStageVideo ? (
                   <video ref={el => { stageVideoRef.current = el }} key={stageSrc} src={stageSrc} autoPlay muted={stageMuted} playsInline onEnded={advanceStageMedia} className="absolute inset-0 h-full w-full object-cover animate-rise-in" />
