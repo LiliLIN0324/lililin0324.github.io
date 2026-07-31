@@ -8,6 +8,8 @@ description: "An app that provides personalized AI Fengshui insights based on us
 tech: ["Figma","React","TypeScript"]
 abstract: "This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korean users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner."
 icon: "/data/fig/Bazi_logo.jpg"
+image:["/data/fig/bazi/01.jpg", "/data/fig/bazi/02.jpg", "/data/fig/bazi/03.jpg", "/data/fig/bazi/04.jpg", "/data/fig/bazi/05.jpg", "/data/fig/bazi/06.jpg"]
+
 ---
 
 # 效果展示
@@ -17,3 +19,4 @@ icon: "/data/fig/Bazi_logo.jpg"
 ![效果展示](/data/fig/bazi/03.jpg)
 ![效果展示](/data/fig/bazi/04.jpg)
 ![效果展示](/data/fig/bazi/05.jpg)
+![效果展示](/data/fig/bazi/06.jpg)

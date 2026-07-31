@@ -73,6 +73,9 @@ function parseMarkdown(markdownContent: string) {
         
         if (value === '|') {
           currentValue = [];
+        } else if (value === '') {
+          // Multi-line value (array), keep currentKey to collect indented lines
+          currentValue = [];
         } else {
           data[currentKey] = value;
           currentKey = null;
@@ -96,8 +99,22 @@ function parseMarkdown(markdownContent: string) {
         if (value.startsWith('"') && value.endsWith('"')) {
           value = value.slice(1, -1);
         }
-        
-        if (value.startsWith('[') && value.endsWith(']')) {
+
+        // Parse YAML-style list: lines starting with "- "
+        if (typeof value === 'string' && value.includes('\n') && /^\s*-/.test(value)) {
+          const listItems = value
+            .split(/\r?\n/)
+            .map(line => line.replace(/^\s*-\s*/, '').trim())
+            .filter(item => item !== '');
+          // Unquote each item if quoted
+          data[key] = listItems.map((item: string) => {
+            if ((item.startsWith('"') && item.endsWith('"')) ||
+                (item.startsWith("'") && item.endsWith("'"))) {
+              return item.slice(1, -1);
+            }
+            return item;
+          });
+        } else if (value.startsWith('[') && value.endsWith(']')) {
           try {
             data[key] = JSON.parse(value);
           } catch {

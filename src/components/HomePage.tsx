@@ -200,6 +200,32 @@ export const HomePage = () => {
 
   /* ---------------- Filmstrip cards ---------------- */
   const filmstripRef = useRef<HTMLDivElement>(null)
+  const DRAG_THRESHOLD = 3
+  const dragRef = useRef({ isDown: false, isDragging: false, startX: 0, scrollLeft: 0 })
+
+  const onFilmstripPointerDown = (e: React.PointerEvent) => {
+    dragRef.current = { isDown: true, isDragging: false, startX: e.clientX, scrollLeft: filmstripRef.current?.scrollLeft ?? 0 }
+  }
+
+  const onFilmstripPointerMove = (e: React.PointerEvent) => {
+    if (!dragRef.current.isDown) return
+    const dx = e.clientX - dragRef.current.startX
+    if (!dragRef.current.isDragging && Math.abs(dx) < DRAG_THRESHOLD) return
+    // Only capture the pointer once a real drag starts — taps pass through to buttons.
+    if (!dragRef.current.isDragging) {
+      dragRef.current.isDragging = true
+      filmstripRef.current?.setPointerCapture(e.pointerId)
+    }
+    e.preventDefault()
+    filmstripRef.current!.scrollLeft = dragRef.current.scrollLeft - dx
+  }
+
+  const onFilmstripPointerUp = (_e: React.PointerEvent) => {
+    if (dragRef.current.isDragging) {
+      filmstripRef.current?.releasePointerCapture(_e.pointerId)
+    }
+    dragRef.current = { isDown: false, isDragging: false, startX: 0, scrollLeft: 0 }
+  }
 
   const selectProject = (index: number) => {
     setCurrentIndex(index)
@@ -379,15 +405,19 @@ export const HomePage = () => {
       <section className="shell pt-10 md:pt-0">
 
         {/* Section title */}
-        <div className="flex items-center justify-between gap-2 mb-2 py-2 md:mb-4">
+        <div className="flex items-center justify-between gap-2 mb-2 py-2 md:mb-4 overflow-hidden">
           <div className="flex items-baseline gap-3 min-w-0">
             <p className="text-sm font-bold text-ink truncate">{currentProject?.title}</p>
             <p className="eyebrow shrink-0">{currentProject?.type} · {currentProject?.year}</p>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
-            {stageMediaItems.length > 1 && stageMediaItems.map((_, i) => (
-              <button key={i} onClick={() => setStageImageIndex(i)} aria-label={`Media ${i + 1}`} className={`h-1.5 rounded-full transition-all duration-300 ${i === stageImageIndex ? 'w-6 bg-accent' : 'w-1.5 bg-rule hover:bg-ink-3'}`} />
-            ))}
+          <div className="flex items-center gap-3 shrink-0 min-w-0">
+            {stageMediaItems.length > 1 && (
+              <span className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar max-w-[80px] sm:max-w-[200px]">
+                {stageMediaItems.map((_, i) => (
+                  <button key={i} onClick={() => setStageImageIndex(i)} aria-label={`Media ${i + 1}`} className={`h-1.5 shrink-0 rounded-full transition-all duration-300 ${i === stageImageIndex ? 'w-6 bg-accent' : 'w-1.5 bg-rule hover:bg-ink-3'}`} />
+                ))}
+              </span>
+            )}
             <button
               onClick={rollDice}
               className="btn-ghost shrink-0 !px-2"
@@ -449,7 +479,11 @@ export const HomePage = () => {
 
           <div
             ref={filmstripRef}
-            className="flex flex-1 gap-2 overflow-x-auto hide-scrollbar py-2"
+            className="flex flex-1 gap-2 overflow-x-auto hide-scrollbar py-2 cursor-grab active:cursor-grabbing select-none touch-pan-y"
+            onPointerDown={onFilmstripPointerDown}
+            onPointerMove={onFilmstripPointerMove}
+            onPointerUp={onFilmstripPointerUp}
+            onPointerLeave={onFilmstripPointerUp}
           >
             {allProjects.map((project, index) => {
               const isActive = index === currentIndex

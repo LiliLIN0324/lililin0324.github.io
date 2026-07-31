@@ -1,7 +1,7 @@
 ---
 id: "02"
 slug: "anyreal"
-title: "AnyReal - AI 虚拟影棚"
+title: "AnyRealAI 虚拟影棚"
 category: "UI&UX Design"
 year: "2024"
 description: "三步生成高真实度商品营销图的 AIGC 内容生产引擎，面向电商与品牌营销场景。"
@@ -11,6 +11,7 @@ challenge: "传统商品图拍摄需要 10-20 天、成本 8000-20000 元。市�
 solution: "设计了三步生图工作流：上传 3D 资产 → 选场景模板 → 调角度大小生成。搭配背景模版中台、文生图/图生图、图像后处理、视频生成等模块，将生图效率从"天级"降到"分钟级"。"
 hasDemo: true
 icon: "/data/fig/AnyReal_logo.jpg"
+image:["/data/fig/AnyReal/01.jpg","/data/fig/AnyReal/02.jpg","/data/fig/AnyReal/03.jpg","/data/fig/AnyReal/04.jpg","/data/fig/AnyReal/05.jpg","/data/fig/AnyReal/06.jpg","/data/fig/AnyReal/07.jpg","/data/fig/AnyReal/08.jpg","/data/fig/AnyReal/09.jpg","/data/fig/AnyReal/10.jpg","/data/fig/AnyReal/11.jpg","/data/fig/AnyReal/12.jpg","/data/fig/AnyReal/13.jpg","/data/fig/AnyReal/14.jpg","/data/fig/AnyReal/15.jpg","/data/fig/AnyReal/16.jpg","/data/fig/AnyReal/17.jpg","/data/fig/AnyReal/18.jpg","/data/fig/AnyReal/19.jpg","/data/fig/AnyReal/20.jpg","/data/fig/AnyReal/21.jpg","/data/fig/AnyReal/22.jpg","/data/fig/AnyReal/23.jpg","/data/fig/AnyReal/24.jpg"]
 ---
 
 # 效果展示
@@ -90,9 +91,7 @@ AnyReal
 ├── 视频生成
 │   ├── 图生视频 / 物体生视频
 │   └── 模板视频
-└── 资产库
-    ├── 物品库 / 背景库
-    └── 广场
+└── 资产库,   ├── 物品库 / 背景库,   └── 广场
 ```
 
 ## 3. AI 生图「三步法」
