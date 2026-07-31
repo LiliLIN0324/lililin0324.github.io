@@ -1,10 +1,11 @@
+import chickenUtopiaMd from './projects/planning/00_chicken-utopia.md?raw';
 import neurotopiaMd from './projects/planning/01_neurotopia.md?raw';
-import clusterVisualizer3dMd from './projects/planning/02_cluster-visualizer-3d.md?raw';
+import clusterVisualizer3dMd from './projects/planning/07_cluster-visualizer-3d.md?raw';
 import knowledgeGraphUrbanPlanningMd from './projects/planning/03_knowledge-graph-urban-planning.md?raw';
 import localClimateZonesUrbanHeatResilienceMd from './projects/planning/04_local-climate-zones-urban-heat-resilience.md?raw';
 import urbanHeatResilienceMachineLearningMd from './projects/planning/05_urban-heat-resilience-machine-learning.md?raw';
 import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/06_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
-import heatmapperMd from './projects/planning/07_heatmapper.md?raw';
+import heatmapperMd from './projects/planning/08_heatmapper.md?raw';
 
 
 import dragonDiffussionMd from './projects/design/01_dragon-diffussion.md?raw';
@@ -114,6 +115,18 @@ function parseMarkdown(markdownContent: string) {
     });
   }
   
+  // Auto-extract images from markdown content if not explicitly set in frontmatter
+  let imageList: string[] = [];
+  if (Array.isArray(data.image) && data.image.length > 0) {
+    imageList = data.image;
+  } else {
+    const imgRegex = /!\[.*?\]\(([^)\s]+)\)/g;
+    let m;
+    while ((m = imgRegex.exec(content)) !== null) {
+      imageList.push(m[1]);
+    }
+  }
+
   return {
     id: data.id || '',
     slug: data.slug || '',
@@ -129,7 +142,7 @@ function parseMarkdown(markdownContent: string) {
     icon: data.icon || '',
     code: data.code || '',
     logo: data.icon || '',
-    image: data.image || [],
+    image: imageList,
     content: content
   };
 }
@@ -160,12 +173,13 @@ function createProject(mdContent: string) {
 }
 
 export const projects = [
+  createProject(chickenUtopiaMd),
   createProject(neurotopiaMd),
-  createProject(clusterVisualizer3dMd),
   createProject(knowledgeGraphUrbanPlanningMd),
   createProject(localClimateZonesUrbanHeatResilienceMd),
   createProject(urbanHeatResilienceMachineLearningMd),
   createProject(participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd),
+  createProject(clusterVisualizer3dMd),
   createProject(heatmapperMd)
 ];
 

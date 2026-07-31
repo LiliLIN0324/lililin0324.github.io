@@ -15,10 +15,13 @@ icon: "/data/fig/Neurotopia_logo.jpg"
 <div style="display:flex; flex-direction:column; gap:16px;">
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Neurotopia.mp4"></video>
 </div>
+
 # 效果展示
 
-![效果展示](/data/fig/Neurotopia (1).jpg)
-![效果展示](/data/fig/Neurotopia (2).jpg)
-![效果展示](/data/fig/Neurotopia (3).jpg)
-![效果展示](/data/fig/Neurotopia (4).jpg)
-![效果展示](/data/fig/Neurotopia (5).jpg)
+![效果展示](/data/fig/Neurotopia_(1).jpg)
+![效果展示](/data/fig/Neurotopia_(2).jpg)
+![效果展示](/data/fig/Neurotopia_(3).jpg)
+![效果展示](/data/fig/Neurotopia_(4).jpg)
+![效果展示](/data/fig/Neurotopia_(5).jpg)
+
+---

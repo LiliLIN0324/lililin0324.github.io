@@ -7,6 +7,7 @@ import {
   platformProjects,
   tutorialProjects,
 } from '../data/projects'
+import { CityWalkSection } from './CityWalkSection'
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
@@ -203,6 +204,16 @@ export const HomePage = () => {
   const selectProject = (index: number) => {
     setCurrentIndex(index)
   }
+
+  // Auto-scroll filmstrip to keep active card visible
+  useEffect(() => {
+    const el = filmstripRef.current
+    if (!el) return
+    const card = el.children[currentIndex] as HTMLElement | null
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+  }, [currentIndex])
 
   /* ---------------- Vertical video gallery ---------------- */
   const galleryRef = useRef<HTMLDivElement>(null)
@@ -512,6 +523,9 @@ export const HomePage = () => {
             </p>
         </div>
       </section>
+
+      {/* ============================ CITY WALKS ============================ */}
+      <CityWalkSection />
 
       {/* ============================ VIDEO GALLERY ============================ */}
       <section className="shell pt-12 md:pt-16">

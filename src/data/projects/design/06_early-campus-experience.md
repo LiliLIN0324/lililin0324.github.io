@@ -7,18 +7,37 @@ year: "2023-03-01~2024-03-01"
 description: "本科期间在华科Pivot Studio的校园产品设计与实践，涵盖校园拼团平台与科学思维教育平台。"
 tech: ["Figma","React","TypeScript"]
 icon: "/data/fig/1037pinpin_logo.jpg"
-image: ["/data/fig/1037pinpin.jpg","/data/fig/persLEARN.jpg"]
 ---
 
 # 效果展示
 
 ## 1037拼拼
 
-![1037拼拼效果展示](/data/fig/1037pinpin.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/01.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/02.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/03.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/04.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/05.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/06.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/07.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/08.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/09.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/10.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/11.jpg)
+![1037拼拼效果展示](/data/fig/1037pinpin-slides/12.jpg)
 
 ## persLEARN
 
-![persLEARN效果展示](/data/fig/persLEARN.jpg)
+![persLEARN效果展示](/data/fig/perslearn/01.jpg)
+![persLEARN效果展示](/data/fig/perslearn/02.jpg)
+![persLEARN效果展示](/data/fig/perslearn/03.jpg)
+![persLEARN效果展示](/data/fig/perslearn/04.jpg)
+![persLEARN效果展示](/data/fig/perslearn/05.jpg)
+![persLEARN效果展示](/data/fig/perslearn/06.jpg)
+![persLEARN效果展示](/data/fig/perslearn/07.jpg)
+![persLEARN效果展示](/data/fig/perslearn/08.jpg)
+![persLEARN效果展示](/data/fig/perslearn/09.jpg)
+![persLEARN效果展示](/data/fig/perslearn/10.jpg)
 
 ---
 
