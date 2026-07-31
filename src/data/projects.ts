@@ -7,13 +7,12 @@ import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from '.
 import heatmapperMd from './projects/planning/07_heatmapper.md?raw';
 
 
-import pinpin1037Md from './projects/design/01_1037pinpin.md?raw';
-import perslearnMd from './projects/design/02_perslearn.md?raw';
-import dragonDiffussionMd from './projects/design/03_dragon-diffussion.md?raw';
-import genstyleMd from './projects/design/04_genstyle.md?raw';
-import baziFengshuiAnalysisMd from './projects/design/05_bazi-fengshui-analysis.md?raw';
-import genshotAIVideoGenerationToolMd from './projects/design/06_genshot-AI-video-generation-tool.md?raw';
-import riffleAiGameGenerationToolMd from './projects/design/07_riffle-ai-game-generation-tool.md?raw';
+import earlyCampusExperienceMd from './projects/design/01_early-campus-experience.md?raw';
+import dragonDiffussionMd from './projects/design/02_dragon-diffussion.md?raw';
+import genstyleMd from './projects/design/03_genstyle.md?raw';
+import baziFengshuiAnalysisMd from './projects/design/04_bazi-fengshui-analysis.md?raw';
+import genshotAIVideoGenerationToolMd from './projects/design/05_genshot-AI-video-generation-tool.md?raw';
+import riffleAiGameGenerationToolMd from './projects/design/06_riffle-ai-game-generation-tool.md?raw';
 
 import gameJam72HourMd from './projects/games/01_72-hour-game-jam.md?raw';
 import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.md?raw';
@@ -171,8 +170,7 @@ export const projects = [
 ];
 
 export const designProjects = [
-  createProject(pinpin1037Md),
-  createProject(perslearnMd),
+  createProject(earlyCampusExperienceMd),
   createProject(dragonDiffussionMd),
   createProject(genstyleMd),
   createProject(baziFengshuiAnalysisMd),
