@@ -17,7 +17,6 @@ image: ["/data/fig/kittylovecarrots-1.png","/data/fig/kittylovecarrots-2.png"]
 # 效果展示
 
 ![效果展示](/data/fig/kittylovecarrots-1.png)
-
 ![效果展示](/data/fig/kittylovecarrots-2.png)
 
 ## 一个人怎么做游戏
@@ -70,7 +69,6 @@ https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
 下载到本地，如果在本地，可以看到。
 
 ![微信开发者工具界面](/data/fig/games/wechat-mini-game-devtools-01.png)
-
 ![微信开发者工具项目结构](/data/fig/games/wechat-mini-game-devtools-02.png)
 
 ### 01 使用vibe三方平台打开微信小程序编译代码

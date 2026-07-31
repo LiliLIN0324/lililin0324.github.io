@@ -18,5 +18,4 @@ image: ["/data/fig/boxupcyberspace-1.png","/data/fig/boxupcyberspace-2.png"]
 # 效果展示
 
 ![效果展示](/data/fig/boxupcyberspace-1.png)
-
 ![效果展示](/data/fig/boxupcyberspace-2.png)

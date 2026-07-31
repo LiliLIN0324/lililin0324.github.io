@@ -8,21 +8,9 @@ description: "An AI-powered image generation tool that transforms text prompts i
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "/data/fig/DragonDiffusion_logo.jpg"
-image:
-  - "/data/fig/dragon-diffusion-slides/slide_01.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_02.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_03.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_04.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_05.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_06.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_07.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_08.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_09.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_10.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_11.jpg"
-  - "/data/fig/dragon-diffusion-slides/slide_12.jpg"
----
+image:["/data/fig/dragon-diffusion-slides/DiffusionProduct_(1).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(2).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(3).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(4).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(5).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(6).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(7).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(8).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(9).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(10).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(11).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(12).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(13).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(14).jpg","/data/fig/dragon-diffusion-slides/DiffusionProduct_(15).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(1).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(2).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(3).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(4).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(5).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(6).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(7).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(8).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(9).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(10).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(11).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(12).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(13).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(14).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(15).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(16).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(17).jpg","/data/fig/dragon-diffusion-slides/DiffusionDesign_(18).jpg"]
 
+---
 # 效果展示
 <h2>效果展示</h2>
 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -32,49 +20,36 @@ image:
 </div>
 
 # PPT 汇报
-
-![slide 01](/data/fig/dragon-diffusion-slides/slide_01.jpg)
-
-![slide 02](/data/fig/dragon-diffusion-slides/slide_02.jpg)
-
-![slide 03](/data/fig/dragon-diffusion-slides/slide_03.jpg)
-
-![slide 04](/data/fig/dragon-diffusion-slides/slide_04.jpg)
-
-![slide 05](/data/fig/dragon-diffusion-slides/slide_05.jpg)
-
-![slide 06](/data/fig/dragon-diffusion-slides/slide_06.jpg)
-
-![slide 07](/data/fig/dragon-diffusion-slides/slide_07.jpg)
-
-![slide 08](/data/fig/dragon-diffusion-slides/slide_08.jpg)
-
-![slide 09](/data/fig/dragon-diffusion-slides/slide_09.jpg)
-
-![slide 10](/data/fig/dragon-diffusion-slides/slide_10.jpg)
-
-![slide 11](/data/fig/dragon-diffusion-slides/slide_11.jpg)
-
-![slide 12](/data/fig/dragon-diffusion-slides/slide_12.jpg)
-
-![slide 13](/data/fig/dragon-diffusion-slides/slide_13.jpg)
-
-![slide 14](/data/fig/dragon-diffusion-slides/slide_14.jpg)
-
-![slide 15](/data/fig/dragon-diffusion-slides/slide_15.jpg)
-
-![slide 16](/data/fig/dragon-diffusion-slides/slide_16.jpg)
-
-![slide 17](/data/fig/dragon-diffusion-slides/slide_17.jpg)
-
-![slide 18](/data/fig/dragon-diffusion-slides/slide_18.jpg)
-
-![slide 19](/data/fig/dragon-diffusion-slides/slide_19.jpg)
-
-![slide 20](/data/fig/dragon-diffusion-slides/slide_20.jpg)
-
-![slide 21](/data/fig/dragon-diffusion-slides/slide_21.jpg)
-
-![slide 22](/data/fig/dragon-diffusion-slides/slide_22.jpg)
+![slide 01](/data/fig/dragon-diffusion-slides/DiffusionProduct_(1).jpg)
+![slide 02](/data/fig/dragon-diffusion-slides/DiffusionProduct_(2).jpg)
+![slide 03](/data/fig/dragon-diffusion-slides/DiffusionProduct_(3).jpg)
+![slide 04](/data/fig/dragon-diffusion-slides/DiffusionProduct_(4).jpg)
+![slide 05](/data/fig/dragon-diffusion-slides/DiffusionProduct_(5).jpg)
+![slide 06](/data/fig/dragon-diffusion-slides/DiffusionProduct_(6).jpg)
+![slide 07](/data/fig/dragon-diffusion-slides/DiffusionProduct_(7).jpg)
+![slide 08](/data/fig/dragon-diffusion-slides/DiffusionProduct_(8).jpg)
+![slide 09](/data/fig/dragon-diffusion-slides/DiffusionProduct_(9).jpg)
+![slide 10](/data/fig/dragon-diffusion-slides/DiffusionProduct_(10).jpg)
+![slide 11](/data/fig/dragon-diffusion-slides/DiffusionProduct_(11).jpg)
+![slide 12](/data/fig/dragon-diffusion-slides/DiffusionProduct_(12).jpg)
+![slide 13](/data/fig/dragon-diffusion-slides/DiffusionProduct_(13).jpg)
+![slide 14](/data/fig/dragon-diffusion-slides/DiffusionProduct_(14).jpg)
+![slide 15](/data/fig/dragon-diffusion-slides/DiffusionProduct_(15).jpg)
+![slide 16](/data/fig/dragon-diffusion-slides/DiffusionDesign_(1).jpg)
+![slide 17](/data/fig/dragon-diffusion-slides/DiffusionDesign_(2).jpg)
+![slide 18](/data/fig/dragon-diffusion-slides/DiffusionDesign_(3).jpg)
+![slide 19](/data/fig/dragon-diffusion-slides/DiffusionDesign_(4).jpg)
+![slide 20](/data/fig/dragon-diffusion-slides/DiffusionDesign_(5).jpg)
+![slide 21](/data/fig/dragon-diffusion-slides/DiffusionDesign_(6).jpg)
+![slide 22](/data/fig/dragon-diffusion-slides/DiffusionDesign_(7).jpg)
+![slide 23](/data/fig/dragon-diffusion-slides/DiffusionDesign_(8).jpg)
+![slide 24](/data/fig/dragon-diffusion-slides/DiffusionDesign_(9).jpg)
+![slide 25](/data/fig/dragon-diffusion-slides/DiffusionDesign_(10).jpg)
+![slide 26](/data/fig/dragon-diffusion-slides/DiffusionDesign_(11).jpg)
+![slide 27](/data/fig/dragon-diffusion-slides/DiffusionDesign_(12).jpg)
+![slide 28](/data/fig/dragon-diffusion-slides/DiffusionDesign_(13).jpg)
+![slide 29](/data/fig/dragon-diffusion-slides/DiffusionDesign_(14).jpg)
+![slide 30](/data/fig/dragon-diffusion-slides/DiffusionDesign_(15).jpg)
+![slide 31](/data/fig/dragon-diffusion-slides/DiffusionDesign_(16).jpg)
 
 ---

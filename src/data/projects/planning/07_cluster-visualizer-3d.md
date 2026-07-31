@@ -17,9 +17,6 @@ image: ["/data/fig/global-5.jpg","/data/fig/global-12.jpg","/data/fig/global-20.
 # 效果展示
 
 ![效果展示](/data/fig/global-5.jpg)
-
 ![效果展示](/data/fig/global-12.jpg)
-
 ![效果展示](/data/fig/global-20.jpg)
-
 ![效果展示](/data/fig/global-26.jpg)

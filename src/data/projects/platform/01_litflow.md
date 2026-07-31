@@ -18,13 +18,8 @@ image: ["/data/fig/litflow (1).png","/data/fig/litflow (2).png","/data/fig/litfl
 # 效果展示
 
 ![效果展示](/data/fig/litflow (1).png)
-
 ![效果展示](/data/fig/litflow (2).png)
-
 ![效果展示](/data/fig/litflow (3).png)
-
 ![效果展示](/data/fig/litflow (4).png)
-
 ![效果展示](/data/fig/litflow (5).png)
-
 ![效果展示](/data/fig/litflow (6).png)

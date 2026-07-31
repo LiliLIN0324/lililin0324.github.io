@@ -20,3 +20,4 @@ export const RiffleDemo = lazy(() => import("../riffle.tsx"));
 export const GenStyleDemo = lazy(() => import("../genstyle.tsx"));
 export const GenshotDemo = lazy(() => import("../genshot.tsx"));
 export const DragonDiffusionDemo = lazy(() => import("../dragon-diffusion.tsx"));
+export const AnyRealDemo = lazy(() => import("../anyreal.tsx"));

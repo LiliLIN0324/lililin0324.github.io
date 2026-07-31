@@ -78,7 +78,12 @@ const proseComponents = {
   h4: ({ children, ...props }: any) => <h4 className="mt-5 mb-2 text-sm font-semibold text-ink" {...props}>{children}</h4>,
   h5: ({ children, ...props }: any) => <h5 className="mt-4 mb-2 text-sm font-semibold text-ink-2" {...props}>{children}</h5>,
   h6: ({ children, ...props }: any) => <h6 className="mt-3 mb-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3" {...props}>{children}</h6>,
-  p: ({ children, ...props }: any) => <p className="mb-4 leading-relaxed text-ink-2" {...props}>{children}</p>,
+  p: ({ children, ...props }: any) => {
+    // Image-only paragraph — no bottom margin so consecutive images sit tight
+    const childArray = React.Children.toArray(children);
+    const isImageOnly = childArray.length === 1 && (childArray[0] as any)?.type === 'img';
+    return <p className={isImageOnly ? 'mb-0 leading-relaxed text-ink-2' : 'mb-4 leading-relaxed text-ink-2'} {...props}>{children}</p>;
+  },
   a: ({ children, href, ...props }: any) => (
     <a href={href} className="text-accent-text underline decoration-1 underline-offset-2 transition-colors hover:text-ink" target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
   ),
@@ -86,7 +91,7 @@ const proseComponents = {
     const isInTable = alt?.match(/BCR|BHV|SVF|NDVI|EV|WR|Dist_/);
     return isInTable
       ? <img src={src} alt={alt} className="h-32 max-w-full border border-rule object-cover" {...props} />
-      : <img src={src} alt={alt} className="my-6 h-auto w-full border border-rule object-cover" {...props} />;
+      : <img src={src} alt={alt} className="my-0 h-auto w-full border border-rule object-cover" {...props} />;
   },
 };
 

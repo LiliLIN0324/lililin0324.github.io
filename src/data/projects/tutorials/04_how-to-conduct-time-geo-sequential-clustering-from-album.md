@@ -18,5 +18,4 @@ image: ["/data/fig/photocluster-1.jpg","/data/fig/photocluster-2.jpg"]
 # 效果展示
 
 ![效果展示](/data/fig/photocluster-1.jpg)
-
 ![效果展示](/data/fig/photocluster-2.jpg)

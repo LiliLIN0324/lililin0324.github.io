@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo, GameJam72HourDemo, PeaceEliteHustCampusDemo, BMWMetaIslandDemo, ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo, DragonDiffusionDemo } from './DemoComponents';
+import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo, GameJam72HourDemo, PeaceEliteHustCampusDemo, BMWMetaIslandDemo, ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo, DragonDiffusionDemo, AnyRealDemo } from './DemoComponents';
 
 // 根据slug获取对应的demo组件
 export const getDemoComponent = (slug: string) => {
@@ -24,6 +24,7 @@ export const getDemoComponent = (slug: string) => {
     'genstyle': GenStyleDemo,
     'genshot-AI-video-generation-tool': GenshotDemo,
     'dragon-diffussion': DragonDiffusionDemo,
+    'anyreal': AnyRealDemo,
   };
 
   return demoComponents[slug];
