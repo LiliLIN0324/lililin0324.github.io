@@ -8,7 +8,7 @@ description: "An AI-powered fashion app that curates daily outfit inspirations b
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "/data/fig/Genstyle_logo.jpg"
-image: ["/data/fig/genstyle/genstyle_(1).jpg", "/data/fig/genstyle/genstyle_(2).jpg", "/data/fig/genstyle/genstyle_(3).jpg", "/data/fig/genstyle/genstyle_(4).jpg", "/data/fig/genstyle/genstyle_(5).jpg", "/data/fig/genstyle/genstyle_(6).jpg","/data/fig/genstyle/genstyle_(7).jpg","/data/fig/genstyle/genstyle_(8).jpg", "/data/fig/genstyle/genstyle_(9).jpg","/data/fig/genstyle/genstyle_(10).jpg","/data/fig/genstyle/genstyle_(11).jpg","/data/fig/genstyle/genstyle_(12).jpg","/data/fig/genstyle/genstyle_(13).jpg"]
+image:["/data/fig/genstyle/genstyle_(1).jpg","/data/fig/genstyle/genstyle_(2).jpg","/data/fig/genstyle/genstyle_(3).jpg","/data/fig/genstyle/genstyle_(4).jpg","/data/fig/genstyle/genstyle_(5).jpg","/data/fig/genstyle/genstyle_(6).jpg","/data/fig/genstyle/genstyle_(7).jpg","/data/fig/genstyle/genstyle_(8).jpg","/data/fig/genstyle/genstyle_(9).jpg","/data/fig/genstyle/genstyle_(10).jpg","/data/fig/genstyle/genstyle_(11).jpg","/data/fig/genstyle/genstyle_(12).jpg","/data/fig/genstyle/genstyle_(13).jpg"]
 
 ---
 
