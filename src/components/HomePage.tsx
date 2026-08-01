@@ -81,8 +81,8 @@ export const HomePage = () => {
   const projectsByType = {
     all: [
       ...designProjects.map(p => ({ ...p, type: 'product' })),
-      ...projects.map(p => ({ ...p, type: 'planning' })),
       ...gameProjects.map(p => ({ ...p, type: 'game' })),
+      ...projects.map(p => ({ ...p, type: 'planning' })),
       ...platformProjects.map(p => ({ ...p, type: 'platform' })),
       ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
     ],
