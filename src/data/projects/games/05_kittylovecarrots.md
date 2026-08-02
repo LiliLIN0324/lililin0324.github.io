@@ -10,14 +10,14 @@ abstract: " "
 challenge: "设计一款既有趣又具有教育意义的儿童游戏，同时兼顾游戏开发过程中的技术实现与设计难点。"
 solution: "我们开发了一款名为 Kitty Love Carrots 的节奏小游戏，通过鼓点节奏（drum rhythm）的互动玩法，引导儿童认识胡萝卜相关知识。游戏采用简单易上手且富有趣味性的机制，让孩子们能够在轻松愉快的游戏体验中，以互动探索的方式学习和了解胡萝卜。"
 hasDemo: true
-icon: "/data/fig/Kittylovecarrots_logo.jpg"
-image: ["/data/fig/kittylovecarrots-1.png","/data/fig/kittylovecarrots-2.png"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/01.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/02.png"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/kittylovecarrots-1.png)
-![效果展示](/data/fig/kittylovecarrots-2.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/01.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/02.png)
 
 ## 一个人怎么做游戏
 
@@ -35,26 +35,26 @@ https://www.figma.com/ 下载，打开打开到本地。注册账号并且登录
 
 在这里，我们会开始画项目的设计稿。
 
-<imagecarousel images="/data/fig/games/wechat-mini-game-01.png,/data/fig/games/wechat-mini-game-02.png,/data/fig/games/wechat-mini-game-03.png,/data/fig/games/wechat-mini-game-04.png" captions="Figma design draft - main interface|Figma design draft - game elements|Figma design draft - 具体的流程添加示意|Figma design draft - final output"></imagecarousel>
+<imagecarousel images="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/03.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/04.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/05.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/06.png" captions="Figma design draft - main interface|Figma design draft - game elements|Figma design draft - 具体的流程添加示意|Figma design draft - final output"></imagecarousel>
 
 ### ai跑图
 
 #### chatgpt/gemini
 使用chatgpt/gemini nano bannana等ai工具，根据设计稿生成对应的图片。
 
-<imagecarousel images="/data/fig/games/wechat-mini-game-chatgpt.png,/data/fig/games/wechat-mini-game-gemini.png" captions="chatgpt|gemini nanobanna"></imagecarousel>
+<imagecarousel images="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/07.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/08.png" captions="chatgpt|gemini nanobanna"></imagecarousel>
 
 #### lovart.ai
 推荐使用lovart.ai。每天有免费的5张图的图片生成额度。
 https://www.lovart.ai/
 
 可以生成对应的游戏ui和游戏插画，此处我示意了对应的帽子的设计。
-![AI generated cat with hats](/data/fig/games/wechat-mini-game-ai-image.png)
+![AI generated cat with hats](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/09.png)
 
 #### figma professional
 可以尝试使用figma professional对图片进行微调。
 figma professional version中，新增了对图片的处理，支持裁剪、去除背景、局部抠图（局部清理）、prompt编辑、矢量化（！！！）
-<imagecarousel images="/data/fig/games/wechat-mini-game-figma-edit-01.png,/data/fig/games/wechat-mini-game-figma-edit-02.png,/data/fig/games/wechat-mini-game-figma-edit-03.png" captions="Figma AI image editing - selecting the cat|Figma AI image editing - adding prompt|Figma AI image editing - model selection"></imagecarousel>
+<imagecarousel images="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/10.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/11.png,https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/12.png" captions="Figma AI image editing - selecting the cat|Figma AI image editing - adding prompt|Figma AI image editing - model selection"></imagecarousel>
 
 ## 02 微信小游戏 code
 
@@ -64,12 +64,12 @@ figma professional version中，新增了对图片的处理，支持裁剪、去
 
 https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
 
-![下载页面](/data/fig/games/wechat-mini-game-devtools-03.png)
+![下载页面](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/15.png)
 
 下载到本地，如果在本地，可以看到。
 
-![微信开发者工具界面](/data/fig/games/wechat-mini-game-devtools-01.png)
-![微信开发者工具项目结构](/data/fig/games/wechat-mini-game-devtools-02.png)
+![微信开发者工具界面](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/13.png)
+![微信开发者工具项目结构](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/14.png)
 
 ### 01 使用vibe三方平台打开微信小程序编译代码
 
@@ -137,7 +137,7 @@ CDN（内容分发网络）资产是指分布在不同地理位置的服务器�
 由于微信小程序的界面对代码的大小有一定的限制，所以我们不能把所有的图片素材都内置，我是直接把素材放在了Cloudflare上访问。Cloudflare R2 免费有每月10G 存储，100 万次 A 类操作，1000 万次 B 类操作，对于个人用户来说完全足够了。
 
 在cloudflare中的R2库里面添加一个文件夹，把所有的图片素材上传到那里，然后在game.json中配置对应的路径。
-![CDN资产](/data/fig/games/wechat-mini-game-cdn.png)
+![CDN资产](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/16.png)
 
 ## 03 发布与审核
 
@@ -160,20 +160,20 @@ CDN（内容分发网络）资产是指分布在不同地理位置的服务器�
 3. **代码发布审核** - 每次代码更新都需要审核
 4. **适龄审核** - 游戏内容分级审核
 5. **ICP备案审核** - 根据政策政策进行ICP备案
-![alt text](/data/fig/games/wechat-mini-game-verification.png)
-![审核通知时间线](/data/fig/games/wechat-mini-game-review-timeline.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/17.png)
+![审核通知时间线](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/18.png)
 
 > ⚠️ 建议提前规划好发布时间，预留充足的审核周期。
 
 发布到正式版之后，就可以开始看游戏的用户流量情况了。
-![alt text](/data/fig/games/wechat-mini-game-data-visual.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/19.png)
 
 
 ## godot引擎，辅助游戏。
 我意识到我可能需要更复杂的
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/22.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/23.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/24.png)
 
 ## 源码目录介绍
 ```
@@ -218,8 +218,8 @@ ios运行请在小游戏后台开通高性能+模式, 操作方法: 功能->游�
 
 ### 🚀 全流程线上 · 0 跑腿
 1. 注册 + 实名认证（1–3 个工作日）  
-![alt text](/data/fig/games/object-storage.png)
-![alt text](/data/fig/games/copyright-protection-center.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/20.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/21.png)
 
 2. 在线填报 + 电子签章  
 3. 审查通过后**直接下载电子证书**  

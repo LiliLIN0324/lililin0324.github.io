@@ -9,8 +9,8 @@ tech: ["Unity", "Blender", "Figma", "Metaverse Design", "O2O Marketing"]
 challenge: "如何让 Z 世代在数字化体验中自然感知 BMW 的品牌价值，并愿意从线上体验继续走向线下互动。"
 solution: "以咖啡联名作为现实入口，结合人格测试、车型匹配、森林与城市探索、BMW 元素收集和 Carbon Energy 机制，构建完整的 Meta Island 沉浸式品牌体验。"
 hasDemo: true
-icon: "/data/fig/BMW&TJ_logo.jpg"
-image: ["/data/fig/BMW&TJ.png"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bmw-meta-island/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bmw-meta-island/01.png"]
 ---
 
 # BMW Meta Island
@@ -39,7 +39,7 @@ Project Overview
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/BMW%26TJ_3.mp4"></video>
 </div>
 
-![效果展示](/data/fig/BMW&TJ.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bmw-meta-island/01.png)
 
 <br />
 <h2>项目背景</h2>

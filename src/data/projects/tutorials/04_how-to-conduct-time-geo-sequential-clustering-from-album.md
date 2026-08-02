@@ -10,12 +10,12 @@ abstract: "This tutorial explains how to conduct time-geo-sequential clustering 
 challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data."
 solution: "By leveraging clustering algorithms such as K-means or DBSCAN, you can group photos based on their temporal and spatial characteristics. This tutorial provides practical examples and code snippets to guide you through the process."
 hasDemo: true
-icon: "/data/fig/Clusteringevents_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-clustering/logo.jpg"
 code: "clusteringevents.tsx"
-image: ["/data/fig/photocluster-1.jpg","/data/fig/photocluster-2.jpg"]
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-clustering/01.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-clustering/02.jpg"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/photocluster-1.jpg)
-![效果展示](/data/fig/photocluster-2.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-clustering/01.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-clustering/02.jpg)

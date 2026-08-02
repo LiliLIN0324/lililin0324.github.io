@@ -20,12 +20,12 @@ const CATEGORIES = [
 ] as const
 
 const CATEGORY_IMAGE: Record<string, string> = {
-  all: '/data/fig/lili/lili_01.png',
-  design: '/data/fig/lili/lili_05.png',
-  planning: '/data/fig/lili/lili_06.png',
-  game: '/data/fig/lili/lili_03.png',
-  platform: '/data/fig/lili/lili_11.png',
-  tutorial: '/data/fig/lili/lili_04.png',
+  all: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_01.png',
+  design: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_05.png',
+  planning: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_06.png',
+  game: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_03.png',
+  platform: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_11.png',
+  tutorial: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_04.png',
 }
 
 const CATEGORY_BLURB: Record<string, React.ReactNode> = {

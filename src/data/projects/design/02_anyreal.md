@@ -10,8 +10,8 @@ abstract: "AnyReal 是一款面向电商与品牌营销场景的 AI 虚拟影棚
 challenge: "传统商品图拍摄需要 10-20 天、成本 8000-20000 元。市面 AI 工具多为背景替换，无法改变商品展示角度，光影不变，效果不真实。"
 solution: "设计了三步生图工作流：上传 3D 资产 → 选场景模板 → 调角度大小生成。搭配背景模版中台、文生图/图生图、图像后处理、视频生成等模块，将生图效率从"天级"降到"分钟级"。"
 hasDemo: true
-icon: "/data/fig/AnyReal_logo.jpg"
-image:["/data/fig/AnyReal/01.jpg","/data/fig/AnyReal/02.jpg","/data/fig/AnyReal/03.jpg","/data/fig/AnyReal/04.jpg","/data/fig/AnyReal/05.jpg","/data/fig/AnyReal/06.jpg","/data/fig/AnyReal/07.jpg","/data/fig/AnyReal/08.jpg","/data/fig/AnyReal/09.jpg","/data/fig/AnyReal/10.jpg","/data/fig/AnyReal/11.jpg","/data/fig/AnyReal/12.jpg","/data/fig/AnyReal/13.jpg","/data/fig/AnyReal/14.jpg","/data/fig/AnyReal/15.jpg","/data/fig/AnyReal/16.jpg","/data/fig/AnyReal/17.jpg","/data/fig/AnyReal/18.jpg","/data/fig/AnyReal/19.jpg","/data/fig/AnyReal/20.jpg","/data/fig/AnyReal/21.jpg","/data/fig/AnyReal/22.jpg","/data/fig/AnyReal/23.jpg","/data/fig/AnyReal/24.jpg"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/logo.jpg"
+image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/01.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/02.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/03.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/04.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/05.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/06.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/07.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/08.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/09.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/10.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/11.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/12.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/13.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/14.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/15.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/16.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/17.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/18.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/19.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/20.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/21.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/22.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/23.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/24.jpg"]
 ---
 
 # 效果展示
@@ -19,30 +19,30 @@ image:["/data/fig/AnyReal/01.jpg","/data/fig/AnyReal/02.jpg","/data/fig/AnyReal/
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/AnyReal.mp4"></video>
 </div>
 
-![AnyReal](/data/fig/AnyReal/01.jpg)
-![AnyReal](/data/fig/AnyReal/02.jpg)
-![AnyReal](/data/fig/AnyReal/03.jpg)
-![AnyReal](/data/fig/AnyReal/04.jpg)
-![AnyReal](/data/fig/AnyReal/05.jpg)
-![AnyReal](/data/fig/AnyReal/06.jpg)
-![AnyReal](/data/fig/AnyReal/07.jpg)
-![AnyReal](/data/fig/AnyReal/08.jpg)
-![AnyReal](/data/fig/AnyReal/09.jpg)
-![AnyReal](/data/fig/AnyReal/10.jpg)
-![AnyReal](/data/fig/AnyReal/11.jpg)
-![AnyReal](/data/fig/AnyReal/12.jpg)
-![AnyReal](/data/fig/AnyReal/13.jpg)
-![AnyReal](/data/fig/AnyReal/14.jpg)
-![AnyReal](/data/fig/AnyReal/15.jpg)
-![AnyReal](/data/fig/AnyReal/16.jpg)
-![AnyReal](/data/fig/AnyReal/17.jpg)
-![AnyReal](/data/fig/AnyReal/18.jpg)
-![AnyReal](/data/fig/AnyReal/19.jpg)
-![AnyReal](/data/fig/AnyReal/20.jpg)
-![AnyReal](/data/fig/AnyReal/21.jpg)
-![AnyReal](/data/fig/AnyReal/22.jpg)
-![AnyReal](/data/fig/AnyReal/23.jpg)
-![AnyReal](/data/fig/AnyReal/24.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/01.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/02.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/03.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/04.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/05.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/06.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/07.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/08.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/09.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/10.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/11.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/12.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/13.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/14.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/15.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/16.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/17.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/18.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/19.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/20.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/21.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/22.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/23.jpg)
+![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/24.jpg)
 
 ---
 

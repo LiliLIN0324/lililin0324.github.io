@@ -10,11 +10,11 @@ abstract: "HeatMapper is a comprehensive web platform designed to monitor and vi
 challenge: "Integrating real-time temperature data from multiple sources and presenting it in an intuitive, interactive visualization that allows users to explore heat patterns at different scales."
 solution: "Developed a responsive web application using React for the frontend, Three.js for 3D visualizations, D3.js for data visualizations, and Node.js for the backend. Implemented data integration pipelines to aggregate temperature data from various sources and created interactive maps and charts for user exploration."
 hasDemo: true
-icon: "/data/fig/HeatMapper_logo.jpg"
-image: ["/data/fig/heatmapper-1.png","/data/fig/heatmapper-2.png"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/01.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/02.png"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/heatmapper-1.png)
-![效果展示](/data/fig/heatmapper-2.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/01.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/02.png)

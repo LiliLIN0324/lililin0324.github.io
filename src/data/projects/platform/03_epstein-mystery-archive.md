@@ -10,9 +10,9 @@ abstract: "The Epstein Mystery Archive is an online platform that provides a det
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users."
 solution: "We developed the Epstein Mystery Archive using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process."
 hasDemo: true
-icon: "/data/fig/EpsteinScret_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/epstein-mystery-archive/logo.jpg"
 code: "epsteinscret.tsx"
-image: ["/data/fig/epsteinscret-1.png","/data/fig/epsteinscret-2.png"]
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/epstein-mystery-archive/01.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/epstein-mystery-archive/02.png"]
 ---
 
 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -77,5 +77,5 @@ https://drive.google.com/drive/folders/13ZyhRCXC_cL1eX34GV9benUj_RD--PZM
 ## IMAGES/IMAGES012
 https://drive.google.com/drive/folders/1__354BbVLSciR40xa8B0wgBhyLL1Scp3
 
-![效果展示](/data/fig/epsteinscret-1.png)
-![效果展示](/data/fig/epsteinscret-2.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/epstein-mystery-archive/01.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/epstein-mystery-archive/02.png)

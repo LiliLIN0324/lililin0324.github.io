@@ -6,7 +6,7 @@ category: "Tutorial"
 year: "2026-2-14"
 description: "本教程将介绍如何构建docker，包括下载docker、安装适用于docker的linux系统、构建docker镜像、运行docker容器等。"
 tech: ["Docker", "Linux", "DevOps"]
-icon: "/data/fig/Docker_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/docker-tutorial/logo.jpg"
 abstract: |
   本教程将介绍如何构建docker，包括下载docker、安装适用于docker的linux系统、构建docker镜像、运行docker容器等。
   本教程适用于Windows 10/11用户，假设用户已经具备基本的Windows操作技能。

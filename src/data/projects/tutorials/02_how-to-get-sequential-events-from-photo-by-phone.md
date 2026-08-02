@@ -9,11 +9,11 @@ tech: ["Computer Vision","Image Processing"]
 challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events."
 solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process."
 hasDemo: true
-icon: "/data/fig/Geophoto_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/logo.jpg"
 code: "photogeo.tsx"
-image: ["/data/fig/photogeo.png"]
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/01.png"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/photogeo.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/01.png)

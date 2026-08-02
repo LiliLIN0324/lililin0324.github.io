@@ -10,12 +10,12 @@ abstract: "Box up my stuff in cyberspace is an App that people could box up thei
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users."
 solution: "We developed Box up my stuff in cyberspace using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process."
 hasDemo: true
-icon: "/data/fig/Boxupcyberspace_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/box-up-my-stuff/logo.jpg"
 code: "boxupcyberspace.tsx"
-image: ["/data/fig/boxupcyberspace-1.png","/data/fig/boxupcyberspace-2.png"]
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/box-up-my-stuff/01.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/box-up-my-stuff/02.png"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/boxupcyberspace-1.png)
-![效果展示](/data/fig/boxupcyberspace-2.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/box-up-my-stuff/01.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/box-up-my-stuff/02.png)

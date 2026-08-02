@@ -9,8 +9,8 @@ tech: ["Game Design", "Level Design", "Puzzle Mechanics"]
 challenge: "如何在短时间内完成一款兼具主题表达与可玩性的 Game Jam 作品，并让玩家感受到配送工作的责任与挑战。"
 solution: "以物资配送为核心玩法，玩家通过连接道路、避开障碍并在限定时间内完成投送任务，在轻量的解谜体验中向城市无名英雄致敬。"
 hasDemo: true
-icon: "/data/fig/Gamejam_logo.jpg"
-image: ["/data/fig/Gamejam.png"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/game-jam/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/game-jam/01.png"]
 ---
 
 <h2>效果展示</h2>
@@ -18,7 +18,7 @@ image: ["/data/fig/Gamejam.png"]
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/NamelessRoad.mp4"></video>
 </div>
 
-![效果展示](/data/fig/Gamejam.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/game-jam/01.png)
 
 # 2022 Tencent Games × HUST 72-Hour Game Jam
 

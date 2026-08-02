@@ -6,7 +6,7 @@ category: "Tutorial"
 year: "2026-2-16"
 description: "本教程将介绍如何构建轻量级后端工作流。"
 tech: ["vercel", "neon", "clerk", "cloudflare r2", "resend"]
-icon: "/data/fig/Backend_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/backend-workflow/logo.jpg"
 abstract: |
   本教程将介绍如何构建轻量级后端工作流。
   部署在vercel； 数据库在Neon； 认证在clerk； 存储在Cloudflare R2； 邮件在Resend

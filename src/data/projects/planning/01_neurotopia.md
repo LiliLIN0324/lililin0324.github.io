@@ -9,7 +9,7 @@ tech: ["Rhino","Grasshopper","design"]
 abstract: "Neurotopia aims to provide shared living and entrepreneurial spaces primarily for young people. This urban design project is located in a former industrial area in Hanyang District, Wuhan, Hubei Province, China. By creating a new metaverse for animation enterprises in Hanyang, the project seeks to revitalize the site and establish a decentralized future community based on the theories of neuronal biological properties and complex systems adaptation."
 solution: "Specifically, the design introduces the concept of neurons, dividing the space into three categories: "nodes," "connections," and "voids“. Vertical transportation hubs are established at the nodes, connecting prefabricated modular units to each node, promoting a smart city design concept that integrates new transportation and intelligent community systems. In the voids between the nodes, incubator modular units are created to accommodate the evolving scale of enterprises, fostering a dynamic, shared, and co-creative living environment. "
 hasDemo: false
-icon: "/data/fig/Neurotopia_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/logo.jpg"
 
 ---
 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -18,10 +18,10 @@ icon: "/data/fig/Neurotopia_logo.jpg"
 
 # 效果展示
 
-![效果展示](/data/fig/Neurotopia_(1).jpg)
-![效果展示](/data/fig/Neurotopia_(2).jpg)
-![效果展示](/data/fig/Neurotopia_(3).jpg)
-![效果展示](/data/fig/Neurotopia_(4).jpg)
-![效果展示](/data/fig/Neurotopia_(5).jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/01.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/02.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/03.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/04.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/05.jpg)
 
 ---

@@ -97,16 +97,26 @@ const proseComponents = {
 
 export const ProjectDetailView = ({ data, type }: { data: any[]; type: string }) => {
   const { id } = useParams();
-  const [viewMode, setViewMode] = useState<'details' | 'demo'>('details');
-  const [overviewOpen, setOverviewOpen] = useState(false);
   const project = data.find(p => p.slug === id);
+  const [viewMode, setViewMode] = useState<'details' | 'demo'>(
+    project?.hasDemo && project?.details?.demoOnly ? 'demo' : 'details'
+  );
+  const [overviewOpen, setOverviewOpen] = useState(false);
 
   useEffect(() => {
-    const sync = () => setViewMode(window.location.hash.includes('demo') ? 'demo' : 'details');
+    const sync = () => {
+      if (project?.hasDemo && project?.details?.demoOnly) {
+        setViewMode('demo');
+      } else if (window.location.hash.includes('demo') && project?.hasDemo) {
+        setViewMode('demo');
+      } else {
+        setViewMode('details');
+      }
+    };
     sync();
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
-  }, [id]);
+  }, [id, project?.hasDemo, project?.details?.demoOnly]);
 
   if (!project) {
     return (
@@ -131,19 +141,21 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
             <h2 className="truncate text-sm font-bold tracking-tight text-ink">{project.title}</h2>
           </div>
 
-          <div className="flex shrink-0 border border-rule" role="group" aria-label="View mode">
-            <button onClick={() => setViewMode('details')} className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow transition-colors duration-200 ${viewMode === 'details' ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'}`}>Docs</button>
-            {project.hasDemo && (
-              <button onClick={() => setViewMode('demo')} className={`flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow transition-colors duration-200 ${viewMode === 'demo' ? 'bg-accent text-accent-ink' : 'text-ink-3 hover:text-ink'}`}>
-                <span className="relative flex h-1.5 w-1.5"><span className="absolute h-full w-full animate-ping rounded-full bg-accent-ink/75" /><span className="relative h-1.5 w-1.5 rounded-full bg-accent-ink" /></span>
-                Demo
+          {!project.details?.demoOnly && (
+            <div className="flex shrink-0 border border-rule" role="group" aria-label="View mode">
+              <button onClick={() => setViewMode('details')} className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow transition-colors duration-200 ${viewMode === 'details' ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'}`}>Docs</button>
+              {project.hasDemo && (
+                <button onClick={() => setViewMode('demo')} className={`flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase tracking-eyebrow transition-colors duration-200 ${viewMode === 'demo' ? 'bg-accent text-accent-ink' : 'text-ink-3 hover:text-ink'}`}>
+                  <span className="relative flex h-1.5 w-1.5"><span className="absolute h-full w-full animate-ping rounded-full bg-accent-ink/75" /><span className="relative h-1.5 w-1.5 rounded-full bg-accent-ink" /></span>
+                  Demo
               </button>
             )}
           </div>
-        </div>
+        )}
       </div>
+    </div>
 
-      {/* ---- Details view ---- */}
+    {/* ---- Details view ---- */}
       {viewMode === 'details' ? (
         <div className="shell py-8 md:py-12">
           <div className="mx-auto max-w-4xl">
@@ -234,6 +246,15 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
             )}
           </div>
         </div>
+      ) : project.details?.demoOnly ? (
+        /* ---- Demo-only view (full scroll, no fixed height) ---- */
+        <Suspense fallback={<div className="flex items-center justify-center py-20"><p className="eyebrow">Loading demo...</p></div>}>
+          {(() => {
+            const DemoComponent = getDemoComponent(project.slug);
+            if (!DemoComponent) return <div className="flex items-center justify-center py-20"><p className="eyebrow">Demo not available</p></div>;
+            return <DemoComponent />;
+          })()}
+        </Suspense>
       ) : (
         /* ---- Demo view ---- */
         <div className="h-[calc(100vh-3.5rem)] w-full bg-surface-2">

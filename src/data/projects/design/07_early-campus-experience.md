@@ -6,8 +6,8 @@ category: "UI&UX Design"
 year: "2023-03-01~2024-03-01"
 description: "本科期间在华科Pivot Studio的校园产品设计与实践，涵盖校园拼团平台与科学思维教育平台。"
 tech: ["Figma","React","TypeScript"]
-icon: "/data/fig/1037pinpin_logo.jpg"
-image:["/data/fig/1037pinpin-slides/1037pinpin_(1).jpg","/data/fig/1037pinpin-slides/1037pinpin_(2).jpg","/data/fig/1037pinpin-slides/1037pinpin_(3).jpg","/data/fig/1037pinpin-slides/1037pinpin_(4).jpg","/data/fig/1037pinpin-slides/1037pinpin_(5).jpg","/data/fig/1037pinpin-slides/1037pinpin_(6).jpg","/data/fig/1037pinpin-slides/1037pinpin_(7).jpg","/data/fig/1037pinpin-slides/1037pinpin_(8).jpg","/data/fig/1037pinpin-slides/1037pinpin_(9).jpg","/data/fig/1037pinpin-slides/1037pinpin_(10).jpg","/data/fig/1037pinpin-slides/1037pinpin_(11).jpg","/data/fig/1037pinpin-slides/1037pinpin_(12).jpg","/data/fig/1037pinpin-slides/1037pinpin_(13).jpg"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/logo.jpg"
+image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/01.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/02.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/03.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/04.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/05.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/06.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/07.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/08.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/09.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/10.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/11.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/12.jpg","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/13.jpg"]
 
 ---
 
@@ -15,33 +15,33 @@ image:["/data/fig/1037pinpin-slides/1037pinpin_(1).jpg","/data/fig/1037pinpin-sl
 
 ## 1037拼拼
 
-![slide 01](/data/fig/1037pinpin-slides/1037pinpin_(1).jpg)
-![slide 02](/data/fig/1037pinpin-slides/1037pinpin_(2).jpg)
-![slide 03](/data/fig/1037pinpin-slides/1037pinpin_(3).jpg)
-![slide 04](/data/fig/1037pinpin-slides/1037pinpin_(4).jpg)
-![slide 05](/data/fig/1037pinpin-slides/1037pinpin_(5).jpg)
-![slide 06](/data/fig/1037pinpin-slides/1037pinpin_(6).jpg)
-![slide 07](/data/fig/1037pinpin-slides/1037pinpin_(7).jpg)
-![slide 08](/data/fig/1037pinpin-slides/1037pinpin_(8).jpg)
-![slide 09](/data/fig/1037pinpin-slides/1037pinpin_(9).jpg)
-![slide 10](/data/fig/1037pinpin-slides/1037pinpin_(10).jpg)
-![slide 11](/data/fig/1037pinpin-slides/1037pinpin_(11).jpg)
-![slide 12](/data/fig/1037pinpin-slides/1037pinpin_(12).jpg)
-![slide 12](/data/fig/1037pinpin-slides/1037pinpin_(13).jpg)
+![slide 01](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/01.jpg)
+![slide 02](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/02.jpg)
+![slide 03](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/03.jpg)
+![slide 04](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/04.jpg)
+![slide 05](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/05.jpg)
+![slide 06](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/06.jpg)
+![slide 07](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/07.jpg)
+![slide 08](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/08.jpg)
+![slide 09](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/09.jpg)
+![slide 10](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/10.jpg)
+![slide 11](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/11.jpg)
+![slide 12](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/12.jpg)
+![slide 12](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/13.jpg)
 
 ## persLEARN — 论文文献平台
 项目时间：2023年
 
 persLEARN 是我在本科期间参与的另一个教育类产品设计项目，旨在通过互动模块帮助学生培养科学思维能力。
-![persLEARN效果展示](/data/fig/perslearn/01.jpg)
-![persLEARN效果展示](/data/fig/perslearn/02.jpg)
-![persLEARN效果展示](/data/fig/perslearn/03.jpg)
-![persLEARN效果展示](/data/fig/perslearn/04.jpg)
-![persLEARN效果展示](/data/fig/perslearn/05.jpg)
-![persLEARN效果展示](/data/fig/perslearn/06.jpg)
-![persLEARN效果展示](/data/fig/perslearn/07.jpg)
-![persLEARN效果展示](/data/fig/perslearn/08.jpg)
-![persLEARN效果展示](/data/fig/perslearn/09.jpg)
-![persLEARN效果展示](/data/fig/perslearn/10.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/01.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/02.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/03.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/04.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/05.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/06.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/07.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/08.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/09.jpg)
+![persLEARN效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/10.jpg)
 
 ---

@@ -336,7 +336,7 @@ const URplatform: React.FC = () => {
         console.log('Loading LST_heatmap.png...');
         map.addSource('lst-heatmap', {
           type: 'image',
-          url: '/data/fig/LST_heatmap.png',
+          url: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/LST_heatmap.png',
           coordinates: [
             [120.81495609, 31.89777115],
             [122.26879924, 31.89777115],

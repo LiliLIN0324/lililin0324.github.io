@@ -6,23 +6,23 @@ category: "Machine Learning"
 year: "2025-present"
 description: "Revealing nonlinear relationships between urban form factors and extreme heat with an explainable machine learning approach"
 tech: ["GIS","Machine Learning"]
-icon: "/data/fig/ml_logo.jpg"
-image: ["/data/fig/AAAI2026.jpg"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/01.jpg"]
 ---
 # Research topic 1 
 “利用机器学习评估城市形态对不同尺度下热韧性的非线性影响”
 
 > 2025.10，在美国明尼阿波利斯举行的第65届美国大学规划学院协会（ACSP）会议上作口头报告
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/01.png)<br>
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/02.png)<br>
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/02.png)<br>
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/03.png)<br>
 > 2026.2，在新加坡举行的第40届AAAI城市规划人工智能研讨会上作海报展示
-![alt text](/data/fig/AAAI2026.jpg)<br>
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/03.png)<br>
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/04.png)<br>
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/01.jpg)<br>
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/04.png)<br>
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/05.png)<br>
 > 2025.5.10 在线上参加佛罗里达大学组织的AI和城市工作坊
 > 2025.8.7 在英国剑桥大学进行工作坊交流
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/05.png)
-![alt text](/data/fig/planning/04-urban-heat-resilience-machine-learning/06.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/06.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/07.png)
 
 
 ## abstract: 
@@ -74,7 +74,7 @@ After identifying extreme heat days (apparent temperature >33°C and percentile 
 **Data Source:** [USGS Landsat Collection 2 Surface Temperature](https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature)
 
 download link: https://earthexplorer.usgs.gov/
-![alt text](usgs.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/08.png)
 #### Temperature Conversion Formula
 To properly interpret Landsat Collection 2 Surface Temperature (ST) data, users must apply a scaling factor to convert digital numbers (DN) to temperature values in Kelvin:
 
@@ -172,7 +172,7 @@ ST = (DN * 0.00341802) + 149.0
 
 ## 4 - Research Results and Visualization
 
-![Research Results](/data/fig/AAAI2026.jpg)
+![Research Results](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/01.jpg)
 
 This poster summarizes the key findings of our study on urban heat resilience using machine learning approaches. The visualization demonstrates the nonlinear relationships between urban form factors and extreme heat events.
 

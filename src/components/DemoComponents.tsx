@@ -21,3 +21,5 @@ export const GenStyleDemo = lazy(() => import("../genstyle.tsx"));
 export const GenshotDemo = lazy(() => import("../genshot.tsx"));
 export const DragonDiffusionDemo = lazy(() => import("../dragon-diffusion.tsx"));
 export const AnyRealDemo = lazy(() => import("../anyreal.tsx"));
+export const PreviousArchiWorkDemo = lazy(() => import("../previous-archi-work.tsx"));
+export const HongqiquDemo = lazy(() => import("../hongqiqu.tsx"));

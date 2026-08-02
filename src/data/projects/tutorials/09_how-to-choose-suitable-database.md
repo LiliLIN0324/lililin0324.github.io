@@ -6,7 +6,7 @@ category: "Tutorial"
 year: "2026-3-17"
 description: "简单明了的数据库选择指南，帮助你根据项目需求快速选择合适的数据库。"
 tech: ["数据库", "MySQL", "PostgreSQL", "MongoDB", "Redis"]
-icon: "/data/fig/database_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/choose-database/logo.jpg"
 abstract: |
   选择合适的数据库是项目成功的关键。本指南用简单的语言告诉你，在不同场景下应该选择哪种数据库，让你不再为数据库选择而困惑。
 ---

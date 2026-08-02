@@ -1,7 +1,9 @@
 import chickenUtopiaMd from './projects/planning/00_chicken-utopia.md?raw';
 import neurotopiaMd from './projects/planning/01_neurotopia.md?raw';
+import previousArchiWorkMd from './projects/planning/02_pervious_archi_work.md?raw';
 import clusterVisualizer3dMd from './projects/planning/07_cluster-visualizer-3d.md?raw';
 import knowledgeGraphUrbanPlanningMd from './projects/planning/03_knowledge-graph-urban-planning.md?raw';
+import hongqiquMd from './projects/planning/03_hongqiqu.md?raw';
 import localClimateZonesUrbanHeatResilienceMd from './projects/planning/04_local-climate-zones-urban-heat-resilience.md?raw';
 import urbanHeatResilienceMachineLearningMd from './projects/planning/05_urban-heat-resilience-machine-learning.md?raw';
 import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/06_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
@@ -185,7 +187,8 @@ function createProject(mdContent: string) {
       icon: parsed.icon,
       code: parsed.code,
       image: parsed.image,
-      content: parsed.content
+      content: parsed.content,
+      demoOnly: parsed.demoOnly || false,
     }
   };
 }
@@ -193,7 +196,9 @@ function createProject(mdContent: string) {
 export const projects = [
   createProject(chickenUtopiaMd),
   createProject(neurotopiaMd),
+  createProject(previousArchiWorkMd),
   createProject(knowledgeGraphUrbanPlanningMd),
+  createProject(hongqiquMd),
   createProject(localClimateZonesUrbanHeatResilienceMd),
   createProject(urbanHeatResilienceMachineLearningMd),
   createProject(participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd),

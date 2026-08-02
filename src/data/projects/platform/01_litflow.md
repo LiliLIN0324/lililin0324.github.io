@@ -10,16 +10,16 @@ abstract: "LitFlow is a platform designed to facilitate the sharing and discover
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of researchers and users."
 solution: "We developed LitFlow using a modern web development stack, including React for the frontend, Node.js for the backend, and MongoDB for the database. The platform features a responsive user interface, a powerful search engine, and a user-friendly paper upload process."
 hasDemo: true
-icon: "/data/fig/LitFlow_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/logo.jpg"
 code: "litflow.tsx"
-image: ["/data/fig/litflow (1).png","/data/fig/litflow (2).png","/data/fig/litflow (3).png","/data/fig/litflow (4).png","/data/fig/litflow (5).png","/data/fig/litflow (6).png"]
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/01.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/02.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/03.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/04.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/05.png","https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/06.png"]
 ---
 
 # 效果展示
 
-![效果展示](/data/fig/litflow (1).png)
-![效果展示](/data/fig/litflow (2).png)
-![效果展示](/data/fig/litflow (3).png)
-![效果展示](/data/fig/litflow (4).png)
-![效果展示](/data/fig/litflow (5).png)
-![效果展示](/data/fig/litflow (6).png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/01.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/02.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/03.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/04.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/05.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/litflow/06.png)

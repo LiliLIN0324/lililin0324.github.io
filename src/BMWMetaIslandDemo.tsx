@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PREVIEW_IMAGE = '/data/fig/BMW&TJ.png';
+const PREVIEW_IMAGE = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/BMW&TJ.png';
 const VIDEO_URL = '/data/demos/bmw-meta-island/BMWMetaIslandCombined.mp4';
 const INSTAGRAM_URL = 'https://www.instagram.com/reel/DDm0kpCTWB6/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==';
 

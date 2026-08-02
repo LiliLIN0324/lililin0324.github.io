@@ -9,8 +9,8 @@ tech: ["3D Modeling", "Oasis Engine", "UE4 Workflow", "LOD Optimization", "Scene
 challenge: "如何在自营绿洲引擎工作流下完成高精度校园地标复原，并在性能限制下实现可用的多级细节模型。"
 solution: "基于测绘资料完成南一楼三维建模、材质制作与场景优化，经过多轮蓝图讨论和 LOD 调整，最终实现兼顾精度与性能的校园数字资产。"
 hasDemo: true
-icon: "/data/fig/GameforPeace&HUST_logo.jpg"
-image: ["/data/fig/GameforPeace&HUST.png"]
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/peace-elite-hust/logo.jpg"
+image: ["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/peace-elite-hust/01.png"]
 ---
 
 # 和平精英绿洲世界 × 华中科技大学高校共建
@@ -24,7 +24,8 @@ image: ["/data/fig/GameforPeace&HUST.png"]
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/%E7%BB%BF%E6%B4%B2%E9%AB%98%E6%A0%A1_3.mp4"></video>
 </div>
 
-![效果展示](/data/fig/GameforPeace&HUST.png)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/peace-elite-hust/01.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/peace-elite-hust/02.jpg)
 
 ## 项目概述
 

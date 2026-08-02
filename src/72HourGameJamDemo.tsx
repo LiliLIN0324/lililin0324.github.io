@@ -53,8 +53,8 @@ const GameJamDemo: React.FC = () => {
                 <span className="w-2.5 h-2.5 rounded-full bg-sky-400" />
                 <span className="text-sm font-semibold text-neutral-200">Project Snapshot</span>
               </div>
-              <a href="/data/fig/Gamejam.png" target="_blank" rel="noopener noreferrer" className="block cursor-zoom-in">
-                <img src="/data/fig/Gamejam.png" alt="Game Jam preview" className="block w-full h-auto" />
+              <a href="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/Gamejam.png" target="_blank" rel="noopener noreferrer" className="block cursor-zoom-in">
+                <img src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/Gamejam.png" alt="Game Jam preview" className="block w-full h-auto" />
               </a>
               <div className="p-4 space-y-2 text-sm text-neutral-300 leading-relaxed">
                 <p><span className="text-neutral-500">Project:</span> 2022 Tencent Games × HUST 72-Hour Game Jam</p>

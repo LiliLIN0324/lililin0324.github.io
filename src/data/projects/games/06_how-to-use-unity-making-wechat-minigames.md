@@ -8,15 +8,15 @@ description: "Unity游戏部署在微信的全流程实战经验分享。"
 tech: ["Unity","游戏开发","wechat minigame"]
 challenge:
 solution:
-icon: "/data/fig/unity_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/unity-wechat/logo.jpg"
 code: "unitygame.tsx"
-image: ["/data/fig/unitygame.png"]
+image: []
 ---
 
 
 下载，打开Unity平台
 unity online service, 打造了一系列针对微信小游戏的管理、云服务等多个系列的内容。
-![alt text](/data/fig/games/copyright-unity-onlineservices.png)
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/unity-wechat/01.png)
 <inframe src='https://docs.unity.cn/cn/tuanjiemanual/Manual/MiniGame.html'></inframe>
 https://docs.unity.cn/cn/tuanjiemanual/Manual/MiniGame.html
 

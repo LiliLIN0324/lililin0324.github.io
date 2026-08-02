@@ -6,7 +6,7 @@ category: "Tutorial"
 year: "2026-2-15"
 description: "本教程将介绍如何在 Dify 中构建 AI 工作流，包括本地部署、知识库创建和工作流设计。"
 tech: ["Dify", "Docker", "Ollama", "AI Workflow", "Local LLM"]
-icon: "/data/fig/Dify_logo.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/dify-workflow/logo.jpg"
 abstract: |
   本教程将介绍如何在 Dify 中构建 AI 工作流，包括本地部署 Dify、配置 Ollama 本地模型、创建知识库和设计自动化工作流。
 ---

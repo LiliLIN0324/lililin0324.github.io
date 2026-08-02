@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ARTICLE_URL = 'https://mp.weixin.qq.com/s/IcG4OHyM48ZXQ3_6--Ii1w';
-const PREVIEW_IMAGE = '/data/fig/GameforPeace&HUST.png';
+const PREVIEW_IMAGE = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/GameforPeace&HUST.png';
 const VIDEO_URL = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/%E7%BB%BF%E6%B4%B2%E9%AB%98%E6%A0%A1_3.mp4';
 
 const PeaceEliteHustCampusDemo: React.FC = () => {
