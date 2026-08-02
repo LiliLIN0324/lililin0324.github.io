@@ -430,7 +430,7 @@ image:["/data/fig/dragon-diffusion-slides/DiffusionProduct_(1).jpg","/data/fig/d
 ---`,On=`---
 id: "02"
 slug: "anyreal"
-title: "AnyRealAI 虚拟影棚"
+title: "AnyReal - AI 虚拟影棚"
 category: "UI&UX Design"
 year: "2024"
 description: "三步生成高真实度商品营销图的 AIGC 内容生产引擎，面向电商与品牌营销场景。"
@@ -571,6 +571,7 @@ image:["/data/fig/genshot/Genshot_(1).jpg","/data/fig/genshot/Genshot_(2).jpg","
 <div style="display:flex; flex-direction:column; gap:16px;">
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Genshot.mp4"></video>
 </div>
+
 ![Genshot1](/data/fig/genshot/Genshot_(1).jpg)
 ![Genshot2](/data/fig/genshot/Genshot_(2).jpg)
 ![Genshot3](/data/fig/genshot/Genshot_(3).jpg)
