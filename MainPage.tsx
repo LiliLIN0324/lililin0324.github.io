@@ -14,7 +14,7 @@ import ClusteringGeoMap from './src/clusteringeomap';
 
 const NAV_TABS = [
   { key: '', label: 'Home' },
-  { key: 'product', label: 'Product' },
+  { key: 'design', label: 'Design' },
   { key: 'game', label: 'Game' },
   { key: 'planning', label: 'Planning' },
   { key: 'platform', label: 'Platform' },
@@ -63,7 +63,7 @@ const MainPage = () => {
   const activeTab = pathSegments[0] || '';
 
   const imageMap: Record<string, string> = {
-    'product': '/data/fig/lili/lili_05.png',
+    'design': '/data/fig/lili/lili_05.png',
     'game': '/data/fig/lili/lili_03.png',
     'platform': '/data/fig/lili/lili_11.png',
     'tutorial': '/data/fig/lili/lili_04.png',
@@ -101,7 +101,7 @@ const MainPage = () => {
       x: prev.x + 720 + Math.round(Math.random() * 360),
       y: prev.y + 720 + Math.round(Math.random() * 360),
     }));
-    const pages = ['product', 'game','planning',  'platform', 'tutorial', 'about'];
+    const pages = ['design', 'game','planning',  'platform', 'tutorial', 'about'];
     setTimeout(() => navigate(`/${pickRandom(pages)}`), 900);
   };
 
@@ -263,8 +263,8 @@ const MainPage = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/planning" element={<ProjectListView data={projects} type="planning" />} />
             <Route path="/planning/:id" element={<ProjectDetailView data={projects} type="planning" />} />
-            <Route path="/product" element={<ProjectListView data={designProjects} type="product" />} />
-            <Route path="/product/:id" element={<ProjectDetailView data={designProjects} type="product" />} />
+            <Route path="/design" element={<ProjectListView data={designProjects} type="design" />} />
+            <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
             <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
             <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
             <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
