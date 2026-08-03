@@ -55,7 +55,8 @@ const MainPage = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [headerCollapsed, setHeaderCollapsed] = useState(false);
   const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 });
-  const [currentImage, setCurrentImage] = useState('/data/fig/lili/lili_01.png');
+  const CDN = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili';
+  const [currentImage, setCurrentImage] = useState(`${CDN}/lili_01.png`);
   const [randomQuote, setRandomQuote] = useState('Exploring the intersection of technology and creativity.');
   const location = useLocation();
   const navigate = useNavigate();
@@ -63,30 +64,30 @@ const MainPage = () => {
   const activeTab = pathSegments[0] || '';
 
   const imageMap: Record<string, string> = {
-    'design': '/data/fig/lili/lili_05.png',
-    'game': '/data/fig/lili/lili_03.png',
-    'platform': '/data/fig/lili/lili_11.png',
-    'tutorial': '/data/fig/lili/lili_04.png',
-    'about': '/data/fig/lili/lili_02.png',
-    'planning': '/data/fig/lili/lili_06.png'
+    'design': `${CDN}/lili_05.png`,
+    'game': `${CDN}/lili_03.png`,
+    'platform': `${CDN}/lili_11.png`,
+    'tutorial': `${CDN}/lili_04.png`,
+    'about': `${CDN}/lili_02.png`,
+    'planning': `${CDN}/lili_06.png`
   };
 
   const randomImages = [
-    '/data/fig/lili/lili_01.png',
-    '/data/fig/lili/lili_07.png',
-    '/data/fig/lili/lili_08.png',
-    '/data/fig/lili/lili_09.png',
-    '/data/fig/lili/lili_10.png',
-    '/data/fig/lili/lili_12.png',
+    `${CDN}/lili_01.png`,
+    `${CDN}/lili_07.png`,
+    `${CDN}/lili_08.png`,
+    `${CDN}/lili_09.png`,
+    `${CDN}/lili_10.png`,
+    `${CDN}/lili_12.png`,
   ];
 
   const quotes = [
-    "Exploring the intersection of technology and creativity.",
-    "Turning data into meaningful visual stories.",
-    "Building digital experiences that inspire.",
-    "Bridging the gap between product and development.",
-    "Creating solutions that matter in the real world.",
-    "Passionate about geospatial technology and urban planning."
+    "探索科技与创意的交汇点。",
+    "把数据转化为有意义的故事。",
+    "构建能激发灵感的数字体验。",
+    "连接产品与开发的桥梁。",
+    "创造在真实世界中落地的解决方案。",
+    "热衷于地理空间技术与城市规划。"
   ];
 
   const pickRandom = <T,>(list: T[]) => list[Math.floor(Math.random() * list.length)];
@@ -171,7 +172,7 @@ const MainPage = () => {
             <button
               onClick={rollDice}
               className="btn-ghost hidden !px-3 sm:inline-flex"
-              title="Explore a random project"
+              title="随机探索一个项目"
             >
               <span className="h-5 w-5" style={{ perspective: '120px' }}>
                 <span
@@ -236,10 +237,10 @@ const MainPage = () => {
                 </div>
                 <hr className="hairline" />
                 <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
-                  Designer · Developer · Product Maker
+                  设计师 · 开发者 · 产品创作者
                 </p>
                 <p className="text-sm leading-relaxed text-ink-2">
-                  Creating meaningful digital experiences that bridge technology and creativity.
+                  创造有意义的数字体验，连接技术与创意。
                 </p>
               </div>
 

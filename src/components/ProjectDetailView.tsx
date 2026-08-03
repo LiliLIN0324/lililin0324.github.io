@@ -90,8 +90,8 @@ const proseComponents = {
   img: ({ src, alt, ...props }: any) => {
     const isInTable = alt?.match(/BCR|BHV|SVF|NDVI|EV|WR|Dist_/);
     return isInTable
-      ? <img src={src} alt={alt} className="h-32 max-w-full border border-rule object-cover" {...props} />
-      : <img src={src} alt={alt} className="my-0 h-auto w-full border border-rule object-cover" {...props} />;
+      ? <img src={src} alt={alt} className="h-32 max-w-full border border-rule object-cover" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} {...props} />
+      : <img src={src} alt={alt} className="my-0 h-auto w-full border border-rule object-cover" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} {...props} />;
   },
 };
 

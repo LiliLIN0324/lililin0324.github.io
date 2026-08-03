@@ -7,6 +7,7 @@ import hongqiquMd from './projects/planning/03_hongqiqu.md?raw';
 import localClimateZonesUrbanHeatResilienceMd from './projects/planning/04_local-climate-zones-urban-heat-resilience.md?raw';
 import urbanHeatResilienceMachineLearningMd from './projects/planning/05_urban-heat-resilience-machine-learning.md?raw';
 import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/06_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
+import previousPlanningResearchMd from './projects/planning/03_previous_planning_research.md?raw';
 import heatmapperMd from './projects/planning/08_heatmapper.md?raw';
 
 
@@ -198,6 +199,7 @@ export const projects = [
   createProject(neurotopiaMd),
   createProject(previousArchiWorkMd),
   createProject(knowledgeGraphUrbanPlanningMd),
+  createProject(previousPlanningResearchMd),
   createProject(hongqiquMd),
   createProject(localClimateZonesUrbanHeatResilienceMd),
   createProject(urbanHeatResilienceMachineLearningMd),

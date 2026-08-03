@@ -130,7 +130,7 @@ const ListRow = ({ project, type, index }: { project: any; type: string; index: 
       <Link to={`/${type}/${project.slug}`} className="flex min-w-0 flex-1 items-center gap-4 md:gap-6">
         <div className="h-16 w-16 shrink-0 overflow-hidden border border-rule bg-surface-2 md:h-20 md:w-20">
           {project.details.logo
-            ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-105" />
+            ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-105" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
             : <PlaceholderThumb className="h-7 w-7" />}
         </div>
 
@@ -158,7 +158,7 @@ const GridCard = ({ project, type, index }: { project: any; type: string; index:
     <Link to={`/${type}/${project.slug}`} className="flex flex-1 flex-col">
       <div className="aspect-square w-full overflow-hidden border-b border-rule bg-surface-2">
         {project.details.logo
-          ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.05]" />
+          ? <img src={project.details.logo} alt="" className="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.05]" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
           : <PlaceholderThumb className="h-10 w-10" />}
       </div>
 

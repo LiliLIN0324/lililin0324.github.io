@@ -350,7 +350,7 @@ export const HomePage = () => {
             {/* ▸ Left trapezoid — blurred center image, right-angle */}
             <div className="relative z-10 hidden flex-1 overflow-hidden md:block" aria-hidden="true">
               <div className="h-full w-full" style={{ clipPath: 'polygon(0 0%, 100% 0%, 100% 86%, 0 100%)' }}>
-                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" />
+                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
               </div>
             </div>
 
@@ -360,7 +360,7 @@ export const HomePage = () => {
                 {isStageVideo ? (
                   <video ref={el => { stageVideoRef.current = el }} key={stageSrc} src={stageSrc} autoPlay muted={stageMuted} playsInline onEnded={advanceStageMedia} className="absolute inset-0 h-full w-full object-cover animate-rise-in" />
                 ) : (
-                  <img key={stageSrc} src={stageSrc} alt={currentProject?.title ?? ''} className="absolute inset-0 h-full w-full object-cover animate-rise-in" />
+                  <img key={stageSrc} src={stageSrc} alt={currentProject?.title ?? ''} className="absolute inset-0 h-full w-full object-cover animate-rise-in" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
                 )}
                 {isStageVideo && (
                   <button onClick={toggleStageAudio} className="absolute bottom-2 right-2 z-30 flex h-8 w-8 items-center justify-center border border-white/30 bg-black/55 text-white/80 hover:border-white hover:text-white" title={stageMuted ? 'Unmute' : 'Mute'}>
@@ -377,7 +377,7 @@ export const HomePage = () => {
             {/* ▸ Right trapezoid — blurred center image, right-angle */}
             <div className="relative z-10 hidden flex-1 overflow-hidden md:block" aria-hidden="true">
               <div className="h-full w-full" style={{ clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 86%)' }}>
-                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" />
+                <img src={blurSrc} alt="" className="absolute inset-0 h-full w-full object-cover blur-xl scale-125 opacity-30" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
               </div>
             </div>
 
@@ -508,6 +508,7 @@ export const HomePage = () => {
                       src={project.details.logo}
                       alt=""
                       className="h-full w-full object-cover"
+                      onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
                     />
                   </div>
                   <div className="min-w-0 text-left">
