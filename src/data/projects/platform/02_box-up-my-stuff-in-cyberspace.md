@@ -4,7 +4,7 @@ slug: "box-up-my-stuff-in-cyberspace"
 title: "Box up my stuff in cyberspace"
 category: "Platform"
 year: "2026-2-8"
-description: "an App that people could box up their belongings in cyberspace"
+description: "一款让人们在虚拟空间中收纳个人物品的应用"
 tech: ["python","React","TypeScript"]
 abstract: "Box up my stuff in cyberspace is an App that people could box up their belongings in cyberspace. It provides a platform for users to upload their belongings, and for other users to find and download them."
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users."

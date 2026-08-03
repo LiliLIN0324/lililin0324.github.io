@@ -4,7 +4,7 @@ slug: "how-to-get-sequential-events-from-photo-by-phone"
 title: "How to get sequential events from photo by phone"
 category: "Tutorial"
 year: "2026-2-2"
-description: "A tutorial on extracting sequential events from photos taken on a phone."
+description: "从手机照片中提取时序事件的教程"
 tech: ["Computer Vision","Image Processing"]
 challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events."
 solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process."

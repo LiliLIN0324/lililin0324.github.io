@@ -4,7 +4,7 @@ slug: "genstyle"
 title: "Genstyle - Daily Outfit Inspiration Delivered"
 category: "UI&UX Design"
 year: "2025"
-description: "An AI-powered fashion app that curates daily outfit inspirations based on user preferences and trends."
+description: "一款基于AI的时尚应用，根据用户偏好与潮流趋势策划每日穿搭灵感。"
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genstyle/logo.jpg"

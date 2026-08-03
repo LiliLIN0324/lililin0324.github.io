@@ -4,7 +4,7 @@ slug: "dragon-diffussion"
 title: "Dragon Diffussion - AI 创意生产平台"
 category: "UI&UX Design"
 year: "2023.10-2024.9"
-description: "An AI-powered image generation tool that transforms text prompts into high-quality visuals platform."
+description: "一款基于AI的图像生成工具，可将文本提示转化为高质量视觉内容的平台。"
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/dragon-diffusion/logo.jpg"

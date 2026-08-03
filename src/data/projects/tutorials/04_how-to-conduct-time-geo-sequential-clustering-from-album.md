@@ -4,7 +4,7 @@ slug: "how-to-conduct-time-geo-sequential-clustering-from-album"
 title: "How to conduct time-geo-sequential clustering from album"
 category: "Tutorial"
 year: "2026-2-6"
-description: "A tutorial on conducting time-geo-sequential clustering from a photo album."
+description: "从相册照片中进行时空序列聚类的教程"
 tech: ["python","Clustering","Geospatial Data Processing"]
 abstract: "This tutorial explains how to conduct time-geo-sequential clustering from a photo album using clustering algorithms and geospatial data processing techniques."
 challenge: "Dealing with large datasets and ensuring accurate clustering results can be challenging when working with time-geo-sequential data."

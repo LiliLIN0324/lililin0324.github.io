@@ -4,7 +4,7 @@ slug: "heatmapper"
 title: "HeatMapper - Global Heat Monitoring"
 category: "urban heat island, extreme heat, participation"
 year: "2025-present"
-description: "A web-based platform for global heat monitoring and visualization"
+description: "面向全球热监测与可视化的Web平台"
 tech: ["React","Three.js","D3.js","Node.js"]
 abstract: "HeatMapper is a comprehensive web platform designed to monitor and visualize global heat patterns. It provides real-time data on urban heat islands, extreme heat events, and temperature trends across different regions. The platform aims to raise awareness about heat-related issues and support informed decision-making for urban planning and climate adaptation."
 challenge: "Integrating real-time temperature data from multiple sources and presenting it in an intuitive, interactive visualization that allows users to explore heat patterns at different scales."

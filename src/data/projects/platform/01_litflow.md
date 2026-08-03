@@ -4,7 +4,7 @@ slug: "litflow"
 title: "LitFlow - Research Hub"
 category: "Platform"
 year: "2026-1-13 ongoing"
-description: "A platform for researchers to visualize their papers with summaries and keywords bubbles."
+description: "面向研究人员的论文可视化平台，以摘要与关键词气泡形式展示研究成果。"
 tech: ["python","React","TypeScript"]
 abstract: "LitFlow is a platform designed to facilitate the sharing and discovery of research papers. It provides a platform for researchers to copy the links of papers, and for users to search and filter papers based on various criteria."
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of researchers and users."

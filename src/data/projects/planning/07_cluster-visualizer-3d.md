@@ -4,7 +4,7 @@ slug: "cluster-visualizer-3d"
 title: "Cluster Visualizer 3D"
 category: "Global heat mapping"
 year: "2024-present"
-description: "A 3D exploration of high-dimensional data clusters using PCA and K-Means."
+description: "基于PCA和K-Means的高维数据聚类3D探索"
 tech: ["Python","Three.js","React"]
 abstract: "An interactive 3D visualization tool that enables users to explore clustered high-dimensional datasets. By applying PCA for dimensionality reduction and K-Means for clustering, project visualizes complex data patterns in an intuitive manner."
 challenge: "compressed 223 cities in global data and revelas pattern from window period of time-series data from 2017 to 2019 with both day and night time data"

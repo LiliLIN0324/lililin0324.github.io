@@ -4,7 +4,7 @@ slug: "participatory-urban-regeneration-empowered-by-artificial-intelligence"
 title: "人工智能赋能下的参与式城市更新 Participatory Urban Regeneration Empowered by Artificial Intelligence"
 category: "Urban regeneration, participatory urban planning"
 year: "2025-present"
-description: "Using AI techniques to build a platform to encourage stakeholders joining in urban regeneration"
+description: "利用AI技术构建平台以鼓励利益相关者参与城市更新"
 tech: ["diffusion models"]
 abstract: "This project integrates generative artificial intelligence techniques, including diffusion models, with large language model-based multi-agent mechanisms to develop a participatory urban regeneration framework that facilitates public interaction and multi-stakeholder engagement. Taking the area surrounding the initial development zone of Shanghai Wusong Innovation City as a case study, the framework incorporates urban spatial morphology, behavioral activity patterns, and urban heat island indicators into the early formulation of urban design guidelines, with the aim of achieving a participatory, efficient, and responsive pathway to urban regeneration."
 solution: "https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm"
@@ -16,6 +16,8 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-ur
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/PARTICIPATORY%20URBAN%20REGENERATION%20EMPOWERED%20BY%20ARTIFICAL%20INTELLIGENCE.mp4"></video>
 </div>
 
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/01.jpg)
+![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/02.jpg)
 ![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/03.jpg)
 ![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/04.jpg)
 ![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/05.jpg)
@@ -116,5 +118,3 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-ur
 https://upd-caup.tongji.edu.cn/6e/91/c36467a355985/page.htm
 
 
-![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/01.jpg)
-![效果展示](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/participatory-urban-regeneration/02.jpg)

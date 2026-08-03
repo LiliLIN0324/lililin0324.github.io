@@ -4,7 +4,7 @@ slug: "epstein-mystery-archive"
 title: "Epstein Mystery Archive"
 category: "Platform"
 year: "2026-2-11 on going"
-description: "An archive of the Epstein Mystery, a case of sexual assault perpetrated by a man in 1983."
+description: "爱泼斯坦疑案档案，记录1983年一起性侵案件的相关资料。"
 tech: ["python","React","TypeScript"]
 abstract: "The Epstein Mystery Archive is an online platform that provides a detailed account of the case of sexual assault perpetrated by a man in 1983. It features a chronological timeline, interviews with suspects and authorities, and a collection of photographs to support the case."
 challenge: "Designing a platform that is user-friendly, efficient, and scalable to support a large number of users."
