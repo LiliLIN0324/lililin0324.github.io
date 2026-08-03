@@ -110,62 +110,61 @@ const MainPage = () => {
     <div className="flex h-screen flex-col bg-canvas text-ink">
       <header className={`relative z-30 shrink-0 border-b border-rule bg-surface/85 backdrop-blur transition-all duration-300 ease-editorial ${headerCollapsed ? 'h-0 border-b-0 overflow-hidden opacity-0' : ''}`}>
         <div className="shell flex h-16 items-center justify-between gap-4">
-          {/* Wordmark */}
-          <div className="flex min-w-0 items-center gap-3">
-            <button
-              onClick={() => setIsPanelOpen(!isPanelOpen)}
-              className="icon-btn"
-              aria-expanded={isPanelOpen}
-              aria-label={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
-              title={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
-            >
-              <span className="flex flex-col items-center justify-center gap-[3px]" aria-hidden="true">
-                <span className="block h-px w-4 bg-current transition-transform duration-300" />
-                <span className={`block h-px w-4 bg-current transition-opacity duration-300 ${isPanelOpen ? 'opacity-0' : 'opacity-100'}`} />
-                <span className="block h-px w-4 bg-current transition-transform duration-300" />
-              </span>
-            </button>
+          {/* Left group: wordmark + nav — always left-aligned so Home stays visible */}
+          <div className="flex min-w-0 flex-1 items-center">
+            <div className="flex min-w-0 items-center gap-3">
+              <button
+                onClick={() => setIsPanelOpen(!isPanelOpen)}
+                className="icon-btn"
+                aria-expanded={isPanelOpen}
+                aria-label={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
+                title={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
+              >
+                <span className="flex flex-col items-center justify-center gap-[3px]" aria-hidden="true">
+                  <span className="block h-px w-4 bg-current transition-transform duration-300" />
+                  <span className={`block h-px w-4 bg-current transition-opacity duration-300 ${isPanelOpen ? 'opacity-0' : 'opacity-100'}`} />
+                  <span className="block h-px w-4 bg-current transition-transform duration-300" />
+                </span>
+              </button>
 
-            <Link to="/" className="group flex min-w-0 items-baseline gap-2.5">
-              <span className="truncate text-lg font-bold tracking-masthead md:text-xl">
-                Lili&nbsp;Lin
-              </span>
-              <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
-              <span className="hidden font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors group-hover:text-accent-text sm:block">
-                Portfolio
-              </span>
-            </Link>
-          </div>
+              <Link to="/" className="group flex min-w-0 items-baseline gap-2.5">
+                <span className="truncate text-lg font-bold tracking-masthead md:text-xl">
+                  林丽丽&nbsp;Lili&nbsp;Lin
+                </span>
+                <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
+              </Link>
+            </div>
 
-          {/* Nav — one list, scrolls horizontally when it runs out of room */}
-          <nav className="-mx-1 flex min-w-0 flex-1 justify-end overflow-x-auto hide-scrollbar">
-            <ul className="flex shrink-0 items-stretch">
-              {NAV_TABS.map((tab) => {
-                const isActive = activeTab === tab.key;
-                return (
-                  <li key={tab.key || 'home'} className="flex">
-                    <Link
-                      to={`/${tab.key}`}
-                      onClick={() => { if (window.innerWidth < 768) setIsPanelOpen(false); }}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={`relative flex items-center px-3 text-sm font-medium transition-colors duration-200 md:px-4 ${
-                        isActive ? 'text-ink' : 'text-ink-3 hover:text-ink'
-                      }`}
-                    >
-                      {tab.label}
-                      {/* Swiss active marker: accent rule on the top edge */}
-                      <span
-                        className={`absolute inset-x-2 top-0 h-[3px] origin-left bg-accent transition-transform duration-300 ease-editorial md:inset-x-3 ${
-                          isActive ? 'scale-x-100' : 'scale-x-0'
+            {/* Nav — scrolls horizontally when it runs out of room */}
+            <nav className="-mx-1 flex min-w-0 overflow-x-auto hide-scrollbar">
+              <ul className="flex shrink-0 items-stretch">
+                {NAV_TABS.map((tab) => {
+                  const isActive = activeTab === tab.key;
+                  return (
+                    <li key={tab.key || 'home'} className="flex">
+                      <Link
+                        to={`/${tab.key}`}
+                        onClick={() => { if (window.innerWidth < 768) setIsPanelOpen(false); }}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={`relative flex items-center px-3 text-sm font-medium transition-colors duration-200 md:px-4 ${
+                          isActive ? 'text-ink' : 'text-ink-3 hover:text-ink'
                         }`}
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+                      >
+                        {tab.label}
+                        {/* Swiss active marker: accent rule on the top edge */}
+                        <span
+                          className={`absolute inset-x-2 top-0 h-[3px] origin-left bg-accent transition-transform duration-300 ease-editorial md:inset-x-3 ${
+                            isActive ? 'scale-x-100' : 'scale-x-0'
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </div>
 
           <div className="flex shrink-0 items-center gap-2">
             <ThemeToggle />
