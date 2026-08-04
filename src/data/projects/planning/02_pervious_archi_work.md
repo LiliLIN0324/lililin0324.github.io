@@ -10,7 +10,7 @@ abstract: ""
 solution: ""
 hasDemo: true
 demoOnly: true
-icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-archi-work/武当山.jpg"
+icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-archi-work/logo.jpg"
 
 ---
 

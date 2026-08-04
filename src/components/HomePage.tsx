@@ -11,7 +11,7 @@ import { CityWalkSection } from './CityWalkSection'
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
-  { key: 'design', label: 'Design' },
+  { key: 'design', label: 'Product' },
   { key: 'game', label: 'Game' },
   { key: 'planning', label: 'Planning' },
 
@@ -30,7 +30,7 @@ const CATEGORY_IMAGE: Record<string, string> = {
 
 const CATEGORY_BLURB: Record<string, React.ReactNode> = {
   all: <>这是我在<strong className="font-semibold text-ink">设计、开发、游戏和城市规划</strong>领域的项目。</>,
-  design: <>这是我在<strong className="font-semibold text-ink">设计</strong>领域的项目。</>,
+  design: <>这是我在<strong className="font-semibold text-ink">产品</strong>领域的项目。</>,
   planning: <>这是我在<strong className="font-semibold text-ink">城市规划</strong>领域的项目。</>,
   game: <>这是我在<strong className="font-semibold text-ink">游戏</strong>领域的项目。</>,
   platform: <>这是我在<strong className="font-semibold text-ink">平台开发</strong>领域的项目。</>,
