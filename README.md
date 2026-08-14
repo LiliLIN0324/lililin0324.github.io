@@ -40,7 +40,7 @@
 
 | Tab | 内容 |
 |---|---|
-| **Design** | UI/UX 设计项目（DragonDiffusion, AnyReal, Genshot, Genstyle, Riffle, Bazi, 1037PinPin） |
+| **Design** | 产品 & UI/UX 设计项目（DragonDiffusion, AnyReal, Genshot, Genstyle, Riffle, Bazi, 1037PinPin） |
 | **Game** | 游戏开发（Game Jam, 和平精英×华科, BMW Meta Island, KittyLoveCarrots, Unity/Cocos 教程） |
 | **Planning** | 城市规划 & 建筑（Neurotopia, Chicken Utopia, 红旗渠, 知识图谱, 城市热环境, Previous Archi Work 等） |
 | **Platform** | 平台工具（LitFlow, BoxUpMyStuff, Epstein Archive） |
