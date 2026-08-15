@@ -1,5 +1,5 @@
 ---
-id: "06"
+id: "04"
 slug: "participatory-urban-regeneration-empowered-by-artificial-intelligence"
 title: "人工智能赋能下的参与式城市更新 Participatory Urban Regeneration Empowered by Artificial Intelligence"
 category: "Urban regeneration, participatory urban planning"

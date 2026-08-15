@@ -2,11 +2,8 @@ import chickenUtopiaMd from './projects/planning/00_chicken-utopia.md?raw';
 import neurotopiaMd from './projects/planning/01_neurotopia.md?raw';
 import previousArchiWorkMd from './projects/planning/02_pervious_archi_work.md?raw';
 import clusterVisualizer3dMd from './projects/planning/07_cluster-visualizer-3d.md?raw';
-import knowledgeGraphUrbanPlanningMd from './projects/planning/03_knowledge-graph-urban-planning.md?raw';
 import hongqiquMd from './projects/planning/03_hongqiqu.md?raw';
 import localClimateZonesUrbanHeatResilienceMd from './projects/planning/04_local-climate-zones-urban-heat-resilience.md?raw';
-import urbanHeatResilienceMachineLearningMd from './projects/planning/05_urban-heat-resilience-machine-learning.md?raw';
-import participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd from './projects/planning/06_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
 import previousPlanningResearchMd from './projects/planning/03_previous_planning_research.md?raw';
 import heatmapperMd from './projects/planning/08_heatmapper.md?raw';
 
@@ -25,6 +22,11 @@ import bmwMetaIslandMd from './projects/games/03_bmw-meta-island.md?raw';
 import guangzhouXinyuanTechMd from './projects/games/04_guangzhou-xinyuan-tech.md?raw';
 import kittylovecarrotsMd from './projects/games/05_kittylovecarrots.md?raw';
 import howToUseUnityMakingWechatMinigamesMd from './projects/games/06_how-to-use-unity-making-wechat-minigames.md?raw';
+
+import promptEngineeringMd from './projects/AI/01_prompt_engineering.md?raw';
+import aiKnowledgeGraphUrbanPlanningMd from './projects/AI/02_knowledge-graph-urban-planning.md?raw';
+import aiUrbanHeatResilienceMachineLearningMd from './projects/AI/03_urban-heat-resilience-machine-learning.md?raw';
+import aiParticipatoryUrbanRegenerationMd from './projects/AI/04_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
 import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
@@ -198,12 +200,9 @@ export const projects = [
   createProject(chickenUtopiaMd),
   createProject(neurotopiaMd),
   createProject(previousArchiWorkMd),
-  createProject(knowledgeGraphUrbanPlanningMd),
   createProject(previousPlanningResearchMd),
   createProject(hongqiquMd),
   createProject(localClimateZonesUrbanHeatResilienceMd),
-  createProject(urbanHeatResilienceMachineLearningMd),
-  createProject(participatoryUrbanRegenerationEmpoweredByArtificialIntelligenceMd),
   createProject(clusterVisualizer3dMd),
   createProject(heatmapperMd)
 ];
@@ -225,6 +224,13 @@ export const gameProjects = [
   createProject(guangzhouXinyuanTechMd),
   createProject(kittylovecarrotsMd),
   createProject(howToUseUnityMakingWechatMinigamesMd)
+];
+
+export const aiProjects = [
+  createProject(promptEngineeringMd),
+  createProject(aiKnowledgeGraphUrbanPlanningMd),
+  createProject(aiUrbanHeatResilienceMachineLearningMd),
+  createProject(aiParticipatoryUrbanRegenerationMd)
 ];
 
 export const platformProjects = [

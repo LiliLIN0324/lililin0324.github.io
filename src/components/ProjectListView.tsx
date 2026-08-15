@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const TYPE_LABEL: Record<string, string> = {
   design: 'Products',
   game: 'Games',
+  ai: 'AI',
   planning: 'Planning',
   platform: 'Platform',
   tutorial: 'Tutorials',

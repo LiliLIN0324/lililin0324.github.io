@@ -20,7 +20,7 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-plannin
 
 ## 国际会议发表（4 项）
 
-### [Knowledge Graph Generation from Urban Planning Texts](#/planning/knowledge-graph-urban-planning)
+### [Knowledge Graph Generation from Urban Planning Texts](#/ai/knowledge-graph-urban-planning)
 
 基于城市规划文本的知识图谱生成：纽约和上海总体规划中气候变化适应的比较分析
 
@@ -36,7 +36,7 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-plannin
 
 > 2025.4 · 加拿大温哥华 第52届 ICUA 国际城市事务会议 · 口头报告
 
-### [Assessing Urban Heat Resilience](#/planning/urban-heat-resilience-machine-learning)
+### [Assessing Urban Heat Resilience](#/ai/urban-heat-resilience-machine-learning)
 
 利用机器学习评估城市形态对不同尺度下热韧性的非线性影响
 
@@ -51,7 +51,7 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-plannin
 
 ---
 
-## [Participatory Urban Regeneration Empowered by AI](#/planning/participatory-urban-regeneration-empowered-by-artificial-intelligence)
+## [Participatory Urban Regeneration Empowered by AI](#/ai/participatory-urban-regeneration-empowered-by-artificial-intelligence)
 
 AI for Cities 夏令营 · 人工智能赋能下的参与式城市更新
 

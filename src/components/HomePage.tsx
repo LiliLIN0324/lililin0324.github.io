@@ -4,6 +4,7 @@ import {
   projects,
   designProjects,
   gameProjects,
+  aiProjects,
   platformProjects,
   tutorialProjects,
 } from '../data/projects'
@@ -13,6 +14,7 @@ const CATEGORIES = [
   { key: 'all', label: 'All' },
   { key: 'design', label: 'Product' },
   { key: 'game', label: 'Game' },
+  { key: 'ai', label: 'AI' },
   { key: 'planning', label: 'Planning' },
 
   { key: 'platform', label: 'Platform' },
@@ -24,15 +26,17 @@ const CATEGORY_IMAGE: Record<string, string> = {
   design: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_05.png',
   planning: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_06.png',
   game: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_03.png',
+  ai: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_07.png',
   platform: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_11.png',
   tutorial: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili/lili_04.png',
 }
 
 const CATEGORY_BLURB: Record<string, React.ReactNode> = {
-  all: <>这是我在<strong className="font-semibold text-ink">设计、开发、游戏和城市规划</strong>领域的项目。</>,
+  all: <>这是我在<strong className="font-semibold text-ink">设计、开发、游戏、AI 和城市规划</strong>领域的项目。</>,
   design: <>这是我在<strong className="font-semibold text-ink">产品</strong>领域的项目。</>,
   planning: <>这是我在<strong className="font-semibold text-ink">城市规划</strong>领域的项目。</>,
   game: <>这是我在<strong className="font-semibold text-ink">游戏</strong>领域的项目。</>,
+  ai: <>这是我在<strong className="font-semibold text-ink">AI</strong>领域的项目。</>,
   platform: <>这是我在<strong className="font-semibold text-ink">平台开发</strong>领域的项目。</>,
   tutorial: <>这是我在<strong className="font-semibold text-ink">教程</strong>领域的项目。</>,
 }
@@ -82,6 +86,7 @@ export const HomePage = () => {
     all: [
       ...designProjects.map(p => ({ ...p, type: 'design' })),
       ...gameProjects.map(p => ({ ...p, type: 'game' })),
+      ...aiProjects.map(p => ({ ...p, type: 'ai' })),
       ...projects.map(p => ({ ...p, type: 'planning' })),
       ...platformProjects.map(p => ({ ...p, type: 'platform' })),
       ...tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
@@ -89,6 +94,7 @@ export const HomePage = () => {
     design: designProjects.map(p => ({ ...p, type: 'design' })),
     planning: projects.map(p => ({ ...p, type: 'planning' })),
     game: gameProjects.map(p => ({ ...p, type: 'game' })),
+    ai: aiProjects.map(p => ({ ...p, type: 'ai' })),
     platform: platformProjects.map(p => ({ ...p, type: 'platform' })),
     tutorial: tutorialProjects.map(p => ({ ...p, type: 'tutorial' })),
   }

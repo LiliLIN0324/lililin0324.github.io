@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import '/index.css';
 
-import { projects, designProjects, tutorialProjects, platformProjects, gameProjects } from './src/data/projects';
+import { projects, designProjects, tutorialProjects, platformProjects, gameProjects, aiProjects } from './src/data/projects';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
 import { AboutSection } from './src/components/AboutSection';
@@ -16,6 +16,7 @@ const NAV_TABS = [
   { key: '', label: 'Home' },
   { key: 'design', label: 'Design' },
   { key: 'game', label: 'Game' },
+  { key: 'ai', label: 'AI' },
   { key: 'planning', label: 'Planning' },
   { key: 'platform', label: 'Platform' },
   { key: 'tutorial', label: 'Tutorial' },
@@ -66,6 +67,7 @@ const MainPage = () => {
   const imageMap: Record<string, string> = {
     'design': `${CDN}/lili_05.png`,
     'game': `${CDN}/lili_03.png`,
+    'ai': `${CDN}/lili_07.png`,
     'platform': `${CDN}/lili_11.png`,
     'tutorial': `${CDN}/lili_04.png`,
     'about': `${CDN}/lili_02.png`,
@@ -102,7 +104,7 @@ const MainPage = () => {
       x: prev.x + 720 + Math.round(Math.random() * 360),
       y: prev.y + 720 + Math.round(Math.random() * 360),
     }));
-    const pages = ['design', 'game','planning',  'platform', 'tutorial', 'about'];
+    const pages = ['design', 'game', 'ai', 'planning', 'platform', 'tutorial', 'about'];
     setTimeout(() => navigate(`/${pickRandom(pages)}`), 900);
   };
 
@@ -267,6 +269,8 @@ const MainPage = () => {
             <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
             <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
             <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
+            <Route path="/ai" element={<ProjectListView data={aiProjects} type="ai" />} />
+            <Route path="/ai/:id" element={<ProjectDetailView data={aiProjects} type="ai" />} />
             <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
             <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
             <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
