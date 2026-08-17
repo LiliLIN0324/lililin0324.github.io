@@ -19,6 +19,28 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/01.jpg",
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/AnyReal.mp4"></video>
 </div>
 
+技术【Stable diffusion】【ControlNet】【Blender】
+
+## 这个项目是基于一个真实的商业需求。
+以前的商品的背景很假，怎么样能够将真实的商品放到真实的背景中，并且可以调整角度和镜头。2023年的时候，利用ControlNet的 Depth（深度图） 和 NormalMap（法线贴图） 将3D软件（如Blender、SketchUp）中导出的低模或白模结构精准“锁定”，在二次渲染或文生图时保留3D资产的空间构图与立体轮廓。 
+
+## AnyReal 当时流程
+电商卖家上传商品 3D 模型→调整：光照/相机角度/场景/材质→渲染→生成营销图片
+所以那个时代很多团队都会用AI + 3D 而不是今天的AI + Inpainting
+而 FLUX.1 是 2024 年 8 月 1 日才发布。也就是说：
+项目开始的时候，Flux 甚至还没正式发布。
+就算发布了，当时也只是第一版 FLUX.1，主要能力还是文生图（Text-to-Image），成熟的图片编辑工作流还没有形成。
+真正让很多团队开始大量使用 Fill（Inpainting）、Redux、Depth、Canny 等编辑能力，是 2024 年 11 月发布 FLUX.1 Tools 之后。
+
+## 如果现在重新做 AnyReal，会怎么做？
+我们在 2024 年设计 AnyReal 时，受限于当时图像生成模型的能力，因此采用了基于 3D 建模和渲染的方案，以保证商品结构和材质的可控性。
+
+随着 FLUX Fill、FLUX Kontext 等图像编辑模型的发展，如今很多营销图可以直接基于商品图片进行局部编辑和场景生成，大幅降低建模成本，提高生成效率。很多场景已经不需要完整建模了。比如："把白底商品图变成巴黎咖啡馆场景"　现在模型直接就能做。
+
+今天（2026）的思路已经变化很大了，如果重新设计，我会考虑采用 AI Image Editing + Workflow 的架构，而不是完全依赖 3D 渲染。 流程：商品图片→Segmentation（抠图）→Flux Kontext / Fill→换背景→换光照→换模特→营销图。
+
+
+
 ![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/01.jpg)
 ![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/02.jpg)
 ![AnyReal](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/anyreal/03.jpg)

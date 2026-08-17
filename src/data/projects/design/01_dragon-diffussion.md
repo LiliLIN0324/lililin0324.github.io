@@ -17,6 +17,27 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/dragon-diffusion
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/DragonDiffusion.mp4"></video>
 </div>
 
+## 技术【Stable Diffusion XL】【ControlNet】【LoRA】【Stable Diffusion lighting】
+
+## 那个时代发生了什么？
+Stable Diffusion XL (SDXL)刚成为主流。ComfyUI 刚刚开始火。ControlNet 很火。LoRA 开始普及。Agent 这个词刚开始进入 AI 产品。所以那个时候大家最大的痛点不是：画不好。而是：怎么把几十个 AI 能力串起来。于是就出现了：Task→Node→Pipeline→Canvas→Layer这种设计。其实和今天 ComfyUI 很像。
+
+## 为什么会做 Node？
+因为当时：一个 Prompt 根本不够。例如：帮我设计一个电商海报。AI不会直接生成最终结果。而是：需求→拆解→背景→主体→Logo→字体→局部修改→导出。所以：Workflow才是真正重要的。
+
+## 为什么研究 LoRA？
+因为那时候：基础模型能力有限。想画：某个品牌/某种IP/某种风格怎么办？训练 LoRA。所以很多公司：每天都在：训练→测试→Bad Case→重新训练。
+## 为什么 Infinite Canvas（无限画布）那么重要？
+因为那个时代：生成一张图以后。不能像今天 Flux Kontext一样：一句话：把衣服换成红色。当时只能：重新生成。或者：局部重绘。于是：无限画布就变成：AI Photoshop。
+
+## 2024.2 Dragon Diffusion遇到了什么问题？
+Stability AI 于 2024 年 2 月正式发布了新一代文生图模型 Stable Cascade。该模型基于 Würstchen 架构，采用独特的三阶段扩散方法，在图像质量、文字理解和生成速度上超越了以往的 SDXL，同时大幅降低了对硬件显存的要求。
+产品定位也发生了变化。以前：Dragon是：AI画图,后来变成：AI设计工具,再后来：这里已经变成：中国产业视觉大模型。这是完全不同的定位。
+所以我们开始讨论：普通人到底能不能用？ToC：自己装修、自己设计、自己印刷。其实就在找：真正能传播出去的场景。
+## 2026 年可能怎么做？
+现在如果重新设计智图，可能是：User→Planner Agent→Image Agent→Edit Agent→Layout Agent→QA Agent→Export
+
+
 # PPT 汇报
 
 ![slide 01](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/dragon-diffusion/01.jpg)
