@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AnyReal — AI 虚拟影棚</title>
+<style>
+:root{
+  --violet:#8B5CF6; --indigo:#6366F1; --cyan:#06B6D4;
+  --ink:#1e293b; --muted:#64748b; --line:#e6eaf2; --bg:#f5f7fb; --card:#ffffff; --accent:#7c3aed;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);line-height:1.78;font-size:16px;-webkit-font-smoothing:antialiased}
+.hero{background:linear-gradient(120deg,#8B5CF6 0%,#6366F1 52%,#06B6D4 100%);color:#fff;padding:60px 24px 52px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(700px 300px at 18% 0%,rgba(255,255,255,.20),transparent 60%),radial-gradient(600px 280px at 90% 120%,rgba(255,255,255,.12),transparent 60%)}
+.hero .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;text-align:center}
+.brand{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:6px 15px;border-radius:999px;font-size:13px;letter-spacing:3px;margin-bottom:20px}
+.hero h1{margin:0;font-size:42px;font-weight:800;letter-spacing:1px}
+.hero p{margin:16px 0 0;font-size:16px;opacity:.92;max-width:680px;margin-left:auto;margin-right:auto}
+.tag{display:inline-block;margin-top:20px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);padding:7px 18px;border-radius:999px;font-size:13px;letter-spacing:1px}
+.layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:236px 1fr;gap:38px;padding:42px 24px 90px}
+.sidebar{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;box-shadow:0 8px 24px rgba(15,23,42,.04)}
+.sidebar h4{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:0 0 12px;padding:0 8px}
+.toc{font-size:14px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc li{margin:1px 0}
+.toc a{display:block;padding:7px 10px;border-radius:8px;color:#475569;text-decoration:none;border-left:2px solid transparent;transition:.15s}
+.toc a:hover{background:#eef2ff;color:var(--accent)}
+.toc li li a{padding-left:22px;font-size:13px;color:var(--muted)}
+.content{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:44px 48px;box-shadow:0 12px 34px rgba(15,23,42,.05)}
+.content h1{font-size:30px;margin:0 0 8px}
+.content h2{font-size:22px;margin:48px 0 14px;padding:0 0 0 14px;border-left:4px solid var(--accent);color:#172554;line-height:1.4}
+.content h3{font-size:17.5px;margin:30px 0 10px;color:#334155}
+.content p{margin:13px 0}
+.content ul,.content ol{margin:14px 0;padding-left:22px}
+.content li{margin:7px 0}
+.content a{color:var(--accent);text-decoration:none}
+.content a:hover{text-decoration:underline}
+.content strong{color:#0f172a}
+.content hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+.content table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.content th{background:linear-gradient(120deg,#7c3aed,#6366f1);color:#fff;text-align:left;padding:12px 14px;font-weight:600;white-space:nowrap}
+.content td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.content tr:nth-child(even) td{background:#f8fafc}
+.content tr:hover td{background:#eef2ff}
+.content blockquote{margin:18px 0;padding:14px 18px;background:#f5f3ff;border-left:4px solid var(--violet);border-radius:8px;color:#4c1d95}
+.content blockquote p{margin:6px 0}
+.content code{background:#eef2f7;padding:2px 7px;border-radius:6px;font-size:13.5px;font-family:"SFMono-Regular",Consolas,Menlo,monospace;color:#7c3aed}
+.content pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto;font-size:13.5px}
+.content pre code{background:none;color:inherit;padding:0}
+.content img{max-width:100%}
+.footer{text-align:center;color:var(--muted);font-size:13px;padding:28px;border-top:1px solid var(--line)}
+.top-btn{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;background:linear-gradient(120deg,#8B5CF6,#06B6D4);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 8px 20px rgba(99,102,241,.4);opacity:0;pointer-events:none;transition:.25s}
+.top-btn.show{opacity:1;pointer-events:auto}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.sidebar{position:static;max-height:none}.content{padding:30px 22px}.hero h1{font-size:32px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="brand">✦ AnyReal</span>
+    <h1>AnyReal — AI 虚拟影棚</h1>
+    <p>三步生成高真实度商品营销图，并延伸至品牌营销视频的 AIGC 内容生产引擎</p>
+    <span class="tag">产品设计 · 项目资料归档</span>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <h4>目录</h4>
+    <div class="toc">
+<ul>
+<li><a href="#overview">项目概述</a><ul>
+<li><a href="#bg">项目背景</a></li>
+<li><a href="#position">产品定位</a></li>
+<li><a href="#users">目标用户与价值</a></li>
+</ul>
+</li>
+<li><a href="#arch">产品功能架构</a><ul>
+<li><a href="#map">整体功能地图</a></li>
+<li><a href="#priority">核心模块与优先级（P0–P3）</a></li>
+</ul>
+</li>
+<li><a href="#flows">核心用户流程</a></li>
+<li><a href="#features">关键能力详解</a><ul>
+<li><a href="#steps">AI 生图「三步法」</a></li>
+<li><a href="#img-gen">文生图 / 图生图</a></li>
+<li><a href="#bg-mid">背景模版中台</a></li>
+<li><a href="#post">图像后处理</a></li>
+<li><a href="#video">视频生成</a></li>
+<li><a href="#lib">自定义图库与 AI 影棚</a></li>
+</ul>
+</li>
+<li><a href="#compare">技术与竞品对比</a><ul>
+<li><a href="#vs-trad">与传统方案对比</a></li>
+<li><a href="#vs-ai">与市面 AI 工具对比</a></li>
+<li><a href="#advantages">三大核心优势</a></li>
+</ul>
+</li>
+<li><a href="#biz">商业模式与定价</a></li>
+<li><a href="#highlights">项目亮点</a></li>
+</ul>
+</div>
+  </aside>
+  <main class="content">
+<h1 id="overview">AnyReal 项目文档</h1>
+<blockquote>
+<p>整理来源：产品介绍与功能规格材料<br />
+整理日期：2024 年 9 月<br />
+文档性质：项目综述 + 产品功能规格 + 竞品与商业模式分析</p>
+</blockquote>
+<hr />
+<h2 id="bg">1. 项目背景</h2>
+<p>AnyReal 是一款面向电商与品牌营销场景的 <strong>AI 虚拟影棚 / AIGC 营销内容生产引擎</strong>，解决"商品营销物料生产成本高、周期长、门槛高"的痛点。底层依托自研视觉大模型及 AIGC 联合实验室的科研能力。</p>
+
+<h2 id="position">2. 产品定位</h2>
+<ul>
+<li>产品名：<strong>AnyReal AI 虚拟影棚</strong></li>
+<li>一句话定位：<strong>三步生成高真实度商品营销图，并延伸至品牌营销视频的 AIGC 内容生产引擎</strong></li>
+<li>核心价值：把传统"10–20 天、数千到上万元"的棚拍/3D 渲染流程，压缩为"数分钟、百元级"的 SaaS 化生成</li>
+</ul>
+
+<h2 id="users">3. 目标用户与价值</h2>
+<table>
+<thead><tr><th>维度</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>核心用户</td><td>电商商家、品牌方、营销/广告 agencies、家居/泛零售品类运营</td></tr>
+<tr><td>核心痛点</td><td>商品图拍摄贵、3D 渲染慢且不真实、现有 AI 工具仅背景替换效果差</td></tr>
+<tr><td>交付价值</td><td>低成本、高真实、可个性化、可批量的营销图文视频产能</td></tr>
+</tbody>
+</table>
+<hr />
+<h2 id="arch">4. 产品功能架构</h2>
+<h3 id="map">整体功能地图</h3>
+<pre><code>AnyReal
+├── 商品资产（3D 资产上传 / 训练）
+│   ├── 公共商品页 / 我的商品页
+│   ├── 上传商品（信息填充、模型上传）
+│   └── 3D 模型预览 → 启动训练
+├── 工作台（核心生图）
+│   ├── 物品模块（分类、搜索）
+│   ├── 生图参数（调整角度、调整大小）
+│   ├── 结果图展示
+│   └── 图片详情页（去水印高清下载 = 主要扣费点）
+├── 背景能力
+│   ├── 背景模版库（背景分类、选中 1–10 个）
+│   ├── 用户上传背景（上传、涂抹选区）
+│   ├── 文生图 / 图生图（AI 生成背景）
+│   └── 背景模版中台（模版库、预设角度/大小参数）
+├── 图像后处理
+│   └── 局部重绘 / 局部擦除 / 贴图迁移 / 尺寸拓展 / 高清放大 / 下载
+├── 视频生成
+│   ├── 图生视频 / 物体生视频
+│   └── 模板视频（视频说明 / 选择物品 / 编辑镜头 / 发布）
+├── 资产库
+│   ├── 物品库（公共商品 / 我的商品）
+│   ├── 背景库（预设图库 / 我的上传图库）
+│   └── 广场
+└── 移动端功能适配
+</code></pre>
+<h3 id="priority">核心模块与优先级（P0–P3）</h3>
+<p><strong>P0 = 核心必做 / P1 = 重要 / P2 = 增强 / P3 = 探索</strong></p>
+<table>
+<thead><tr><th>页面</th><th>模块</th><th>功能</th><th>优先级</th></tr></thead>
+<tbody>
+<tr><td>商品页（公共）</td><td>公共商品页</td><td>商品搜索 / 分类 / 生成</td><td>P0–P1</td></tr>
+<tr><td>我的商品页</td><td>我的商品页</td><td>上传商品 / 商品分类</td><td>P0–P1</td></tr>
+<tr><td>上传商品页</td><td>上传商品页</td><td>商品信息填充 / 模型上传</td><td>P0</td></tr>
+<tr><td>3D 模型预览页</td><td>3D 模型预览页</td><td>模型预览 / 启动训练</td><td>P0</td></tr>
+<tr><td>工作台主页</td><td>物品模块</td><td>物品分类 / 物品搜索</td><td>P0–P1</td></tr>
+<tr><td>工作台主页</td><td>生图参数模块</td><td>调整角度 / 调整大小</td><td>P0</td></tr>
+<tr><td>工作台主页</td><td>结果图展示</td><td>按时间顺序展示场景效果图</td><td>P0</td></tr>
+<tr><td>图片详情页</td><td>图片详情页</td><td>图片展示 / 去水印高清下载</td><td>P0</td></tr>
+<tr><td>背景模版库</td><td>背景模版库</td><td>背景分类 / 背景选中</td><td>P0</td></tr>
+<tr><td>背景页</td><td>背景页</td><td>上传背景 / 涂抹选区</td><td>P0</td></tr>
+<tr><td>文生图</td><td>文生图</td><td>场景风格选择 / 文生图 / 涂抹选区</td><td>P0</td></tr>
+<tr><td>文生图</td><td>文生图</td><td>风格 LoRA 训练</td><td>P3</td></tr>
+<tr><td>图生图</td><td>图生图</td><td>上传参考图 / 图生图 / 涂抹选区</td><td>P2</td></tr>
+<tr><td>背景模版中台</td><td>模版库 / 预设参数</td><td>模版增删改查 / 预设角度大小</td><td>P0</td></tr>
+<tr><td>图像后处理</td><td>后处理</td><td>局部重绘/擦除 / 贴图迁移 / 尺寸拓展 / 高清放大</td><td>P0–P3</td></tr>
+</tbody>
+</table>
+<hr />
+<h2 id="flows">5. 核心用户流程</h2>
+<table>
+<thead><tr><th>流程</th><th>名称</th><th>关键节点</th></tr></thead>
+<tbody>
+<tr><td>流程 1</td><td>客户上传 3D 资产</td><td>上传商品 → 模型上传 → 3D 模型预览 → 启动训练</td></tr>
+<tr><td>流程 2</td><td>工作台生图</td><td>选物品 → 调整角度/大小 → 选背景 → 生成 → 结果展示 → 去水印下载</td></tr>
+<tr><td>流程 3</td><td>AI 生成背景图</td><td>文生图（风格+提示词+涂抹）/ 图生图（参考图+提示词）</td></tr>
+<tr><td>流程 4</td><td>背景模版中台</td><td>模版库管理 → 涂抹选区预设 Mask → 设置预设角度/大小参数</td></tr>
+<tr><td>流程 5</td><td>图像后处理</td><td>局部重绘/擦除 → 贴图迁移 → 尺寸拓展 → 高清放大 → 下载</td></tr>
+</tbody>
+</table>
+<hr />
+<h2 id="features">6. 关键能力详解</h2>
+<h3 id="steps">AI 生图「三步法」</h3>
+<ol>
+<li><strong>商品上传</strong>：上传商品 3D 模型，环拍视频启动 AI 训练</li>
+<li><strong>场景创建</strong>：从海量场景模板库中选择</li>
+<li><strong>参数调节</strong>：选择商品摆放角度与大小，生成高真实度场景图</li>
+</ol>
+<h3 id="img-gen">文生图 / 图生图</h3>
+<ul>
+<li>文生图：选择场景风格 → 输入提示词 → 涂抹选区（指定商品替换区域）生成</li>
+<li>图生图：上传 1–4 张参考图，输入提示词生成 4 张，风格与内容均被参考</li>
+<li>风格 LoRA 训练（P3）：根据客户图片定制专属场景风格</li>
+</ul>
+<h3 id="bg-mid">背景模版中台</h3>
+<ul>
+<li>模版库支持增删改查；模板预设 Mask 指定商品生成区域</li>
+<li>预设角度/大小参数：通过前端预览简易模型，将 3D 模型旋转至与模板图片透视最协调的角度与大小</li>
+</ul>
+<h3 id="post">图像后处理</h3>
+<p>局部重绘、局部擦除、贴图迁移、尺寸拓展、高清放大（x2/x4）、PNG 下载</p>
+<h3 id="video">视频生成</h3>
+<ul>
+<li>基于视频生成大模型，快速生成品牌营销视频</li>
+<li>能力：图生视频 / 物体生视频、模板视频（视频说明 → 选择物品 → 编辑镜头 → 发布）</li>
+</ul>
+<h3 id="lib">自定义图库与 AI 影棚</h3>
+<ul>
+<li>自定义图库：上万套高质量精选家居样板，支持个性化图库定制</li>
+<li>AI 影棚：可添加 AI 摄影棚，定制化训练大模型，搭建理想摄影环境</li>
+</ul>
+<hr />
+<h2 id="compare">7. 技术与竞品对比</h2>
+<h3 id="vs-trad">与传统方案对比</h3>
+<table>
+<thead><tr><th>维度</th><th>传统现场棚拍</th><th>3D 建模渲染</th><th>AnyReal</th></tr></thead>
+<tbody>
+<tr><td>时间</td><td>10–20 天</td><td>3–5 天</td><td><strong>数分钟</strong></td></tr>
+<tr><td>成本</td><td>8000–20000 元</td><td>2000 元</td><td><strong>0.5 元/张生成，100 元/张高清下载</strong></td></tr>
+<tr><td>门槛</td><td>棚拍各岗位专业门槛</td><td>平面/3D 设计专业门槛</td><td><strong>低门槛、低学习成本</strong></td></tr>
+<tr><td>效果</td><td>成本高、质量高</td><td>成本中等、真实度差</td><td><strong>低成本、高真实、个性化</strong></td></tr>
+</tbody>
+</table>
+<h3 id="vs-ai">与市面 AI 工具对比</h3>
+<p>市面主流 AI 电商图产品普遍存在：无自研模型能力、无法改变商品展示角度、只生成 AI 背景（光影不变）、缺少底层模型训练技术。</p>
+<h3 id="advantages">三大核心优势</h3>
+<table>
+<thead><tr><th>优势</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><strong>真实场景</strong></td><td>使用真实场景图而非 AI 生成场景，最终效果更具真实感</td></tr>
+<tr><td><strong>可控可调</strong></td><td>光影、比例、角度算法自适应，且支持手动精准调整，出图效率极高</td></tr>
+<tr><td><strong>添加模特</strong></td><td>可生成 AI 模特与家具的交互，真实生活气息强</td></tr>
+</tbody>
+</table>
+<hr />
+<h2 id="biz">8. 商业模式与定价</h2>
+<ul>
+<li>服务模式：<strong>先 POC 测试、好用再付费</strong>；专业工程师团队提供产品讲解与操作培训</li>
+<li>计费结构：</li>
+<li>商品训练服务：<strong>1000 元/件</strong>（模型训练，将商品添加至后台）</li>
+<li>商品图生成：<strong>0.5 元/张</strong>（低成本生成）</li>
+<li>高清商品图下载：<strong>100 元/张</strong>（确认图像可用后下载高清原图）</li>
+</ul>
+<hr />
+<h2 id="highlights">9. 项目亮点</h2>
+<ul>
+<li><strong>技术壁垒</strong>：自研视觉大模型 + AIGC 联合实验室，非套壳开源模型</li>
+<li><strong>差异定位</strong>：真实场景 + 可控可调 + 可加模特，区别于"背景替换"类竞品</li>
+<li><strong>效率跃迁</strong>：生图从"天级"降到"分钟级"，单张成本从"万元级"降到"元级"</li>
+<li><strong>能力延展</strong>：从图到视频，覆盖品牌营销全链路内容生产</li>
+<li><strong>规模化底座</strong>：海量用户与存量数据的飞轮效应</li>
+</ul>
+<hr />
+<p><em>说明：本文档为基于产品材料的项目综述，供团队对齐、复盘与对外介绍使用。</em></p>
+  </main>
+</div>
+<footer class="footer">AnyReal · AI 虚拟影棚项目文档</footer>
+<button class="top-btn" id="topBtn" title="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+var b=document.getElementById('topBtn');
+window.onscroll=function(){b.classList.toggle('show',window.scrollY>400)};
+</script>
+</body>
+</html>
