@@ -41,6 +41,7 @@ import howToConstructWorkflowInDifyMd from './projects/tutorials/06_how-to-const
 import howToConstructLightBackendWorkflowMd from './projects/tutorials/07_how-to-construct-light-backend-workflow.md?raw';
 import whatsMcpMd from './projects/tutorials/08_whats-mcp.md?raw';
 import howToChooseSuitableDatabaseMd from './projects/tutorials/09_how-to-choose-suitable-database.md?raw';
+import leetcodeNotesMd from './projects/tutorials/10_leetcode-notes.md?raw';
 
 
 
@@ -248,5 +249,6 @@ export const tutorialProjects = [
   createProject(howToConstructWorkflowInDifyMd),
   createProject(howToConstructLightBackendWorkflowMd),
   createProject(whatsMcpMd),
-  createProject(howToChooseSuitableDatabaseMd)
+  createProject(howToChooseSuitableDatabaseMd),
+  createProject(leetcodeNotesMd)
 ];
