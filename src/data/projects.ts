@@ -27,6 +27,7 @@ import promptEngineeringMd from './projects/AI/01_prompt_engineering.md?raw';
 import aiKnowledgeGraphUrbanPlanningMd from './projects/AI/02_knowledge-graph-urban-planning.md?raw';
 import aiUrbanHeatResilienceMachineLearningMd from './projects/AI/03_urban-heat-resilience-machine-learning.md?raw';
 import aiParticipatoryUrbanRegenerationMd from './projects/AI/04_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
+import aiCampusPublicSpaceVitalityModelingMd from './projects/AI/05_campus-public-space-vitality-modeling.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
 import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
@@ -231,7 +232,8 @@ export const aiProjects = [
   createProject(promptEngineeringMd),
   createProject(aiKnowledgeGraphUrbanPlanningMd),
   createProject(aiUrbanHeatResilienceMachineLearningMd),
-  createProject(aiParticipatoryUrbanRegenerationMd)
+  createProject(aiParticipatoryUrbanRegenerationMd),
+  createProject(aiCampusPublicSpaceVitalityModelingMd)
 ];
 
 export const platformProjects = [
