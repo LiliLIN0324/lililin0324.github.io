@@ -75,16 +75,6 @@ image:["https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/previous-plannin
 > 中日韩城市扩张和城市收缩 SDGs 议题 [跨国多高校合作]
 > [CityEnergyLab — UN Projects SIT Index for East Asia](https://cityenergylab.cafe24.com/un-projects-sit-index-for-east-asia-from-urban-diagnostics-to-expanding-toward-asia/)
 
-
----
-
-## 本科研究
-
-### [neurotopia](#/planning/neurotopia)
-
-本科期间的一项城市设计研究，在韩国春川进行了分享。
-
-> 2023 · 韩国春川 · 国际学术交流分享
 ---
 
 
