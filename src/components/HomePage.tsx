@@ -9,6 +9,7 @@ import {
   tutorialProjects,
 } from '../data/projects'
 import { CityWalkSection } from './CityWalkSection'
+import { ContentSection } from './ContentSection'
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
@@ -564,6 +565,9 @@ export const HomePage = () => {
             </p>
         </div>
       </section>
+
+      {/* ============================ CONTENT TIMELINE ============================ */}
+      <ContentSection />
 
       {/* ============================ CITY WALKS ============================ */}
       <CityWalkSection />
