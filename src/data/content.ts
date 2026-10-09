@@ -6,7 +6,7 @@
 
 import {
   projects,
-  designProjects,
+  productProjects,
   gameProjects,
   aiProjects,
   platformProjects,
@@ -51,7 +51,7 @@ export interface ProjectIntro {
 
 const INTRO_BY_HREF = new Map<string, ProjectIntro>(
   [
-    ...designProjects.map(p => ['design', p] as const),
+    ...productProjects.map(p => ['product', p] as const),
     ...gameProjects.map(p => ['game', p] as const),
     ...aiProjects.map(p => ['ai', p] as const),
     ...projects.map(p => ['planning', p] as const),
@@ -77,26 +77,27 @@ export const contentCategories: ContentCategory[] = [
   {
     zh: '产品',
     en: 'Product',
-    listHref: '/design',
+    listHref: '/product',
     color: '#5ec5d4',
     items: [
-      { name: 'Counting', year: 2022, logo: logo('counting'), href: '/design/early-campus-experience' },
-      { name: '1037拼拼', year: 2022, logo: logo('1037pinpin'), href: '/design/early-campus-experience' },
-      { name: 'PersLearn', year: 2023, logo: logo('perslearn'), href: '/design/early-campus-experience' },
+      { name: 'Counting', year: 2022, logo: logo('counting'), href: '/product/early-campus-experience' },
+      { name: '1037拼拼', year: 2022, logo: logo('1037pinpin'), href: '/product/early-campus-experience' },
+      { name: 'PersLearn', year: 2023, logo: logo('perslearn'), href: '/product/early-campus-experience' },
     ],
   },
   {
     zh: 'AI 产品',
     en: 'AI Product',
-    listHref: '/design',
+    listHref: '/product',
     color: '#3f6fd8',
     items: [
-      { name: '智图', year: 2023, logo: logo('dragon-diffusion'), href: '/design/dragon-diffussion' },
-      { name: 'AnyReal', year: 2024, logo: logo('anyreal'), href: '/design/anyreal' },
-      { name: 'Genshot', year: 2024, logo: logo('genshot'), href: '/design/genshot-AI-video-generation-tool' },
-      { name: '洛书八字', year: 2025, logo: logo('bazi'), href: '/design/bazi-fengshui-analysis' },
-      { name: 'Genstyle', year: 2025, logo: logo('genstyle'), href: '/design/genstyle' },
-      { name: 'Riffle', year: 2026, logo: logo('riffle'), href: '/design/riffle-ai-game-generation-tool' },
+      { name: '智图', year: 2023, logo: logo('dragon-diffusion'), href: '/product/dragon-diffussion' },
+      { name: 'AnyReal', year: 2024, logo: logo('anyreal'), href: '/product/anyreal' },
+      { name: 'Genshot', year: 2024, logo: logo('genshot'), href: '/product/genshot-AI-video-generation-tool' },
+      { name: '洛书八字', year: 2025, logo: logo('bazi'), href: '/product/bazi-fengshui-analysis' },
+      { name: 'Genstyle', year: 2025, logo: logo('genstyle'), href: '/product/genstyle' },
+      { name: 'Riffle', year: 2026, logo: logo('riffle'), href: '/product/riffle-ai-game-generation-tool' },
+      { name: '幕景 Scendance', year: 2026, logo: logo('scendance'), href: '/product/scendance' },
     ],
   },
   {

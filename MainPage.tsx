@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import '/index.css';
 
-import { projects, designProjects, tutorialProjects, platformProjects, gameProjects, aiProjects } from './src/data/projects';
+import { projects, productProjects, tutorialProjects, platformProjects, gameProjects, aiProjects } from './src/data/projects';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
 import { AboutSection } from './src/components/AboutSection';
@@ -14,12 +14,13 @@ import ClusteringGeoMap from './src/clusteringeomap';
 
 const NAV_TABS = [
   { key: '', label: 'Home' },
-  { key: 'design', label: 'Design' },
+  { key: 'product', label: 'Product' },
   { key: 'game', label: 'Game' },
   { key: 'ai', label: 'AI' },
   { key: 'planning', label: 'Planning' },
   { key: 'platform', label: 'Platform' },
   { key: 'tutorial', label: 'Tutorial' },
+  { key: 'blog', label: 'Blog' },
   { key: 'about', label: 'About' },
 ];
 
@@ -65,7 +66,7 @@ const MainPage = () => {
   const activeTab = pathSegments[0] || '';
 
   const imageMap: Record<string, string> = {
-    'design': `${CDN}/lili_05.png`,
+    'product': `${CDN}/lili_05.png`,
     'game': `${CDN}/lili_03.png`,
     'ai': `${CDN}/lili_07.png`,
     'platform': `${CDN}/lili_11.png`,
@@ -104,7 +105,7 @@ const MainPage = () => {
       x: prev.x + 720 + Math.round(Math.random() * 360),
       y: prev.y + 720 + Math.round(Math.random() * 360),
     }));
-    const pages = ['design', 'game', 'ai', 'planning', 'platform', 'tutorial', 'about'];
+    const pages = ['product', 'game', 'ai', 'planning', 'platform', 'tutorial', 'about'];
     setTimeout(() => navigate(`/${pickRandom(pages)}`), 900);
   };
 
@@ -265,8 +266,8 @@ const MainPage = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/planning" element={<ProjectListView data={projects} type="planning" />} />
             <Route path="/planning/:id" element={<ProjectDetailView data={projects} type="planning" />} />
-            <Route path="/design" element={<ProjectListView data={designProjects} type="design" />} />
-            <Route path="/design/:id" element={<ProjectDetailView data={designProjects} type="design" />} />
+            <Route path="/product" element={<ProjectListView data={productProjects} type="product" />} />
+            <Route path="/product/:id" element={<ProjectDetailView data={productProjects} type="product" />} />
             <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
             <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
             <Route path="/ai" element={<ProjectListView data={aiProjects} type="ai" />} />

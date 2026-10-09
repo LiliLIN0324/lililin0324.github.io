@@ -124,7 +124,7 @@ const IconTile: React.FC<{
     {/* Tile — the expanded state keeps the hover lift so the open card still
         reads as the one you're pointing at. */}
     <span
-      className={`flex h-16 w-16 items-center justify-center rounded-xl border bg-surface p-1.5 shadow-lift transition-all duration-300 ease-editorial group-hover:-translate-y-1 ${
+      className={`flex h-16 w-16 items-center justify-center rounded-xl border bg-surface p-1 shadow-lift transition-all duration-300 ease-editorial group-hover:-translate-y-1 ${
         expanded ? '-translate-y-1 border-transparent' : 'border-rule'
       }`}
       style={

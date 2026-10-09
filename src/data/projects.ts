@@ -8,13 +8,14 @@ import previousPlanningResearchMd from './projects/planning/03_previous_planning
 import heatmapperMd from './projects/planning/08_heatmapper.md?raw';
 
 
-import dragonDiffussionMd from './projects/design/01_dragon-diffussion.md?raw';
-import anyrealMd from './projects/design/02_anyreal.md?raw';
-import genshotAIVideoGenerationToolMd from './projects/design/03_genshot-AI-video-generation-tool.md?raw';
-import genstyleMd from './projects/design/04_genstyle.md?raw';
-import riffleAiGameGenerationToolMd from './projects/design/05_riffle-ai-game-generation-tool.md?raw';
-import baziFengshuiAnalysisMd from './projects/design/06_bazi-fengshui-analysis.md?raw';
-import earlyCampusExperienceMd from './projects/design/07_early-campus-experience.md?raw';
+import dragonDiffussionMd from './projects/product/01_dragon-diffussion.md?raw';
+import anyrealMd from './projects/product/02_anyreal.md?raw';
+import genshotAIVideoGenerationToolMd from './projects/product/03_genshot-AI-video-generation-tool.md?raw';
+import genstyleMd from './projects/product/04_genstyle.md?raw';
+import riffleAiGameGenerationToolMd from './projects/product/05_riffle-ai-game-generation-tool.md?raw';
+import baziFengshuiAnalysisMd from './projects/product/06_bazi-fengshui-analysis.md?raw';
+import earlyCampusExperienceMd from './projects/product/07_early-campus-experience.md?raw';
+import scendanceMd from './projects/product/08_scendance.md?raw';
 
 import gameJam72HourMd from './projects/games/01_72-hour-game-jam.md?raw';
 import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.md?raw';
@@ -209,14 +210,15 @@ export const projects = [
   createProject(heatmapperMd)
 ];
 
-export const designProjects = [
+export const productProjects = [
   createProject(dragonDiffussionMd),
   createProject(anyrealMd),
   createProject(genshotAIVideoGenerationToolMd),
   createProject(genstyleMd),
   createProject(riffleAiGameGenerationToolMd),
   createProject(baziFengshuiAnalysisMd),
-  createProject(earlyCampusExperienceMd)
+  createProject(earlyCampusExperienceMd),
+  createProject(scendanceMd)
 ];
 
 export const gameProjects = [

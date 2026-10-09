@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // Route params are singular ('tutorial'), which the previous mapping missed —
 // the Tutorial index rendered as "Selected Platform".
 const TYPE_LABEL: Record<string, string> = {
-  design: 'Products',
+  product: 'Products',
   game: 'Games',
   ai: 'AI',
   planning: 'Planning',
@@ -36,12 +36,12 @@ const TOTAL_PDF_PAGES = 55;
 
 const PDF_PAGE_HINTS: Record<number, { text: string; link: string }> = {
   2: { text: 'Self-introduction', link: '/about' },
-  5: { text: 'View Early Campus Experience', link: '/design/early-campus-experience' },
-  11: { text: 'View Early Campus Experience', link: '/design/early-campus-experience' },
-  21: { text: 'View Dragon Diffusion Project', link: '/design/dragon-diffussion' },
-  27: { text: 'View Genstyle Project', link: '/design/genstyle' },
-  43: { text: 'View Luoshu Project', link: '/design/bazi-fengshui-analysis' },
-  48: { text: 'View Genshot Project', link: '/design/genshot' },
+  5: { text: 'View Early Campus Experience', link: '/product/early-campus-experience' },
+  11: { text: 'View Early Campus Experience', link: '/product/early-campus-experience' },
+  21: { text: 'View Dragon Diffusion Project', link: '/product/dragon-diffussion' },
+  27: { text: 'View Genstyle Project', link: '/product/genstyle' },
+  43: { text: 'View Luoshu Project', link: '/product/bazi-fengshui-analysis' },
+  48: { text: 'View Genshot Project', link: '/product/genshot' },
 };
 
 const PortfolioPdf = () => {
@@ -198,7 +198,7 @@ export const ProjectListView = ({ data, type }: { data: any[], type: string }) =
 
   return (
     <div className="shell animate-rise-in py-8 md:py-12">
-      {type === 'design' && SHOW_PORTFOLIO_PDF && <PortfolioPdf />}
+      {type === 'product' && SHOW_PORTFOLIO_PDF && <PortfolioPdf />}
 
       <div className="section-head">
         <p className="eyebrow">{type} / Index</p>
