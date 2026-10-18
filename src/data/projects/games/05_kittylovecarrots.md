@@ -4,8 +4,11 @@ slug: "kittylovecarrots"
 title: "指萝卜 - 个人开发微信小游戏"
 category: "Game"
 year: "2026-2 - on going"
-description: "一人独立完成的微信小游戏「指萝卜」，从设计、美术到提审上线。"
+description: "指萝卜小游戏与微信小游戏完整开发流程合并展示。"
 tech: ["WeChat Mini Program", "游戏开发", "Figma", "AI生图"]
+abstract: " "
+challenge: "设计一款既有趣又具有教育意义的儿童游戏，同时兼顾游戏开发过程中的技术实现与设计难点。"
+solution: "我们开发了一款名为 Kitty Love Carrots 的节奏小游戏，通过鼓点节奏（drum rhythm）的互动玩法，引导儿童认识胡萝卜相关知识。游戏采用简单易上手且富有趣味性的机制，让孩子们能够在轻松愉快的游戏体验中，以互动探索的方式学习和了解胡萝卜。"
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/logo.jpg"
 image:
@@ -89,27 +92,74 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/99.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/01.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/02.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/09.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/15.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/13.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/14.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/16.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/17.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/18.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/19.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/20.png"
-  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/21.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/03.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/04.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/05.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/06.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/07.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/08.png"
+  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/09.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/10.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/11.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/12.png"
+  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/16.png"
+  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/20.png"
+  - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/21.png"
 ---
+## 一个人怎么做游戏
 
-- 架构按轻量、模块化来拆，方便一个人快速改。
-- 设计在 Figma 里画，形象用生成图再修；代码是微信小游戏的 JavaScript 工程。
-- 图集里是界面、角色和提审过程。
+这是一个**一人独立开发**的项目，从设计到代码到发布全流程由单人完成。架构设计的核心理念是：**轻量、模块化、快速迭代**。
+
+### 为什么把这两个内容合并？
+
+指萝卜本体是一个微信小游戏项目，而下面这部分是同一套开发路径的复盘，记录了从设计、开发到上线的完整过程。
+
+<!-- details -->
+
+### 微信小游戏项目结构
+
+打开微信开发者工具
+
+https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
+
+![下载页面](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/15.png)
+
+下载到本地，如果在本地，可以看到。
+
+![微信开发者工具界面](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/13.png)
+![微信开发者工具项目结构](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/14.png)
+
+## 03 发布与审核
+
+### 测试版、开发版、正式版
+
+在微信开发者工具中，我们可以发布不同的版本：
+
+- **测试版** - 用于内部测试，不面向公众
+- **开发版** - 面向公众测试，可邀请好友测试
+- **正式版** - 正式发布，面向所有用户
+
+个人开发者只能有15个测试用户。发布到正式版的审核很严格，需要完成
+
+### 审核流程与时间
+
+微信小程序的审核流程比较严格，从首次提交到最终通过审核大约需要 **一个月** 的时间。审核流程包括：
+
+1. **微信认证** - 企业/个人主体认证
+2. **小游戏资质审核** - 游戏类目需要额外的资质
+3. **代码发布审核** - 每次代码更新都需要审核
+4. **适龄审核** - 游戏内容分级审核
+5. **ICP备案审核** - 根据政策政策进行ICP备案
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/17.png)
+![审核通知时间线](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/18.png)
+
+> ⚠️ 建议提前规划好发布时间，预留充足的审核周期。
+
+发布到正式版之后，就可以开始看游戏的用户流量情况了。
+![alt text](https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/kittylovecarrots/19.png)
+
+## godot引擎，辅助游戏。
+我意识到我可能需要更复杂的
+
+## 其它说明
+ios运行请在小游戏后台开通高性能+模式, 操作方法: 功能->游戏能力地图->研发能力->生成提效包->高性能模式

@@ -4,7 +4,7 @@ slug: "early-campus-experience"
 title: "早期校园经历 — 1037拼拼 & persLEARN"
 category: "UI&UX Design"
 year: "2023-03-01~2024-03-01"
-description: "本科在华科 Pivot Studio 做的产品：校园拼团 1037拼拼、零件计数康零、文献平台 persLEARN。"
+description: "本科期间在华科Pivot Studio的校园产品设计与实践，涵盖校园拼团平台与论文文献平台。"
 tech: ["Figma","React","TypeScript"]
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/1037pinpin/logo.jpg"
 image:
@@ -227,11 +227,21 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/98.jpg"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/99.jpg"
 ---
-
-- **1037拼拼**：华科 Pivot Studio 的校园拼团。
-- **康零**：面向汽配加工的视觉计数和产线看板。我做了产品方案和 App / 小程序原型。获中国国际互联网+大赛智能制造赛道湖北省铜奖（武汉市银奖）。
-- **persLEARN**：用互动模块帮学生练科学思维的文献平台。
-
+## 1037拼拼
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/1037pinpin.mp4"></video>
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/1037pinpin.mp4"></video>
 </div>
+
+## 康零Counting - 智能零件计数与数据平台 
+项目时间：2022.6 - 2023.8
+•	康零是面向汽车零部件加工企业的智能零件计数系统，通过机器视觉实现高速计数，并提供生产数据可视化、异常预警及分析能力。
+•	参与工业智能制造产品规划, 负责商业计划书中产品方案设计, 完成产品定位、市场分析、商业模式及发展规划等内容输出。
+•	负责 App/小程序产品原型设计, 规划生产数据实时监控、可视化看板、异常预警等功能, 构建设备端与数据平台协同方案。
+•	项目获中国国际”互联网+”大学生创新创业大赛智能制造及其他产业赛道湖北省铜奖（武汉市银奖）。
+
+## persLEARN — 论文文献平台
+项目时间：2023年
+
+persLEARN 是我在本科期间参与的另一个教育类产品设计项目，旨在通过互动模块帮助学生培养科学思维能力。
+
+---

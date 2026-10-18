@@ -4,8 +4,9 @@ slug: "bazi-fengshui-analysis"
 title: "Bazi - Fengshui Analysis Application"
 category: "UI&UX Design"
 year: "2025"
-description: "按出生信息与环境给出风水解读，中文和韩文各做了一套界面。"
+description: "基于用户出生数据与环境因素提供个性化AI风水洞察的应用。"
 tech: ["Figma","React","TypeScript"]
+abstract: "This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korean users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner."
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bazi/logo.jpg"
 image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bazi/01.jpg"
@@ -108,4 +109,4 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bazi/98.jpg"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/bazi/99.jpg"
 ---
-
+This project involves designing an intuitive user interface for a Fengshui analysis application that leverages AI to provide personalized insights based on users' birth data and environmental factors. I designed two systems for both Chinese and Korean users. The design focuses on user experience, ensuring that complex Fengshui concepts are presented in an accessible manner.

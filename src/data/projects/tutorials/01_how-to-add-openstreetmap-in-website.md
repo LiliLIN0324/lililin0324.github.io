@@ -4,8 +4,10 @@ slug: "how-to-add-openstreetmap-in-website"
 title: "How to Add OpenStreetMap in Website"
 category: "Tutorial"
 year: "2026-2-1"
-description: "把 OpenStreetMap 嵌进网页，用 Leaflet，并申请 MapTiler 的 key。"
+description: "将OpenStreetMap集成到网站中的教程"
 tech: ["python","React","TypeScript"]
+challenge: "Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners. There had some limitations on the free version of OpenStreetMap, especially if your website is complicated. You need to apply for an API key from Maptiler. link: https://api.maptiler.com/maps/basic/style.json?key=you_API_key."
+solution: "You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started."
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/openstreetmap/logo.jpg"
 code: "openstreetmap.tsx"
@@ -110,6 +112,6 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/openstreetmap/98.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/openstreetmap/99.png"
 ---
+Understanding the various APIs and libraries available for working with OpenStreetMap can be challenging for beginners. There had some limitations on the free version of OpenStreetMap, especially if your website is complicated. You need to apply for an API key from Maptiler. link: https://api.maptiler.com/maps/basic/style.json?key=you_API_key.
 
-- 免费额度不够复杂站点时，需要 MapTiler 的 key。
-- 页面里有一份可运行的地图 Demo。
+You can use libraries like Leaflet or OpenLayers to embed OpenStreetMap in your web applications. This tutorial provides step-by-step instructions and code examples to help you get started.

@@ -342,6 +342,12 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
     );
   }
 
+  const DETAILS_MARK = '<!-- details -->';
+  const rawContent = String(project.details.content || '');
+  const splitAt = rawContent.indexOf(DETAILS_MARK);
+  const lead = (splitAt === -1 ? rawContent : rawContent.slice(0, splitAt)).trim();
+  const details = splitAt === -1 ? '' : rawContent.slice(splitAt + DETAILS_MARK.length).trim();
+
   return (
     <div className="animate-rise-in pb-16">
       {/* ---- Sticky toolbar ---- */}
@@ -370,7 +376,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
     {/* ---- Details view ---- */}
       {viewMode === 'details' ? (
         <div className="shell py-8 md:py-12">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-5xl">
             {/* Meta */}
             {project.tech?.length > 0 && (
               <div className="mb-6 flex flex-wrap gap-1.5">
@@ -432,15 +438,12 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
               </div>
             </details>
 
-            {/* ---- Content — the main event ---- */}
-            {project.details.content && (
+            {/* Narrative first, then the gallery, then optional deeper detail. */}
+            {lead && (
               <section id="content">
-                <div className="section-head mb-8">
-                  <p className="eyebrow">Content</p>
-                </div>
                 <div className="prose-custom text-base leading-relaxed text-ink-2">
                   <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={proseComponents}>
-                    {project.details.content}
+                    {lead}
                   </ReactMarkdown>
                 </div>
               </section>
@@ -450,6 +453,20 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
               key={project.slug}
               images={(project.details.image ?? []).filter((url: string) => url && !String(project.details.content || '').includes(url))}
             />
+
+            {details && (
+              <section id="details" className="mt-12">
+                <div className="section-head mb-8">
+                  <p className="eyebrow">细节</p>
+                  <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">Methods</p>
+                </div>
+                <div className="prose-custom text-base leading-relaxed text-ink-2">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={proseComponents}>
+                    {details}
+                  </ReactMarkdown>
+                </div>
+              </section>
+            )}
           </div>
         </div>
       ) : project.details?.demoOnly ? (

@@ -4,8 +4,10 @@ slug: "how-to-get-sequential-events-from-photo-by-phone"
 title: "How to get sequential events from photo by phone"
 category: "Tutorial"
 year: "2026-2-2"
-description: "从手机照片的时间和内容里整理出前后事件。"
+description: "从手机照片中提取时序事件的教程"
 tech: ["Computer Vision","Image Processing"]
+challenge: "Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events."
+solution: "By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process."
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/logo.jpg"
 code: "photogeo.tsx"
@@ -110,6 +112,6 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/98.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-sequential-events/99.png"
 ---
+Dealing with varying photo qualities and metadata inconsistencies can pose challenges in accurately extracting sequential events.
 
-- 用照片的拍摄时间和画面内容把事件排成序列。
-- 页面里有一份可运行的 Demo。
+By leveraging computer vision libraries such as OpenCV, you can analyze the metadata and visual content of photos to identify and sequence events. This tutorial provides practical examples and code snippets to guide you through the process.

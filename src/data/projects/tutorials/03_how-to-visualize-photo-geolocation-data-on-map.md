@@ -4,8 +4,10 @@ slug: "how-to-visualize-photo-geolocation-data-on-map"
 title: "How to visualize photo geolocation data on map"
 category: "Tutorial"
 year: "2026-2-3"
-description: "把照片里的地理坐标画到交互地图上。"
+description: "在地图上可视化照片地理定位数据的教程"
 tech: ["Mapping","Image Processing"]
+challenge: "Handling large datasets and ensuring accurate geospatial representation can be challenging when visualizing photo geolocation data."
+solution: "By utilizing mapping libraries such as Leaflet or Mapbox, you can plot geolocation data extracted from photos onto interactive maps. This tutorial provides detailed instructions and code examples to help you create compelling visualizations."
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-geolocation-map/logo.jpg"
 code: "photogeomap.tsx"
@@ -110,6 +112,6 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-geolocation-map/98.png"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/photo-geolocation-map/99.png"
 ---
+Handling large datasets and ensuring accurate geospatial representation can be challenging when visualizing photo geolocation data.
 
-- 读取照片坐标，在地图上标出拍摄位置。
-- 页面里有一份可运行的 Demo。
+By utilizing mapping libraries such as Leaflet or Mapbox, you can plot geolocation data extracted from photos onto interactive maps. This tutorial provides detailed instructions and code examples to help you create compelling visualizations.

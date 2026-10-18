@@ -4,7 +4,7 @@ slug: "genshot-AI-video-generation-tool"
 title: "Genshot - AI videos Generation Tool"
 category: "UI&UX Design"
 year: "2025"
-description: "把文本提示做成短视频的 AI 生成工具。"
+description: "一款基于AI的图像生成工具，可将文本提示转化为高质量视觉内容的平台。"
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/logo.jpg"
@@ -109,7 +109,7 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/98.jpg"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/99.jpg"
 ---
-
+# 效果展示
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Genshot.mp4"></video>
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Genshot.mp4"></video>
 </div>
