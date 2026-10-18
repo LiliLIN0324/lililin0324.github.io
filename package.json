@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assets:inventory": "node scripts/assets/inventory.mjs",
+    "assets:export": "node scripts/assets/export-pages.mjs",
+    "assets:upload": "node scripts/assets/upload-fig.mjs",
+    "assets:pipeline": "node scripts/assets/pipeline.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

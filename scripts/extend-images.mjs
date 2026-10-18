@@ -1,3 +1,10 @@
+/**
+ * ONE-OFF. Do not re-run.
+ *
+ * Rewrites project markdown so every detected image sequence is padded to
+ * 99 frames. Many of those URLs were never uploaded (they 404 on R2).
+ * New figures go through scripts/assets/pipeline.mjs — see scripts/ASSETS.md.
+ */
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
