@@ -20,6 +20,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'docs',
+    // docs/ also holds PDFs, CSVs, and static demos that Vite does not emit.
+    emptyOutDir: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
