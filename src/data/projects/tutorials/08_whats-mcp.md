@@ -10,7 +10,6 @@ icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/whats-mcp/logo.jp
 abstract: |
   MCP（Model Context Protocol）是一种让 AI 助手与外部工具和数据源连接的标准协议。本教程用通俗的语言，帮助没有计算机背景的学生理解 MCP 的概念、工作原理和实际应用。
 ---
-
 # 什么是 MCP？—— 让 AI 学会使用工具的「通用语言」
 
 ## 一句话理解 MCP
@@ -133,84 +132,6 @@ AI → MCP → 日历工具 + 天气工具
 
 ---
 
-## 05 如何使用 MCP？
-
-### 第一步：确认你的 AI 助手支持 MCP
-
-目前支持 MCP 的 AI 客户端：
-- ✅ **Trae**（字节跳动的 AI IDE，内置 MCP 支持）
-- ✅ **Windsurf**（Codeium 的 AI IDE，支持 MCP）
-- ✅ **VS Code + Cline/Roo Code**（通过插件支持 MCP）
-- ✅ **Cursor**（代码编辑器，支持 MCP）
-- ✅ **Claude Desktop**（官方支持最完善）
-- ✅ **Cursor**（代码编辑器）
-- ✅ **Continue**（VS Code 插件）
-- ✅ **其他兼容客户端**
-
-### 第二步：安装 MCP 服务器
-
-以 **Trae** 为例（VS Code 和 Windsurf 类似）：
-
-1. **打开 Trae**
-2. **进入设置** → 找到 MCP 配置入口（通常在 AI 助手设置中）
-3. **编辑配置文件**，添加你想要的工具：
-
-```json
-{
-  "mcpServers": {
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/username/Desktop",
-        "/Users/username/Downloads"
-      ]
-    },
-    "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"]
-    }
-  }
-}
-```
-
-### 第三步：开始使用！
-
-配置完成后，你的 AI 助手（Trae/Windsurf/VS Code）就能：
-- 📁 **读取和编辑你项目中的文件**
-- 🌐 **访问网页并提取内容**
-- 🗄️ **查询数据库**
-- 🖥️ **执行终端命令**
-- 🔧 **操作各种开发工具**
-- 等等...
-
----
-
-## 06 常用 MCP 工具推荐
-
-| 工具名称 | 功能 | 适用场景 |
-|---------|------|---------|
-| **filesystem** | 文件读写 | 管理本地文件、批量重命名、整理文档 |
-| **fetch** | 网页抓取 | 获取网页内容、监控网站变化 |
-| **sqlite** | 数据库查询 | 数据分析、记录管理 |
-| **puppeteer** | 浏览器自动化 | 网页截图、自动化测试 |
-| **github** | GitHub 操作 | 代码管理、Issue 追踪 |
-| **slack** | 消息发送 | 团队协作、自动通知 |
-
----
-
-## 07 MCP vs 传统方式的优势
-
-| 对比项 | 传统插件 | MCP |
-|--------|---------|-----|
-| **开发成本** | 每个 AI 平台都要单独开发 | 一次开发，多平台通用 |
-| **安全性** | 权限控制不统一 | 标准化的权限管理 |
-| **灵活性** | 功能固定 | 可动态发现和切换工具 |
-| **生态** | 各自为政 | 开放共享的生态系统 |
-
----
-
 ## 08 总结
 
 ### 核心要点
@@ -236,13 +157,15 @@ AI → MCP → 日历工具 + 天气工具
 
 ---
 
-## 参考资源
+<!-- details -->
 
-- **官方文档**: https://modelcontextprotocol.io/
-- **GitHub 仓库**: https://github.com/modelcontextprotocol
-- **工具市场**: https://github.com/modelcontextprotocol/servers
-- **Claude 官方介绍**: https://www.anthropic.com/news/model-context-protocol
+## 07 MCP vs 传统方式的优势
+
+| 对比项 | 传统插件 | MCP |
+|--------|---------|-----|
+| **开发成本** | 每个 AI 平台都要单独开发 | 一次开发，多平台通用 |
+| **安全性** | 权限控制不统一 | 标准化的权限管理 |
+| **灵活性** | 功能固定 | 可动态发现和切换工具 |
+| **生态** | 各自为政 | 开放共享的生态系统 |
 
 ---
-
-> 💡 **小提示**：MCP 是一个快速发展的开放标准，未来会有越来越多的工具和应用支持它。现在学习 MCP，就是提前掌握 AI 时代的「通用语言」！

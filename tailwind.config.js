@@ -9,7 +9,6 @@ export default {
   content: [
     "./index.html",
     "./MainPage.tsx",
-    "./Root.tsx",
     "./IntroScreen.tsx",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],

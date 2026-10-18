@@ -8,8 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist
+# Vite build leftovers. GitHub Pages publishes docs/, so that directory stays tracked.
+dist/
 dist-ssr
+.vite/
 *.local
 
 # Editor directories and files
@@ -23,7 +25,16 @@ dist-ssr
 *.sln
 *.sw?
 # *.tsx
-1.py
-2.py
+*.py
 
+# One-off scratch scripts that should not land in the repo again.
+temp-*.js
+gen_project_*.js
+setup-ollama.ps1
+evolo.txt
+.cjs'
+\!pip*
+
+# public/ is ignored for new files. The tracked CSV files under public/data/
+# stay in git: cluster demos fetch /data/..., and those files are not on the R2 CDN.
 public

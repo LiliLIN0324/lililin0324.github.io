@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo, GameJam72HourDemo, PeaceEliteHustCampusDemo, BMWMetaIslandDemo, ClusteringEvents, BoxUpMyStuffInCyberspace, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo, DragonDiffusionDemo, AnyRealDemo, PreviousArchiWorkDemo, HongqiquDemo, ScendanceDemo } from './DemoComponents';
+import { ClusterVisualizer3D, URplatform, HeatMapper, OpenStreetMap, SequentialEvents, PhotoGeolocationMap, WeChatGameDemo, GameJam72HourDemo, PeaceEliteHustCampusDemo, BMWMetaIslandDemo, ClusteringEvents, EpsteinScretArchive, RiffleDemo, GenStyleDemo, GenshotDemo, DragonDiffusionDemo, AnyRealDemo, PreviousArchiWorkDemo, HongqiquDemo, ScendanceDemo } from './DemoComponents';
 
 // 根据slug获取对应的demo组件
 export const getDemoComponent = (slug: string) => {
@@ -18,7 +18,6 @@ export const getDemoComponent = (slug: string) => {
     'peace-elite-hust-campus': PeaceEliteHustCampusDemo,
     'bmw-meta-island': BMWMetaIslandDemo,
     'how-to-conduct-time-geo-sequential-clustering-from-album': ClusteringEvents,
-    'box-up-my-stuff-in-cyberspace': BoxUpMyStuffInCyberspace,
     'epstein-mystery-archive': EpsteinScretArchive,
     'riffle-ai-game-generation-tool': RiffleDemo,
     'genstyle': GenStyleDemo,

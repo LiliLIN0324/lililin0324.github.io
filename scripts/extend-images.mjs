@@ -214,10 +214,8 @@ function processFile(filePath) {
   }
 }
 
-// Main
-console.log('Extending image references to 99...\n');
-const files = walkDir(DATA_DIR).sort();
-for (const f of files) {
-  processFile(f);
-}
-console.log('\nDone.');
+// Retired. This script padded every project to 99 image URLs and copied that
+// list into the markdown body, which is the duplication the detail page no
+// longer uses. Galleries belong in frontmatter `image` only.
+console.error('extend-images.mjs is retired. Keep gallery URLs in frontmatter image lists; do not duplicate them as markdown images.')
+process.exit(1)

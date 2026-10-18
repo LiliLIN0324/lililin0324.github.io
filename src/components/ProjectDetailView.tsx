@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getDemoComponent } from './DemoLoader';
-import { tutorialCodeContent } from './tutorialCodeContent';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -95,6 +94,219 @@ const proseComponents = {
   },
 };
 
+const GALLERY_PREVIEW = 6;
+
+const galleryModeButton = (selected: boolean) =>
+  `px-3 py-1.5 text-[12px] transition-colors duration-200 ${selected ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'}`;
+
+/* Frontmatter galleries used to be repeated as a wall of markdown images.
+   Default is a short grid with a dropdown expand. A second mode pages
+   one image at a time. Either way, a click still opens the lightbox. */
+const ProjectGallery = ({ images }: { images: string[] }) => {
+  const [mode, setMode] = useState<'expand' | 'flip'>('expand');
+  const [expanded, setExpanded] = useState(false);
+  const [failed, setFailed] = useState<Set<string>>(new Set());
+  const [active, setActive] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+
+  const available = images.filter(src => !failed.has(src));
+  const pageIndex = available.length === 0 ? 0 : Math.min(page, available.length - 1);
+  const visible = expanded ? available : available.slice(0, GALLERY_PREVIEW);
+  const hiddenCount = Math.max(0, available.length - GALLERY_PREVIEW);
+
+  const stepPage = (delta: number) => {
+    setPage(current => {
+      const len = available.length;
+      if (len <= 1) return 0;
+      const index = Math.min(current, len - 1);
+      const next = index + delta;
+      if (next < 0 || next >= len) return index;
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+
+      if (active !== null) {
+        if (event.key === 'Escape') setActive(null);
+        if (event.key === 'ArrowRight') setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1)));
+        if (event.key === 'ArrowLeft') setActive(index => (index === null ? index : Math.max(0, index - 1)));
+        return;
+      }
+
+      if (mode !== 'flip' || available.length < 2) return;
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      const gallery = document.getElementById('gallery');
+      if (!gallery) return;
+      const rect = gallery.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+      event.preventDefault();
+      stepPage(event.key === 'ArrowRight' ? 1 : -1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [active, mode, available.length]);
+
+  if (available.length === 0) return null;
+
+  const markFailed = (src: string) => {
+    setFailed(prev => {
+      if (prev.has(src)) return prev;
+      const next = new Set(prev);
+      next.add(src);
+      return next;
+    });
+  };
+
+  return (
+    <section id="gallery" className="mt-12">
+      <div className="section-head mb-5">
+        <p className="eyebrow">Gallery</p>
+        <div className="flex flex-wrap items-center gap-3">
+          {available.length > 1 && (
+            <div className="flex border border-rule" role="group" aria-label="Gallery layout">
+              <button type="button" aria-pressed={mode === 'expand'} onClick={() => setMode('expand')} className={galleryModeButton(mode === 'expand')}>下拉展开</button>
+              <button type="button" aria-pressed={mode === 'flip'} onClick={() => setMode('flip')} className={galleryModeButton(mode === 'flip')}>左右翻页</button>
+            </div>
+          )}
+          <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+            {mode === 'flip' ? `${pageIndex + 1} / ${available.length}` : `${available.length} images`}
+          </p>
+        </div>
+      </div>
+
+      {mode === 'expand' ? (
+        <>
+          <div className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3">
+            {visible.map((src, index) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setActive(index)}
+                className="group relative bg-surface text-left"
+              >
+                <img
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[4/3] h-auto w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                  onError={() => markFailed(src)}
+                />
+                <span className="pointer-events-none absolute bottom-2 right-2 bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-ink-3">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {hiddenCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setExpanded(open => !open)}
+              className="flex w-full items-center justify-center gap-2 border border-t-0 border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
+            >
+              {expanded ? 'Collapse' : `Show all ${available.length}`}
+              <svg className={`h-3 w-3 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          )}
+        </>
+      ) : (
+        <div className="border border-rule bg-surface">
+          <div className="relative bg-surface-2">
+            <button
+              type="button"
+              onClick={() => setActive(pageIndex)}
+              className="block w-full"
+              aria-label={`Image ${pageIndex + 1} of ${available.length}`}
+            >
+              <img
+                src={available[pageIndex]}
+                alt=""
+                className="mx-auto aspect-[4/3] max-h-[70vh] w-full object-contain"
+                onError={() => markFailed(available[pageIndex])}
+              />
+            </button>
+            <button
+              type="button"
+              aria-label="Previous image"
+              disabled={pageIndex === 0}
+              onClick={() => stepPage(-1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              aria-label="Next image"
+              disabled={pageIndex >= available.length - 1}
+              onClick={() => stepPage(1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
+            >
+              Next
+            </button>
+          </div>
+          <p className="border-t border-rule px-4 py-3 text-center font-mono text-[12px] tracking-eyebrow text-ink" aria-live="polite">
+            {pageIndex + 1} / {available.length}
+          </p>
+        </div>
+      )}
+
+      {active !== null && available[active] && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-4 md:p-10"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Gallery image"
+          onClick={() => setActive(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 font-mono text-[11px] uppercase tracking-eyebrow text-canvas/80 hover:text-canvas"
+            onClick={() => setActive(null)}
+          >
+            Close
+          </button>
+          {available.length > 1 && (
+            <button
+              type="button"
+              aria-label="Previous image"
+              className="absolute left-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:left-6"
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.max(0, index - 1))); }}
+            >
+              Prev
+            </button>
+          )}
+          <img
+            src={available[active]}
+            alt=""
+            className="max-h-[85vh] max-w-[90vw] object-contain"
+            onClick={event => event.stopPropagation()}
+            onError={() => markFailed(available[active])}
+          />
+          {available.length > 1 && (
+            <button
+              type="button"
+              aria-label="Next image"
+              className="absolute right-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:right-6"
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1))); }}
+            >
+              Next
+            </button>
+          )}
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas/70">
+            {active + 1} / {available.length}
+          </p>
+        </div>
+      )}
+    </section>
+  );
+};
+
 export const ProjectDetailView = ({ data, type }: { data: any[]; type: string }) => {
   const { id } = useParams();
   const project = data.find(p => p.slug === id);
@@ -130,6 +342,12 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
     );
   }
 
+  const DETAILS_MARK = '<!-- details -->';
+  const rawContent = String(project.details.content || '');
+  const splitAt = rawContent.indexOf(DETAILS_MARK);
+  const lead = (splitAt === -1 ? rawContent : rawContent.slice(0, splitAt)).trim();
+  const details = splitAt === -1 ? '' : rawContent.slice(splitAt + DETAILS_MARK.length).trim();
+
   return (
     <div className="animate-rise-in pb-16">
       {/* ---- Sticky toolbar ---- */}
@@ -158,7 +376,7 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
     {/* ---- Details view ---- */}
       {viewMode === 'details' ? (
         <div className="shell py-8 md:py-12">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-5xl">
             {/* Meta */}
             {project.tech?.length > 0 && (
               <div className="mb-6 flex flex-wrap gap-1.5">
@@ -220,28 +438,33 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
               </div>
             </details>
 
-            {/* ---- Content — the main event ---- */}
-            {project.details.content && (
+            {/* Narrative first, then the gallery, then optional deeper detail. */}
+            {lead && (
               <section id="content">
-                <div className="section-head mb-8">
-                  <p className="eyebrow">Content</p>
-                </div>
                 <div className="prose-custom text-base leading-relaxed text-ink-2">
                   <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={proseComponents}>
-                    {project.details.content}
+                    {lead}
                   </ReactMarkdown>
                 </div>
               </section>
             )}
 
-            {(project.details.code || project.details.codeComponent || tutorialCodeContent[project.slug]) && (
-              <section id="code" className="mt-12">
-                <div className="section-head mb-5">
-                  <p className="eyebrow">Code Example</p>
+            <ProjectGallery
+              key={project.slug}
+              images={(project.details.image ?? []).filter((url: string) => url && !String(project.details.content || '').includes(url))}
+            />
+
+            {details && (
+              <section id="details" className="mt-12">
+                <div className="section-head mb-8">
+                  <p className="eyebrow">细节</p>
+                  <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">Methods</p>
                 </div>
-                <pre className="overflow-x-auto border border-rule bg-ink p-5 font-mono text-[13px] leading-relaxed text-canvas md:p-7">
-                  <code>{tutorialCodeContent[project.slug] || project.details.codeComponent || `// Code file: ${project.details.code}`}</code>
-                </pre>
+                <div className="prose-custom text-base leading-relaxed text-ink-2">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={proseComponents}>
+                    {details}
+                  </ReactMarkdown>
+                </div>
               </section>
             )}
           </div>
