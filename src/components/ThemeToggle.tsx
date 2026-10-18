@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // The `dark` class is applied by the pre-paint script in index.html, so state
 // is seeded from the DOM rather than re-deciding it here (which would flash).
@@ -6,8 +6,22 @@ const readInitialTheme = () =>
   typeof document !== 'undefined' &&
   document.documentElement.classList.contains('dark')
 
-export const ThemeToggle = () => {
+export const ThemeToggle = ({ className = '' }: { className?: string }) => {
   const [isDark, setIsDark] = useState(readInitialTheme)
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const follow = () => {
+      let saved: string | null = null
+      try { saved = localStorage.getItem('theme') } catch { /* private mode */ }
+      if (saved === 'light' || saved === 'dark') return
+      const next = media.matches
+      document.documentElement.classList.toggle('dark', next)
+      setIsDark(next)
+    }
+    media.addEventListener('change', follow)
+    return () => media.removeEventListener('change', follow)
+  }, [])
 
   const toggleTheme = () => {
     const next = !isDark
@@ -23,7 +37,7 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="icon-btn"
+      className={`icon-btn ${className}`.trim()}
       aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
       title={isDark ? '切换到日间模式' : '切换到夜间模式'}
     >

@@ -1,0 +1,1 @@
+import{j as l}from"./react-vendor-Dn-0NGU0.js";import"./geo-BbprxUkj.js";import"./vendor-BzO13j2l.js";const s=()=>l.jsx("div",{className:"h-full w-full bg-[#f5f7fb]",children:l.jsx("iframe",{src:"/demos/anyreal.html",className:"h-full w-full border-0",title:"AnyReal — AI 虚拟影棚项目文档",allowFullScreen:!0})});export{s as default};
