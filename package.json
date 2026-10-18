@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assets:inventory": "node scripts/inventory-images.mjs",
+    "assets:pdf": "node scripts/pdf-to-fig.mjs",
+    "assets:upload": "node scripts/upload-fig.mjs",
+    "assets:test": "node --test scripts/lib/fig-layout.test.mjs scripts/inventory-images.test.mjs scripts/pdf-to-fig.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

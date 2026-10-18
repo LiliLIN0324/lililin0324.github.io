@@ -34,7 +34,8 @@
 │ │   └── projects/         # 分类目录（product / game / planning / platform / tutorial）
 │   │       └── *.md          # 每个项目一个 md，frontmatter + 正文
 │   └── *.tsx                 # 各项目 Demo 组件
-├── public/data/fig/          # 本地图片（已迁移至 CDN）
+├── public/data/              # Demo 用 CSV。图片不在这里，见 scripts/ASSETS.md
+├── scripts/                  # 图片流水线（PDF → fig/<slug>/ → R2）与旧的 extend-images
 ├── docs/                     # 构建产物（GitHub Pages）
 └── MainPage.tsx              # 全局布局 & 路由
 ```
@@ -110,6 +111,13 @@ icon: "封面图 CDN 地址"
 ---
 正文（Markdown + 图片）
 ```
+
+## 图片
+
+作品图放在 Cloudflare R2 桶 `lili-assets`，公开地址
+`https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/<slug>/`。
+本地原件在 Windows 的 `E:\fig\<slug>\`，不要把大图提交进仓库。
+从 PDF 导出、上传、以及当前引用清单见 [scripts/ASSETS.md](scripts/ASSETS.md)。
 
 ## 开发
 
