@@ -26,4 +26,9 @@ dist-ssr
 1.py
 2.py
 
+# Staged R2 uploads. The site references public URLs; do not commit the binaries.
+assets-out/
+
+# Vite static dir. Cluster CSVs already tracked under public/data/K_* stay in git.
+# New files here (including fig images) stay untracked.
 public

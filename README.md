@@ -34,7 +34,8 @@
 │ │   └── projects/         # 分类目录（product / game / planning / platform / tutorial）
 │   │       └── *.md          # 每个项目一个 md，frontmatter + 正文
 │   └── *.tsx                 # 各项目 Demo 组件
-├── public/data/fig/          # 本地图片（已迁移至 CDN）
+├── public/data/K_*/          # 聚类 demo 的 CSV（图片不放这里）
+├── scripts/ASSETS.md         # PDF / E:\fig → R2 `fig/<slug>/` 流水线
 ├── docs/                     # 构建产物（GitHub Pages）
 └── MainPage.tsx              # 全局布局 & 路由
 ```
@@ -119,6 +120,11 @@ npm run dev      # http://localhost:5173
 npm run build    # 输出到 docs/
 npm run preview  # 预览构建产物
 ```
+
+## 素材（R2）
+
+作品图片不进 git。本地图在 `E:\fig\<slug>\`，作品集 PDF 在 `E:\`。
+导出为 `fig/<slug>/01.jpg` 并上传到桶 `lili-assets` 的步骤见 [scripts/ASSETS.md](scripts/ASSETS.md)。
 
 ## 部署
 
