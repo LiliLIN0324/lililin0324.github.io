@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getDemoComponent } from './DemoLoader';
 import ReactMarkdown from 'react-markdown';
@@ -94,34 +94,110 @@ const proseComponents = {
   },
 };
 
-const GALLERY_PREVIEW = 6;
+/* Collapsed list shows a few stacked thumbs. One extra success tells us
+   the catalog is longer, without downloading every later file up front. */
+const LIST_PREVIEW = 3;
 
 const galleryModeButton = (selected: boolean) =>
   `px-3 py-1.5 text-[12px] transition-colors duration-200 ${selected ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'}`;
 
 /* Frontmatter galleries used to be repeated as a wall of markdown images.
-   Default is a short grid with a dropdown expand. A second mode pages
-   one image at a time. Either way, a click still opens the lightbox. */
+   Default is a vertical expand/collapse list of stacked thumbs. A second
+   mode pages one image at a time. Files that fail to load never occupy a cell.
+   Either way, a click still opens the lightbox. */
 const ProjectGallery = ({ images }: { images: string[] }) => {
   const [mode, setMode] = useState<'expand' | 'flip'>('expand');
   const [expanded, setExpanded] = useState(false);
-  const [failed, setFailed] = useState<Set<string>>(new Set());
   const [active, setActive] = useState<number | null>(null);
   const [page, setPage] = useState(0);
+  const [tick, setTick] = useState(0);
+  const statusRef = useRef<Map<string, 'ok' | 'bad'>>(new Map());
 
-  const available = images.filter(src => !failed.has(src));
-  const pageIndex = available.length === 0 ? 0 : Math.min(page, available.length - 1);
-  const visible = expanded ? available : available.slice(0, GALLERY_PREVIEW);
-  const hiddenCount = Math.max(0, available.length - GALLERY_PREVIEW);
+  const revealAll = mode === 'expand' && expanded;
+  const imagesKey = images.join('\n');
+
+  useEffect(() => {
+    let cancelled = false;
+    let activeLoads = 0;
+    let cursor = 0;
+    const status = statusRef.current;
+    const inflight: HTMLImageElement[] = [];
+    const CONCURRENCY = 4;
+
+    const okCount = () => images.reduce((count, src) => count + (status.get(src) === 'ok' ? 1 : 0), 0);
+
+    const target = () => {
+      if (revealAll) return Number.POSITIVE_INFINITY;
+      if (mode === 'flip') return page + 2;
+      return LIST_PREVIEW + 1;
+    };
+
+    const pump = () => {
+      if (cancelled) return;
+      while (activeLoads < CONCURRENCY && cursor < images.length) {
+        if (okCount() >= target()) break;
+        const src = images[cursor++];
+        if (status.has(src)) continue;
+        activeLoads++;
+        const img = new Image();
+        inflight.push(img);
+        const finish = (result: 'ok' | 'bad') => {
+          status.set(src, result);
+          if (cancelled) return;
+          activeLoads--;
+          setTick(value => value + 1);
+          pump();
+        };
+        img.onload = () => finish(img.naturalWidth > 0 ? 'ok' : 'bad');
+        img.onerror = () => finish('bad');
+        img.src = src;
+      }
+    };
+
+    pump();
+    return () => {
+      cancelled = true;
+      inflight.forEach(img => {
+        img.onload = null;
+        img.onerror = null;
+      });
+    };
+    // Restart when the URL list, mode, or how far we need to read changes.
+    // imagesKey (not the array identity) is the catalog key: the parent builds
+    // a new array on every render.
+  }, [imagesKey, revealAll, mode, page]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const good = images.filter(src => statusRef.current.get(src) === 'ok');
+  const fullyKnown = images.every(src => statusRef.current.has(src));
+  const pageIndex = good.length === 0 ? 0 : Math.min(page, good.length - 1);
+  const visible = revealAll ? good : good.slice(0, LIST_PREVIEW);
+  const canExpand = good.length > LIST_PREVIEW;
+  const waitingForNext = mode === 'flip' && !fullyKnown && page >= good.length && good.length > 0;
+
+  useEffect(() => {
+    if (fullyKnown && good.length > 0 && page > good.length - 1) {
+      setPage(good.length - 1);
+    }
+  }, [fullyKnown, good.length, page]);
+
+  const markBad = (src: string) => {
+    if (statusRef.current.get(src) === 'bad') return;
+    statusRef.current.set(src, 'bad');
+    setTick(value => value + 1);
+  };
 
   const stepPage = (delta: number) => {
     setPage(current => {
-      const len = available.length;
-      if (len <= 1) return 0;
-      const index = Math.min(current, len - 1);
+      const last = Math.max(0, good.length - 1);
+      const index = Math.min(current, last);
       const next = index + delta;
-      if (next < 0 || next >= len) return index;
-      return next;
+      if (next < 0) return 0;
+      if (delta > 0) {
+        if (next < good.length) return next;
+        if (!fullyKnown) return good.length;
+        return index;
+      }
+      return Math.min(next, last);
     });
   };
 
@@ -132,12 +208,12 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
 
       if (active !== null) {
         if (event.key === 'Escape') setActive(null);
-        if (event.key === 'ArrowRight') setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1)));
+        if (event.key === 'ArrowRight') setActive(index => (index === null ? index : Math.min(good.length - 1, index + 1)));
         if (event.key === 'ArrowLeft') setActive(index => (index === null ? index : Math.max(0, index - 1)));
         return;
       }
 
-      if (mode !== 'flip' || available.length < 2) return;
+      if (mode !== 'flip' || good.length < 1) return;
       if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
       const gallery = document.getElementById('gallery');
       if (!gallery) return;
@@ -148,67 +224,79 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [active, mode, available.length]);
+  }, [active, mode, good.length, fullyKnown, page]);
 
-  if (available.length === 0) return null;
+  if (tick < 0) return null;
+  if (fullyKnown && good.length === 0) return null;
 
-  const markFailed = (src: string) => {
-    setFailed(prev => {
-      if (prev.has(src)) return prev;
-      const next = new Set(prev);
-      next.add(src);
-      return next;
-    });
-  };
+  const countLabel = good.length === 0
+    ? ''
+    : fullyKnown
+      ? `${good.length} images`
+      : `${good.length}+`;
+  const flipLabel = good.length === 0
+    ? ''
+    : fullyKnown
+      ? `${pageIndex + 1} / ${good.length}`
+      : `${pageIndex + 1} / ${good.length}+`;
 
   return (
     <section id="gallery" className="mt-12">
       <div className="section-head mb-5">
         <p className="eyebrow">Gallery</p>
         <div className="flex flex-wrap items-center gap-3">
-          {available.length > 1 && (
+          {images.length > 1 && (
             <div className="flex border border-rule" role="group" aria-label="Gallery layout">
               <button type="button" aria-pressed={mode === 'expand'} onClick={() => setMode('expand')} className={galleryModeButton(mode === 'expand')}>下拉展开</button>
               <button type="button" aria-pressed={mode === 'flip'} onClick={() => setMode('flip')} className={galleryModeButton(mode === 'flip')}>左右翻页</button>
             </div>
           )}
-          <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
-            {mode === 'flip' ? `${pageIndex + 1} / ${available.length}` : `${available.length} images`}
-          </p>
+          {(mode === 'flip' ? flipLabel : countLabel) && (
+            <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+              {mode === 'flip' ? flipLabel : countLabel}
+            </p>
+          )}
         </div>
       </div>
 
       {mode === 'expand' ? (
         <>
-          <div className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3">
-            {visible.map((src, index) => (
-              <button
-                key={src}
-                type="button"
-                onClick={() => setActive(index)}
-                className="group relative bg-surface text-left"
-              >
-                <img
-                  src={src}
-                  alt=""
-                  loading="lazy"
-                  className="aspect-[4/3] h-auto w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-                  onError={() => markFailed(src)}
-                />
-                <span className="pointer-events-none absolute bottom-2 right-2 bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-ink-3">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </button>
-            ))}
-          </div>
+          {visible.length > 0 ? (
+            <ol className="border border-rule bg-surface">
+              {visible.map((src, index) => (
+                <li key={src} className="border-b border-rule last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => setActive(good.indexOf(src))}
+                    className="flex w-full items-center gap-3 px-3 py-3 text-left transition-colors hover:bg-surface-2 md:gap-4 md:px-4"
+                  >
+                    <span className="w-8 shrink-0 font-mono text-[11px] text-ink-3">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <img
+                      src={src}
+                      alt=""
+                      className="min-w-0 max-h-64 w-auto max-w-full object-contain"
+                      onError={() => markBad(src)}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="border border-rule px-4 py-6 text-center font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+              Loading
+            </p>
+          )}
 
-          {hiddenCount > 0 && (
+          {canExpand && (
             <button
               type="button"
               onClick={() => setExpanded(open => !open)}
+              aria-expanded={expanded}
               className="flex w-full items-center justify-center gap-2 border border-t-0 border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
             >
-              {expanded ? 'Collapse' : `Show all ${available.length}`}
+              {expanded ? 'Collapse' : fullyKnown ? `Show all ${good.length}` : 'Show all'}
               <svg className={`h-3 w-3 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
@@ -218,23 +306,29 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
       ) : (
         <div className="border border-rule bg-surface">
           <div className="relative bg-surface-2">
-            <button
-              type="button"
-              onClick={() => setActive(pageIndex)}
-              className="block w-full"
-              aria-label={`Image ${pageIndex + 1} of ${available.length}`}
-            >
-              <img
-                src={available[pageIndex]}
-                alt=""
-                className="mx-auto aspect-[4/3] max-h-[70vh] w-full object-contain"
-                onError={() => markFailed(available[pageIndex])}
-              />
-            </button>
+            {good[pageIndex] ? (
+              <button
+                type="button"
+                onClick={() => setActive(pageIndex)}
+                className="block w-full"
+                aria-label={flipLabel ? `Image ${flipLabel}` : `Image ${pageIndex + 1}`}
+              >
+                <img
+                  src={good[pageIndex]}
+                  alt=""
+                  className="mx-auto max-h-[70vh] w-full object-contain"
+                  onError={() => markBad(good[pageIndex])}
+                />
+              </button>
+            ) : (
+              <p className="px-4 py-16 text-center font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+                Loading
+              </p>
+            )}
             <button
               type="button"
               aria-label="Previous image"
-              disabled={pageIndex === 0}
+              disabled={pageIndex === 0 || good.length === 0}
               onClick={() => stepPage(-1)}
               className="absolute left-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
             >
@@ -243,7 +337,7 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
             <button
               type="button"
               aria-label="Next image"
-              disabled={pageIndex >= available.length - 1}
+              disabled={good.length === 0 || (pageIndex >= good.length - 1 && (fullyKnown || waitingForNext))}
               onClick={() => stepPage(1)}
               className="absolute right-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
             >
@@ -251,12 +345,12 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
             </button>
           </div>
           <p className="border-t border-rule px-4 py-3 text-center font-mono text-[12px] tracking-eyebrow text-ink" aria-live="polite">
-            {pageIndex + 1} / {available.length}
+            {flipLabel || '—'}
           </p>
         </div>
       )}
 
-      {active !== null && available[active] && (
+      {active !== null && good[active] && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-4 md:p-10"
           role="dialog"
@@ -271,7 +365,7 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
           >
             Close
           </button>
-          {available.length > 1 && (
+          {good.length > 1 && (
             <button
               type="button"
               aria-label="Previous image"
@@ -282,24 +376,24 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
             </button>
           )}
           <img
-            src={available[active]}
+            src={good[active]}
             alt=""
             className="max-h-[85vh] max-w-[90vw] object-contain"
             onClick={event => event.stopPropagation()}
-            onError={() => markFailed(available[active])}
+            onError={() => markBad(good[active])}
           />
-          {available.length > 1 && (
+          {good.length > 1 && (
             <button
               type="button"
               aria-label="Next image"
               className="absolute right-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:right-6"
-              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1))); }}
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.min(good.length - 1, index + 1))); }}
             >
               Next
             </button>
           )}
           <p className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas/70">
-            {active + 1} / {available.length}
+            {active + 1} / {good.length}
           </p>
         </div>
       )}
