@@ -6,9 +6,6 @@ category: "urban heat island, extreme heat, participation"
 year: "2025-present"
 description: "面向全球热监测与可视化的Web平台"
 tech: ["React","Three.js","D3.js","Node.js"]
-abstract: "HeatMapper is a comprehensive web platform designed to monitor and visualize global heat patterns. It provides real-time data on urban heat islands, extreme heat events, and temperature trends across different regions. The platform aims to raise awareness about heat-related issues and support informed decision-making for urban planning and climate adaptation."
-challenge: "Integrating real-time temperature data from multiple sources and presenting it in an intuitive, interactive visualization that allows users to explore heat patterns at different scales."
-solution: "Developed a responsive web application using React for the frontend, Three.js for 3D visualizations, D3.js for data visualizations, and Node.js for the backend. Implemented data integration pipelines to aggregate temperature data from various sources and created interactive maps and charts for user exploration."
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/logo.jpg"
 image:
@@ -113,4 +110,4 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/heatmapper/99.png"
 ---
 
-
+- 把城市热岛、极端高温和温度趋势放在同一张可缩放的图上，给规划和适应做参考。

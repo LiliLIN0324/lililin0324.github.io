@@ -4,10 +4,8 @@ slug: "neurotopia"
 title: "neurotopia"
 category: "planning"
 year: "2023"
-description: ""
+description: "武汉汉阳旧工业区的青年共享居住和创业空间，用神经元的节点、连接和空隙组织社区。"
 tech: ["Rhino","Grasshopper","design"]
-abstract: "Neurotopia aims to provide shared living and entrepreneurial spaces primarily for young people. This urban design project is located in a former industrial area in Hanyang District, Wuhan, Hubei Province, China. By creating a new metaverse for animation enterprises in Hanyang, the project seeks to revitalize the site and establish a decentralized future community based on the theories of neuronal biological properties and complex systems adaptation."
-solution: "Specifically, the design introduces the concept of neurons, dividing the space into three categories: "nodes," "connections," and "voids“. Vertical transportation hubs are established at the nodes, connecting prefabricated modular units to each node, promoting a smart city design concept that integrates new transportation and intelligent community systems. In the voids between the nodes, incubator modular units are created to accommodate the evolving scale of enterprises, fostering a dynamic, shared, and co-creative living environment. "
 hasDemo: false
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/logo.jpg"
 image:
@@ -112,10 +110,10 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/neurotopia/99.jpg"
 ---
 
+- 地点：武汉市汉阳区一处旧工业用地。
+- 节点放垂直交通，模块挂在节点上，空隙留下来。
+- 2024-10 韩国春川，韩国城市设计学会秋季会议口头报告。
+
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Neurotopia.mp4"></video>
+<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Neurotopia.mp4"></video>
 </div>
-
-# 效果展示
-
----

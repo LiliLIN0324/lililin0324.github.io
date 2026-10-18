@@ -6,9 +6,6 @@ category: "AI / Agentic RAG"
 year: "2025-present"
 description: "面向城市规划的 Agentic RAG 原型：结合规划知识库、Prompt Engineering、向量检索与多 Agent 工具调用"
 tech: ["LLM","Prompt Engineering","RAG","Agentic RAG","LangChain","Chroma","Embedding","Python"]
-abstract: "我独立设计并实现了一个面向城市规划的 Agentic RAG 原型，将规划知识库、Prompt Engineering、向量检索和多 Agent 工具调用结合，用于处理主题检索、时间信息分析及跨城市规划比较。"
-challenge: "基础 Naïve RAG 只能做简单检索，难以处理城市规划中主题、城市、时间与 Initiative 等多维度信息。"
-solution: "围绕主题、城市、时间与 Initiative 设计专用检索与比较工具，使系统从 Naïve RAG 扩展为多工具协调的 Agentic RAG 原型。"
 hasDemo: false
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/agentic-rag/logo.jpg"
 image:
@@ -113,26 +110,10 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/agentic-rag/99.jpg"
 ---
 
+- 我独立做了选题、知识库、检索、提示词和多工具 Agent。
+- 能按主题、城市、时间和 initiative 查规划文本，并做跨城市比较。
+- 技术：GPT-4o-mini、LangChain、Chroma。
+
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/agentic-rag.mp4"></video>
+<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/agentic-rag.mp4"></video>
 </div>
-
-# 项目概述
-
-我独立设计并实现了一个面向城市规划的 Agentic RAG 原型，将规划知识库、Prompt Engineering、向量检索和多 Agent 工具调用结合，用于处理主题检索、时间信息分析及跨城市规划比较。
-
-## 个人贡献
-独立完成项目选题、规划数据整理、知识库设计、RAG 架构设计、Prompt Engineering、工具定义、Agent Workflow、案例分析及最终展示。围绕城市规划中的主题、城市、时间与 Initiative 信息，设计专用检索与比较工具，使系统从基础 Naïve RAG 扩展为具备多工具协调能力的 Agentic RAG 原型。
-
-## 技术栈
-LLM / GPT-4o-mini · Prompt Engineering · RAG · Agentic RAG · LangChain · Chroma / Vector DB · Embedding · Structured Output / JSON · Python
-
-## 项目类型标签
-AI Product / AI Application · Agent Workflow · RAG · Urban Planning · Knowledge Base · Prompt Engineering · LLM Tool Use · Information Retrieval
-
-## 资料依据
-本报告根据用户提供的 AskPlan Final Presentation、AskPlan Final Report、Lin Lili Personal Report 等材料整理。项目名称、架构、工具、案例、个人贡献与学习总结均以原始材料为依据；为适配个人作品集，对表达进行了中文化和结构化重写。
-
-## 效果展示
-
----

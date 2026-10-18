@@ -6,9 +6,6 @@ category: "Computer Vision · Urban Sensing"
 year: "2023.06"
 description: "通过狩猎相机长时段高精度追踪校园户外环境与人群活动，建模人本尺度公共空间活力"
 tech: ["Computer Vision","Active Sensing","Pedestrian Tracking","Time-series Analysis","Urban Analytics","Trail Camera"]
-abstract: "The vitality of space plays an important role in evaluating spatial quality and attractiveness. Using active perception technologies and image acquisition methods such as hunting cameras, this project captures campus outdoor environments and pedestrian activities over long periods at high precision, enabling vitality modeling of human-scale public spaces. Through time-series analysis, we investigated the impact of wind and heat environments on pedestrian activities."
-challenge: "Past studies relied on low-sample surveys or low-precision positioning to obtain crowd vitality data, which could not capture individual environmental perception and behavioral activities accurately."
-solution: "Active perception technologies and long-term, high-precision image acquisition (such as hunting cameras) were adopted to track campus crowd activities and the material environment, and time-series data were used to study how wind and heat environments influence pedestrian activities."
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/campus-public-space-vitality-modeling/logo.jpg"
 image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/campus-public-space-vitality-modeling/01.jpg"
@@ -112,42 +109,10 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/campus-public-space-vitality-modeling/99.jpg"
 ---
 
+- 2023-06，同济 DigitalFUTURES 夏令营狩猎相机组。成员：林丽丽、黄婧、公丕欣、沈小洁、刘博宇、陈忆湄、刘天明。
+- 用狩猎相机长期拍校园户外的人和环境。
+- 结果：风速越高，经过的人越多；热感指数越高，停留越短。
+
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/campus-public-space-vitality-modeling.mp4"></video>
+<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/campus-public-space-vitality-modeling.mp4"></video>
 </div>
-
-# 校园公共空间活力建模
-## Modeling the Vitality of Public Spaces on Campus
-### ——基于对户外环境与人群活动的实时跟踪
-
-> 2023.6｜上海同济大学｜Architectural DigitalFUTURES 2023 同济夏令营｜成员（狩猎相机组）
-
----
-
-## 研究题目
-
-狩猎相机组的研究题目为 **「户外环境与人群跟踪的校园空间活力建模」**。
-
-## 小组成员
-
-林丽丽 Lili Lin｜黄婧 Jing Huang｜公丕欣 Pixin Gong｜沈小洁 Xiaojie Shen｜刘博宇 Boyu Liu｜陈忆湄 Yimei Chen｜刘天明 Tianming Liu
-
----
-
-## 研究简介
-
-空间的活力在评价空间质量和吸引力上起着重要作用。相较于以往低样本调查或低精度定位获取的人群活力数据，主动感知技术能够实现对个体环境感知与行为活动的精准反馈。同时，图像采集技术手段（如打猎相机）的进步已允许研究者实现对校园人群活动与物质环境的长时段、高精度捕捉，使得针对人本尺度公共空间的活力建模成为可能。
-
-该组通过研究发现户外环境对个体环境感知与行为活动存在影响，同时通过时序数据研究风热环境对行人活动的影响，结果表明：**场地内风速对行人通过数量有正向影响，热感指数与人群停留时间有负向影响**。
-
-## 英文摘要
-
-The vitality of space plays an important role in evaluating spatial quality and attractiveness. Compared with the low-sample surveys or low-precision positioning of crowd vitality data in the past, active perception technology can achieve accurate feedback on individual environmental perception and behavioral activities. At the same time, the progress of image acquisition technology (such as hunting cameras) has allowed researchers to achieve long-term and high-precision capture of campus crowd activities and material environments, making it possible to model public space activities at the human scale.
-
-The group found that outdoor environments have an impact on individual environmental perception and behavioral activities. At the same time, through time-series data research, the impact of wind and heat environment on pedestrian activities was studied. The results showed that **wind speed has a positive effect on the number of pedestrians passing through the site, and the heat index has a negative effect on the length of time people stay**.
-
----
-
-## 参考链接
-
-<https://mp.weixin.qq.com/s?__biz=Mzg3NjQ2Mjc5NA==&mid=2247525414&idx=1&sn=fe70b061b93cbc6d38d8d38a6b32bfc1&chksm=cf33f383f8447a9586418622ca0e2f7a76c6e7c5257d49098f0c0e51e0381fd7ed643dda5ea3&scene=178&cur_album_id=2912679801638027265#rd>

@@ -4,9 +4,8 @@ slug: "riffle-ai-game-generation-tool"
 title: "Riffle - AI game Generation Tool"
 category: "UI&UX Design"
 year: "2026"
-description: "一款基于AI的游戏生成工具"
+description: "用一句话生成可玩小游戏的 AI 工具。"
 tech: ["Figma","React","TypeScript"]
-abstract: "Riffle is an AI-powered game generation tool that leverages advanced artificial intelligence algorithms to create immersive and engaging gaming experiences. By just one word, users can generate unique game concepts, characters, and storylines tailored to their interests. The platform aims to democratize game development, allowing both aspiring and experienced developers to bring their creative visions to life with ease."
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/riffle/logo.jpg"
 hasDemo: true
 image:
@@ -111,12 +110,8 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/riffle/99.jpg"
 ---
 
-# 项目网页链接
-https://www.riffle.games/
+作品页：[riffle.games](https://www.riffle.games/)
 
-# 效果展示
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Riffle.mp4"></video>
+<video controls playsinline style="width:100%;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Riffle.mp4"></video>
 </div>
-
----

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getDemoComponent } from './DemoLoader';
-import { tutorialCodeContent } from './tutorialCodeContent';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -451,17 +450,6 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
               key={project.slug}
               images={(project.details.image ?? []).filter((url: string) => url && !String(project.details.content || '').includes(url))}
             />
-
-            {(project.details.code || project.details.codeComponent || tutorialCodeContent[project.slug]) && (
-              <section id="code" className="mt-12">
-                <div className="section-head mb-5">
-                  <p className="eyebrow">Code Example</p>
-                </div>
-                <pre className="overflow-x-auto border border-rule bg-ink p-5 font-mono text-[13px] leading-relaxed text-canvas md:p-7">
-                  <code>{tutorialCodeContent[project.slug] || project.details.codeComponent || `// Code file: ${project.details.code}`}</code>
-                </pre>
-              </section>
-            )}
           </div>
         </div>
       ) : project.details?.demoOnly ? (
