@@ -97,28 +97,59 @@ const proseComponents = {
 
 const GALLERY_PREVIEW = 6;
 
+const galleryModeButton = (selected: boolean) =>
+  `px-3 py-1.5 text-[12px] transition-colors duration-200 ${selected ? 'bg-ink text-canvas' : 'text-ink-3 hover:text-ink'}`;
+
 /* Frontmatter galleries used to be repeated as a wall of markdown images.
-   Show a short grid first; the rest stays one click away, and a lightbox
-   lets you step through without scrolling the whole set. */
+   Default is a short grid with a dropdown expand. A second mode pages
+   one image at a time. Either way, a click still opens the lightbox. */
 const ProjectGallery = ({ images }: { images: string[] }) => {
+  const [mode, setMode] = useState<'expand' | 'flip'>('expand');
   const [expanded, setExpanded] = useState(false);
   const [failed, setFailed] = useState<Set<string>>(new Set());
   const [active, setActive] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
 
   const available = images.filter(src => !failed.has(src));
+  const pageIndex = available.length === 0 ? 0 : Math.min(page, available.length - 1);
   const visible = expanded ? available : available.slice(0, GALLERY_PREVIEW);
   const hiddenCount = Math.max(0, available.length - GALLERY_PREVIEW);
 
+  const stepPage = (delta: number) => {
+    setPage(current => {
+      const len = available.length;
+      if (len <= 1) return 0;
+      const index = Math.min(current, len - 1);
+      const next = index + delta;
+      if (next < 0 || next >= len) return index;
+      return next;
+    });
+  };
+
   useEffect(() => {
-    if (active === null) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setActive(null);
-      if (event.key === 'ArrowRight') setActive(index => (index === null ? index : (index + 1) % available.length));
-      if (event.key === 'ArrowLeft') setActive(index => (index === null ? index : (index - 1 + available.length) % available.length));
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+
+      if (active !== null) {
+        if (event.key === 'Escape') setActive(null);
+        if (event.key === 'ArrowRight') setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1)));
+        if (event.key === 'ArrowLeft') setActive(index => (index === null ? index : Math.max(0, index - 1)));
+        return;
+      }
+
+      if (mode !== 'flip' || available.length < 2) return;
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      const gallery = document.getElementById('gallery');
+      if (!gallery) return;
+      const rect = gallery.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+      event.preventDefault();
+      stepPage(event.key === 'ArrowRight' ? 1 : -1);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [active, available.length]);
+  }, [active, mode, available.length]);
 
   if (available.length === 0) return null;
 
@@ -135,42 +166,95 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
     <section id="gallery" className="mt-12">
       <div className="section-head mb-5">
         <p className="eyebrow">Gallery</p>
-        <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">{available.length} images</p>
+        <div className="flex flex-wrap items-center gap-3">
+          {available.length > 1 && (
+            <div className="flex border border-rule" role="group" aria-label="Gallery layout">
+              <button type="button" aria-pressed={mode === 'expand'} onClick={() => setMode('expand')} className={galleryModeButton(mode === 'expand')}>下拉展开</button>
+              <button type="button" aria-pressed={mode === 'flip'} onClick={() => setMode('flip')} className={galleryModeButton(mode === 'flip')}>左右翻页</button>
+            </div>
+          )}
+          <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
+            {mode === 'flip' ? `${pageIndex + 1} / ${available.length}` : `${available.length} images`}
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3">
-        {visible.map((src, index) => (
-          <button
-            key={src}
-            type="button"
-            onClick={() => setActive(index)}
-            className="group relative bg-surface text-left"
-          >
-            <img
-              src={src}
-              alt=""
-              loading="lazy"
-              className="aspect-[4/3] h-auto w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-              onError={() => markFailed(src)}
-            />
-            <span className="pointer-events-none absolute bottom-2 right-2 bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-ink-3">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-          </button>
-        ))}
-      </div>
+      {mode === 'expand' ? (
+        <>
+          <div className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3">
+            {visible.map((src, index) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setActive(index)}
+                className="group relative bg-surface text-left"
+              >
+                <img
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[4/3] h-auto w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                  onError={() => markFailed(src)}
+                />
+                <span className="pointer-events-none absolute bottom-2 right-2 bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-ink-3">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </button>
+            ))}
+          </div>
 
-      {hiddenCount > 0 && (
-        <button
-          type="button"
-          onClick={() => setExpanded(open => !open)}
-          className="flex w-full items-center justify-center gap-2 border border-t-0 border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
-        >
-          {expanded ? 'Collapse' : `Show all ${available.length}`}
-          <svg className={`h-3 w-3 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+          {hiddenCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setExpanded(open => !open)}
+              className="flex w-full items-center justify-center gap-2 border border-t-0 border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
+            >
+              {expanded ? 'Collapse' : `Show all ${available.length}`}
+              <svg className={`h-3 w-3 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          )}
+        </>
+      ) : (
+        <div className="border border-rule bg-surface">
+          <div className="relative bg-surface-2">
+            <button
+              type="button"
+              onClick={() => setActive(pageIndex)}
+              className="block w-full"
+              aria-label={`Image ${pageIndex + 1} of ${available.length}`}
+            >
+              <img
+                src={available[pageIndex]}
+                alt=""
+                className="mx-auto aspect-[4/3] max-h-[70vh] w-full object-contain"
+                onError={() => markFailed(available[pageIndex])}
+              />
+            </button>
+            <button
+              type="button"
+              aria-label="Previous image"
+              disabled={pageIndex === 0}
+              onClick={() => stepPage(-1)}
+              className="absolute left-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              aria-label="Next image"
+              disabled={pageIndex >= available.length - 1}
+              onClick={() => stepPage(1)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 border border-rule bg-canvas/90 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-ink transition-colors hover:bg-ink hover:text-canvas disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-canvas/90 disabled:hover:text-ink"
+            >
+              Next
+            </button>
+          </div>
+          <p className="border-t border-rule px-4 py-3 text-center font-mono text-[12px] tracking-eyebrow text-ink" aria-live="polite">
+            {pageIndex + 1} / {available.length}
+          </p>
+        </div>
       )}
 
       {active !== null && available[active] && (
@@ -193,7 +277,7 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
               type="button"
               aria-label="Previous image"
               className="absolute left-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:left-6"
-              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : (index - 1 + available.length) % available.length)); }}
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.max(0, index - 1))); }}
             >
               Prev
             </button>
@@ -210,7 +294,7 @@ const ProjectGallery = ({ images }: { images: string[] }) => {
               type="button"
               aria-label="Next image"
               className="absolute right-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:right-6"
-              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : (index + 1) % available.length)); }}
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : Math.min(available.length - 1, index + 1))); }}
             >
               Next
             </button>
