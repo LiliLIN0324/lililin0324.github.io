@@ -1,3 +1,8 @@
+/**
+ * Rewrites numbered figure URLs in project markdown so a detected sequence
+ * runs through 99. It does not check that those objects exist on R2.
+ * Prefer scripts/ASSETS.md for the PDF → fig/<slug>/ → R2 workflow.
+ */
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
