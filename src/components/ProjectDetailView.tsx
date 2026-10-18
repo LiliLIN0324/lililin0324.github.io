@@ -95,6 +95,135 @@ const proseComponents = {
   },
 };
 
+const GALLERY_PREVIEW = 6;
+
+/* Frontmatter galleries used to be repeated as a wall of markdown images.
+   Show a short grid first; the rest stays one click away, and a lightbox
+   lets you step through without scrolling the whole set. */
+const ProjectGallery = ({ images }: { images: string[] }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [failed, setFailed] = useState<Set<string>>(new Set());
+  const [active, setActive] = useState<number | null>(null);
+
+  const available = images.filter(src => !failed.has(src));
+  const visible = expanded ? available : available.slice(0, GALLERY_PREVIEW);
+  const hiddenCount = Math.max(0, available.length - GALLERY_PREVIEW);
+
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActive(null);
+      if (event.key === 'ArrowRight') setActive(index => (index === null ? index : (index + 1) % available.length));
+      if (event.key === 'ArrowLeft') setActive(index => (index === null ? index : (index - 1 + available.length) % available.length));
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [active, available.length]);
+
+  if (available.length === 0) return null;
+
+  const markFailed = (src: string) => {
+    setFailed(prev => {
+      if (prev.has(src)) return prev;
+      const next = new Set(prev);
+      next.add(src);
+      return next;
+    });
+  };
+
+  return (
+    <section id="gallery" className="mt-12">
+      <div className="section-head mb-5">
+        <p className="eyebrow">Gallery</p>
+        <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">{available.length} images</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-px border border-rule bg-rule md:grid-cols-3">
+        {visible.map((src, index) => (
+          <button
+            key={src}
+            type="button"
+            onClick={() => setActive(index)}
+            className="group relative bg-surface text-left"
+          >
+            <img
+              src={src}
+              alt=""
+              loading="lazy"
+              className="aspect-[4/3] h-auto w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+              onError={() => markFailed(src)}
+            />
+            <span className="pointer-events-none absolute bottom-2 right-2 bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-ink-3">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {hiddenCount > 0 && (
+        <button
+          type="button"
+          onClick={() => setExpanded(open => !open)}
+          className="flex w-full items-center justify-center gap-2 border border-t-0 border-rule px-5 py-3 font-mono text-[11px] uppercase tracking-eyebrow text-ink-3 transition-colors hover:bg-surface-2 hover:text-ink"
+        >
+          {expanded ? 'Collapse' : `Show all ${available.length}`}
+          <svg className={`h-3 w-3 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      )}
+
+      {active !== null && available[active] && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-4 md:p-10"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Gallery image"
+          onClick={() => setActive(null)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 font-mono text-[11px] uppercase tracking-eyebrow text-canvas/80 hover:text-canvas"
+            onClick={() => setActive(null)}
+          >
+            Close
+          </button>
+          {available.length > 1 && (
+            <button
+              type="button"
+              aria-label="Previous image"
+              className="absolute left-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:left-6"
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : (index - 1 + available.length) % available.length)); }}
+            >
+              Prev
+            </button>
+          )}
+          <img
+            src={available[active]}
+            alt=""
+            className="max-h-[85vh] max-w-[90vw] object-contain"
+            onClick={event => event.stopPropagation()}
+            onError={() => markFailed(available[active])}
+          />
+          {available.length > 1 && (
+            <button
+              type="button"
+              aria-label="Next image"
+              className="absolute right-3 top-1/2 -translate-y-1/2 border border-canvas/30 px-3 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas hover:bg-canvas hover:text-ink md:right-6"
+              onClick={event => { event.stopPropagation(); setActive(index => (index === null ? index : (index + 1) % available.length)); }}
+            >
+              Next
+            </button>
+          )}
+          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] uppercase tracking-eyebrow text-canvas/70">
+            {active + 1} / {available.length}
+          </p>
+        </div>
+      )}
+    </section>
+  );
+};
+
 export const ProjectDetailView = ({ data, type }: { data: any[]; type: string }) => {
   const { id } = useParams();
   const project = data.find(p => p.slug === id);
@@ -233,6 +362,11 @@ export const ProjectDetailView = ({ data, type }: { data: any[]; type: string })
                 </div>
               </section>
             )}
+
+            <ProjectGallery
+              key={project.slug}
+              images={(project.details.image ?? []).filter((url: string) => url && !String(project.details.content || '').includes(url))}
+            />
 
             {(project.details.code || project.details.codeComponent || tutorialCodeContent[project.slug]) && (
               <section id="code" className="mt-12">

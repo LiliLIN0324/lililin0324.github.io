@@ -44,9 +44,9 @@
 | Tab | 内容 |
 |---|---|
 | **Product** | 产品 & AI 产品项目（DragonDiffusion, AnyReal, Genshot, Genstyle, Riffle, Bazi, 幕景 Scendance, 1037PinPin） |
-| **Game** | 游戏开发（Game Jam, 和平精英×华科, BMW Meta Island, KittyLoveCarrots, Unity/Cocos 教程） |
+| **Game** | 游戏开发（Game Jam, 和平精英×华科, BMW Meta Island, Bilibili 实习, KittyLoveCarrots） |
 | **Planning** | 城市规划 & 建筑（Neurotopia, Chicken Utopia, 红旗渠, 知识图谱, 城市热环境, Previous Archi Work 等） |
-| **Platform** | 平台工具（LitFlow, BoxUpMyStuff, Epstein Archive） |
+| **Platform** | 平台工具（LitFlow, Epstein Archive） |
 | **Tutorial** | 技术教程（OpenStreetMap, Docker, Dify, MCP, 数据库选型等） |
 
 ## Blog（独立博客）
@@ -107,9 +107,13 @@ tech: ["React", "TypeScript"]
 hasDemo: true               # 是否有 Demo 视图
 demoOnly: true              # 强制仅显示 Demo（隐藏 Docs）
 icon: "封面图 CDN 地址"
+image:                       # 图集只写在这里
+  - "https://pub-....r2.dev/fig/project/01.jpg"
 ---
-正文（Markdown + 图片）
+正文（Markdown）。和某一段绑定的配图可以继续用 `![](url)`。
 ```
+
+同一批效果图不要同时出现在 `image` 和正文里。详情页会把 frontmatter 图集收成 Gallery：默认先显示 6 张，其余展开后再看，点击可逐张翻阅。正文里已经出现的图片不会在 Gallery 里再列一次。
 
 ## 开发
 

@@ -22,7 +22,6 @@ import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.
 import bmwMetaIslandMd from './projects/games/03_bmw-meta-island.md?raw';
 import guangzhouXinyuanTechMd from './projects/games/04_guangzhou-xinyuan-tech.md?raw';
 import kittylovecarrotsMd from './projects/games/05_kittylovecarrots.md?raw';
-import howToUseUnityMakingWechatMinigamesMd from './projects/games/06_how-to-use-unity-making-wechat-minigames.md?raw';
 
 import promptEngineeringMd from './projects/AI/01_prompt_engineering.md?raw';
 import aiKnowledgeGraphUrbanPlanningMd from './projects/AI/02_knowledge-graph-urban-planning.md?raw';
@@ -31,7 +30,6 @@ import aiParticipatoryUrbanRegenerationMd from './projects/AI/04_participatory-u
 import aiCampusPublicSpaceVitalityModelingMd from './projects/AI/05_campus-public-space-vitality-modeling.md?raw';
 
 import litflowMd from './projects/platform/01_litflow.md?raw';
-import boxUpMyStuffInCyberspaceMd from './projects/platform/02_box-up-my-stuff-in-cyberspace.md?raw';
 import epsteinMysteryArchiveMd from './projects/platform/03_epstein-mystery-archive.md?raw';
 
 import howToAddOpenstreetmapInWebsiteMd from './projects/tutorials/01_how-to-add-openstreetmap-in-website.md?raw';
@@ -43,7 +41,6 @@ import howToConstructWorkflowInDifyMd from './projects/tutorials/06_how-to-const
 import howToConstructLightBackendWorkflowMd from './projects/tutorials/07_how-to-construct-light-backend-workflow.md?raw';
 import whatsMcpMd from './projects/tutorials/08_whats-mcp.md?raw';
 import howToChooseSuitableDatabaseMd from './projects/tutorials/09_how-to-choose-suitable-database.md?raw';
-import leetcodeNotesMd from './projects/tutorials/10_leetcode-notes.md?raw';
 
 
 
@@ -141,16 +138,32 @@ function parseMarkdown(markdownContent: string) {
     });
   }
   
-  // Auto-extract images from markdown content if not explicitly set in frontmatter
-  let imageList: string[] = [];
-  if (Array.isArray(data.image) && data.image.length > 0) {
-    imageList = data.image;
-  } else {
-    const imgRegex = /!\[.*?\]\(([^)\s]+)\)/g;
-    let m;
-    while ((m = imgRegex.exec(content)) !== null) {
-      imageList.push(m[1]);
-    }
+  // Gallery images live in frontmatter. Inline markdown images (and
+  // <imagecarousel> urls) are kept as well when they illustrate a paragraph,
+  // so a project can use one source without dropping the other.
+  const imageList: string[] = [];
+  const seenImages = new Set<string>();
+  const pushImage = (url: string) => {
+    const trimmed = url.trim();
+    if (!trimmed || seenImages.has(trimmed)) return;
+    seenImages.add(trimmed);
+    imageList.push(trimmed);
+  };
+
+  if (Array.isArray(data.image)) {
+    data.image.forEach((url: string) => pushImage(String(url)));
+  }
+
+  const imgRegex = /!\[.*?\]\(([^)\s]+)\)/g;
+  let imgMatch: RegExpExecArray | null;
+  while ((imgMatch = imgRegex.exec(content)) !== null) {
+    pushImage(imgMatch[1]);
+  }
+
+  const carouselRegex = /<imagecarousel\b[^>]*\simages="([^"]*)"/gi;
+  let carouselMatch: RegExpExecArray | null;
+  while ((carouselMatch = carouselRegex.exec(content)) !== null) {
+    carouselMatch[1].split(',').forEach(pushImage);
   }
 
   return {
@@ -165,6 +178,7 @@ function parseMarkdown(markdownContent: string) {
     challenge: data.challenge || '',
     solution: data.solution || '',
     hasDemo: data.hasDemo || false,
+    demoOnly: data.demoOnly === true,
     icon: data.icon || '',
     code: data.code || '',
     logo: data.icon || '',
@@ -226,8 +240,7 @@ export const gameProjects = [
   createProject(peaceEliteHustCampusMd),
   createProject(bmwMetaIslandMd),
   createProject(guangzhouXinyuanTechMd),
-  createProject(kittylovecarrotsMd),
-  createProject(howToUseUnityMakingWechatMinigamesMd)
+  createProject(kittylovecarrotsMd)
 ];
 
 export const aiProjects = [
@@ -240,7 +253,6 @@ export const aiProjects = [
 
 export const platformProjects = [
   createProject(litflowMd),
-  createProject(boxUpMyStuffInCyberspaceMd),
   createProject(epsteinMysteryArchiveMd)
 ];
 
@@ -253,6 +265,5 @@ export const tutorialProjects = [
   createProject(howToConstructWorkflowInDifyMd),
   createProject(howToConstructLightBackendWorkflowMd),
   createProject(whatsMcpMd),
-  createProject(howToChooseSuitableDatabaseMd),
-  createProject(leetcodeNotesMd)
+  createProject(howToChooseSuitableDatabaseMd)
 ];
