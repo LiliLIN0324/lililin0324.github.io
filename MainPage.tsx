@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import '/index.css';
 
-import { projects, productProjects, tutorialProjects, platformProjects, gameProjects, aiProjects } from './src/data/projects';
+import { platformProjects } from './src/data/projects';
+import { diceWorkPaths } from './src/data/catalog';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
-import { AboutSection } from './src/components/AboutSection';
 import { ContactSection } from './src/components/ContactSection';
 import { SocialLink } from './src/components/SocialLink';
-import { HomePage } from './src/components/HomePage';
 import { ThemeToggle } from './src/components/ThemeToggle';
-import ClusteringGeoMap from './src/clusteringeomap';
+import { HomeView } from './src/redesign/HomeView';
+import { WorkIndexView } from './src/redesign/WorkIndexView';
+import { WorkDetailView } from './src/redesign/WorkDetailView';
+import { AboutView } from './src/redesign/AboutView';
+import { ContentTransition } from './src/redesign/ContentTransition';
+
+const ClusteringGeoMap = lazy(() => import('./src/clusteringeomap'));
 
 const NAV_TABS = [
   { key: '', label: 'Home' },
@@ -105,8 +110,9 @@ const MainPage = () => {
       x: prev.x + 720 + Math.round(Math.random() * 360),
       y: prev.y + 720 + Math.round(Math.random() * 360),
     }));
-    const pages = ['product', 'game', 'ai', 'planning', 'platform', 'tutorial', 'about'];
-    setTimeout(() => navigate(`/${pickRandom(pages)}`), 900);
+    const pool = diceWorkPaths.filter(href => href !== location.pathname);
+    const target = pool[Math.floor(Math.random() * pool.length)];
+    if (target) setTimeout(() => navigate(target), 900);
   };
 
   return (
@@ -262,22 +268,24 @@ const MainPage = () => {
         )}
 
         <section className="relative min-w-0 flex-1 overflow-y-auto">
+          <ContentTransition />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/planning" element={<ProjectListView data={projects} type="planning" />} />
-            <Route path="/planning/:id" element={<ProjectDetailView data={projects} type="planning" />} />
-            <Route path="/product" element={<ProjectListView data={productProjects} type="product" />} />
-            <Route path="/product/:id" element={<ProjectDetailView data={productProjects} type="product" />} />
-            <Route path="/game" element={<ProjectListView data={gameProjects} type="game" />} />
-            <Route path="/game/:id" element={<ProjectDetailView data={gameProjects} type="game" />} />
-            <Route path="/ai" element={<ProjectListView data={aiProjects} type="ai" />} />
-            <Route path="/ai/:id" element={<ProjectDetailView data={aiProjects} type="ai" />} />
+            <Route path="/" element={<HomeView />} />
+            <Route path="/work" element={<WorkIndexView scope="all" />} />
+            <Route path="/planning" element={<WorkIndexView scope="planning" />} />
+            <Route path="/planning/:id" element={<WorkDetailView routeType="planning" />} />
+            <Route path="/product" element={<WorkIndexView scope="product" />} />
+            <Route path="/product/:id" element={<WorkDetailView routeType="product" />} />
+            <Route path="/game" element={<WorkIndexView scope="game" />} />
+            <Route path="/game/:id" element={<WorkDetailView routeType="game" />} />
+            <Route path="/ai" element={<WorkIndexView scope="ai" />} />
+            <Route path="/ai/:id" element={<WorkDetailView routeType="ai" />} />
             <Route path="/platform" element={<ProjectListView data={platformProjects} type="platform" />} />
             <Route path="/platform/:id" element={<ProjectDetailView data={platformProjects} type="platform" />} />
-            <Route path="/tutorial" element={<ProjectListView data={tutorialProjects} type="tutorial" />} />
-            <Route path="/tutorial/:id" element={<ProjectDetailView data={tutorialProjects} type="tutorial" />} />
-            <Route path="/clusteringeomap" element={<ClusteringGeoMap />} />
-            <Route path="/about" element={<AboutSection />} />
+            <Route path="/tutorial" element={<WorkIndexView scope="notes" />} />
+            <Route path="/tutorial/:id" element={<WorkDetailView routeType="tutorial" />} />
+            <Route path="/clusteringeomap" element={<Suspense fallback={null}><ClusteringGeoMap /></Suspense>} />
+            <Route path="/about" element={<AboutView />} />
             <Route path="/contact" element={<ContactSection />} />
           </Routes>
         </section>

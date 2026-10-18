@@ -1,0 +1,1 @@
+import{j as l}from"./react-vendor-Dn-0NGU0.js";import"./geo-BbprxUkj.js";import"./vendor-BzO13j2l.js";const e=()=>l.jsx("div",{className:"h-full w-full bg-[#0b0d12]",children:l.jsx("iframe",{src:"/demos/dragon-diffusion.html",className:"h-full w-full border-0",title:"Dragon Diffusion - 版本演进与贡献图谱",allowFullScreen:!0})});export{e as default};
