@@ -1,33 +1,22 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import '/index.css';
 
 import { platformProjects } from './src/data/projects';
-import { diceWorkPaths } from './src/data/catalog';
+import { NOTE_COUNT, WORK_COUNT, diceWorkPaths, findWork } from './src/data/catalog';
 import { ProjectListView } from './src/components/ProjectListView';
 import { ProjectDetailView } from './src/components/ProjectDetailView';
 import { ContactSection } from './src/components/ContactSection';
-import { SocialLink } from './src/components/SocialLink';
 import { ThemeToggle } from './src/components/ThemeToggle';
 import { HomeView } from './src/redesign/HomeView';
 import { WorkIndexView } from './src/redesign/WorkIndexView';
 import { WorkDetailView } from './src/redesign/WorkDetailView';
 import { AboutView } from './src/redesign/AboutView';
 import { ContentTransition } from './src/redesign/ContentTransition';
+import { SiteDrawer, locate } from './src/redesign/SiteDrawer';
+import './src/redesign/redesign.css';
 
 const ClusteringGeoMap = lazy(() => import('./src/clusteringeomap'));
-
-const NAV_TABS = [
-  { key: '', label: 'Home' },
-  { key: 'product', label: 'Product' },
-  { key: 'game', label: 'Game' },
-  { key: 'ai', label: 'AI' },
-  { key: 'planning', label: 'Planning' },
-  { key: 'platform', label: 'Platform' },
-  { key: 'tutorial', label: 'Tutorial' },
-  { key: 'blog', label: 'Blog' },
-  { key: 'about', label: 'About' },
-];
 
 /* Pip positions on a 3x3 grid, indexed 0-8 left-to-right, top-to-bottom. */
 const DICE_PIPS: Record<number, number[]> = {
@@ -60,7 +49,9 @@ const DiceFace = ({ value, transform }: { value: number; transform: string }) =>
 
 const MainPage = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [headerCollapsed, setHeaderCollapsed] = useState(false);
+  const [barHidden, setBarHidden] = useState(false);
+  const [onImage, setOnImage] = useState(true);
+  const menuRef = useRef<HTMLButtonElement>(null);
   const [diceRotation, setDiceRotation] = useState({ x: 0, y: 0 });
   const CDN = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/lili';
   const [currentImage, setCurrentImage] = useState(`${CDN}/lili_01.png`);
@@ -72,12 +63,12 @@ const MainPage = () => {
 
   const imageMap: Record<string, string> = {
     'product': `${CDN}/lili_05.png`,
+    'platform': `${CDN}/lili_05.png`,
     'game': `${CDN}/lili_03.png`,
     'ai': `${CDN}/lili_07.png`,
-    'platform': `${CDN}/lili_11.png`,
+    'planning': `${CDN}/lili_07.png`,
     'tutorial': `${CDN}/lili_04.png`,
     'about': `${CDN}/lili_02.png`,
-    'planning': `${CDN}/lili_06.png`
   };
 
   const randomImages = [
@@ -105,6 +96,43 @@ const MainPage = () => {
     setRandomQuote(pickRandom(quotes));
   }, [activeTab]);
 
+  useEffect(() => {
+    const root = document.documentElement
+    const applyBar = () => {
+      root.style.setProperty('--bar', window.matchMedia('(max-width: 768px)').matches ? '56px' : '64px')
+    }
+    applyBar()
+    window.addEventListener('resize', applyBar)
+    return () => window.removeEventListener('resize', applyBar)
+  }, [])
+
+  useEffect(() => {
+    const scroller = document.querySelector('main > section')
+    if (!(scroller instanceof HTMLElement)) return
+    let last = scroller.scrollTop
+    let hidden = false
+    const tick = () => {
+      const y = scroller.scrollTop
+      const dy = y - last
+      last = y
+      if (dy > 0 && y > 120) hidden = true
+      else if (dy < 0 || y <= 4) hidden = false
+      setBarHidden(hidden)
+      const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar')) || 64
+      const hero = document.querySelector('.swiss .fold > .hero, .swiss .dhero')
+      const over = hero instanceof HTMLElement && hero.getBoundingClientRect().bottom > bar + 12
+      setOnImage(over)
+      document.documentElement.style.setProperty('--bar-offset', hidden ? '0px' : `${bar}px`)
+    }
+    tick()
+    scroller.addEventListener('scroll', tick, { passive: true })
+    return () => scroller.removeEventListener('scroll', tick)
+  }, [location.pathname])
+
+  const closeDrawer = useCallback(() => setIsPanelOpen(false), [])
+  const place = locate(location.pathname)
+  const bleed = location.pathname === '/' || Boolean(findWork(location.pathname) && !location.pathname.startsWith('/platform'))
+
   const rollDice = () => {
     setDiceRotation(prev => ({
       x: prev.x + 720 + Math.round(Math.random() * 360),
@@ -115,160 +143,73 @@ const MainPage = () => {
     if (target) setTimeout(() => navigate(target), 900);
   };
 
+  const worksOn = place.kind === 'home' || place.kind === 'works'
+  const notesOn = place.kind === 'notes'
+  const aboutOn = place.kind === 'about'
+
   return (
     <div className="flex h-screen flex-col bg-canvas text-ink">
-      <header className={`relative z-30 shrink-0 border-b border-rule bg-surface/85 backdrop-blur transition-all duration-300 ease-editorial ${headerCollapsed ? 'h-0 border-b-0 overflow-hidden opacity-0' : ''}`}>
-        <div className="shell flex h-16 items-center justify-between gap-4">
-          {/* Left group: wordmark + nav — always left-aligned so Home stays visible */}
-          <div className="flex min-w-0 flex-1 items-center">
-            <div className="flex min-w-0 items-center gap-3">
-              <button
-                onClick={() => setIsPanelOpen(!isPanelOpen)}
-                className="icon-btn"
-                aria-expanded={isPanelOpen}
-                aria-label={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
-                title={isPanelOpen ? 'Hide profile panel' : 'Show profile panel'}
+      <header className={`topbar ${onImage ? 'on-img' : 'on-solid'} ${barHidden ? 'away' : ''}`}>
+        <button
+          ref={menuRef}
+          type="button"
+          className={isPanelOpen ? 'hb x' : 'hb'}
+          aria-expanded={isPanelOpen}
+          aria-controls="site-drawer"
+          aria-label={isPanelOpen ? '关闭侧栏' : '打开侧栏'}
+          onClick={() => setIsPanelOpen(open => !open)}
+        >
+          <i /><i /><i />
+        </button>
+        <Link to="/" className="brand">
+          <span className="sq" />
+          Lili Lin<em>林丽丽</em>
+        </Link>
+        <nav aria-label="主要">
+          <Link to="/work" className={worksOn ? 'on' : ''} aria-current={worksOn ? 'page' : undefined}>作品<sup>{WORK_COUNT}</sup></Link>
+          <Link to="/tutorial" className={notesOn ? 'on' : ''} aria-current={notesOn ? 'page' : undefined}>笔记<sup>{NOTE_COUNT}</sup></Link>
+          <Link to="/about" className={aboutOn ? 'on' : ''} aria-current={aboutOn ? 'page' : undefined}>关于</Link>
+        </nav>
+        <div className="right">
+          <ThemeToggle className="topbar-toggle" />
+          <button
+            onClick={rollDice}
+            className="btn-ghost !px-3"
+            title="随机探索一个项目"
+          >
+            <span className="h-5 w-5" style={{ perspective: '120px' }}>
+              <span
+                className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
+                style={{
+                  transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`,
+                  transformStyle: 'preserve-3d',
+                }}
               >
-                <span className="flex flex-col items-center justify-center gap-[3px]" aria-hidden="true">
-                  <span className="block h-px w-4 bg-current transition-transform duration-300" />
-                  <span className={`block h-px w-4 bg-current transition-opacity duration-300 ${isPanelOpen ? 'opacity-0' : 'opacity-100'}`} />
-                  <span className="block h-px w-4 bg-current transition-transform duration-300" />
-                </span>
-              </button>
-
-              <Link to="/" className="group flex min-w-0 items-baseline gap-2.5">
-                <span className="truncate text-lg font-bold tracking-masthead md:text-xl">
-                  林丽丽&nbsp;Lili&nbsp;Lin
-                </span>
-                <span className="hidden h-3 w-px bg-rule sm:block" aria-hidden="true" />
-              </Link>
-            </div>
-
-            {/* Nav — scrolls horizontally when it runs out of room */}
-            <nav className="-mx-1 flex min-w-0 overflow-x-auto hide-scrollbar">
-              <ul className="flex shrink-0 items-stretch">
-                {NAV_TABS.map((tab) => {
-                  const isActive = activeTab === tab.key;
-                  return (
-                    <li key={tab.key || 'home'} className="flex">
-                      <Link
-                        to={`/${tab.key}`}
-                        onClick={() => { if (window.innerWidth < 768) setIsPanelOpen(false); }}
-                        aria-current={isActive ? 'page' : undefined}
-                        className={`relative flex items-center px-3 text-sm font-medium transition-colors duration-200 md:px-4 ${
-                          isActive ? 'text-ink' : 'text-ink-3 hover:text-ink'
-                        }`}
-                      >
-                        {tab.label}
-                        {/* Swiss active marker: accent rule on the top edge */}
-                        <span
-                          className={`absolute inset-x-2 top-0 h-[3px] origin-left bg-accent transition-transform duration-300 ease-editorial md:inset-x-3 ${
-                            isActive ? 'scale-x-100' : 'scale-x-0'
-                          }`}
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-          </div>
-
-          <div className="flex shrink-0 items-center gap-2">
-            <ThemeToggle />
-            <button
-              onClick={rollDice}
-              className="btn-ghost hidden !px-3 sm:inline-flex"
-              title="随机探索一个项目"
-            >
-              <span className="h-5 w-5" style={{ perspective: '120px' }}>
-                <span
-                  className="relative block h-full w-full transition-transform duration-[900ms] ease-out"
-                  style={{
-                    transform: `rotateX(${diceRotation.x}deg) rotateY(${diceRotation.y}deg)`,
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  <DiceFace value={1} transform="translateZ(10px)" />
-                  <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
-                  <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
-                  <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
-                  <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
-                  <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
-                </span>
+                <DiceFace value={1} transform="translateZ(10px)" />
+                <DiceFace value={6} transform="rotateY(180deg) translateZ(10px)" />
+                <DiceFace value={3} transform="rotateY(-90deg) translateZ(10px)" />
+                <DiceFace value={4} transform="rotateY(90deg) translateZ(10px)" />
+                <DiceFace value={2} transform="rotateX(90deg) translateZ(10px)" />
+                <DiceFace value={5} transform="rotateX(-90deg) translateZ(10px)" />
               </span>
-              Jump
-            </button>
-            <button
-              onClick={() => setHeaderCollapsed(true)}
-              className="icon-btn hidden sm:inline-flex"
-              title="Collapse header"
-              aria-label="Collapse header"
-            >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>
-            </button>
-          </div>
+            </span>
+            Jump
+          </button>
         </div>
       </header>
 
-      {/* Expand trigger — only visible when header is collapsed */}
-      {headerCollapsed && (
-        <button
-          onClick={() => setHeaderCollapsed(false)}
-          className="group flex h-4 w-full items-center justify-center bg-surface/50 hover:bg-surface transition-colors duration-200"
-          title="Expand header"
-          aria-label="Expand header"
-        >
-          <svg className="h-3 w-3 text-ink-3 transition-colors group-hover:text-ink" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-        </button>
-      )}
+      <SiteDrawer
+        open={isPanelOpen}
+        onClose={closeDrawer}
+        avatar={currentImage}
+        quote={randomQuote}
+        returnFocus={menuRef}
+      />
 
       <main className="relative flex min-h-0 flex-1 flex-row overflow-hidden">
-        {/* Profile panel — one implementation for both breakpoints */}
-        {isPanelOpen && (
-          <aside className="z-20 h-full w-64 shrink-0 overflow-y-auto border-r border-rule bg-surface md:w-72">
-            <div className="flex flex-col gap-8 p-5">
-              {currentImage && (
-                <img
-                  src={currentImage}
-                  alt="Lili's avatar"
-                  className="w-full border border-rule bg-surface-2 object-contain"
-                />
-              )}
-
-              <div className="space-y-3">
-                <div>
-                  <p className="eyebrow">Profile</p>
-                  <h2 className="mt-2 text-xl font-bold tracking-masthead">Lili Lin</h2>
-                  <p className="text-sm text-ink-2">林丽丽</p>
-                </div>
-                <hr className="hairline" />
-                <p className="font-mono text-[11px] uppercase tracking-eyebrow text-ink-3">
-                  设计师 · 开发者 · 产品创作者
-                </p>
-                <p className="text-sm leading-relaxed text-ink-2">
-                  创造有意义的数字体验，连接技术与创意。
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <hr className="hairline" />
-                <p className="border-l-2 border-accent pl-3 text-sm italic leading-relaxed text-ink-2">
-                  {randomQuote}
-                </p>
-                <div className="flex gap-2">
-                  <SocialLink href="https://github.com/lililin0324" label="GH" />
-                  <SocialLink href="mailto:lili0324@snu.ac.kr" label="EM" />
-                  <SocialLink href="https://www.linkedin.com/in/lililin0324" label="LK" />
-                </div>
-              </div>
-            </div>
-          </aside>
-        )}
-
         <section className="relative min-w-0 flex-1 overflow-y-auto">
           <ContentTransition />
+          <div className={bleed ? 'bleed-frame' : 'under-bar'}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/work" element={<WorkIndexView scope="all" />} />
@@ -288,6 +229,7 @@ const MainPage = () => {
             <Route path="/about" element={<AboutView />} />
             <Route path="/contact" element={<ContactSection />} />
           </Routes>
+          </div>
         </section>
       </main>
     </div>

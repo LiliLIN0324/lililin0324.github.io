@@ -17,7 +17,8 @@
       (function () {
         try {
           var saved = localStorage.getItem('theme')
-          var dark = saved !== 'light'
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = saved === 'dark' ? true : saved === 'light' ? false : systemDark
           if (dark) document.documentElement.classList.add('dark')
         } catch (e) {}
       })()
@@ -33,13 +34,13 @@
           Roboto, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
       }
     </style>
-  <script type="module" crossorigin src="./assets/index-Di3HRrjj.js"></script>
+  <script type="module" crossorigin src="./assets/index-BamdubxN.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-BzO13j2l.js">
   <link rel="modulepreload" crossorigin href="./assets/geo-BbprxUkj.js">
   <link rel="modulepreload" crossorigin href="./assets/react-vendor-Dn-0NGU0.js">
   <link rel="modulepreload" crossorigin href="./assets/framer-BpNNdg_d.js">
   <link rel="modulepreload" crossorigin href="./assets/markdown-cHbBfKKj.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-CyQryt2F.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-BLH8Fjor.css">
 </head>
 <body>
     <div id="root"></div>

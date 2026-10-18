@@ -17,7 +17,8 @@
       (function () {
         try {
           var saved = localStorage.getItem('theme')
-          var dark = saved !== 'light'
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = saved === 'dark' ? true : saved === 'light' ? false : systemDark
           if (dark) document.documentElement.classList.add('dark')
         } catch (e) {}
       })()
