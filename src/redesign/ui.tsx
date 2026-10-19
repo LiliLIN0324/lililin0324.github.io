@@ -1,10 +1,11 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import {
   EMAIL,
   type CoverSource,
   type WorkItem,
   coverSources,
+  coverVideo,
   heroSources,
   loadManifest,
   subscribeManifest,
@@ -41,6 +42,69 @@ function useFrame(sources: CoverSource[]) {
   return { current, failed, advance }
 }
 
+/**
+ * Muted looping cover. Stays invisible until the first frame is ready so a
+ * failed or not-yet-loaded file never paints a black rectangle over the still.
+ * Pauses when the frame leaves the scrolling pane.
+ */
+function useCoverVideo(src: string | undefined) {
+  const reduced = useReducedMotion()
+  const ref = useRef<HTMLVideoElement>(null)
+  const [failed, setFailed] = useState(false)
+  const [ready, setReady] = useState(false)
+  const active = Boolean(src) && !reduced && !failed
+
+  useEffect(() => {
+    setFailed(false)
+    setReady(false)
+  }, [src, reduced])
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !active) return
+    el.muted = true
+    const root = document.querySelector('main > section')
+    const observer = new IntersectionObserver(entries => {
+      const entry = entries[0]
+      if (!entry) return
+      if (entry.isIntersecting) el.play().catch(() => {})
+      else el.pause()
+    }, { root: root instanceof HTMLElement ? root : null, threshold: 0.2 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [active, src])
+
+  return {
+    ref,
+    active,
+    ready,
+    fail: () => setFailed(true),
+    markReady: () => setReady(true),
+  }
+}
+
+function CoverVideo({ src, poster }: { src: string; poster?: string }) {
+  const video = useCoverVideo(src)
+  if (!video.active) return null
+  return (
+    <video
+      ref={video.ref}
+      src={src}
+      poster={poster}
+      muted
+      autoPlay
+      loop
+      playsInline
+      preload="metadata"
+      disablePictureInPicture
+      data-cover-video=""
+      style={{ opacity: video.ready ? 1 : 0 }}
+      onCanPlay={video.markReady}
+      onError={video.fail}
+    />
+  )
+}
+
 export function Cover({ work, showGo = true }: { work: WorkItem; showGo?: boolean }) {
   useManifestRevision()
   const sources = coverSources(work)
@@ -54,8 +118,9 @@ export function Cover({ work, showGo = true }: { work: WorkItem; showGo?: boolea
       </div>
     )
   }
+  const clip = coverVideo(work)
   return (
-    <div className={`im ${current.logo ? 'logo' : ''}`} data-cover={current.logo ? 'logo' : 'photo'}>
+    <div className={`im ${current.logo ? 'logo' : ''}`} data-cover={clip ? 'video' : current.logo ? 'logo' : 'photo'}>
       <img
         src={current.src}
         srcSet={current.logo ? undefined : current.srcSet}
@@ -63,6 +128,7 @@ export function Cover({ work, showGo = true }: { work: WorkItem; showGo?: boolea
         alt=""
         onError={advance}
       />
+      {clip ? <CoverVideo src={clip} poster={current.logo ? undefined : current.src} /> : null}
       {showGo && <span className="go">查看 →</span>}
     </div>
   )
@@ -79,9 +145,11 @@ export function HeroFrame({ work, mobile }: { work: WorkItem; mobile: boolean })
       </div>
     )
   }
+  const clip = coverVideo(work)
   return (
-    <div className="frame" data-cover="photo">
+    <div className="frame" data-cover={clip ? 'video' : 'photo'}>
       <img src={current.src} alt="" onError={advance} />
+      {clip ? <CoverVideo src={clip} poster={current.src} /> : null}
     </div>
   )
 }

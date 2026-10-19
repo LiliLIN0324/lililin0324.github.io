@@ -20,7 +20,39 @@ export const R2_SLUG_BY_SITE_ID: Record<string, string> = {
   'prompt-engineering-agentic-rag': 'agentic-rag',
 }
 
-export const FIG = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig'
+/** Public bucket. Cover videos live under fig/<folder>/, not the bucket root. */
+export const R2_BASE = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev'
+
+/**
+ * First live `<video src>` in each work's markdown, keyed by site slug.
+ * Paths are the fig/<folder>/ copies from the R2 reorg. Hongqiqu is omitted:
+ * its clips were not copied. Extra clips on the same work stay in the markdown
+ * and are not repeated here.
+ */
+export const VIDEO_BY_SLUG: Record<string, string> = {
+  scendance: `${R2_BASE}/fig/scendance/Scendance.mp4`,
+  'riffle-ai-game-generation-tool': `${R2_BASE}/fig/riffle/cover.mp4`,
+  genstyle: `${R2_BASE}/fig/genstyle/cover.mp4`,
+  'genshot-AI-video-generation-tool': `${R2_BASE}/fig/genshot/cover.mp4`,
+  anyreal: `${R2_BASE}/fig/anyreal/cover.mp4`,
+  'dragon-diffussion': `${R2_BASE}/fig/dragon-diffusion/cover.mp4`,
+  'early-campus-experience': `${R2_BASE}/fig/perslearn/cover.mp4`,
+  'epstein-mystery-archive': `${R2_BASE}/fig/epstein-mystery-archive/cover.mp4`,
+  'guangzhou-xinyuan-tech': `${R2_BASE}/fig/guangzhou-xinyuan/cover.mp4`,
+  'bmw-meta-island': `${R2_BASE}/fig/bmw-meta-island/cover.mp4`,
+  'peace-elite-hust-campus': `${R2_BASE}/fig/peace-elite-hust/cover.mp4`,
+  '72-hour-game-jam': `${R2_BASE}/fig/game-jam/cover.mp4`,
+  'prompt-engineering-agentic-rag': `${R2_BASE}/fig/agentic-rag/cover.mp4`,
+  'knowledge-graph-urban-planning': `${R2_BASE}/fig/knowledge-graph-urban-planning/cover.mp4`,
+  'urban-heat-resilience-machine-learning': `${R2_BASE}/fig/urban-heat-resilience-ml/cover.mp4`,
+  'participatory-urban-regeneration-empowered-by-artificial-intelligence': `${R2_BASE}/fig/participatory-urban-regeneration/cover.mp4`,
+  'local-climate-zones-urban-heat-resilience': `${R2_BASE}/fig/local-climate-zones/cover.mp4`,
+  'campus-public-space-vitality-modeling': `${R2_BASE}/fig/campus-public-space-vitality-modeling/cover.mp4`,
+  neurotopia: `${R2_BASE}/fig/neurotopia/cover.mp4`,
+  'chicken-utopia': `${R2_BASE}/fig/chicken-utopia/cover.mp4`,
+}
+
+export const FIG = `${R2_BASE}/fig`
 export const MUJING_URL = 'https://mujing-universe.pages.dev/'
 export const EMAIL = 'lili0324@snu.ac.kr'
 
@@ -336,7 +368,7 @@ export interface ManifestMedia {
   hero_m?: string
 }
 
-const CDN = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev'
+const CDN = R2_BASE
 
 /** Tried in order. The public bucket did not serve these at build time; the chain below still works. */
 export const MANIFEST_URLS = [
@@ -442,10 +474,33 @@ function dedupe(sources: CoverSource[]): CoverSource[] {
   })
 }
 
+/** Same pattern as the v1 homepage: `<video ... src="...">` in the markdown body. */
+export function extractVideos(content: string): string[] {
+  if (!content) return []
+  const re = /<video[^>]+src="([^"]+)"/gi
+  return Array.from(content.matchAll(re), match => match[1])
+}
+
+const VERIFIED_VIDEO_URLS = new Set(Object.values(VIDEO_BY_SLUG))
+
+/**
+ * Cover clip for a work. Only a markdown `<video src>` that is also in
+ * VIDEO_BY_SLUG. Anything else, including hongqiqu's uncopied files, stays
+ * on the still chain instead of an empty black frame.
+ */
+export function coverVideo(work: Pick<WorkItem, 'slug' | 'content'>): string | undefined {
+  const found = extractVideos(work.content)
+  const listed = VIDEO_BY_SLUG[work.slug]
+  if (listed && found.includes(listed)) return listed
+  return found.find(src => VERIFIED_VIDEO_URLS.has(src))
+}
+
 /**
  * Prefer manifest `card` / `card_s` when that file is present.
  * Otherwise card.jpg → logo.jpg → 01.jpg (always .jpg) → the project's icon.
  * previous-planning-research has no card and uses the title block directly.
+ * Scendance prefers poster-hero.jpg, then the existing poster.jpg and card.jpg.
+ * logo.jpg and the 01–26 sequence are not required.
  */
 export function coverSources(work: WorkItem): CoverSource[] {
   if (TITLE_FALLBACK_SLUGS.has(work.slug)) return []
@@ -453,11 +508,16 @@ export function coverSources(work: WorkItem): CoverSource[] {
   const media = manifestMedia(work)
   const card = media?.card || `${base}/card.jpg`
   const cardSmall = media?.card_s || `${base}/card-s.jpg`
-  const sources: CoverSource[] = [
+  const sources: CoverSource[] = []
+  if (work.slug === 'scendance') {
+    sources.push({ src: `${base}/poster-hero.jpg` })
+    sources.push({ src: `${base}/poster.jpg` })
+  }
+  sources.push(
     { src: card, srcSet: `${cardSmall} 800w, ${card} 1600w` },
     { src: `${base}/logo.jpg`, logo: true },
     { src: `${base}/01.jpg` },
-  ]
+  )
   if (work.icon && !sources.some(source => source.src === work.icon)) {
     sources.push({ src: work.icon, logo: /logo\.(jpg|png|webp)$/i.test(work.icon) })
   }

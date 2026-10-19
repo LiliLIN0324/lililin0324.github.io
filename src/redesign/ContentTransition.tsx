@@ -4,7 +4,11 @@ import { findWork, WORK_COUNT } from '../data/catalog'
 import { pad } from './ui'
 import './redesign.css'
 
-/** Curtain inside the scrolling pane. The top bar is outside this element. */
+/**
+ * Route-change curtain. Mounted only while the 760ms animation plays.
+ * An idle `.curtain` (translateY(100%), #0e0e0e) used to sit one viewport
+ * down inside the scrollport and paint a solid black band over #featured.
+ */
 export function ContentTransition() {
   const { pathname } = useLocation()
   const [play, setPlay] = useState(false)
@@ -24,8 +28,10 @@ export function ContentTransition() {
     return () => window.clearTimeout(timer)
   }, [pathname])
 
+  if (!play) return null
+
   return (
-    <div className={play ? 'curtain go' : 'curtain'} aria-hidden="true">
+    <div className="curtain go" aria-hidden="true">
       <i className="line" />
       {label}
     </div>

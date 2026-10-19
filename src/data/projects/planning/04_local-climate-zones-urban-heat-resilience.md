@@ -112,7 +112,7 @@ image:
 “局部气候区与城市热岛效应韧性：纽约实证研究”
 
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/Local%20Climate%20Zone.mp4"></video>
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/local-climate-zones/cover.mp4"></video>
 </div>
 
 > 2025.4，在加拿大温哥华举行的第52届国际城市事务会议（ICUA）上作口头报告

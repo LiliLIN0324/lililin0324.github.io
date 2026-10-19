@@ -128,7 +128,7 @@ This poster summarizes the key findings of our study on urban heat resilience us
 # Research topic 2
 “利用机器学习评估城市形态对不同天气状况下热韧性的非线性影响”
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/GBDT2.mp4"></video>
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/urban-heat-resilience-ml/cover.mp4"></video>
 </div>
 
 <!-- details -->
