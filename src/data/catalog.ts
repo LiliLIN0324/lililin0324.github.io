@@ -47,6 +47,7 @@ export const VIDEO_BY_SLUG: Record<string, string> = {
   'urban-heat-resilience-machine-learning': `${R2_BASE}/fig/urban-heat-resilience-ml/cover.mp4`,
   'participatory-urban-regeneration-empowered-by-artificial-intelligence': `${R2_BASE}/fig/participatory-urban-regeneration/cover.mp4`,
   'local-climate-zones-urban-heat-resilience': `${R2_BASE}/fig/local-climate-zones/cover.mp4`,
+  heatmapper: `${R2_BASE}/fig/heatmapper/cover.mp4`,
   'campus-public-space-vitality-modeling': `${R2_BASE}/fig/campus-public-space-vitality-modeling/cover.mp4`,
   neurotopia: `${R2_BASE}/fig/neurotopia/cover.mp4`,
   'chicken-utopia': `${R2_BASE}/fig/chicken-utopia/cover.mp4`,
