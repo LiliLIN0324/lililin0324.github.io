@@ -35,6 +35,7 @@ export const VIDEO_BY_SLUG: Record<string, string> = {
   genstyle: `${R2_BASE}/fig/genstyle/cover.mp4`,
   'genshot-AI-video-generation-tool': `${R2_BASE}/fig/genshot/cover.mp4`,
   anyreal: `${R2_BASE}/fig/anyreal/cover.mp4`,
+  // Demo part 1 (former DragonDiffusion-Demo_(1)). Parts 2–3 stay in the article.
   'dragon-diffussion': `${R2_BASE}/fig/dragon-diffusion/cover.mp4`,
   'early-campus-experience': `${R2_BASE}/fig/perslearn/cover.mp4`,
   'epstein-mystery-archive': `${R2_BASE}/fig/epstein-mystery-archive/cover.mp4`,

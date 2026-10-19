@@ -6,6 +6,7 @@ import rehypeRaw from 'rehype-raw'
 import { findBySlug, nextWork, type WorkItem } from '../data/catalog'
 import { getDemoComponent } from '../components/DemoLoader'
 import { HeroFrame, SiteFooter, pad, Cover } from './ui'
+import { dragonDemoPart, playDragonDemoNext, preloadDragonDemoNext } from './dragonDemoSequence'
 import './redesign.css'
 
 function useMobile() {
@@ -159,9 +160,29 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
               rehypePlugins={[rehypeRaw]}
               components={{
                 img: ({ src, alt }) => <img src={src} alt={alt || ''} onError={event => { (event.target as HTMLImageElement).style.display = 'none' }} />,
-                video: ({ src, poster, ...props }) => (
-                  <video {...props} src={src} poster={poster || images[0]} controls playsInline preload="metadata" />
-                ),
+                video: ({ src, poster, node: _node, ...props }: any) => {
+                  const part = dragonDemoPart(typeof src === 'string' ? src : undefined)
+                  return (
+                    <video
+                      {...props}
+                      src={src}
+                      poster={poster || images[0]}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      data-playlist={part ? 'dragon-demo' : undefined}
+                      data-part={part ? String(part) : undefined}
+                      onPlay={event => {
+                        props.onPlay?.(event)
+                        if (part) preloadDragonDemoNext(event.currentTarget)
+                      }}
+                      onEnded={event => {
+                        props.onEnded?.(event)
+                        if (part) playDragonDemoNext(event.currentTarget)
+                      }}
+                    />
+                  )
+                },
               }}
             >
               {body}
