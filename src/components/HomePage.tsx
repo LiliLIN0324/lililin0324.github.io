@@ -43,15 +43,9 @@ const CATEGORY_BLURB: Record<string, React.ReactNode> = {
 }
 
 const GALLERY_VIDEOS = [
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/kitty-0317.mp4', title: 'Kitty Video' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%912026-02-09_184301_354.mp4', title: 'Kitty Video 2' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/20260225-192100.mp4', title: 'Riffle Loading 1' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video3.mp4', title: 'Video Title 3' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video4.mp4', title: 'Video Title 4' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video5.mp4', title: 'Video Title 5' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video6.mp4', title: 'Video Title 6' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video7.mp4', title: 'Video Title 7' },
-  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/video8.mp4', title: 'Video Title 8' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/gallery/kitty-0317.mp4', title: 'Kitty Video' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/gallery/%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%912026-02-09_184301_354.mp4', title: 'Kitty Video 2' },
+  { src: 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/gallery/20260225-192100.mp4', title: 'Riffle Loading 1' },
 ]
 
 const ChevronLeft = () => (

@@ -1,5 +1,5 @@
 import React from 'react';
-const VIDEO_URL = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/NamelessRoad.mp4';
+const VIDEO_URL = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/game-jam/cover.mp4';
 
 const GameJamDemo: React.FC = () => {
   return (

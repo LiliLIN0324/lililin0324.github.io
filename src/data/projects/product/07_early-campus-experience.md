@@ -229,7 +229,7 @@ image:
 ---
 ## 1037拼拼
 <div style="display:flex; flex-direction:column; gap:16px;">
-<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/1037pinpin.mp4"></video>
+<video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/perslearn/cover.mp4"></video>
 </div>
 
 ## 康零Counting - 智能零件计数与数据平台 
