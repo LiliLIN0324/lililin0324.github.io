@@ -110,13 +110,11 @@ type RawProject = {
 }
 
 /** Approved card titles. Subtitles split from frontmatter, with the Chinese forms used in the design. */
-const COPY: Record<string, { title: string; sub: string; desc?: string }> = {
+const COPY: Record<string, { title: string; sub: string }> = {
   scendance: { title: '幕景 Scendance', sub: 'AI 活动布置工作台' },
   'riffle-ai-game-generation-tool': { title: 'Riffle', sub: 'AI 游戏生成工具' },
   genstyle: { title: 'Genstyle', sub: '每日穿搭灵感' },
-  // TODO: Genshot's frontmatter description was copied from Dragon Diffusion.
-  // Subtitle is a placeholder taken from the title, not a verified product blurb.
-  'genshot-AI-video-generation-tool': { title: 'Genshot', sub: 'AI 视频生成工具', desc: 'TODO' },
+  'genshot-AI-video-generation-tool': { title: 'Genshot', sub: 'AI 视频生成工具' },
   'bazi-fengshui-analysis': { title: '洛书八字', sub: 'Bazi · 风水分析应用' },
   anyreal: { title: 'AnyReal', sub: 'AI 虚拟影棚' },
   'dragon-diffussion': { title: 'Dragon Diffusion', sub: 'AI 创意生产平台' },
@@ -182,14 +180,6 @@ export const FEATURED_SLUGS = [
   'kittylovecarrots',
   'bazi-fengshui-analysis',
   'peace-elite-hust-campus',
-]
-
-/** Four homepage hero frames. Neurotopia is first; it is the only project with hero.jpg / hero-m.jpg. */
-export const HERO_SLUGS = [
-  'neurotopia',
-  'riffle-ai-game-generation-tool',
-  'anyreal',
-  'kittylovecarrots',
 ]
 
 const GROUP_BY_ROUTE: Record<string, WorkGroup> = {
@@ -270,9 +260,7 @@ function toWork(entry: { project: RawProject; routeType: string }, no: number): 
   const copy = COPY[project.slug]
   const split = splitTitle(project.title || project.slug)
   const icon = project.details.icon || project.details.logo || ''
-  // TODO: Genshot description in the markdown was Dragon Diffusion's sentence. Never surface it.
-  const sourced = project.description || firstSentence(project.details.abstract) || firstSentence(project.details.solution)
-  const description = project.slug === 'genshot-AI-video-generation-tool' ? 'TODO' : sourced
+  const description = project.description || firstSentence(project.details.abstract) || firstSentence(project.details.solution)
   const role = extractRole(project.details.content || '')
   return {
     slug: project.slug,
@@ -324,9 +312,8 @@ export const featured: WorkItem[] = FEATURED_SLUGS
   .map(slug => works.find(work => work.slug === slug))
   .filter((work): work is WorkItem => Boolean(work))
 
-export const heroSlides: WorkItem[] = HERO_SLUGS
-  .map(slug => works.find(work => work.slug === slug))
-  .filter((work): work is WorkItem => Boolean(work))
+/** Every work appears in the hero, in reverse index order. */
+export const heroSlides: WorkItem[] = [...works].reverse()
 
 export function worksInGroup(group: WorkGroup): WorkItem[] {
   return works.filter(work => work.group === group)

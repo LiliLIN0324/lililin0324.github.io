@@ -4,7 +4,7 @@ slug: "genshot-AI-video-generation-tool"
 title: "Genshot - AI videos Generation Tool"
 category: "UI&UX Design"
 year: "2025"
-description: "TODO"
+description: "粘贴商品链接，一键成片。"
 tech: ["Figma","React","TypeScript"]
 hasDemo: true
 icon: "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/logo.jpg"
@@ -109,7 +109,6 @@ image:
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/98.jpg"
   - "https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/99.jpg"
 ---
-<!-- TODO: frontmatter description was copied from Dragon Diffusion and is now the placeholder "TODO". Replace it with a real blurb. -->
 # 效果展示
 <div style="display:flex; flex-direction:column; gap:16px;">
 <video controls playsinline style="width:100%; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.08); border:1px solid #e5e7eb;" src="https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/fig/genshot/cover.mp4"></video>

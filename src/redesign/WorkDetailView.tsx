@@ -27,6 +27,16 @@ function articleText(work: WorkItem) {
     work.images.includes(url.trim()) ? '' : full
   ))
   text = text.replace(/^https?:\/\/\S+\.(?:jpg|jpeg|png|webp|gif)\s*$/gim, '')
+  text = text.trimStart()
+  const lead = text.match(/^#\s+([^\n]+)\n*/)
+  if (lead && lead[1].replace(/\s+/g, '') === work.title.replace(/\s+/g, '')) {
+    text = text.slice(lead[0].length)
+  }
+  const intro = (work.abstract || work.description || '').replace(/\s+/g, ' ').trim()
+  if (intro) {
+    const [first, ...rest] = text.trim().split(/\n\s*\n/)
+    if (first && first.replace(/\s+/g, ' ').trim() === intro) text = rest.join('\n\n')
+  }
   return text.trim()
 }
 
@@ -71,9 +81,7 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
     )
   }
 
-  const intro = work.slug === 'genshot-AI-video-generation-tool'
-    ? 'TODO'
-    : (work.abstract || work.description)
+  const intro = work.abstract || work.description
   const next = nextWork(work)
   const backTo = work.group === '笔记' ? '/tutorial' : `/${work.routeType}`
   const Demo = work.hasDemo ? getDemoComponent(work.slug) : undefined
@@ -116,7 +124,7 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
             <span>/</span>
             <b>{work.title}</b>
           </div>
-          <h1>{work.title}</h1>
+          <h1 className={work.title.length > 16 ? 'long' : undefined}>{work.title}</h1>
           {work.subtitle ? <p className="sub">{work.subtitle}</p> : null}
           <div className="meta">
             <b>{pad(work.no)}</b>
@@ -154,11 +162,18 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
         )}
 
         {body && (
-          <div className="prose">
+          <div className="article-body">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
               components={{
+                p: ({ node, children }: any) => {
+                  const only = node?.children?.length === 1 ? node.children[0] : null
+                  return <p className={only?.tagName === 'a' ? 'extlink' : undefined}>{children}</p>
+                },
+                a: ({ href, children }: any) => (
+                  <a href={href} target={href?.startsWith('http') ? '_blank' : undefined} rel="noreferrer">{children}</a>
+                ),
                 img: ({ src, alt }) => <img src={src} alt={alt || ''} onError={event => { (event.target as HTMLImageElement).style.display = 'none' }} />,
                 video: ({ src, poster, node: _node, ...props }: any) => {
                   const part = dragonDemoPart(typeof src === 'string' ? src : undefined)

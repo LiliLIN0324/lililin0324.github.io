@@ -154,10 +154,10 @@ export function HeroFrame({ work, mobile }: { work: WorkItem; mobile: boolean })
   )
 }
 
-export function WorkCard({ work, no, large = false }: { work: WorkItem; no?: number; large?: boolean }) {
+export function WorkCard({ work, no }: { work: WorkItem; no?: number }) {
   const label = String(no ?? work.no).padStart(2, '0')
   return (
-    <Link to={work.href} className={large ? 'card lg' : 'card'}>
+    <Link to={work.href} className="card">
       <Cover work={work} />
       <div className="cap">
         <span className="no">{label}</span>
