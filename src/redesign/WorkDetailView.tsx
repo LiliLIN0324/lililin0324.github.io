@@ -45,12 +45,10 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
   const work = findBySlug(id, routeType)
   const mobile = useMobile()
   const [demo, setDemo] = useState(false)
-  const [open, setOpen] = useState(false)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     setDemo(Boolean(work?.demoOnly))
-    setOpen(false)
     setProgress(0)
   }, [work?.href, work?.demoOnly])
 
@@ -68,8 +66,6 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
 
   const body = useMemo(() => (work ? articleText(work) : ''), [work])
   const images = work?.images || []
-  const preview = open ? images : images.slice(0, 3)
-  const hidden = Math.max(0, images.length - 3)
 
   if (!work) {
     return (
@@ -113,7 +109,6 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
       <div className="read" aria-hidden="true"><i style={{ width: `${Math.round(progress * 100)}%` }} /></div>
       <div className="dhero">
         <HeroFrame work={work} mobile={mobile} />
-        {images.length > 0 && <div className="cap" style={{ position: 'absolute', left: 48, bottom: 20, color: '#fff', font: '500 12px/1 Inter, sans-serif', letterSpacing: '.06em' }}>图 01 / {pad(images.length)}</div>}
       </div>
       <section className="w dh">
         <div className="grid12">
@@ -205,35 +200,18 @@ export function WorkDetailView({ routeType }: { routeType: string }) {
           </div>
         )}
 
-        {preview.length > 0 && (
+        {images.length > 0 && (
           <div className="gal">
-            {preview[0] && (
-              <figure className="fig">
-                <img src={preview[0]} alt="" onError={event => { (event.target as HTMLImageElement).style.display = 'none' }} />
-                <figcaption><span>图 {pad(1)}</span><span>{pad(1)} / {pad(images.length)}</span></figcaption>
-              </figure>
-            )}
-            {preview.length > 1 && (
-              <div className="grid12 two">
-                {preview.slice(1, 3).map((src, index) => (
-                  <figure className="fig" key={src}>
-                    <img src={src} alt="" loading="lazy" onError={event => { (event.target as HTMLImageElement).style.display = 'none' }} />
-                    <figcaption><span>图 {pad(index + 2)}</span><span>{pad(index + 2)} / {pad(images.length)}</span></figcaption>
-                  </figure>
-                ))}
-              </div>
-            )}
-            {open && preview.slice(3).map((src, index) => (
-              <figure className="fig" key={src} style={{ marginTop: 24 }}>
-                <img src={src} alt="" loading="lazy" onError={event => { (event.target as HTMLImageElement).style.display = 'none' }} />
-                <figcaption><span>图 {pad(index + 4)}</span><span>{pad(index + 4)} / {pad(images.length)}</span></figcaption>
+            {images.map((src, index) => (
+              <figure className="fig" key={src} style={index > 0 ? { marginTop: 24 } : undefined}>
+                <img
+                  src={src}
+                  alt=""
+                  loading={index < 3 ? undefined : 'lazy'}
+                  onError={event => { (event.target as HTMLImageElement).style.display = 'none' }}
+                />
               </figure>
             ))}
-            {!open && hidden > 0 && (
-              <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center' }}>
-                <button type="button" className="lnk" onClick={() => setOpen(true)}>展开其余 {hidden} 张图 ↓</button>
-              </div>
-            )}
           </div>
         )}
 

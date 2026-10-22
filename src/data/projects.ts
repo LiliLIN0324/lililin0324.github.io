@@ -14,8 +14,9 @@ import genshotAIVideoGenerationToolMd from './projects/product/03_genshot-AI-vid
 import genstyleMd from './projects/product/04_genstyle.md?raw';
 import riffleAiGameGenerationToolMd from './projects/product/05_riffle-ai-game-generation-tool.md?raw';
 import baziFengshuiAnalysisMd from './projects/product/06_bazi-fengshui-analysis.md?raw';
-import earlyCampusExperienceMd from './projects/product/07_early-campus-experience.md?raw';
-import scendanceMd from './projects/product/08_scendance.md?raw';
+import earlyCampus1037Md from './projects/product/07_1037pinpin.md?raw';
+import persLearnMd from './projects/product/08_perslearn.md?raw';
+import scendanceMd from './projects/product/09_scendance.md?raw';
 
 import gameJam72HourMd from './projects/games/01_72-hour-game-jam.md?raw';
 import peaceEliteHustCampusMd from './projects/games/02_peace-elite-hust-campus.md?raw';
@@ -29,7 +30,6 @@ import aiUrbanHeatResilienceMachineLearningMd from './projects/AI/03_urban-heat-
 import aiParticipatoryUrbanRegenerationMd from './projects/AI/04_participatory-urban-regeneration-empowered-by-artificial-intelligence.md?raw';
 import aiCampusPublicSpaceVitalityModelingMd from './projects/AI/05_campus-public-space-vitality-modeling.md?raw';
 
-import litflowMd from './projects/platform/01_litflow.md?raw';
 import epsteinMysteryArchiveMd from './projects/platform/03_epstein-mystery-archive.md?raw';
 
 import howToAddOpenstreetmapInWebsiteMd from './projects/tutorials/01_how-to-add-openstreetmap-in-website.md?raw';
@@ -231,7 +231,8 @@ export const productProjects = [
   createProject(genstyleMd),
   createProject(riffleAiGameGenerationToolMd),
   createProject(baziFengshuiAnalysisMd),
-  createProject(earlyCampusExperienceMd),
+  createProject(earlyCampus1037Md),
+  createProject(persLearnMd),
   createProject(scendanceMd)
 ];
 
@@ -252,7 +253,6 @@ export const aiProjects = [
 ];
 
 export const platformProjects = [
-  createProject(litflowMd),
   createProject(epsteinMysteryArchiveMd)
 ];
 

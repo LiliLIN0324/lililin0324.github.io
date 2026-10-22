@@ -99,7 +99,7 @@ const MainPage = () => {
   useEffect(() => {
     const root = document.documentElement
     const applyBar = () => {
-      root.style.setProperty('--bar', window.matchMedia('(max-width: 768px)').matches ? '56px' : '64px')
+      root.style.setProperty('--bar', window.matchMedia('(max-width: 768px)').matches ? '52px' : '60px')
     }
     applyBar()
     window.addEventListener('resize', applyBar)
@@ -118,7 +118,7 @@ const MainPage = () => {
       if (dy > 0 && y > 120) hidden = true
       else if (dy < 0 || y <= 4) hidden = false
       setBarHidden(hidden)
-      const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar')) || 64
+      const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar')) || 60
       const hero = document.querySelector('.swiss .fold > .hero, .swiss .dhero')
       const over = hero instanceof HTMLElement && hero.getBoundingClientRect().bottom > bar + 12
       setOnImage(over)
@@ -162,7 +162,6 @@ const MainPage = () => {
           <i /><i /><i />
         </button>
         <Link to="/" className="brand">
-          <span className="sq" />
           Lili Lin<em>林丽丽</em>
         </Link>
         <nav aria-label="主要">
@@ -174,7 +173,7 @@ const MainPage = () => {
           <ThemeToggle className="topbar-toggle" />
           <button
             onClick={rollDice}
-            className="btn-ghost !px-3"
+            className="jump"
             title="随机探索一个项目"
           >
             <span className="h-5 w-5" style={{ perspective: '120px' }}>

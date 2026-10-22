@@ -29,6 +29,25 @@ const talks = [
 type Award = { name: string; year: string; file?: string; files?: { file: string; label?: string }[] }
 
 const CERT = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev/certificate/'
+const scholarships: Award[] = [
+  { name: '优秀外国人研究奖学金', year: '2024', file: '优秀外国人研究奖学金2024.jpg' },
+  { name: '中国近现代科学家助学金', year: '2024', file: '中国近现代科学家助学金.jpg' },
+  { name: '国家励志奖学金', year: '2020', file: '国家励志奖学金2020.jpg' },
+  { name: '国家励志奖学金', year: '2021', file: '国家励志奖学金2021.jpg' },
+  { name: '国家励志奖学金', year: '2022', file: '国家励志奖学金2022.jpg' },
+  { name: '国家励志奖学金', year: '2023', file: '国家励志奖学金2023.jpg' },
+  { name: '学习优秀奖学金', year: '2020', file: '学习优秀奖学金-2020.jpg' },
+  { name: '自强奖学金', year: '2023', file: '自强奖学金2023.jpg' },
+]
+const honors: Award[] = [
+  { name: '优秀毕业生', year: '2024', file: '优秀毕业生.jpg' },
+  { name: '三好学生', year: '2021', file: '三好学生2021.jpg' },
+  { name: '三好学生', year: '2023', file: '三好学生2023.jpg' },
+  { name: '优秀学生干部', year: '2022', file: '优秀学生干部2022.jpg' },
+  { name: '优秀共青团员', year: '2020', file: '优秀共青团员2020.jpg' },
+  { name: '优秀共青团员', year: '2022', file: '优秀共青团员2022.jpg' },
+  { name: '全国计算机等级考试三级 · 网络技术', year: '2022', file: '计算机三级等级证明2022.jpg' },
+]
 const competitions: Award[] = [
   { name: '亚洲设计学年奖 银奖、铜奖、优秀奖', year: '2023' },
   { name: '米兰设计周省级一等奖', year: '2023', file: '米兰设计周2023.jpg' },
@@ -44,6 +63,7 @@ const projects: Award[] = [
   { name: '最佳跨界融合奖 · 同济 AI4CITIES 工作坊', year: '2025', file: 'AI4CITIES最佳跨界融合奖.jpg' },
   { name: '国家级大创项目《红旗渠类山地灌渠工程遗产价值判定与数字化平台构建》', year: '2023' },
   { name: 'Digital Futures workshop 参与证书', year: '2023', file: 'digitalfuture2023.jpg' },
+  { name: 'ITC 青年论坛', year: '2022', file: 'ITC青年论坛2022.jpg' },
 ]
 
 function imagesOf(item: Award) {
@@ -133,25 +153,43 @@ export function AboutView() {
         </div>
 
         <div className="blk">
-          <SectionHead n="03" title="竞赛与项目" en="Awards" right={<span>带 ⊕ 的条目可点开证书</span>} />
+          <SectionHead n="03" title="奖学金与荣誉" en="Scholarships & Honors" right={<span>带 ⊕ 的条目可点开证书</span>} />
           <div className="grid12 aw">
             <div className="col">
-              <h3>竞赛奖项<em>Competitions</em></h3>
-              {competitions.map(item => (
-                <AwardRow key={item.name} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
+              <h3>奖学金<em>Scholarships</em></h3>
+              {scholarships.map(item => (
+                <AwardRow key={`${item.name}-${item.year}`} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
               ))}
             </div>
             <div className="col">
-              <h3>项目与其他<em>Projects</em></h3>
-              {projects.map(item => (
-                <AwardRow key={item.name} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
+              <h3>荣誉<em>Honors</em></h3>
+              {honors.map(item => (
+                <AwardRow key={`${item.name}-${item.year}`} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
               ))}
             </div>
           </div>
         </div>
 
         <div className="blk">
-          <SectionHead n="04" title="链接" en="Links" />
+          <SectionHead n="04" title="竞赛与项目" en="Awards" right={<span>带 ⊕ 的条目可点开证书</span>} />
+          <div className="grid12 aw">
+            <div className="col">
+              <h3>竞赛奖项<em>Competitions</em></h3>
+              {competitions.map(item => (
+                <AwardRow key={`${item.name}-${item.year}`} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
+              ))}
+            </div>
+            <div className="col">
+              <h3>项目与其他<em>Projects</em></h3>
+              {projects.map(item => (
+                <AwardRow key={`${item.name}-${item.year}`} item={item} onOpen={award => { setOpen(award); setFrame(0) }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="blk">
+          <SectionHead n="05" title="链接" en="Links" />
           <div className="lk">
             <a href="https://www.instagram.com/lililin_portfolio/" target="_blank" rel="noopener"><b>Instagram</b><span>instagram.com/lililin_portfolio</span><i>↗</i></a>
             <a href="https://github.com/lililin0324" target="_blank" rel="noopener"><b>GitHub</b><span>github.com/lililin0324</span><i>↗</i></a>

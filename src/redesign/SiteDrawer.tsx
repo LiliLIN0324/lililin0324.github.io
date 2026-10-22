@@ -154,7 +154,6 @@ export function SiteDrawer({
             <button type="button" className="hb x" data-close aria-label="关闭侧栏" onClick={onClose}>
               <i /><i /><i />
             </button>
-            <span className="sq" />
             Lili Lin<em>林丽丽</em>
           </div>
           <button type="button" className="esc" onClick={onClose}>ESC</button>

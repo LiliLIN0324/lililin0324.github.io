@@ -36,8 +36,8 @@ const TOTAL_PDF_PAGES = 55;
 
 const PDF_PAGE_HINTS: Record<number, { text: string; link: string }> = {
   2: { text: 'Self-introduction', link: '/about' },
-  5: { text: 'View Early Campus Experience', link: '/product/early-campus-experience' },
-  11: { text: 'View Early Campus Experience', link: '/product/early-campus-experience' },
+  5: { text: 'View 1037 Pinpin', link: '/product/1037pinpin' },
+  11: { text: 'View PersLearn', link: '/product/perslearn' },
   21: { text: 'View Dragon Diffusion Project', link: '/product/dragon-diffussion' },
   27: { text: 'View Genstyle Project', link: '/product/genstyle' },
   43: { text: 'View Luoshu Project', link: '/product/bazi-fengshui-analysis' },

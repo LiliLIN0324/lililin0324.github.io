@@ -12,7 +12,6 @@ import {
  * Card and hero URLs are built only from this map (then the icon folder, then the site id).
  */
 export const R2_SLUG_BY_SITE_ID: Record<string, string> = {
-  'early-campus-experience': 'perslearn',
   'guangzhou-xinyuan-tech': 'guangzhou-xinyuan',
   '72-hour-game-jam': 'game-jam',
   'urban-heat-resilience-machine-learning': 'urban-heat-resilience-ml',
@@ -25,19 +24,22 @@ export const R2_BASE = 'https://pub-3209bcb7fc36444a914deb0e70ceca92.r2.dev'
 
 /**
  * First live `<video src>` in each work's markdown, keyed by site slug.
- * Paths are the fig/<folder>/ copies from the R2 reorg. Hongqiqu is omitted:
- * its clips were not copied. Extra clips on the same work stay in the markdown
- * and are not repeated here.
+ * Paths are the fig/<folder>/ copies from the R2 reorg. Extra clips on the same
+ * work stay in the markdown and are not repeated here.
+ * Listing a slug reserves its cover slot: `CoverVideo` starts at opacity 0 and
+ * drops out on error, so a slug whose cover.mp4 is not on R2 yet keeps the still
+ * frame and starts playing by itself once the file lands.
  */
 export const VIDEO_BY_SLUG: Record<string, string> = {
-  scendance: `${R2_BASE}/fig/scendance/Scendance.mp4`,
+  scendance: `${R2_BASE}/fig/scendance/cover.mp4`,
   'riffle-ai-game-generation-tool': `${R2_BASE}/fig/riffle/cover.mp4`,
   genstyle: `${R2_BASE}/fig/genstyle/cover.mp4`,
   'genshot-AI-video-generation-tool': `${R2_BASE}/fig/genshot/cover.mp4`,
   anyreal: `${R2_BASE}/fig/anyreal/cover.mp4`,
   // Demo part 1 (former DragonDiffusion-Demo_(1)). Parts 2–3 stay in the article.
   'dragon-diffussion': `${R2_BASE}/fig/dragon-diffusion/cover.mp4`,
-  'early-campus-experience': `${R2_BASE}/fig/perslearn/cover.mp4`,
+  'bazi-fengshui-analysis': `${R2_BASE}/fig/bazi/cover.mp4`,
+  '1037pinpin': `${R2_BASE}/fig/1037pinpin/cover.mp4`,
   'epstein-mystery-archive': `${R2_BASE}/fig/epstein-mystery-archive/cover.mp4`,
   'guangzhou-xinyuan-tech': `${R2_BASE}/fig/guangzhou-xinyuan/cover.mp4`,
   'bmw-meta-island': `${R2_BASE}/fig/bmw-meta-island/cover.mp4`,
@@ -52,6 +54,10 @@ export const VIDEO_BY_SLUG: Record<string, string> = {
   'campus-public-space-vitality-modeling': `${R2_BASE}/fig/campus-public-space-vitality-modeling/cover.mp4`,
   neurotopia: `${R2_BASE}/fig/neurotopia/cover.mp4`,
   'chicken-utopia': `${R2_BASE}/fig/chicken-utopia/cover.mp4`,
+  // Moved out of the bucket root (hongqiqu_1.mp4 / hongqiqu_2.mp4 are gone) and into the folder.
+  hongqiqu: `${R2_BASE}/fig/hongqiqu/cover.mp4`,
+  // Reserved: the file is not on R2 yet. The card keeps its still until it is.
+  perslearn: `${R2_BASE}/fig/perslearn/cover.mp4`,
 }
 
 export const FIG = `${R2_BASE}/fig`
@@ -118,11 +124,11 @@ const COPY: Record<string, { title: string; sub: string }> = {
   'bazi-fengshui-analysis': { title: '洛书八字', sub: 'Bazi · 风水分析应用' },
   anyreal: { title: 'AnyReal', sub: 'AI 虚拟影棚' },
   'dragon-diffussion': { title: 'Dragon Diffusion', sub: 'AI 创意生产平台' },
-  'early-campus-experience': { title: '1037拼拼 & PersLEARN', sub: '早期校园产品' },
-  litflow: { title: 'LitFlow', sub: 'Research Hub' },
+  '1037pinpin': { title: '1037拼拼', sub: '校园拼团平台' },
+  perslearn: { title: 'persLEARN', sub: '论文文献平台' },
   'epstein-mystery-archive': { title: 'Epstein Mystery Archive', sub: '档案平台' },
   kittylovecarrots: { title: '指萝卜', sub: '个人开发微信小游戏' },
-  'guangzhou-xinyuan-tech': { title: '广州心源科技', sub: 'Bilibili 游戏子公司实习' },
+  'guangzhou-xinyuan-tech': { title: 'Bilibili 游戏实习', sub: '广州心源科技 · UE5 场景设计' },
   'bmw-meta-island': { title: '一杯咖啡的游戏旅程', sub: '同济 × BMW 联合挑战营' },
   'peace-elite-hust-campus': { title: '和平精英 × 华中科技大学', sub: '绿洲世界高校共建' },
   '72-hour-game-jam': { title: '无名之路', sub: '腾讯 × 华科 72 小时极限开发' },
@@ -150,8 +156,8 @@ const WORK_ORDER = [
   'bazi-fengshui-analysis',
   'anyreal',
   'dragon-diffussion',
-  'early-campus-experience',
-  'litflow',
+  '1037pinpin',
+  'perslearn',
   'epstein-mystery-archive',
   'kittylovecarrots',
   'guangzhou-xinyuan-tech',
@@ -473,20 +479,24 @@ export function extractVideos(content: string): string[] {
 const VERIFIED_VIDEO_URLS = new Set(Object.values(VIDEO_BY_SLUG))
 
 /**
- * Cover clip for a work. Only a markdown `<video src>` that is also in
- * VIDEO_BY_SLUG. Anything else, including hongqiqu's uncopied files, stays
- * on the still chain instead of an empty black frame.
+ * Cover clip for a work. A slug in VIDEO_BY_SLUG always plays, whether or not
+ * the markdown embeds it, because that list is the curated set of cover files.
+ * Otherwise a verified `<video src>` found in the article is used. A listed slug
+ * whose file has not been uploaded yet stays on the still chain instead of an
+ * empty black frame.
  */
 export function coverVideo(work: Pick<WorkItem, 'slug' | 'content'>): string | undefined {
-  const found = extractVideos(work.content)
   const listed = VIDEO_BY_SLUG[work.slug]
-  if (listed && found.includes(listed)) return listed
-  return found.find(src => VERIFIED_VIDEO_URLS.has(src))
+  if (listed) return listed
+  return extractVideos(work.content).find(src => VERIFIED_VIDEO_URLS.has(src))
 }
 
 /**
  * Prefer manifest `card` / `card_s` when that file is present.
- * Otherwise card.jpg → logo.jpg → 01.jpg (always .jpg) → the project's icon.
+ * Otherwise the still is, in order: the work's first gallery image (the file
+ * written in the markdown), 01.jpg / 01.png, logo.jpg, then the project icon.
+ * The gallery frame comes before the logo so a card never shows the wordmark
+ * when the project has real imagery.
  * previous-planning-research has no card and uses the title block directly.
  * Scendance prefers poster-hero.jpg, then the existing poster.jpg and card.jpg.
  * logo.jpg and the 01–26 sequence are not required.
@@ -504,8 +514,10 @@ export function coverSources(work: WorkItem): CoverSource[] {
   }
   sources.push(
     { src: card, srcSet: `${cardSmall} 800w, ${card} 1600w` },
-    { src: `${base}/logo.jpg`, logo: true },
+    ...(work.images[0] ? [{ src: work.images[0] }] : []),
     { src: `${base}/01.jpg` },
+    { src: `${base}/01.png` },
+    { src: `${base}/logo.jpg`, logo: true },
   )
   if (work.icon && !sources.some(source => source.src === work.icon)) {
     sources.push({ src: work.icon, logo: /logo\.(jpg|png|webp)$/i.test(work.icon) })

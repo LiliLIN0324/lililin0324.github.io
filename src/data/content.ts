@@ -80,9 +80,9 @@ export const contentCategories: ContentCategory[] = [
     listHref: '/product',
     color: '#5ec5d4',
     items: [
-      { name: 'Counting', year: 2022, logo: logo('counting'), href: '/product/early-campus-experience' },
-      { name: '1037拼拼', year: 2022, logo: logo('1037pinpin'), href: '/product/early-campus-experience' },
-      { name: 'PersLearn', year: 2023, logo: logo('perslearn'), href: '/product/early-campus-experience' },
+      { name: 'Counting', year: 2022, logo: logo('counting'), href: '/product/1037pinpin' },
+      { name: '1037拼拼', year: 2022, logo: logo('1037pinpin'), href: '/product/1037pinpin' },
+      { name: 'PersLearn', year: 2023, logo: logo('perslearn'), href: '/product/perslearn' },
     ],
   },
   {

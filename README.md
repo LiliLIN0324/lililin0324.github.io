@@ -46,7 +46,7 @@
 | **Product** | 产品 & AI 产品项目（DragonDiffusion, AnyReal, Genshot, Genstyle, Riffle, Bazi, 幕景 Scendance, 1037PinPin） |
 | **Game** | 游戏开发（Game Jam, 和平精英×华科, BMW Meta Island, Bilibili 实习, KittyLoveCarrots） |
 | **Planning** | 城市规划 & 建筑（Neurotopia, Chicken Utopia, 红旗渠, 知识图谱, 城市热环境, Previous Archi Work 等） |
-| **Platform** | 平台工具（LitFlow, Epstein Archive） |
+| **Platform** | 平台工具（Epstein Archive） |
 | **Tutorial** | 技术教程（OpenStreetMap, Docker, Dify, MCP, 数据库选型等） |
 
 ## Blog（独立博客）
