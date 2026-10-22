@@ -1,129 +1,68 @@
-# Lili Lin · Portfolio
+# 林丽丽的个人网站
 
-> 设计 × 开发 × 城市研究 —— 一个多领域的个人作品集网站。
+设计 × 开发 × 城市研究的作品集。项目按 Markdown 管理，页面里的地图、3D、图表 demo 都能直接跑。
 
-**[lililin0324.github.io](https://lililin0324.github.io/)**
+**在线访问：<https://lililin0324.github.io/>**
+
+---
+
+## 有什么
+
+- **作品集**：项目以 Markdown 文件加 frontmatter 登记，自动生成列表页与详情页
+- **可交互 demo**：空间聚类地图、热力图、活动轨迹、照片 EXIF 定位等都在页面内运行
+- **博客**：独立的路由与评论系统
+- **深浅色主题**：首屏绘制前就确定主题，不闪白
+- **照片上传**：读取 EXIF 经纬度，把照片放回地图上
 
 ## 技术栈
 
-| 层 | 技术 |
+| 层 | 选型 |
 |---|---|
-| 框架 | React 18 + TypeScript |
-| 路由 | React Router (Hash) |
-| 样式 | Tailwind CSS |
-| 构建 | Vite |
-| 内容 | Markdown（frontmatter 驱动） |
-| 媒体 | Cloudflare R2 CDN |
-| 部署 | GitHub Pages（`docs/`） |
+| 构建 | Vite + TypeScript |
+| 界面 | React 19 · Tailwind CSS · Framer Motion |
+| 地图 | Leaflet · react-leaflet · georaster · shpjs |
+| 图表 | Plotly.js |
+| 内容 | Markdown + 自建 frontmatter 解析 |
+| 评论 | giscus |
 
-## 项目结构
-
-```
-├── src/
-│   ├── components/           # 核心组件
-│   │   ├── HomePage.tsx      # 首页（作品舞台 + 胶片卡片）
-│   │   ├── ProjectDetailView.tsx  # 项目详情页（Docs / Demo 双视图）
-│   │   ├── ProjectListView.tsx    # 分类列表页
-│   │   ├── DemoLoader.tsx    # Demo 懒加载路由
-│   │   └── ...
-│   ├── blog/                 # 独立博客模块（见下）
-│   ├── data/
-│   │   ├── projects.ts       # 项目注册 & Markdown 解析
-│   │   ├── blog.ts           # 博客内容自动扫描
-│   │   ├── blog/             # 博客文章 *.md
-│ │   └── projects/         # 分类目录（product / game / planning / platform / tutorial）
-│   │       └── *.md          # 每个项目一个 md，frontmatter + 正文
-│   └── *.tsx                 # 各项目 Demo 组件
-├── public/data/fig/          # 本地图片（已迁移至 CDN）
-├── docs/                     # 构建产物（GitHub Pages）
-└── MainPage.tsx              # 全局布局 & 路由
-```
-
-## 分类
-
-| Tab | 内容 |
-|---|---|
-| **Product** | 产品 & AI 产品项目（DragonDiffusion, AnyReal, Genshot, Genstyle, Riffle, Bazi, 幕景 Scendance, 1037PinPin） |
-| **Game** | 游戏开发（Game Jam, 和平精英×华科, BMW Meta Island, Bilibili 实习, KittyLoveCarrots） |
-| **Planning** | 城市规划 & 建筑（Neurotopia, Chicken Utopia, 红旗渠, 知识图谱, 城市热环境, Previous Archi Work 等） |
-| **Platform** | 平台工具（Epstein Archive） |
-| **Tutorial** | 技术教程（OpenStreetMap, Docker, Dify, MCP, 数据库选型等） |
-
-## Blog（独立博客）
-
-博客是**完全独立**的模块，有自己的 header / 布局 / 路由，挂在 `/blog` 下，与作品集互不干扰。
+## 目录
 
 ```
-src/blog/
-├── BlogApp.tsx        # 独立布局 + 列表页 + 路由
-├── BlogPostView.tsx   # 单篇文章渲染
-└── BlogComments.tsx   # giscus 评论区
-src/data/blog.ts       # 自动扫描 src/data/blog/*.md
-src/data/blog/*.md     # 你的文章
+src/
+  components/        布局、列表、详情、demo 加载器、主题切换
+  data/projects/     每个项目一个 .md，frontmatter 声明标题/分类/封面
+  blog/              博客路由与评论
+  *.tsx              各个独立 demo（聚类地图、照片上传等）
+public/data/         demo 用的 CSV
+docs/                构建产物，GitHub Pages 从这里发布
 ```
 
-### 写一篇新文章
-
-在 `src/data/blog/` 新建一个 `.md` 文件即可 —— 文件名即 URL（`my-post.md` → `/blog/my-post`），**无需改任何代码**。
-
-```yaml
----
-title: "文章标题"
-date: "2026-09-18"        # 用于排序
-description: "一句话摘要"
-tags: ["标签A", "标签B"]
-cover: "封面图 URL"       # 可选
----
-正文（Markdown）
-```
-
-### 评论（giscus）
-
-基于 GitHub Discussions，零后端、零成本。
-
-已完成：仓库 Discussions 已开启；`src/blog/BlogComments.tsx` 的 `GISCUS_CONFIG`
-里已填好 `repoId` / `categoryId`，分类用的是 giscus 官方推荐的 **Announcements**
-（只有维护者能发起讨论，天然防垃圾评论）。
-
-**还差最后一步**（只能在浏览器里操作，没有 API）：到
-[github.com/apps/giscus/installations/new](https://github.com/apps/giscus/installations/new)
-把 giscus App 安装到本仓库。装完评论即可生效。
-
-> 想换成独立的 `Blog` 分类的话：Discussion 分类只能在仓库网页 UI 里新建
-> （GitHub 没有开放对应的 API），建好后把 `GISCUS_CONFIG` 里的 `category`
-> 与 `categoryId` 换成新分类的即可。
-
-## 项目配置
-
-每个 md 文件通过 frontmatter 控制行为：
-
-```yaml
----
-slug: "project-slug"        # URL 标识
-title: "项目标题"
-category: "planning"
-year: "2024"
-tech: ["React", "TypeScript"]
-hasDemo: true               # 是否有 Demo 视图
-demoOnly: true              # 强制仅显示 Demo（隐藏 Docs）
-icon: "封面图 CDN 地址"
-image:                       # 图集只写在这里
-  - "https://pub-....r2.dev/fig/project/01.jpg"
----
-正文（Markdown）。和某一段绑定的配图可以继续用 `![](url)`。
-```
-
-同一批效果图不要同时写进 `image` 和正文。详情页沿用改版前的图库：frontmatter 里的图按全宽、上下紧贴的方式铺回正文，跟着页面滚动。没有「下拉展开 / 左右翻页」切换。正文里已经出现的地址不会再铺一次，加载失败的图会藏起来。
-
-## 开发
+## 本地开发
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm run build    # 输出到 docs/
-npm run preview  # 预览构建产物
+npm run dev
 ```
+
+默认地址 `http://localhost:5173`。
+
+## 新增一个项目
+
+1. 在 `src/data/projects/` 下新建 Markdown 文件；
+2. 填写 frontmatter：标题、分类、日期、封面、链接；
+3. 正文直接写 Markdown，需要嵌入 demo 时在 frontmatter 里指定组件。
+
+项目列表、详情页和路由都由这些文件自动生成，不需要改代码。
 
 ## 部署
 
-推送到 `main` 分支 → GitHub Pages 自动从 `docs/` 目录发布。
+```bash
+npm run build
+```
+
+构建输出会复制到 `docs/`，GitHub Pages 配置为从 `docs/` 发布。`docs/` 是生成结果，不要手改；仓库因此较大（含历史构建与 demo 资源），克隆时可用 `--depth 1`。
+
+## 已知事项
+
+- 博客评论基于 giscus，需要仓库开启 Discussions 并完成 giscus 授权
+- 部分 demo 依赖 `public/data/` 下的样例数据，换数据时保持列名一致
