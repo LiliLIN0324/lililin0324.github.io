@@ -1,1 +1,0 @@
-import{j as t}from"./react-vendor-Dn-0NGU0.js";import"./geo-BbprxUkj.js";import"./vendor-BzO13j2l.js";const r=()=>t.jsx("div",{className:"litflow-container",style:{width:"100%",height:"100vh"},children:t.jsx("iframe",{src:"https://litflow-one.vercel.app/",title:"LitFlow - Research Hub",style:{width:"100%",height:"100%",border:"none"},loading:"lazy"})});export{r as default};
