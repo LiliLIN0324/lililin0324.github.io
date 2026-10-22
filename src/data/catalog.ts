@@ -57,7 +57,7 @@ export const VIDEO_BY_SLUG: Record<string, string> = {
   'chicken-utopia': `${R2_BASE}/fig/chicken-utopia/cover.mp4`,
   // Moved out of the bucket root (hongqiqu_1.mp4 / hongqiqu_2.mp4 are gone) and into the folder.
   hongqiqu: `${R2_BASE}/fig/hongqiqu/cover.mp4`,
-  // Reserved: the file is not on R2 yet. The card keeps its still until it is.
+  // The clip landed on R2, so this reserved slot now fills itself in.
   perslearn: `${R2_BASE}/fig/perslearn/cover.mp4`,
 }
 
